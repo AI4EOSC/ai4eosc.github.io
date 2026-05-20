@@ -1,0 +1,31 @@
+brand:
+    name: AI4EOSC
+    description: A clean, interoperable foundation for research-grade AI in Europe.
+columns:
+    - title: Navigate
+      links:
+          - label: About
+            href: /about
+          - label: Products
+            href: /products
+          - label: Stories
+            href: /stories
+    - title: Ecosystem
+      links:
+          - label: Projects
+            href: /projects
+          - label: Communities
+            href: /communities
+          - label: Gateways
+            href: /gateways
+    - title: Support
+      links:
+          - label: Contact
+            href: /contact
+          - label: FAQ
+            href: /faq
+          - label: Documentation
+            href: https://docs.ai4eosc.eu
+bottom:
+    left: AI4EOSC Initiative. All rights reserved.
+    right: "An initiative coordinated by the Spanish National Research Council (CSIC)"

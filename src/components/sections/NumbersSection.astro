@@ -1,0 +1,84 @@
+---
+import data from '../../data/numbers.yml';
+---
+
+<section>
+  <div class="section-label">
+    <div class="container">{data.label}</div>
+  </div>
+  <div class="container">
+    <div class="card">
+      <div class="grid">
+        {data.items.map((item) => (
+          <div class="item" key={item.label}>
+            <div class="value">
+              {item.value}
+              {item.suffix && <span>{item.suffix}</span>}
+            </div>
+            <div class="label">{item.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .card {
+    background: #ffffff;
+    border: 0.5px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 28px 32px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .item {
+    padding: 6px 18px;
+    border-right: 0.5px solid var(--color-neutral-200);
+  }
+
+  .item:last-child {
+    border-right: none;
+  }
+
+  .value {
+    font-family: var(--font-headings);
+    font-size: 42px;
+    color: var(--color-neutral-900);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .value span {
+    font-style: normal;
+    color: var(--color-primary-600);
+    font-size: 34px;
+  }
+
+  .label {
+    font-size: 13px;
+    color: var(--color-neutral-500);
+    line-height: 1.45;
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px 0;
+    }
+
+    .item {
+      border-right: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

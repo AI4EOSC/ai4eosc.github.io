@@ -1,0 +1,11 @@
+label: Trusted by leading research infrastructures and cloud providers
+items:
+  - name: EOSC
+  - name: EGI
+  - name: GEANT
+  - name: CNRS
+  - name: IFCA-CSIC
+  - name: IN2P3
+  - name: INFN
+  - name: AWS
+  - name: OpenNebula

@@ -1,0 +1,19 @@
+label: Gateways
+hero:
+  title: Gateways built on AI4EOSC
+  description: Specialised platforms and projects that use AI4EOSC products to serve their own scientific communities.
+  buttonLabel: Explore gateways
+  buttonHref: /ecosystem/gateways
+items:
+  - tag: Marine
+    status: Active
+    title: iMagine
+    description: AI for underwater imaging and marine biodiversity.
+  - tag: Climate
+    status: Active
+    title: OSCAR Gateway
+    description: Serverless AI for Earth observation data.
+  - tag: Health
+    status: New
+    title: Health-RI
+    description: Federated AI for European health research.

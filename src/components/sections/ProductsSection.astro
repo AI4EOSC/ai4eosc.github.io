@@ -1,0 +1,118 @@
+---
+import data from '../../data/products.yml';
+import SectionHeader from '../SectionHeader.astro';
+---
+
+<section>
+  <div class="section-label">
+    <div class="container">{data.label}</div>
+  </div>
+  <div class="container">
+    <div class="section-card">
+      <SectionHeader
+        title={data.title}
+        subtitle={data.description}
+        actionLabel={data.action.label}
+        actionHref={data.action.href}
+      />
+      <div class="grid">
+        {data.items.map((item) => (
+          <article class="card" key={item.title}>
+            <div class={`screen ${item.theme}`}>
+              <div class="dots"></div>
+              <span>{item.icon}</span>
+            </div>
+            <div class="body">
+              <span class="badge">{item.category}</span>
+              <h4>{item.title}</h4>
+              <p>{item.description}</p>
+              <a class="link" href={item.linkHref}>{item.linkLabel}</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .card {
+    background: var(--color-neutral-50);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.05);
+  }
+
+  .screen {
+    height: 78px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .screen.primary {
+    background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-400));
+  }
+
+  .screen.dark {
+    background: linear-gradient(135deg, #1a1a2e, #2d2d5e);
+  }
+
+  .dots {
+    position: absolute;
+    inset: 0;
+    opacity: 0.2;
+    background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+
+  .body {
+    padding: 16px 18px 20px;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-primary-700);
+    background: var(--color-primary-100);
+    border-radius: 999px;
+    padding: 3px 10px;
+    margin-bottom: 8px;
+  }
+
+  h4 {
+    margin: 0 0 6px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--color-neutral-500);
+  }
+
+  .link {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-primary-700);
+    text-decoration: none;
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

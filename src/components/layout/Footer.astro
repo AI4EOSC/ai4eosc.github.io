@@ -1,0 +1,104 @@
+---
+import footer from '../../data/footer.yml';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer-wrap">
+  <div class="footer">
+    <div class="brand">
+      <div class="brand-mark">
+        <a class="brand" href="/">
+            <img class="brand-logo" src="/logos/AI4-horizontal-light.svg" alt="AI4EOSC" />
+        </a>
+      </div>
+      <p>{footer.brand.description}</p>
+    </div>
+    {footer.columns.map((column) => (
+      <div class="column" key={column.title}>
+        <h5>{column.title}</h5>
+        {column.links.map((link) => (
+          <a href={link.href} key={link.label}>{link.label}</a>
+        ))}
+      </div>
+    ))}
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; {currentYear} {footer.bottom.left}</p>
+    <p>{footer.bottom.right}</p>
+  </div>
+</footer>
+
+<style>
+  .footer-wrap {
+    margin: 0 auto;
+    width: min(1320px, 100% - 20px);
+    background: #ffffff;
+    border-top: 0.5px solid var(--card-border);
+  }
+
+  .footer {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 26px;
+    padding: 36px 40px 0;
+  }
+
+    /* ── Marca ─────────────────────────────────────────────────────── */
+
+  .brand-logo {
+    height: 70px;
+    width: auto;
+  }
+
+  .brand p {
+    margin: 10px 0 0;
+    color: var(--color-neutral-400);
+    line-height: 1.65;
+    max-width: 400px;
+  }
+
+  .column h5 {
+    margin: 0 0 12px;
+    font-weight: 600;
+    color: var(--color-neutral-900);
+  }
+
+  .column a {
+    display: block;
+    font-size: 16px;
+    color: var(--color-neutral-500);
+    margin-bottom: 7px;
+    text-decoration: none;
+  }
+
+  .footer-bottom {
+    border-top: 0.5px solid var(--card-border);
+    margin-top: 28px;
+    padding: 20px 40px 24px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    font-size: 16px;
+    color: var(--color-neutral-500);
+  }
+
+  @media (max-width: 900px) {
+    .footer {
+      grid-template-columns: 1fr 1fr;
+      padding: 32px 24px 0;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 18px 24px 22px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .footer {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

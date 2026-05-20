@@ -1,0 +1,12 @@
+badge:
+    text: AI4EOSC Initiative · Powered by EOSC
+    dotLabel: true
+title: Accelerating Artificial Intelligence in the European Open Science Cloud
+description: A shared foundation for deploying, extending, and accessing research-grade AI services across the European Open Science Cloud.
+cta:
+    primary:
+        label: Explore products
+        href: /products
+    secondary:
+        label: Learn more
+        href: /about

@@ -1,0 +1,13 @@
+label: Communities
+hero:
+  title: Scientific communities
+  description: AI4EOSC serves a growing number of research domains, connecting scientists with the AI tools they need.
+  buttonLabel: Explore communities
+  buttonHref: /ecosystem/communities
+items:
+  - title: Marine Science
+    description: Underwater imaging, biodiversity
+  - title: Climate & Weather
+    description: Forecasting, Earth observation
+  - title: Bioinformatics
+    description: Genomics, proteomics, drug discovery

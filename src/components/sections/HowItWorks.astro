@@ -1,0 +1,67 @@
+---
+import howItWorks from '../../data/how-it-works.yml';
+---
+
+<section>
+  <div class="section-label">
+    <div class="container">{howItWorks.label}</div>
+  </div>
+  <div class="container">
+    <div class="grid">
+      {howItWorks.items.map((item) => (
+        <article class="card" key={item.title}>
+          <div class="icon" style={`background:${item.iconBg};`}>{item.icon}</div>
+          <h3>{item.title}</h3>
+          <p>{item.description}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .card {
+    background: #ffffff;
+    border: 0.5px solid var(--card-border);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.05);
+  }
+
+  .icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    margin-bottom: 14px;
+  }
+
+  h3 {
+    margin: 0 0 6px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-neutral-500);
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

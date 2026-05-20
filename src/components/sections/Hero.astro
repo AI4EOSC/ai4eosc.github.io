@@ -1,0 +1,133 @@
+---
+import hero from '../../data/hero.yml';
+---
+
+<section class="hero">
+  <div class="hero-container">
+    <div class="hero-badge">
+      {hero.badge.dotLabel && <span class="dot" aria-hidden="true"></span>}
+      {hero.badge.text}
+    </div>
+    <h1>{hero.title}</h1>
+    <p>{hero.description}</p>
+    <div class="hero-actions">
+      <a class="button-pill primary" href={hero.cta.primary.href}>{hero.cta.primary.label}</a>
+      <a class="button-pill ghost" href={hero.cta.secondary.href}>{hero.cta.secondary.label}</a>
+    </div>
+  </div>
+  <div class="hero-deco deco-one"></div>
+  <div class="hero-deco deco-two"></div>
+  <div class="hero-deco deco-three"></div>
+</section>
+
+<style>
+  .hero {
+    margin: 18px auto 0;
+    width: min(1320px, 100% - 20px);
+    border-radius: 0 0 28px 28px;
+    background:
+      radial-gradient(500px 280px at 10% 10%, rgba(255, 255, 255, 0.14), transparent 70%),
+      linear-gradient(140deg, var(--color-primary-700), var(--color-primary-500));
+    padding: 76px 72px 70px;
+    position: relative;
+    overflow: hidden;
+    color: #ffffff;
+  }
+
+  .hero-container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.85);
+    padding: 6px 16px;
+    border-radius: 999px;
+    border: 0.5px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.18);
+    margin-bottom: 22px;
+  }
+
+  .hero-badge .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #7fe8c4;
+  }
+
+  h1 {
+    font-family: var(--font-headings);
+    font-size: 48px;
+    font-weight: 400;
+    line-height: 1.15;
+    margin: 0 0 16px;
+    max-width: 520px;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 430px;
+    margin: 0 0 30px;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .hero-deco {
+    position: absolute;
+    border-radius: 999px;
+    border: 1px dashed rgba(255, 255, 255, 0.16);
+  }
+
+  .deco-one {
+    width: 340px;
+    height: 340px;
+    top: -40px;
+    right: -40px;
+  }
+
+  .deco-two {
+    width: 220px;
+    height: 220px;
+    top: 24px;
+    right: 70px;
+    opacity: 0.6;
+  }
+
+  .deco-three {
+    width: 280px;
+    height: 280px;
+    bottom: -90px;
+    right: 110px;
+    opacity: 0.35;
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      padding: 60px 42px 56px;
+    }
+
+    h1 {
+      font-size: 38px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      padding: 50px 26px 48px;
+    }
+
+    h1 {
+      font-size: 34px;
+    }
+  }
+</style>

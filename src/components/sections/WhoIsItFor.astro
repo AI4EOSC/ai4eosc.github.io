@@ -1,0 +1,93 @@
+---
+import data from '../../data/who-is-it-for.yml';
+import SectionHeader from '../SectionHeader.astro';
+---
+
+<section>
+  <div class="section-label">
+    <div class="container">{data.label}</div>
+  </div>
+  <div class="container">
+    <div class="section-card">
+      <SectionHeader title={data.title} subtitle={data.description} />
+      <div class="grid">
+        {data.items.map((item) => (
+          <article class={`card ${item.tagStyle}`} key={item.title}>
+            <span class="tag">{item.tag}</span>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+            <a class="link" href={item.linkHref}>{item.linkLabel}</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .card {
+    background: var(--color-neutral-50);
+    border-radius: var(--radius-md);
+    padding: 18px;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.05);
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  h3 {
+    margin: 0 0 6px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0 0 12px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-neutral-500);
+  }
+
+  .link {
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .research .tag,
+  .research .link {
+    color: var(--color-secondary-700);
+    background: color-mix(in oklch, var(--color-secondary-50) 70%, #ffffff 30%);
+  }
+
+  .developer .tag,
+  .developer .link {
+    color: var(--color-primary-700);
+    background: color-mix(in oklch, var(--color-primary-50) 70%, #ffffff 30%);
+  }
+
+  .institution .tag,
+  .institution .link {
+    color: #1a4a8a;
+    background: #e8f0ff;
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

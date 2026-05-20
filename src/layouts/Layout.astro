@@ -1,0 +1,75 @@
+---
+import Navbar from '../components/layout/Navbar.astro';
+import Footer from '../components/layout/Footer.astro';
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+import '../styles/transitions.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title = 'AI4EOSC Initiative', description = 'AI4EOSC is a collaborative initiative to integrate AI into the European Open Science Cloud (EOSC), fostering open science and accelerating research across disciplines.' } = Astro.props;
+const canonicalUrl = Astro.url.href;
+const siteName = "ai4eosc.eu";
+const ogImageUrl = new URL('/og/ai4eosc-og.png', Astro.url).href;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.svg" sizes="any">
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="robots" content="index, follow" />
+    <meta name="keywords" content="AI4EOSC, AI, EOSC, Open Science, Research Data Management, FAIR Data, Open Access" />
+    <meta name="author" content="AI4EOSC Initiative" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={title} />
+    <meta property="og:image:type" content="image/svg+xml" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- <ClientRouter /> -->
+  </head>
+  <body>
+    <Navbar />
+      <!-- <div id="page-wrapper" class="page-transition-wrapper"> -->
+      <slot />
+    </div>
+
+    <Footer />
+
+    <script>
+      // Handle page transitions
+      document.addEventListener('astro:page-load', () => {
+        // This runs on initial page load and after each navigation
+        const pageWrapper = document.getElementById('page-wrapper');
+        if (pageWrapper) {
+          pageWrapper.classList.add('page-loaded');
+        }
+      });
+
+      document.addEventListener('astro:before-swap', () => {
+        // This runs before the new page content is swapped in
+        const pageWrapper = document.getElementById('page-wrapper');
+        if (pageWrapper) {
+          pageWrapper.classList.remove('page-loaded');
+        }
+      });
+    </script>
+    <script src="../scripts/transitions.js"></script>
+  </body>
+</html>

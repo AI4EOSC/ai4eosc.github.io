@@ -1,0 +1,39 @@
+logo: AI4EOSC
+cta:
+    label: Get Started Now
+    href: https://dashboard.cloud.ai4eosc.eu/
+links:
+    - label: About
+      href: /about
+    - label: Products
+      href: /products
+    - label: Ecosystem
+      dropdown:
+          - label: Projects
+            description: EU-funded associated projects
+            href: /projects
+            hoverGradient: eu-blue
+          - label: Communities
+            description: Scientific research domains
+            href: /communities
+            hoverGradient: pink
+          - label: Gateways
+            description: Platforms built on AI4EOSC
+            href: /gateways
+            hoverGradient: green
+    - label: Stories
+      href: /stories
+    - label: Support
+      dropdown:
+          - label: Contact
+            description: Get in touch with the team
+            href: /contact
+            hoverGradient: eu-blue
+          - label: FAQ
+            description: Frequently asked questions
+            href: /faq
+            hoverGradient: pink
+          - label: Documentation
+            description: Technical guides and resources
+            href: https://docs.ai4eosc.eu
+            hoverGradient: green

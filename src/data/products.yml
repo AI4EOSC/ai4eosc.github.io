@@ -1,0 +1,21 @@
+label: Products
+title: Our software
+description: Open-source tools built to make research-grade AI accessible across the European Open Science Cloud.
+action:
+  label: View all products →
+  href: /products
+items:
+  - category: Core platform
+    title: AI4EOSC Platform
+    description: The base infrastructure for deploying and managing AI models in EOSC.
+    icon: "🧱"
+    theme: primary
+    linkLabel: Explore platform ↗
+    linkHref: /products/platform
+  - category: Language models
+    title: AI4EOSC LLM
+    description: Large language model services tailored for research use cases on EOSC infrastructure.
+    icon: "🤖"
+    theme: dark
+    linkLabel: Explore LLM ↗
+    linkHref: /products/llm
