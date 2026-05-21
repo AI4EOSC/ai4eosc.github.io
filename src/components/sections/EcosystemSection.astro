@@ -17,7 +17,7 @@ import SectionHeader from '../SectionHeader.astro';
       />
       <div class="grid">
         {data.items.map((item) => (
-          <article class="card" key={item.title}>
+          <article class="card glass" key={item.title}>
             <div class="row">
               <span class="tag">{item.tag}</span>
               <span class={`status ${item.status.toLowerCase()}`}>{item.status}</span>
@@ -40,11 +40,8 @@ import SectionHeader from '../SectionHeader.astro';
   }
 
   .card {
-    background: var(--color-neutral-50);
     border-radius: var(--radius-sm);
     padding: 14px 16px;
-    border: 0.5px solid transparent;
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.04);
   }
 
   .row {
@@ -88,7 +85,7 @@ import SectionHeader from '../SectionHeader.astro';
 
   p {
     margin: 0;
-    font-size: 12px;
+    font-size: 13px;
     color: var(--color-neutral-400);
   }
 

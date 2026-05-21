@@ -22,7 +22,7 @@ const sortedStories = stories.sort(
       />
       <div class="grid">
         {sortedStories.map((story) => (
-          <article class="card" key={story.data.title}>
+          <article class="card glass" key={story.data.title}>
             <div class={`image ${story.data.gradient ?? 'primary'}`}>
               {story.data.icon}
             </div>
@@ -54,10 +54,8 @@ const sortedStories = stories.sort(
   }
 
   .card {
-    background: var(--color-neutral-50);
     border-radius: var(--radius-md);
     overflow: hidden;
-    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.05);
   }
 
   .image {
@@ -115,7 +113,7 @@ const sortedStories = stories.sort(
 
   p {
     margin: 0;
-    font-size: 12px;
+    font-size: 13px;
     color: var(--color-neutral-400);
     line-height: 1.5;
   }

@@ -5,14 +5,26 @@ import data from '../../data/open-source.yml';
 <section class="os-wrap">
   <div class="container">
     <div class="banner">
-      <div class="left">
-        <span class="icon" aria-hidden="true">{data.icon}</span>
-        <div>
-          <h4>{data.title}</h4>
-          <p>{data.description}</p>
+      <div class="banner-content">
+        <div class="left">
+          <span class="icon" aria-hidden="true">{data.icon}</span>
+          <div>
+            <h4>{data.title}</h4>
+            <p>{data.description}</p>
+          </div>
         </div>
+        <a class="button-pill primary" href={data.button.href}>
+          <svg class="gh-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          {data.button.label}
+        </a>
       </div>
-      <a class="button-pill primary" href={data.button.href}>{data.button.label}</a>
+      <div class="banner-circles" aria-hidden="true">
+        <span class="circle circle--lg"></span>
+        <span class="circle circle--md"></span>
+        <span class="circle circle--sm"></span>
+      </div>
     </div>
   </div>
 </section>
@@ -23,40 +35,88 @@ import data from '../../data/open-source.yml';
   }
 
   .banner {
-    background: var(--color-neutral-900);
+    background: var(--color-neutral-800);
     border-radius: 16px;
-    padding: 16px 22px;
+    padding: 28px 32px;
+    position: relative;
+    overflow: hidden;
+    color: #ffffff;
+  }
+
+  .banner-content {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    color: #ffffff;
   }
 
   .left {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
   }
 
   .icon {
-    font-size: 20px;
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+
+  .gh-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
   }
 
   h4 {
-    margin: 0 0 2px;
-    font-size: 15px;
+    margin: 0 0 4px;
+    font-size: 22px;
     font-weight: 600;
   }
 
   p {
     margin: 0;
-    font-size: 13px;
+    font-size: 15px;
     color: var(--color-neutral-400);
   }
 
+  @keyframes pulsing {
+    0%, 100% { scale: 1; }
+    50%       { scale: 1.05; }
+  }
+
+  .banner-circles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: visible;
+  }
+
+  .circle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translate(50%, 50%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1px dashed rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.03);
+    animation: pulsing 5s ease-in-out infinite;
+    transition: scale 2s ease;
+  }
+
+  .circle--lg { width: 70%; animation-delay: 2s; }
+  .circle--md { width: 50%; animation-delay: 1s; }
+  .circle--sm { width: 32%; animation-delay: 0s; }
+
+  .banner:hover .circle {
+    scale: 1.10;
+  }
+
   @media (max-width: 720px) {
-    .banner {
+    .banner-content {
       flex-direction: column;
       align-items: flex-start;
     }

@@ -62,7 +62,7 @@ import nav from '../../data/nav.yml';
 <style>
   /* ── Variables locales de nav ──────────────────────────────────── */
   :root {
-    --nav-bg:               rgba(255, 255, 255, 0.92);
+    --nav-bg:               rgba(255, 255, 255, 0.58);
     --nav-border:           rgba(0, 0, 0, 0.08);
     --nav-shadow-collapsed:
       0 2px 16px rgba(0, 0, 0, 0.06),
@@ -74,10 +74,11 @@ import nav from '../../data/nav.yml';
 
   /* ── Wrapper ───────────────────────────────────────────────────── */
   .nav-wrap {
-    margin: 20px auto 0;
-    width: min(1200px, 100% - 20px);
-    position: sticky;
+    position: fixed;
     top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1200px, 100% - 20px);
     z-index: 200;
   }
 
@@ -90,8 +91,8 @@ import nav from '../../data/nav.yml';
     border-radius: 40px;
     background: var(--nav-bg);
     border: 0.5px solid var(--nav-border);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
     box-shadow: var(--nav-shadow-collapsed);
     transition: box-shadow 0.32s ease;
   }

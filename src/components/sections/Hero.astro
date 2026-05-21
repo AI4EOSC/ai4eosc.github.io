@@ -15,20 +15,28 @@ import hero from '../../data/hero.yml';
       <a class="button-pill ghost" href={hero.cta.secondary.href}>{hero.cta.secondary.label}</a>
     </div>
   </div>
-  <div class="hero-deco deco-one"></div>
-  <div class="hero-deco deco-two"></div>
-  <div class="hero-deco deco-three"></div>
+  <div class="hero-circles" aria-hidden="true">
+    <span class="circle circle--lg"></span>
+    <span class="circle circle--md"></span>
+    <span class="circle circle--sm"></span>
+  </div>
 </section>
 
 <style>
   .hero {
-    margin: 18px auto 0;
     width: min(1320px, 100% - 20px);
+    margin: 0 auto;
+    height: calc(100vh - var(--marquee-height));
+    height: calc(100svh - var(--marquee-height));
+    min-height: 520px;
     border-radius: 0 0 28px 28px;
     background:
       radial-gradient(500px 280px at 10% 10%, rgba(255, 255, 255, 0.14), transparent 70%),
       linear-gradient(140deg, var(--color-primary-700), var(--color-primary-500));
-    padding: 76px 72px 70px;
+    padding: calc(var(--nav-offset) + 30px) 72px 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     position: relative;
     overflow: hidden;
     color: #ffffff;
@@ -42,14 +50,14 @@ import hero from '../../data/hero.yml';
   .hero-badge {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     font-size: 13px;
     color: rgba(255, 255, 255, 0.85);
     padding: 6px 16px;
     border-radius: 999px;
     border: 0.5px solid rgba(255, 255, 255, 0.25);
     background: rgba(255, 255, 255, 0.18);
-    margin-bottom: 22px;
+    margin-bottom: 50px;
   }
 
   .hero-badge .dot {
@@ -61,15 +69,16 @@ import hero from '../../data/hero.yml';
 
   h1 {
     font-family: var(--font-headings);
-    font-size: 48px;
-    font-weight: 400;
-    line-height: 1.15;
+    font-size: 56px;
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
     margin: 0 0 16px;
     max-width: 520px;
   }
 
   p {
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1.7;
     max-width: 430px;
     margin: 0 0 30px;
@@ -82,38 +91,43 @@ import hero from '../../data/hero.yml';
     flex-wrap: wrap;
   }
 
-  .hero-deco {
+  @keyframes pulsing {
+    0%, 100% { scale: 1; }
+    50%       { scale: 1.05; }
+  }
+
+  .hero-circles {
     position: absolute;
-    border-radius: 999px;
-    border: 1px dashed rgba(255, 255, 255, 0.16);
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: visible;
   }
 
-  .deco-one {
-    width: 340px;
-    height: 340px;
-    top: -40px;
-    right: -40px;
+  .circle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translate(50%, 50%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1px dashed rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.04);
+    animation: pulsing 5s ease-in-out infinite;
+    transition: scale 2s ease;
   }
 
-  .deco-two {
-    width: 220px;
-    height: 220px;
-    top: 24px;
-    right: 70px;
-    opacity: 0.6;
-  }
+  .circle--lg { width: 82%; animation-delay: 2s; }
+  .circle--md { width: 58%; animation-delay: 1s; }
+  .circle--sm { width: 36%; animation-delay: 0s; }
 
-  .deco-three {
-    width: 280px;
-    height: 280px;
-    bottom: -90px;
-    right: 110px;
-    opacity: 0.35;
+  .hero:hover .circle {
+    scale: 1.10;
   }
 
   @media (max-width: 900px) {
     .hero {
-      padding: 60px 42px 56px;
+      padding: calc(var(--nav-offset) + 20px) 42px 56px;
     }
 
     h1 {
@@ -123,7 +137,7 @@ import hero from '../../data/hero.yml';
 
   @media (max-width: 640px) {
     .hero {
-      padding: 50px 26px 48px;
+      padding: calc(var(--nav-offset) + 16px) 26px 48px;
     }
 
     h1 {

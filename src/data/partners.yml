@@ -1,11 +1,32 @@
-label: Trusted by leading research infrastructures and cloud providers
+label: Trusted by leading research organizations across Europe
 items:
-  - name: EOSC
-  - name: EGI
-  - name: GEANT
-  - name: CNRS
-  - name: IFCA-CSIC
-  - name: IN2P3
-  - name: INFN
-  - name: AWS
-  - name: OpenNebula
+    - name: CSIC
+      logo: CSIC.svg
+      url: https://www.csic.es
+    - name: USTAV
+      logo: USTAV.png
+      url: https://www.ustav.sk
+    - name: KIT
+      logo: KIT.svg
+      url: https://www.kit.edu
+    - name: UPV
+      logo: UPV.png
+      url: https://www.upv.es
+    - name: Predictia
+      logo: predictia.png
+      url: https://predictia.es
+    - name: LIP
+      logo: LIP.svg
+      url: https://www.lip.pt
+    - name: INFN
+      logo: INFN.svg
+      url: https://www.infn.it
+    - name: PCSS
+      logo: PCSS.svg
+      url: https://www.pcss.pl
+    - name: MicroStep
+      logo: microstep.png
+      url: https://www.microstep.com
+    - name: WODR
+      logo: WODR.png
+      url: https://www.wodr.pl

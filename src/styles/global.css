@@ -30,8 +30,8 @@
 ───────────────────────────────────────────────────────────────── */
 :root {
 	/* -- Colores de marca oficiales */
-	--brand-green: #008691;
-	--brand-pink: #ff5b7f;
+	--brand-green: #008792;
+	--brand-pink: #ec5d80;
 	--brand-black: #040204;
 
 	/* -- Paleta primaria desde #008691 — stops aclarados ~3-5pt en midtones */
@@ -47,18 +47,18 @@
 	--color-primary-900: oklch(22% 0.046 194);
 	--color-primary-950: oklch(14% 0.026 194);
 
-	/* -- Paleta secundaria desde #ff5b7f — stops aclarados ~3-5pt en midtones */
-	--color-secondary-50: oklch(99% 0.016 5);
-	--color-secondary-100: oklch(96% 0.044 5);
-	--color-secondary-200: oklch(92% 0.082 5);
-	--color-secondary-300: oklch(87% 0.126 5);
-	--color-secondary-400: oklch(80% 0.165 5);
-	--color-secondary-500: oklch(72% 0.2 5); /* ligeramente más claro que #ff5b7f */
-	--color-secondary-600: oklch(62% 0.178 5);
-	--color-secondary-700: oklch(52% 0.152 5);
-	--color-secondary-800: oklch(41% 0.114 5);
-	--color-secondary-900: oklch(30% 0.074 5);
-	--color-secondary-950: oklch(20% 0.044 5);
+	/* -- Paleta secundaria desde #ec5d80 — stops ajustados ~3pt en midtones */
+	--color-secondary-50: oklch(98% 0.016 3);
+	--color-secondary-100: oklch(95% 0.044 3);
+	--color-secondary-200: oklch(91% 0.082 3);
+	--color-secondary-300: oklch(85% 0.126 3);
+	--color-secondary-400: oklch(77% 0.165 3);
+	--color-secondary-500: oklch(63% 0.178 3); /* ~#ec5d80 */
+	--color-secondary-600: oklch(55% 0.16 3);
+	--color-secondary-700: oklch(46% 0.136 3);
+	--color-secondary-800: oklch(36% 0.102 3);
+	--color-secondary-900: oklch(26% 0.066 3);
+	--color-secondary-950: oklch(17% 0.04 3);
 
 	/* -- Neutros aclarados ~2-3pt */
 	--color-neutral-50: oklch(99% 0.003 194);
@@ -103,24 +103,24 @@
 
 	/* -- Gradientes de marca — construidos desde los colores oficiales */
 	/* Principal: verde oscuro → verde marca */
-	--gradient-primary: linear-gradient(135deg, #005a60, #008691);
+	--gradient-primary: linear-gradient(135deg, #005a60, #008792);
 	/* Marca: verde → rosa (los dos colores de la identidad) */
-	--gradient-brand: linear-gradient(135deg, #008691, #ff5b7f);
+	--gradient-brand: linear-gradient(135deg, #008792, #ec5d80);
 	/* Verde: oscuro profundo → verde marca */
-	--gradient-green: linear-gradient(135deg, #004d53, #008691);
-	/* Rosa: rosa marca → rosa claro */
-	--gradient-pink: linear-gradient(135deg, #d63660, #ff5b7f);
+	--gradient-green: linear-gradient(135deg, #004d53, #008792);
+	/* Rosa: rosa oscuro → rosa marca */
+	--gradient-pink: linear-gradient(135deg, #c02060, #ec5d80);
 	/* Azul EU: se mantiene para el contexto EU/institucional */
 	--gradient-eu-blue: linear-gradient(135deg, #15428b, #2e68d4);
 
 	/* Versiones suaves para overlays, fondos de hover, chips */
 	--gradient-primary-soft: linear-gradient(
 		135deg,
-		rgba(0, 134, 145, 0.1),
-		rgba(0, 134, 145, 0.04)
+		rgba(0, 135, 146, 0.1),
+		rgba(0, 135, 146, 0.04)
 	);
-	--gradient-green-soft: linear-gradient(135deg, rgba(0, 77, 83, 0.1), rgba(0, 134, 145, 0.06));
-	--gradient-pink-soft: linear-gradient(135deg, rgba(214, 54, 96, 0.1), rgba(255, 91, 127, 0.06));
+	--gradient-green-soft: linear-gradient(135deg, rgba(0, 77, 83, 0.1), rgba(0, 135, 146, 0.06));
+	--gradient-pink-soft: linear-gradient(135deg, rgba(192, 32, 96, 0.1), rgba(236, 93, 128, 0.06));
 	--gradient-eu-blue-soft: linear-gradient(
 		135deg,
 		rgba(21, 66, 139, 0.1),
@@ -128,14 +128,84 @@
 	);
 	--gradient-brand-soft: linear-gradient(
 		135deg,
-		rgba(0, 134, 145, 0.08),
-		rgba(255, 91, 127, 0.08)
+		rgba(0, 135, 146, 0.08),
+		rgba(236, 93, 128, 0.08)
 	);
+
+	/* -- Glass */
+	--glass-bg-primary: rgba(0, 135, 146, 0.35);
+	--glass-bg-secondary: rgba(236, 93, 128, 0.32);
+	--glass-bg-neutral: rgba(255, 255, 255, 0.55);
+	--glass-border-primary: rgba(120, 220, 228, 0.42);
+	--glass-border-secondary: rgba(255, 155, 175, 0.4);
+	--glass-border-neutral: rgba(255, 255, 255, 0.7);
+	--glass-blur: 35px;
+	--glass-shadow-primary:
+		0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 30px rgba(0, 134, 145, 0.22),
+		inset 0 0 0 0.5px rgba(120, 220, 228, 0.2);
+	--glass-shadow-secondary:
+		0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 30px rgba(236, 93, 128, 0.2),
+		inset 0 0 0 0.5px rgba(255, 155, 175, 0.2);
+	--glass-shadow-neutral:
+		0 2px 4px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.09),
+		inset 0 0 0 0.5px rgba(255, 255, 255, 0.5);
+
+	/* -- Layout */
+	--marquee-height: 180px;
+	--nav-offset: 100px; /* navbar margin(20px) + nav-row height(80px) */
 
 	/* -- Transiciones */
 	--transition-fast: 0.15s ease;
 	--transition-base: 0.22s ease;
 	--transition-slow: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   GLASS
+───────────────────────────────────────────────────────────────── */
+.glass {
+	backdrop-filter: blur(var(--glass-blur));
+	-webkit-backdrop-filter: blur(var(--glass-blur));
+	background: var(--glass-bg-neutral);
+	border: 0.5px solid var(--glass-border-neutral);
+	box-shadow: var(--glass-shadow-neutral);
+	transition:
+		transform var(--transition-base),
+		box-shadow var(--transition-base);
+}
+
+.glass:hover {
+	transform: translateY(-2px);
+	box-shadow:
+		0 4px 8px rgba(0, 0, 0, 0.06),
+		0 14px 32px rgba(0, 0, 0, 0.13),
+		inset 0 0 0 0.5px rgba(255, 255, 255, 0.6);
+}
+
+.glass.primary {
+	background: var(--glass-bg-primary);
+	border-color: var(--glass-border-primary);
+	box-shadow: var(--glass-shadow-primary);
+}
+
+.glass.primary:hover {
+	box-shadow:
+		0 4px 8px rgba(0, 0, 0, 0.06),
+		0 14px 32px rgba(0, 134, 145, 0.3),
+		inset 0 0 0 0.5px rgba(120, 220, 228, 0.28);
+}
+
+.glass.secondary {
+	background: var(--glass-bg-secondary);
+	border-color: var(--glass-border-secondary);
+	box-shadow: var(--glass-shadow-secondary);
+}
+
+.glass.secondary:hover {
+	box-shadow:
+		0 4px 8px rgba(0, 0, 0, 0.06),
+		0 14px 32px rgba(236, 93, 128, 0.28),
+		inset 0 0 0 0.5px rgba(255, 155, 175, 0.28);
 }
 
 /* ─────────────────────────────────────────────────────────────────
@@ -185,16 +255,18 @@ svg {
    SECTION LABEL
 ───────────────────────────────────────────────────────────────── */
 .section-label {
-	font-size: 11.5px;
-	font-weight: 600;
+	font-size: 11px;
+	font-weight: 700;
 	text-transform: uppercase;
-	letter-spacing: 0.16em;
-	color: var(--color-neutral-400);
-	margin: 28px auto 12px;
+	letter-spacing: 0.2em;
+	color: var(--color-neutral-700);
+	margin: 36px auto 10px;
 }
 
 .section-label .container {
 	padding-left: 0;
+	border-left: 2px solid var(--color-primary-500);
+	padding-left: 10px;
 }
 
 /* ─────────────────────────────────────────────────────────────────
@@ -202,7 +274,7 @@ svg {
 ───────────────────────────────────────────────────────────────── */
 .section-card {
 	background: var(--card-bg);
-	border: 0.5px solid var(--card-border);
+	border: 1px solid var(--card-border);
 	border-radius: var(--radius-lg);
 	padding: 32px 34px;
 	box-shadow: var(--shadow-1);
@@ -213,7 +285,19 @@ svg {
 
 .section-card:hover {
 	box-shadow: var(--shadow-2);
-	border-color: color-mix(in oklch, var(--color-neutral-300) 60%, transparent 40%);
+	border-color: color-mix(in oklch, var(--color-neutral-300) 70%, transparent 30%);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   BACKGROUND ZONES (continuidad visual landing)
+───────────────────────────────────────────────────────────────── */
+.zone-feature {
+	padding: 4px 0 24px;
+}
+
+.zone-impact {
+	background: color-mix(in oklch, var(--color-neutral-200) 18%, var(--page-bg) 82%);
+	padding: 4px 0 24px;
 }
 
 /* ─────────────────────────────────────────────────────────────────
@@ -223,6 +307,7 @@ svg {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	gap: 8px;
 	border-radius: 999px;
 	padding: 10px 22px;
 	border: 1px solid transparent;

@@ -18,16 +18,20 @@ import CtaFinal from '../components/sections/CtaFinal.astro';
   <main>
     <Hero />
     <Marquee />
-    <HowItWorks />
-    <WhoIsItFor />
+    <div class="zone-feature">
+      <HowItWorks />
+      <WhoIsItFor />
+    </div>
     <OpenSourceBanner />
     <ProductsSection />
     <EcosystemSection />
     <CommunitiesSection />
     <GatewaysSection />
-    <NumbersSection />
-    <StoriesSection />
-    <Testimonials />
+    <div class="zone-impact">
+      <NumbersSection />
+      <StoriesSection />
+      <Testimonials />
+    </div>
     <CtaFinal />
   </main>
 </Layout>

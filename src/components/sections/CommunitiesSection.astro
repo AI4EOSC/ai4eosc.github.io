@@ -8,15 +8,20 @@ import data from '../../data/communities.yml';
   </div>
   <div class="container">
     <div class="hero">
-      <div class="deco one"></div>
-      <div class="deco two"></div>
-      <h2>{data.hero.title}</h2>
-      <p>{data.hero.description}</p>
-      <a class="button-pill ghost" href={data.hero.buttonHref}>{data.hero.buttonLabel}</a>
+      <div class="hero-content">
+        <h2>{data.hero.title}</h2>
+        <p>{data.hero.description}</p>
+        <a class="button-pill ghost" href={data.hero.buttonHref}>{data.hero.buttonLabel}</a>
+      </div>
+      <div class="hero-circles" aria-hidden="true">
+        <span class="circle circle--lg"></span>
+        <span class="circle circle--md"></span>
+        <span class="circle circle--sm"></span>
+      </div>
     </div>
     <div class="grid">
       {data.items.map((item) => (
-        <article class="card" key={item.title}>
+        <article class="card glass secondary" key={item.title}>
           <span class="dot"></span>
           <h4>{item.title}</h4>
           <p>{item.description}</p>
@@ -44,13 +49,14 @@ import data from '../../data/communities.yml';
   h2 {
     margin: 0 0 10px;
     font-family: var(--font-headings);
-    font-size: 40px;
-    font-weight: 500;
+    font-size: 46px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 
   p {
     margin: 0 0 20px;
-    font-size: 15px;
+    font-size: 16px;
     color: rgba(255, 255, 255, 0.72);
     max-width: 380px;
     line-height: 1.6;
@@ -63,11 +69,8 @@ import data from '../../data/communities.yml';
   }
 
   .card {
-    background: #ffffff;
-    border: 0.5px solid color-mix(in oklch, var(--color-secondary-200) 60%, #ffffff 40%);
     border-radius: var(--radius-md);
     padding: 16px;
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.04);
   }
 
   .dot {
@@ -88,28 +91,47 @@ import data from '../../data/communities.yml';
 
   .card p {
     margin: 0;
-    font-size: 12px;
+    font-size: 13px;
     color: var(--color-neutral-400);
   }
 
-  .deco {
+  .hero-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes pulsing {
+    0%, 100% { scale: 1; }
+    50%       { scale: 1.05; }
+  }
+
+  .hero-circles {
     position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: visible;
+  }
+
+  .circle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translate(50%, 50%);
+    aspect-ratio: 1;
     border-radius: 50%;
-    border: 1px dashed rgba(255, 255, 255, 0.12);
+    border: 1px dashed rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.04);
+    animation: pulsing 5s ease-in-out infinite;
+    transition: scale 2s ease;
   }
 
-  .deco.one {
-    width: 220px;
-    height: 220px;
-    right: -20px;
-    top: -20px;
-  }
+  .circle--lg { width: 90%; animation-delay: 2s; }
+  .circle--md { width: 64%; animation-delay: 1s; }
+  .circle--sm { width: 40%; animation-delay: 0s; }
 
-  .deco.two {
-    width: 160px;
-    height: 160px;
-    right: 70px;
-    bottom: -50px;
+  .hero:hover .circle {
+    scale: 1.10;
   }
 
   @media (max-width: 900px) {

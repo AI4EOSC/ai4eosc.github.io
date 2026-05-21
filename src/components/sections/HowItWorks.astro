@@ -9,7 +9,7 @@ import howItWorks from '../../data/how-it-works.yml';
   <div class="container">
     <div class="grid">
       {howItWorks.items.map((item) => (
-        <article class="card" key={item.title}>
+        <article class="card glass" key={item.title}>
           <div class="icon" style={`background:${item.iconBg};`}>{item.icon}</div>
           <h3>{item.title}</h3>
           <p>{item.description}</p>
@@ -28,11 +28,8 @@ import howItWorks from '../../data/how-it-works.yml';
   }
 
   .card {
-    background: #ffffff;
-    border: 0.5px solid var(--card-border);
     border-radius: var(--radius-md);
     padding: 24px;
-    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.05);
   }
 
   .icon {
@@ -54,7 +51,7 @@ import howItWorks from '../../data/how-it-works.yml';
 
   p {
     margin: 0;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.6;
     color: var(--color-neutral-500);
   }

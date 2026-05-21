@@ -17,7 +17,7 @@ import SectionHeader from '../SectionHeader.astro';
       />
       <div class="grid">
         {data.items.map((item) => (
-          <article class="card" key={item.title}>
+          <article class="card glass" key={item.title}>
             <div class={`screen ${item.theme}`}>
               <div class="dots"></div>
               <span>{item.icon}</span>
@@ -43,10 +43,8 @@ import SectionHeader from '../SectionHeader.astro';
   }
 
   .card {
-    background: var(--color-neutral-50);
     border-radius: var(--radius-md);
     overflow: hidden;
-    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.05);
   }
 
   .screen {
@@ -98,7 +96,7 @@ import SectionHeader from '../SectionHeader.astro';
 
   p {
     margin: 0 0 10px;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.55;
     color: var(--color-neutral-500);
   }

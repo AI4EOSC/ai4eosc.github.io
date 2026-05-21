@@ -9,7 +9,7 @@ import data from '../../data/testimonials.yml';
   <div class="container">
     <div class="grid">
       {data.items.map((item) => (
-        <article class="card" key={item.name}>
+        <article class="card glass" key={item.name}>
           <p class="quote">{item.quote}</p>
           <div class="author">
             <div class={`avatar ${item.tone}`}>
@@ -35,15 +35,12 @@ import data from '../../data/testimonials.yml';
   }
 
   .card {
-    background: #ffffff;
-    border: 0.5px solid var(--card-border);
     border-radius: var(--radius-md);
     padding: 22px;
-    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.05);
   }
 
   .quote {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--color-neutral-600);
     line-height: 1.7;
     margin: 0 0 18px;
