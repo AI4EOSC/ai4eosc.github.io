@@ -101,17 +101,28 @@
 	--shadow-secondary: 0 8px 24px rgba(255, 91, 127, 0.25);
 	--shadow-soft: var(--shadow-2);
 
-	/* -- Gradientes de marca — construidos desde los colores oficiales */
-	/* Principal: verde oscuro → verde marca */
-	--gradient-primary: linear-gradient(135deg, #005a60, #008792);
-	/* Marca: verde → rosa (los dos colores de la identidad) */
+	/* -- Gradientes de marca — 3 stops para mayor profundidad */
+	--gradient-primary: linear-gradient(140deg, #003c40 0%, #005a60 40%, #008792 100%);
 	--gradient-brand: linear-gradient(135deg, #008792, #ec5d80);
-	/* Verde: oscuro profundo → verde marca */
-	--gradient-green: linear-gradient(135deg, #004d53, #008792);
-	/* Rosa: rosa oscuro → rosa marca */
-	--gradient-pink: linear-gradient(135deg, #c02060, #ec5d80);
-	/* Azul EU: se mantiene para el contexto EU/institucional */
-	--gradient-eu-blue: linear-gradient(135deg, #15428b, #2e68d4);
+	--gradient-green: linear-gradient(140deg, #002d30 0%, #004d53 45%, #008792 100%);
+	--gradient-pink: linear-gradient(140deg, #8b1040 0%, #c02060 45%, #ec5d80 100%);
+	--gradient-eu-blue: linear-gradient(140deg, #0d2d5e 0%, #15428b 45%, #2e68d4 100%);
+
+	/* Overlays radiales mesh — se apilan sobre el linear base */
+	--mesh-primary:
+		radial-gradient(ellipse 80% 60% at 12% 12%, rgba(0, 200, 215, 0.18) 0%, transparent 60%),
+		radial-gradient(ellipse 55% 45% at 85% 88%, rgba(0, 30, 35, 0.45) 0%, transparent 58%),
+		radial-gradient(ellipse 55% 45% at 50% 0%, rgba(255, 255, 255, 0.07) 0%, transparent 50%);
+	--mesh-pink:
+		radial-gradient(ellipse 80% 60% at 12% 12%, rgba(255, 120, 160, 0.2) 0%, transparent 60%),
+		radial-gradient(ellipse 55% 45% at 85% 88%, rgba(80, 8, 25, 0.45) 0%, transparent 58%),
+		radial-gradient(ellipse 55% 45% at 50% 0%, rgba(255, 255, 255, 0.07) 0%, transparent 50%);
+
+	/* Tokens de glow coloreado */
+	--glow-primary-sm: 0 0 20px rgba(0, 135, 146, 0.3);
+	--glow-primary-md: 0 0 40px rgba(0, 135, 146, 0.35), 0 0 80px rgba(0, 135, 146, 0.15);
+	--glow-secondary-sm: 0 0 20px rgba(236, 93, 128, 0.3);
+	--glow-secondary-md: 0 0 40px rgba(236, 93, 128, 0.35), 0 0 80px rgba(236, 93, 128, 0.15);
 
 	/* Versiones suaves para overlays, fondos de hover, chips */
 	--gradient-primary-soft: linear-gradient(
@@ -133,19 +144,19 @@
 	);
 
 	/* -- Glass */
-	--glass-bg-primary: rgba(0, 135, 146, 0.35);
-	--glass-bg-secondary: rgba(236, 93, 128, 0.32);
-	--glass-bg-neutral: rgba(255, 255, 255, 0.75);
-	--glass-blur: 15px;
+	--glass-bg-primary: rgba(0, 135, 146, 0.28);
+	--glass-bg-secondary: rgba(236, 93, 128, 0.26);
+	--glass-bg-neutral: rgba(255, 255, 255, 0.7);
+	--glass-blur: 25px;
 	--glass-shadow-primary:
-		0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 30px rgba(0, 134, 145, 0.22),
-		inset 0 0 0 0.5px rgba(120, 220, 228, 0.2);
+		0 2px 4px rgba(0, 0, 0, 0.06), 0 12px 36px rgba(0, 134, 145, 0.28),
+		inset 0 0 0 0.5px rgba(120, 220, 228, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 	--glass-shadow-secondary:
-		0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 30px rgba(236, 93, 128, 0.2),
-		inset 0 0 0 0.5px rgba(255, 155, 175, 0.2);
+		0 2px 4px rgba(0, 0, 0, 0.06), 0 12px 36px rgba(236, 93, 128, 0.26),
+		inset 0 0 0 0.5px rgba(255, 155, 175, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 	--glass-shadow-neutral:
-		0 2px 4px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.09),
-		inset 0 0 0 0.5px rgba(255, 255, 255, 0.5);
+		0 2px 4px rgba(0, 0, 0, 0.04), 0 10px 28px rgba(0, 0, 0, 0.09),
+		inset 0 0 0 0.5px rgba(255, 255, 255, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.7);
 
 	/* -- Layout */
 	--marquee-height: 180px;
@@ -174,8 +185,9 @@
 	transform: translateY(-2px);
 	box-shadow:
 		0 4px 8px rgba(0, 0, 0, 0.06),
-		0 14px 32px rgba(0, 0, 0, 0.13),
-		inset 0 0 0 0.5px rgba(255, 255, 255, 0.6);
+		0 16px 40px rgba(0, 0, 0, 0.13),
+		inset 0 0 0 0.5px rgba(255, 255, 255, 0.65),
+		inset 0 1px 0 rgba(255, 255, 255, 0.75);
 }
 
 .glass.primary {
@@ -186,9 +198,11 @@
 
 .glass.primary:hover {
 	box-shadow:
-		0 4px 8px rgba(0, 0, 0, 0.06),
-		0 14px 32px rgba(0, 134, 145, 0.3),
-		inset 0 0 0 0.5px rgba(120, 220, 228, 0.28);
+		0 4px 8px rgba(0, 0, 0, 0.07),
+		0 16px 40px rgba(0, 134, 145, 0.35),
+		0 0 40px rgba(0, 200, 215, 0.12),
+		inset 0 0 0 0.5px rgba(120, 220, 228, 0.32),
+		inset 0 1px 0 rgba(180, 240, 248, 0.25);
 }
 
 .glass.secondary {
@@ -199,9 +213,11 @@
 
 .glass.secondary:hover {
 	box-shadow:
-		0 4px 8px rgba(0, 0, 0, 0.06),
-		0 14px 32px rgba(236, 93, 128, 0.28),
-		inset 0 0 0 0.5px rgba(255, 155, 175, 0.28);
+		0 4px 8px rgba(0, 0, 0, 0.07),
+		0 16px 40px rgba(236, 93, 128, 0.33),
+		0 0 40px rgba(255, 140, 170, 0.12),
+		inset 0 0 0 0.5px rgba(255, 155, 175, 0.32),
+		inset 0 1px 0 rgba(255, 195, 210, 0.25);
 }
 
 /* ─────────────────────────────────────────────────────────────────

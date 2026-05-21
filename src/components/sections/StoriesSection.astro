@@ -24,7 +24,10 @@ const sortedStories = stories.sort(
         {sortedStories.map((story) => (
           <article class="card glass" key={story.data.title}>
             <div class={`image ${story.data.gradient ?? 'primary'}`}>
-              {story.data.icon}
+              <span class="circle circle--lg" aria-hidden="true"></span>
+              <span class="circle circle--md" aria-hidden="true"></span>
+              <span class="circle circle--sm" aria-hidden="true"></span>
+              <span class="icon">{story.data.icon}</span>
             </div>
             <div class="body">
               <div class="meta">
@@ -64,18 +67,62 @@ const sortedStories = stories.sort(
     align-items: center;
     justify-content: center;
     font-size: 22px;
+    position: relative;
+    overflow: hidden;
   }
 
   .image.primary {
-    background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-400));
+    background:
+      radial-gradient(ellipse 60% 80% at 50% 50%, rgba(255, 255, 255, 0.16) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 10% 10%, rgba(0, 200, 215, 0.18) 0%, transparent 55%),
+      linear-gradient(135deg, var(--color-primary-700) 0%, var(--color-primary-500) 60%, var(--color-primary-400) 100%);
   }
 
   .image.secondary {
-    background: linear-gradient(135deg, var(--color-secondary-600), var(--color-secondary-400));
+    background:
+      radial-gradient(ellipse 60% 80% at 50% 50%, rgba(255, 255, 255, 0.14) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 10% 10%, rgba(255, 120, 160, 0.16) 0%, transparent 55%),
+      linear-gradient(135deg, var(--color-secondary-700) 0%, var(--color-secondary-500) 60%, var(--color-secondary-400) 100%);
   }
 
   .image.dark {
-    background: linear-gradient(135deg, #2d4a8a, #5b7fd4);
+    background:
+      radial-gradient(ellipse 60% 80% at 50% 50%, rgba(255, 255, 255, 0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 10% 10%, rgba(0, 135, 146, 0.14) 0%, transparent 55%),
+      linear-gradient(135deg, #1e3a7a 0%, #2d4a8a 50%, #5b7fd4 100%);
+  }
+
+  .circle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translate(50%, 50%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: transparent;
+    pointer-events: none;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.26),
+      0 0 30px rgba(255, 255, 255, 0.14),
+      0 0 60px rgba(255, 255, 255, 0.06),
+      inset 0 0 12px rgba(255, 255, 255, 0.05);
+    animation: pulsing 5s ease-in-out infinite;
+    z-index: 0;
+  }
+
+  .circle--lg { width: 90%; animation-delay: 2s; }
+  .circle--md { width: 62%; animation-delay: 1s; }
+  .circle--sm { width: 38%; animation-delay: 0s; }
+
+  @keyframes pulsing {
+    0%, 100% { scale: 1; }
+    50%       { scale: 1.05; }
+  }
+
+  .icon {
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.35));
   }
 
   .body {

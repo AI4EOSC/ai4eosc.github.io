@@ -26,13 +26,28 @@ import data from '../../data/cta.yml';
 
   .cta {
     background:
-      radial-gradient(500px 280px at 12% 20%, rgba(255, 255, 255, 0.14), transparent 70%),
-      linear-gradient(140deg, var(--color-primary-700), var(--color-primary-500));
+      radial-gradient(ellipse 55% 48% at 14% 16%, rgba(255, 255, 255, 0.15) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 42% at 82% 86%, rgba(0, 35, 40, 0.45) 0%, transparent 55%),
+      radial-gradient(ellipse 38% 32% at 48% 50%, rgba(0, 200, 215, 0.12) 0%, transparent 55%),
+      radial-gradient(ellipse 35% 28% at 75% 20%, rgba(0, 180, 195, 0.10) 0%, transparent 50%),
+      linear-gradient(140deg, #002d30 0%, #005060 38%, #007d88 70%, #008792 100%);
     border-radius: 24px 24px 0 0;
     padding: 56px;
     position: relative;
     overflow: hidden;
     color: #ffffff;
+  }
+
+  .cta::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    z-index: 1;
   }
 
   h2 {
@@ -53,7 +68,7 @@ import data from '../../data/cta.yml';
 
   .cta-content {
     position: relative;
-    z-index: 1;
+    z-index: 3;
   }
 
   @keyframes pulsing {
@@ -65,7 +80,7 @@ import data from '../../data/cta.yml';
     position: absolute;
     inset: 0;
     pointer-events: none;
-    z-index: 0;
+    z-index: 2;
     overflow: visible;
   }
 
@@ -76,8 +91,12 @@ import data from '../../data/cta.yml';
     transform: translate(50%, 50%);
     aspect-ratio: 1;
     border-radius: 50%;
-    border: 1px dashed rgba(255, 255, 255, 0.28);
-    background: rgba(255, 255, 255, 0.04);
+    background: transparent;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.26),
+      0 0 40px rgba(0, 200, 215, 0.20),
+      0 0 80px rgba(0, 200, 215, 0.08),
+      inset 0 0 16px rgba(255, 255, 255, 0.06);
     animation: pulsing 5s ease-in-out infinite;
     transition: scale 2s ease;
   }

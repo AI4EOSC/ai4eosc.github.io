@@ -34,7 +34,9 @@ const svgPaths: Record<string, string> = {
       {howItWorks.items.map((item) => (
         <article class="card glass" key={item.title}>
           <div class="header" style={`background: ${gradients[item.theme]}`}>
-            <div class="dots"></div>
+            <span class="circle circle--lg" aria-hidden="true"></span>
+            <span class="circle circle--md" aria-hidden="true"></span>
+            <span class="circle circle--sm" aria-hidden="true"></span>
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -79,17 +81,56 @@ const svgPaths: Record<string, string> = {
     overflow: hidden;
   }
 
-  .dots {
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .header::after {
+    content: '';
     position: absolute;
     inset: 0;
-    opacity: 0.18;
-    background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
-    background-size: 16px 16px;
+    background:
+      radial-gradient(ellipse 80% 70% at 15% 20%, rgba(255, 255, 255, 0.10) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 40% at 85% 85%, rgba(0, 0, 0, 0.15) 0%, transparent 55%);
+    pointer-events: none;
+    z-index: 0;
   }
+
+  .circle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translate(50%, 50%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: transparent;
+    pointer-events: none;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.26),
+      0 0 30px rgba(255, 255, 255, 0.14),
+      0 0 60px rgba(255, 255, 255, 0.06),
+      inset 0 0 12px rgba(255, 255, 255, 0.05);
+    animation: pulsing 5s ease-in-out infinite;
+    z-index: 0;
+  }
+
+  .circle--lg { width: 85%; animation-delay: 2s; }
+  .circle--md { width: 58%; animation-delay: 1s; }
+  .circle--sm { width: 35%; animation-delay: 0s; }
 
   svg {
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
 
   .body {
