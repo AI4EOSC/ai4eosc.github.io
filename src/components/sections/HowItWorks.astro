@@ -1,5 +1,28 @@
 ---
 import howItWorks from '../../data/how-it-works.yml';
+
+const gradients: Record<string, string> = {
+  primary:   'var(--gradient-primary)',
+  secondary: 'var(--gradient-pink)',
+  'eu-blue': 'var(--gradient-eu-blue)',
+};
+
+const svgPaths: Record<string, string> = {
+  primary: `
+    <polygon points="12 2 22 8.5 12 15 2 8.5"/>
+    <polyline points="2 12 12 18.5 22 12"/>
+    <polyline points="2 15.5 12 22 22 15.5"/>`,
+  secondary: `
+    <circle cx="18" cy="5" r="3"/>
+    <circle cx="6" cy="12" r="3"/>
+    <circle cx="18" cy="19" r="3"/>
+    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>`,
+  'eu-blue': `
+    <circle cx="12" cy="12" r="10"/>
+    <line x1="2" y1="12" x2="22" y2="12"/>
+    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>`,
+};
 ---
 
 <section>
@@ -10,9 +33,24 @@ import howItWorks from '../../data/how-it-works.yml';
     <div class="grid">
       {howItWorks.items.map((item) => (
         <article class="card glass" key={item.title}>
-          <div class="icon" style={`background:${item.iconBg};`}>{item.icon}</div>
-          <h3>{item.title}</h3>
-          <p>{item.description}</p>
+          <div class="header" style={`background: ${gradients[item.theme]}`}>
+            <div class="dots"></div>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              width="28"
+              height="28"
+              set:html={svgPaths[item.theme]}
+            />
+          </div>
+          <div class="body">
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+          </div>
         </article>
       ))}
     </div>
@@ -29,30 +67,48 @@ import howItWorks from '../../data/how-it-works.yml';
 
   .card {
     border-radius: var(--radius-md);
-    padding: 24px;
+    overflow: hidden;
   }
 
-  .icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
+  .header {
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
-    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dots {
+    position: absolute;
+    inset: 0;
+    opacity: 0.18;
+    background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+
+  svg {
+    position: relative;
+    z-index: 1;
+  }
+
+  .body {
+    padding: 20px 22px 26px;
   }
 
   h3 {
-    margin: 0 0 6px;
-    font-size: 15px;
+    margin: 0 0 8px;
+    font-family: var(--font-headings);
+    font-size: 18px;
     font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-neutral-900);
   }
 
   p {
     margin: 0;
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 15px;
+    line-height: 1.65;
     color: var(--color-neutral-500);
   }
 

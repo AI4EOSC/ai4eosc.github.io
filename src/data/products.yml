@@ -4,6 +4,9 @@ description: Open-source tools built to make research-grade AI accessible across
 action:
   label: View all products →
   href: /products
+more:
+  label: "+ more software →"
+  href: /products
 items:
   - category: Core platform
     title: AI4EOSC Platform

@@ -1,9 +1,7 @@
 ---
 import Navbar from '../components/layout/Navbar.astro';
 import Footer from '../components/layout/Footer.astro';
-import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
-import '../styles/transitions.css';
 
 interface Props {
   title: string;
@@ -42,34 +40,10 @@ const ogImageUrl = new URL('/og/ai4eosc-og.png', Astro.url).href;
     <meta name="twitter:image" content={ogImageUrl} />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- <ClientRouter /> -->
   </head>
   <body>
     <Navbar />
-      <!-- <div id="page-wrapper" class="page-transition-wrapper"> -->
       <slot />
-    </div>
-
     <Footer />
-
-    <script>
-      // Handle page transitions
-      document.addEventListener('astro:page-load', () => {
-        // This runs on initial page load and after each navigation
-        const pageWrapper = document.getElementById('page-wrapper');
-        if (pageWrapper) {
-          pageWrapper.classList.add('page-loaded');
-        }
-      });
-
-      document.addEventListener('astro:before-swap', () => {
-        // This runs before the new page content is swapped in
-        const pageWrapper = document.getElementById('page-wrapper');
-        if (pageWrapper) {
-          pageWrapper.classList.remove('page-loaded');
-        }
-      });
-    </script>
-    <script src="../scripts/transitions.js"></script>
   </body>
 </html>

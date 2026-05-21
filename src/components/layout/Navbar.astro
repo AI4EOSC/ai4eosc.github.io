@@ -2,20 +2,27 @@
 import nav from '../../data/nav.yml';
 ---
 
-<header class="nav-wrap" data-nav-wrap>
-  <div class="nav" data-nav>
-    <div class="nav-row">
-      <a class="brand" href="/">
-        <img class="brand-logo" src="/logos/AI4-horizontal-light.svg" alt="AI4EOSC" />
+<header class="fixed top-5 left-1/2 -translate-x-1/2 w-[min(1200px,calc(100%-20px))] z-[200]">
+  <div
+    data-nav
+    class="nav glass relative flex flex-col rounded-[40px] transition-shadow duration-300"
+  >
+    <!-- Row principal -->
+    <div class="flex items-center justify-between gap-3.5 h-20 pr-5">
+
+      <!-- Logo -->
+      <a href="/" class="flex items-center shrink-0 no-underline">
+        <img src="/logos/AI4-horizontal-light.svg" alt="AI4EOSC" class="h-20 w-auto" />
       </a>
-      <nav class="links" aria-label="Primary">
+
+      <!-- Links centrales -->
+      <nav class="links flex gap-0.5 items-center mx-auto" aria-label="Primary">
         {nav.links.map((link) =>
           link.dropdown ? (
             <button
-              class="nav-link has-dropdown"
+              class="nav-link"
               data-menu={link.label}
               type="button"
-              key={link.label}
             >
               {link.label}
               <span class="chevron" aria-hidden="true">
@@ -25,18 +32,21 @@ import nav from '../../data/nav.yml';
               </span>
             </button>
           ) : (
-            <a class="nav-link" data-no-menu href={link.href} key={link.label}>
+            <a class="nav-link" data-no-menu href={link.href}>
               {link.label}
             </a>
           )
         )}
       </nav>
-      <div class="nav-actions">
+
+      <!-- CTA -->
+      <div class="flex shrink-0">
         <a class="button-pill dark" href={nav.cta.href}>{nav.cta.label}</a>
       </div>
     </div>
 
-    <div class="nav-panel" data-nav-panel>
+    <!-- Panel desplegable -->
+    <div data-nav-panel class="nav-panel">
       {nav.links
         .filter((link) => link.dropdown)
         .map((link) => (
@@ -44,10 +54,12 @@ import nav from '../../data/nav.yml';
             class="panel"
             data-panel={link.label}
             style={`grid-template-columns: repeat(${link.dropdown?.length ?? 1}, minmax(0, 1fr));`}
-            key={link.label}
           >
             {link.dropdown?.map((item) => (
-              <a class={`panel-item gradient-${item.hoverGradient ?? 'none'}`} href={item.href} key={item.label}>
+              <a
+                class={`panel-item gradient-${item.hoverGradient ?? 'none'}`}
+                href={item.href}
+              >
                 <h4>{item.label}</h4>
                 <p>{item.description}</p>
               </a>
@@ -60,85 +72,26 @@ import nav from '../../data/nav.yml';
 </header>
 
 <style>
-  /* ── Variables locales de nav ──────────────────────────────────── */
-  :root {
-    --nav-bg:               rgba(255, 255, 255, 0.58);
-    --nav-border:           rgba(0, 0, 0, 0.08);
-    --nav-shadow-collapsed:
-      0 2px 16px rgba(0, 0, 0, 0.06),
-      0 0 0 0.5px rgba(0, 0, 0, 0.06);
-    --nav-shadow-expanded:
-      0 8px 32px rgba(0, 0, 0, 0.10),
-      0 0 0 0.5px rgba(0, 0, 0, 0.08);
-  }
-
-  /* ── Wrapper ───────────────────────────────────────────────────── */
-  .nav-wrap {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(1200px, 100% - 20px);
-    z-index: 200;
-  }
-
-  /* ── Nav shell ─────────────────────────────────────────────────── */
-  .nav {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    border-radius: 40px;
-    background: var(--nav-bg);
-    border: 0.5px solid var(--nav-border);
-    backdrop-filter: blur(28px);
-    -webkit-backdrop-filter: blur(28px);
-    box-shadow: var(--nav-shadow-collapsed);
-    transition: box-shadow 0.32s ease;
+  /* ── Sobreescribe el hover de .glass — el nav no hace translateY ── */
+  .nav.glass:hover {
+    transform: none;
+    box-shadow: var(--glass-shadow-neutral);
   }
 
   .nav.open {
-    box-shadow: var(--nav-shadow-expanded);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.12),
+      inset 0 0 0 0.5px rgba(255, 255, 255, 0.5);
   }
 
-  /* ── Row principal ─────────────────────────────────────────────── */
-  .nav-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    height: 80px;
-    padding: 0 20px 0 0;
-  }
-
-  /* ── Marca ─────────────────────────────────────────────────────── */
-  .brand {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    flex-shrink: 0;
-  }
-
-  .brand-logo {
-    height: 80px;
-    width: auto;
-  }
-
-  /* ── Links centrales ───────────────────────────────────────────── */
-  .links {
-    display: flex;
-    gap: 2px;
-    align-items: center;
-    margin: 0 auto;
-  }
-
+  /* ── Links ─────────────────────────────────────────────────────── */
   .nav-link {
     display: inline-flex;
     align-items: center;
     gap: 5px;
     padding: 7px 14px;
     border-radius: 999px;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 500;
     letter-spacing: -0.01em;
     color: var(--color-neutral-600);
@@ -146,8 +99,11 @@ import nav from '../../data/nav.yml';
     background: transparent;
     border: none;
     cursor: pointer;
-    transition: background 0.15s ease, color 0.15s ease;
     white-space: nowrap;
+    font-family: var(--font-body);
+    transition:
+      background var(--transition-fast),
+      color var(--transition-fast);
   }
 
   .nav-link:hover,
@@ -161,18 +117,14 @@ import nav from '../../data/nav.yml';
     display: inline-flex;
     align-items: center;
     color: var(--color-neutral-400);
-    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), color 0.15s ease;
+    transition:
+      transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      color var(--transition-fast);
   }
 
   .nav-link.active .chevron {
     transform: rotate(180deg);
     color: var(--color-neutral-700);
-  }
-
-  /* ── CTA ───────────────────────────────────────────────────────── */
-  .nav-actions {
-    display: flex;
-    flex-shrink: 0;
   }
 
   /* ── Panel desplegable ─────────────────────────────────────────── */
@@ -181,15 +133,16 @@ import nav from '../../data/nav.yml';
     max-height: 0;
     opacity: 0;
     transition:
-      max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+      max-height var(--transition-slow),
       opacity 0.2s ease;
   }
 
   .nav.open .nav-panel {
-    max-height: 280px;
+    max-height: 300px;
     opacity: 1;
   }
 
+  /* Separador */
   .nav.open .nav-panel::before {
     content: '';
     display: block;
@@ -210,10 +163,10 @@ import nav from '../../data/nav.yml';
     display: grid;
   }
 
-  /* ── Panel items — base ────────────────────────────────────────── */
+  /* ── Panel items ───────────────────────────────────────────────── */
   .panel-item {
     display: block;
-    padding: 14px 16px;
+    padding: 10px 10px 10px 20px;
     border-radius: 14px;
     text-decoration: none;
     background: rgba(0, 0, 0, 0.025);
@@ -221,95 +174,72 @@ import nav from '../../data/nav.yml';
     position: relative;
     overflow: hidden;
     transition:
-      background  0.22s ease,
-      border-color 0.22s ease,
-      box-shadow  0.22s ease,
-      transform   0.18s ease;
+      background   var(--transition-base),
+      border-color var(--transition-base),
+      box-shadow   var(--transition-base),
+      transform    var(--transition-fast);
   }
 
-  /*
-   * ::before = capa de gradiente de marca.
-   * Empieza en opacity 0, sube a 1 en hover.
-   * El fondo base también cambia de color para que el efecto
-   * sea visible incluso antes de que el gradiente llegue a plena opacidad.
-   */
+  /* Esquinas encajadas: nav radius(40px) − panel padding(16px) = 24px */
+  .panel-item:first-child { border-bottom-left-radius:  24px; }
+  .panel-item:last-child  { border-bottom-right-radius: 24px; }
+
+  .panel-item:hover { transform: translateY(-1px); }
+
+  /* Capa de gradiente (::before, 0 → 1 en hover) */
   .panel-item::before {
     content: '';
     position: absolute;
     inset: 0;
     border-radius: inherit;
     opacity: 0;
-    transition: opacity 0.28s ease;
     pointer-events: none;
+    transition: opacity 0.28s ease;
   }
+  .panel-item:hover::before { opacity: 1; }
 
-  .panel-item:hover {
-    transform: translateY(-1px);
-  }
-
-  .panel-item:hover::before {
-    opacity: 1;
-  }
-
-  /* ── EU Blue (Projects) ────────────────────────────────────────── */
-  .panel-item.gradient-eu-blue::before {
-    background: var(--gradient-eu-blue-soft);
-  }
-
-  .panel-item.gradient-eu-blue:hover {
-    background: rgba(21, 66, 139, 0.08);
+  /* EU Blue — Projects */
+  .gradient-eu-blue::before { background: var(--gradient-eu-blue-soft); }
+  .gradient-eu-blue:hover   {
+    background:   rgba(21, 66, 139, 0.15);
     border-color: rgba(21, 66, 139, 0.20);
-    box-shadow: 0 4px 16px rgba(21, 66, 139, 0.10);
+    box-shadow:   0 4px 16px rgba(21, 66, 139, 0.10);
   }
 
-  /* ── Pink (Communities, FAQ) ───────────────────────────────────── */
-  .panel-item.gradient-pink::before {
-    background: var(--gradient-pink-soft);
+  /* Pink — Communities / FAQ */
+  .gradient-pink::before { background: var(--gradient-pink-soft); }
+  .gradient-pink:hover   {
+    background:   rgba(236, 93, 128, 0.15);
+    border-color: rgba(236, 93, 128, 0.22);
+    box-shadow:   0 4px 16px rgba(236, 93, 128, 0.12);
   }
 
-  .panel-item.gradient-pink:hover {
-    background: rgba(255, 91, 127, 0.08);
-    border-color: rgba(255, 91, 127, 0.22);
-    box-shadow: 0 4px 16px rgba(255, 91, 127, 0.12);
+  /* Green — Gateways / Contact */
+  .gradient-green::before { background: var(--gradient-green-soft); }
+  .gradient-green:hover   {
+    background:   rgba(0, 135, 146, 0.15);
+    border-color: rgba(0, 135, 146, 0.22);
+    box-shadow:   0 4px 16px rgba(0, 135, 146, 0.12);
   }
-
-  /* ── Green (Gateways, Contact) ─────────────────────────────────── */
-  .panel-item.gradient-green::before {
-    background: var(--gradient-green-soft);
-  }
-
-  .panel-item.gradient-green:hover {
-    background: rgba(0, 134, 145, 0.08);
-    border-color: rgba(0, 134, 145, 0.22);
-    box-shadow: 0 4px 16px rgba(0, 134, 145, 0.12);
-  }
-
-  /* ── Esquinas encajadas con el radio del nav ───────────────────── */
-  /* nav radius (40px) − panel padding (16px) = 24px */
-  .panel-item:first-child { border-bottom-left-radius:  24px; }
-  .panel-item:last-child  { border-bottom-right-radius: 24px; }
 
   /* ── Tipografía del panel ──────────────────────────────────────── */
   .panel-item h4 {
-    margin: 0 0 5px;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: 600;
     letter-spacing: -0.01em;
     color: var(--color-neutral-900);
     position: relative;
     z-index: 1;
-    transition: color 0.15s ease;
+    transition: color var(--transition-fast);
   }
 
   .panel-item p {
     margin: 0;
-    font-size: 13px;
-    font-weight: 450;
-    line-height: 1.5;
+    font-size: 16px;
     color: var(--color-neutral-500);
     position: relative;
     z-index: 1;
-    transition: color 0.15s ease;
+    transition: color var(--transition-fast);
   }
 
   .panel-item:hover h4 { color: var(--color-neutral-900); }
@@ -322,45 +252,41 @@ import nav from '../../data/nav.yml';
 </style>
 
 <script>
-  const nav = document.querySelector('[data-nav]') as HTMLElement | null;
+  const nav     = document.querySelector('[data-nav]') as HTMLElement | null;
   const buttons = document.querySelectorAll<HTMLElement>('[data-menu]');
-  const noMenuLinks = document.querySelectorAll('[data-no-menu]');
+  const noMenus = document.querySelectorAll('[data-no-menu]');
 
-  const closeDropdown = () => {
+  const close = () => {
     if (!nav) return;
     nav.classList.remove('open');
     nav.removeAttribute('data-active');
-    buttons.forEach((btn) => btn.classList.remove('active'));
+    buttons.forEach(b => b.classList.remove('active'));
   };
 
-  buttons.forEach((btn) => {
+  buttons.forEach(btn => {
     btn.addEventListener('mouseenter', () => {
       const menu = btn.getAttribute('data-menu');
       if (!menu || !nav) return;
       nav.classList.add('open');
       nav.setAttribute('data-active', menu);
-      buttons.forEach((b) => b.classList.remove('active'));
+      buttons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
     });
-
     btn.addEventListener('click', () => {
       const menu = btn.getAttribute('data-menu');
       if (!menu || !nav) return;
-      const isActive = nav.getAttribute('data-active') === menu;
-      if (isActive) { closeDropdown(); return; }
+      if (nav.getAttribute('data-active') === menu) { close(); return; }
       nav.classList.add('open');
       nav.setAttribute('data-active', menu);
-      buttons.forEach((b) => b.classList.remove('active'));
+      buttons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
     });
   });
 
-  nav?.addEventListener('mouseleave', closeDropdown);
-  noMenuLinks.forEach((link) => link.addEventListener('mouseenter', closeDropdown));
-
-  document.addEventListener('click', (event) => {
-    const target = event.target;
-    if (!(target instanceof Element)) return;
-    if (!target.closest('[data-nav]')) closeDropdown();
+  nav?.addEventListener('mouseleave', close);
+  noMenus.forEach(link => link.addEventListener('mouseenter', close));
+  document.addEventListener('click', e => {
+    if (!(e.target instanceof Element)) return;
+    if (!e.target.closest('[data-nav]')) close();
   });
 </script>

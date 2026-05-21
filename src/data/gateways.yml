@@ -4,6 +4,9 @@ hero:
   description: Specialised platforms and projects that use AI4EOSC products to serve their own scientific communities.
   buttonLabel: Explore gateways
   buttonHref: /ecosystem/gateways
+more:
+  label: "+ more gateways →"
+  href: /ecosystem/gateways
 items:
   - tag: Marine
     status: Active

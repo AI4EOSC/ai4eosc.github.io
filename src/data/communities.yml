@@ -4,6 +4,9 @@ hero:
   description: AI4EOSC serves a growing number of research domains, connecting scientists with the AI tools they need.
   buttonLabel: Explore communities
   buttonHref: /ecosystem/communities
+more:
+  label: "+ more communities →"
+  href: /ecosystem/communities
 items:
   - title: Marine Science
     description: Underwater imaging, biodiversity

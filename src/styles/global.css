@@ -9,7 +9,7 @@
 		url("/fonts/clashdisplay/ClashDisplay-Variable.woff2") format("woff2"),
 		url("/fonts/clashdisplay/ClashDisplay-Variable.woff") format("woff"),
 		url("/fonts/clashdisplay/ClashDisplay-Variable.ttf") format("truetype");
-	font-weight: 300 800;
+	font-weight: 400 800;
 	font-style: normal;
 	font-display: swap;
 }
@@ -20,7 +20,7 @@
 		url("/fonts/clashgrotesk/ClashGrotesk-Variable.woff2") format("woff2"),
 		url("/fonts/clashgrotesk/ClashGrotesk-Variable.woff") format("woff"),
 		url("/fonts/clashgrotesk/ClashGrotesk-Variable.ttf") format("truetype");
-	font-weight: 300 800;
+	font-weight: 400 800;
 	font-style: normal;
 	font-display: swap;
 }
@@ -135,11 +135,8 @@
 	/* -- Glass */
 	--glass-bg-primary: rgba(0, 135, 146, 0.35);
 	--glass-bg-secondary: rgba(236, 93, 128, 0.32);
-	--glass-bg-neutral: rgba(255, 255, 255, 0.55);
-	--glass-border-primary: rgba(120, 220, 228, 0.42);
-	--glass-border-secondary: rgba(255, 155, 175, 0.4);
-	--glass-border-neutral: rgba(255, 255, 255, 0.7);
-	--glass-blur: 35px;
+	--glass-bg-neutral: rgba(255, 255, 255, 0.75);
+	--glass-blur: 15px;
 	--glass-shadow-primary:
 		0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 30px rgba(0, 134, 145, 0.22),
 		inset 0 0 0 0.5px rgba(120, 220, 228, 0.2);
@@ -167,7 +164,6 @@
 	backdrop-filter: blur(var(--glass-blur));
 	-webkit-backdrop-filter: blur(var(--glass-blur));
 	background: var(--glass-bg-neutral);
-	border: 0.5px solid var(--glass-border-neutral);
 	box-shadow: var(--glass-shadow-neutral);
 	transition:
 		transform var(--transition-base),
@@ -255,18 +251,17 @@ svg {
    SECTION LABEL
 ───────────────────────────────────────────────────────────────── */
 .section-label {
-	font-size: 11px;
-	font-weight: 700;
+	font-size: 16px;
+	font-weight: 600;
 	text-transform: uppercase;
-	letter-spacing: 0.2em;
-	color: var(--color-neutral-700);
-	margin: 36px auto 10px;
+	letter-spacing: 0.1em;
+	color: var(--color-neutral-600);
+	margin: 50px auto 25px;
 }
 
 .section-label .container {
-	padding-left: 0;
 	border-left: 2px solid var(--color-primary-500);
-	padding-left: 10px;
+	padding-left: 15px;
 }
 
 /* ─────────────────────────────────────────────────────────────────
@@ -276,7 +271,7 @@ svg {
 	background: var(--card-bg);
 	border: 1px solid var(--card-border);
 	border-radius: var(--radius-lg);
-	padding: 32px 34px;
+	padding: 34px 34px;
 	box-shadow: var(--shadow-1);
 	transition:
 		box-shadow var(--transition-base),
@@ -312,7 +307,7 @@ svg {
 	padding: 10px 22px;
 	border: 1px solid transparent;
 	font-family: var(--font-body);
-	font-size: 15px;
+	font-size: 18px;
 	font-weight: 500;
 	letter-spacing: -0.01em;
 	cursor: pointer;

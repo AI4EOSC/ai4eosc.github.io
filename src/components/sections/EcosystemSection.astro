@@ -1,6 +1,8 @@
 ---
 import data from '../../data/projects.yml';
 import SectionHeader from '../SectionHeader.astro';
+
+const MAX_ITEMS = 5;
 ---
 
 <section>
@@ -16,7 +18,7 @@ import SectionHeader from '../SectionHeader.astro';
         actionHref={data.action.href}
       />
       <div class="grid">
-        {data.items.map((item) => (
+        {data.items.slice(0, MAX_ITEMS).map((item) => (
           <article class="card glass" key={item.title}>
             <div class="row">
               <span class="tag">{item.tag}</span>

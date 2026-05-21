@@ -1,14 +1,11 @@
 label: How it works
 items:
   - title: Products
+    theme: primary
     description: Open-source software for training, serving and cataloguing AI models — built for EOSC.
-    icon: "🧱"
-    iconBg: var(--color-primary-100)
   - title: Ecosystem
+    theme: secondary
     description: EU-funded projects and scientific communities extending and using the platform.
-    icon: "🔬"
-    iconBg: var(--color-secondary-100)
   - title: Gateways
+    theme: eu-blue
     description: Domain-specific deployments giving researchers direct access to AI tools in their field.
-    icon: "🚀"
-    iconBg: #e8f0ff

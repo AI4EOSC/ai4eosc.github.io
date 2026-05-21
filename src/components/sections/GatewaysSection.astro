@@ -1,5 +1,7 @@
 ---
 import data from '../../data/gateways.yml';
+
+const MAX_ITEMS = 3;
 ---
 
 <section class="wrap">
@@ -20,7 +22,7 @@ import data from '../../data/gateways.yml';
       </div>
     </div>
     <div class="grid">
-      {data.items.map((item) => (
+      {data.items.slice(0, MAX_ITEMS).map((item) => (
         <article class="card glass primary" key={item.title}>
           <div class="row">
             <span class="tag">{item.tag}</span>
@@ -30,6 +32,7 @@ import data from '../../data/gateways.yml';
           <p>{item.description}</p>
         </article>
       ))}
+      <a class="card more" href={data.more.href}>{data.more.label}</a>
     </div>
   </div>
 </section>
@@ -159,6 +162,18 @@ import data from '../../data/gateways.yml';
 
   .hero:hover .circle {
     scale: 1.10;
+  }
+
+  .more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0.5px dashed var(--color-neutral-300);
+    color: var(--color-neutral-400);
+    text-decoration: none;
+    min-height: 80px;
+    font-size: 13px;
+    border-radius: var(--radius-sm);
   }
 
   @media (max-width: 900px) {

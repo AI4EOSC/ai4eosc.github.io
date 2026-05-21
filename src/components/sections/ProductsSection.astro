@@ -1,6 +1,8 @@
 ---
 import data from '../../data/products.yml';
 import SectionHeader from '../SectionHeader.astro';
+
+const MAX_ITEMS = 2;
 ---
 
 <section>
@@ -16,7 +18,7 @@ import SectionHeader from '../SectionHeader.astro';
         actionHref={data.action.href}
       />
       <div class="grid">
-        {data.items.map((item) => (
+        {data.items.slice(0, MAX_ITEMS).map((item) => (
           <article class="card glass" key={item.title}>
             <div class={`screen ${item.theme}`}>
               <div class="dots"></div>
@@ -30,6 +32,7 @@ import SectionHeader from '../SectionHeader.astro';
             </div>
           </article>
         ))}
+        <a class="card more" href={data.more.href}>{data.more.label}</a>
       </div>
     </div>
   </div>
@@ -108,9 +111,25 @@ import SectionHeader from '../SectionHeader.astro';
     text-decoration: none;
   }
 
+  .more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0.5px dashed var(--color-neutral-300);
+    color: var(--color-neutral-400);
+    text-decoration: none;
+    min-height: 60px;
+    font-size: 13px;
+    grid-column: 1 / -1;
+  }
+
   @media (max-width: 900px) {
     .grid {
       grid-template-columns: 1fr;
+    }
+
+    .more {
+      grid-column: auto;
     }
   }
 </style>
