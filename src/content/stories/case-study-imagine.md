@@ -5,4 +5,5 @@ date: 2026-05-01
 excerpt: A deep dive into the deployment of underwater imaging models.
 icon: "📡"
 gradient: primary
+image: /images/stories/placeholder1.jpeg
 ---

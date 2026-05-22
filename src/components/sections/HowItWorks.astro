@@ -6,23 +6,6 @@ const gradients: Record<string, string> = {
   secondary: 'var(--gradient-pink)',
   'eu-blue': 'var(--gradient-eu-blue)',
 };
-
-const svgPaths: Record<string, string> = {
-  primary: `
-    <polygon points="12 2 22 8.5 12 15 2 8.5"/>
-    <polyline points="2 12 12 18.5 22 12"/>
-    <polyline points="2 15.5 12 22 22 15.5"/>`,
-  secondary: `
-    <circle cx="18" cy="5" r="3"/>
-    <circle cx="6" cy="12" r="3"/>
-    <circle cx="18" cy="19" r="3"/>
-    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
-    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>`,
-  'eu-blue': `
-    <circle cx="12" cy="12" r="10"/>
-    <line x1="2" y1="12" x2="22" y2="12"/>
-    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>`,
-};
 ---
 
 <section>
@@ -37,17 +20,6 @@ const svgPaths: Record<string, string> = {
             <span class="circle circle--lg" aria-hidden="true"></span>
             <span class="circle circle--md" aria-hidden="true"></span>
             <span class="circle circle--sm" aria-hidden="true"></span>
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              stroke-width="1.75"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              width="28"
-              height="28"
-              set:html={svgPaths[item.theme]}
-            />
           </div>
           <div class="body">
             <h3>{item.title}</h3>
@@ -127,11 +99,6 @@ const svgPaths: Record<string, string> = {
   .circle--lg { width: 85%; animation-delay: 2s; }
   .circle--md { width: 58%; animation-delay: 1s; }
   .circle--sm { width: 35%; animation-delay: 0s; }
-
-  svg {
-    position: relative;
-    z-index: 2;
-  }
 
   .body {
     padding: 20px 22px 26px;

@@ -60,6 +60,9 @@ import nav from '../../data/nav.yml';
                 class={`panel-item gradient-${item.hoverGradient ?? 'none'}`}
                 href={item.href}
               >
+                <span class="circle circle--lg" aria-hidden="true"></span>
+                <span class="circle circle--md" aria-hidden="true"></span>
+                <span class="circle circle--sm" aria-hidden="true"></span>
                 <h4>{item.label}</h4>
                 <p>{item.description}</p>
               </a>
@@ -199,27 +202,59 @@ import nav from '../../data/nav.yml';
   .panel-item:hover::before { opacity: 1; }
 
   /* EU Blue — Projects */
-  .gradient-eu-blue::before { background: var(--gradient-eu-blue-soft); }
+  .gradient-eu-blue::before { background: var(--gradient-eu-blue); }
   .gradient-eu-blue:hover   {
-    background:   rgba(21, 66, 139, 0.15);
-    border-color: rgba(21, 66, 139, 0.20);
-    box-shadow:   0 4px 16px rgba(21, 66, 139, 0.10);
+    background:   rgba(13, 45, 94, 0.10);
+    border-color: rgba(46, 104, 212, 0.45);
+    box-shadow:   0 4px 20px rgba(21, 66, 139, 0.30);
   }
 
   /* Pink — Communities / FAQ */
-  .gradient-pink::before { background: var(--gradient-pink-soft); }
+  .gradient-pink::before { background: var(--gradient-pink); }
   .gradient-pink:hover   {
-    background:   rgba(236, 93, 128, 0.15);
-    border-color: rgba(236, 93, 128, 0.22);
-    box-shadow:   0 4px 16px rgba(236, 93, 128, 0.12);
+    background:   rgba(139, 16, 64, 0.10);
+    border-color: rgba(236, 93, 128, 0.45);
+    box-shadow:   0 4px 20px rgba(236, 93, 128, 0.30);
   }
 
   /* Green — Gateways / Contact */
-  .gradient-green::before { background: var(--gradient-green-soft); }
+  .gradient-green::before { background: var(--gradient-primary); }
   .gradient-green:hover   {
-    background:   rgba(0, 135, 146, 0.15);
-    border-color: rgba(0, 135, 146, 0.22);
-    box-shadow:   0 4px 16px rgba(0, 135, 146, 0.12);
+    background:   rgba(0, 45, 48, 0.10);
+    border-color: rgba(0, 135, 146, 0.45);
+    box-shadow:   0 4px 20px rgba(0, 135, 146, 0.30);
+  }
+
+  /* ── Círculos pulsantes en panel-items ────────────────────────── */
+  .panel-item .circle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translate(50%, 50%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: transparent;
+    pointer-events: none;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.26),
+      0 0 30px rgba(255, 255, 255, 0.14),
+      0 0 60px rgba(255, 255, 255, 0.06),
+      inset 0 0 12px rgba(255, 255, 255, 0.05);
+    animation: pulsing 5s ease-in-out infinite;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    z-index: 0;
+  }
+
+  .panel-item:hover .circle { opacity: 1; }
+
+  .panel-item .circle--lg { width: 180px; animation-delay: 2s; }
+  .panel-item .circle--md { width: 120px; animation-delay: 1s; }
+  .panel-item .circle--sm { width: 60px; animation-delay: 0s; }
+
+  @keyframes pulsing {
+    0%, 100% { scale: 1; }
+    50%       { scale: 1.05; }
   }
 
   /* ── Tipografía del panel ──────────────────────────────────────── */
@@ -242,8 +277,8 @@ import nav from '../../data/nav.yml';
     transition: color var(--transition-fast);
   }
 
-  .panel-item:hover h4 { color: var(--color-neutral-900); }
-  .panel-item:hover p  { color: var(--color-neutral-600); }
+  .panel-item:hover h4,
+  .panel-item:hover p  { color: white; }
 
   /* ── Responsive ────────────────────────────────────────────────── */
   @media (max-width: 640px) {

@@ -6,6 +6,7 @@ const stories = await getCollection('stories');
 const sortedStories = stories.sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
+const posGradients = ['dark', 'secondary', 'primary'];
 ---
 
 <section>
@@ -21,13 +22,15 @@ const sortedStories = stories.sort(
         actionHref="/stories"
       />
       <div class="grid">
-        {sortedStories.map((story) => (
+        {sortedStories.map((story, i) => (
           <article class="card glass" key={story.data.title}>
-            <div class={`image ${story.data.gradient ?? 'primary'}`}>
+            <div class={`image ${posGradients[i % 3]}`}>
+              {story.data.image && (
+                <img src={story.data.image} alt="" class="cover" loading="lazy" />
+              )}
               <span class="circle circle--lg" aria-hidden="true"></span>
               <span class="circle circle--md" aria-hidden="true"></span>
               <span class="circle circle--sm" aria-hidden="true"></span>
-              <span class="icon">{story.data.icon}</span>
             </div>
             <div class="body">
               <div class="meta">
@@ -62,36 +65,23 @@ const sortedStories = stories.sort(
   }
 
   .image {
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
+    height: 220px;
     position: relative;
     overflow: hidden;
   }
 
-  .image.primary {
-    background:
-      radial-gradient(ellipse 60% 80% at 50% 50%, rgba(255, 255, 255, 0.16) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 40% at 10% 10%, rgba(0, 200, 215, 0.18) 0%, transparent 55%),
-      linear-gradient(135deg, var(--color-primary-700) 0%, var(--color-primary-500) 60%, var(--color-primary-400) 100%);
+  /* Imagen encima de los círculos, semitransparente */
+  .cover {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 1;
+    z-index: -1;
   }
 
-  .image.secondary {
-    background:
-      radial-gradient(ellipse 60% 80% at 50% 50%, rgba(255, 255, 255, 0.14) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 40% at 10% 10%, rgba(255, 120, 160, 0.16) 0%, transparent 55%),
-      linear-gradient(135deg, var(--color-secondary-700) 0%, var(--color-secondary-500) 60%, var(--color-secondary-400) 100%);
-  }
-
-  .image.dark {
-    background:
-      radial-gradient(ellipse 60% 80% at 50% 50%, rgba(255, 255, 255, 0.06) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 40% at 10% 10%, rgba(0, 135, 146, 0.14) 0%, transparent 55%),
-      linear-gradient(135deg, #1e3a7a 0%, #2d4a8a 50%, #5b7fd4 100%);
-  }
-
+  /* Círculos debajo de la imagen — su neon se filtra a través */
   .circle {
     position: absolute;
     right: 0;
@@ -101,28 +91,42 @@ const sortedStories = stories.sort(
     border-radius: 50%;
     background: transparent;
     pointer-events: none;
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.26),
-      0 0 30px rgba(255, 255, 255, 0.14),
-      0 0 60px rgba(255, 255, 255, 0.06),
-      inset 0 0 12px rgba(255, 255, 255, 0.05);
     animation: pulsing 5s ease-in-out infinite;
-    z-index: 0;
+    z-index: 1;
   }
 
-  .circle--lg { width: 90%; animation-delay: 2s; }
-  .circle--md { width: 62%; animation-delay: 1s; }
-  .circle--sm { width: 38%; animation-delay: 0s; }
+  .circle--lg { width: 70%; animation-delay: 2s; }
+  .circle--md { width: 50%; animation-delay: 1s; }
+  .circle--sm { width: 30%; animation-delay: 0s; }
 
   @keyframes pulsing {
     0%, 100% { scale: 1; }
     50%       { scale: 1.05; }
   }
 
-  .icon {
-    position: relative;
-    z-index: 2;
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.35));
+  /* Neon sobre fondo oscuro — ring blanco + glow coloreado */
+  .image.dark .circle {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.22),
+      0 0 30px rgba(46, 104, 212, 0.55),
+      0 0 70px rgba(46, 104, 212, 0.28),
+      inset 0 0 12px rgba(255, 255, 255, 0.04);
+  }
+
+  .image.secondary .circle {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.22),
+      0 0 30px rgba(236, 93, 128, 0.55),
+      0 0 70px rgba(236, 93, 128, 0.28),
+      inset 0 0 12px rgba(255, 255, 255, 0.04);
+  }
+
+  .image.primary .circle {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.22),
+      0 0 30px rgba(0, 200, 215, 0.55),
+      0 0 70px rgba(0, 200, 215, 0.28),
+      inset 0 0 12px rgba(255, 255, 255, 0.04);
   }
 
   .body {
@@ -137,7 +141,7 @@ const sortedStories = stories.sort(
   }
 
   .tag {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     color: var(--color-primary-700);
     background: var(--color-primary-100);
@@ -146,22 +150,22 @@ const sortedStories = stories.sort(
   }
 
   .date {
-    font-size: 11px;
-    color: var(--color-neutral-300);
+    font-size: 16px;
+    color: var(--color-neutral-400);
   }
 
   h4 {
     margin: 0 0 6px;
-    font-size: 13px;
+    font-size: 18px;
     font-weight: 600;
-    color: var(--color-neutral-900);
+    color: var(--color-neutral-800);
     line-height: 1.45;
   }
 
   p {
     margin: 0;
-    font-size: 13px;
-    color: var(--color-neutral-400);
+    font-size: 16px;
+    color: var(--color-neutral-500);
     line-height: 1.5;
   }
 

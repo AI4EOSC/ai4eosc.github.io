@@ -1,11 +1,11 @@
 label: How it works
 items:
   - title: Products
-    theme: primary
+    theme: eu-blue
     description: Open-source software for training, serving and cataloguing AI models — built for EOSC.
   - title: Ecosystem
     theme: secondary
     description: EU-funded projects and scientific communities extending and using the platform.
   - title: Gateways
-    theme: eu-blue
+    theme: primary
     description: Domain-specific deployments giving researchers direct access to AI tools in their field.

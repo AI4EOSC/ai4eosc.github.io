@@ -2,7 +2,11 @@
 import data from '../../data/products.yml';
 import SectionHeader from '../SectionHeader.astro';
 
-const MAX_ITEMS = 2;
+const icons: Record<string, string> = {
+  platform: `<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>`,
+  llm: `<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>`,
+  agents: `<circle cx="12" cy="7" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/>`,
+};
 ---
 
 <section>
@@ -18,23 +22,35 @@ const MAX_ITEMS = 2;
         actionHref={data.action.href}
       />
       <div class="grid">
-        {data.items.slice(0, MAX_ITEMS).map((item) => (
+        {data.items.map((item) => (
           <article class="card glass" key={item.title}>
             <div class={`screen ${item.theme}`}>
               <span class="circle circle--lg" aria-hidden="true"></span>
               <span class="circle circle--md" aria-hidden="true"></span>
               <span class="circle circle--sm" aria-hidden="true"></span>
-              <span class="icon">{item.icon}</span>
+              <div class="screen-label">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  set:html={icons[item.iconId]}
+                />
+                <span class="screen-name">{item.title}</span>
+              </div>
             </div>
             <div class="body">
               <span class="badge">{item.category}</span>
-              <h4>{item.title}</h4>
               <p>{item.description}</p>
               <a class="link" href={item.linkHref}>{item.linkLabel}</a>
             </div>
           </article>
         ))}
-        <a class="card more" href={data.more.href}>{data.more.label}</a>
       </div>
     </div>
   </div>
@@ -43,7 +59,7 @@ const MAX_ITEMS = 2;
 <style>
   .grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
   }
 
@@ -53,28 +69,18 @@ const MAX_ITEMS = 2;
   }
 
   .screen {
-    height: 78px;
+    height: 90px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 26px;
+    justify-content: flex-start;
+    padding: 0 0 0 22px;
     position: relative;
     overflow: hidden;
-  }
-
-  .screen.primary {
     background:
-      radial-gradient(ellipse 60% 80% at 50% 50%, rgba(255, 255, 255, 0.18) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 40% at 10% 10%, rgba(0, 200, 215, 0.20) 0%, transparent 55%),
-      linear-gradient(135deg, var(--color-primary-700) 0%, var(--color-primary-500) 60%, var(--color-primary-400) 100%);
-  }
-
-  .screen.dark {
-    background:
-      radial-gradient(ellipse 60% 80% at 50% 50%, rgba(255, 255, 255, 0.06) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 40% at 10% 10%, rgba(0, 135, 146, 0.15) 0%, transparent 55%),
-      radial-gradient(ellipse 35% 35% at 85% 85%, rgba(236, 93, 128, 0.10) 0%, transparent 55%),
-      linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #2a2040 100%);
+      radial-gradient(ellipse 55% 80% at 5% 50%, rgba(0, 135, 146, 0.14) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 70% at 92% 50%, rgba(236, 93, 128, 0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 50%),
+      linear-gradient(140deg, #111418 0%, #1a1f24 50%, #1e2228 100%);
   }
 
   .circle {
@@ -86,11 +92,6 @@ const MAX_ITEMS = 2;
     border-radius: 50%;
     background: transparent;
     pointer-events: none;
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.26),
-      0 0 30px rgba(255, 255, 255, 0.14),
-      0 0 60px rgba(255, 255, 255, 0.06),
-      inset 0 0 12px rgba(255, 255, 255, 0.05);
     animation: pulsing 5s ease-in-out infinite;
     z-index: 0;
   }
@@ -99,10 +100,44 @@ const MAX_ITEMS = 2;
   .circle--md { width: 62%; animation-delay: 1s; }
   .circle--sm { width: 38%; animation-delay: 0s; }
 
-  .icon {
+  .screen.eu-blue .circle {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.18),
+      0 0 30px rgba(46, 104, 212, 0.22),
+      0 0 60px rgba(46, 104, 212, 0.10),
+      inset 0 0 12px rgba(255, 255, 255, 0.03);
+  }
+
+  .screen.secondary .circle {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.18),
+      0 0 30px rgba(236, 93, 128, 0.22),
+      0 0 60px rgba(236, 93, 128, 0.10),
+      inset 0 0 12px rgba(255, 255, 255, 0.03);
+  }
+
+  .screen.primary .circle {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.18),
+      0 0 30px rgba(0, 200, 215, 0.22),
+      0 0 60px rgba(0, 200, 215, 0.10),
+      inset 0 0 12px rgba(255, 255, 255, 0.03);
+  }
+
+  .screen-label {
     position: relative;
     z-index: 2;
-    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.40));
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding-left: 4px;
+  }
+
+  .screen-name {
+    font-size: 20px;
+    font-weight: 500;
+    color: white;
+    white-space: nowrap;
   }
 
   .body {
@@ -111,7 +146,7 @@ const MAX_ITEMS = 2;
 
   .badge {
     display: inline-block;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     color: var(--color-primary-700);
     background: var(--color-primary-100);
@@ -120,45 +155,23 @@ const MAX_ITEMS = 2;
     margin-bottom: 8px;
   }
 
-  h4 {
-    margin: 0 0 6px;
-    font-size: 14px;
-    font-weight: 600;
-  }
-
   p {
     margin: 0 0 10px;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.55;
     color: var(--color-neutral-500);
   }
 
   .link {
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 600;
     color: var(--color-primary-700);
     text-decoration: none;
   }
 
-  .more {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 0.5px dashed var(--color-neutral-300);
-    color: var(--color-neutral-400);
-    text-decoration: none;
-    min-height: 60px;
-    font-size: 13px;
-    grid-column: 1 / -1;
-  }
-
   @media (max-width: 900px) {
     .grid {
       grid-template-columns: 1fr;
-    }
-
-    .more {
-      grid-column: auto;
     }
   }
 </style>

@@ -11,14 +11,21 @@ items:
   - category: Core platform
     title: AI4EOSC Platform
     description: The base infrastructure for deploying and managing AI models in EOSC.
-    icon: "🧱"
-    theme: primary
+    iconId: platform
+    theme: eu-blue
     linkLabel: Explore platform ↗
     linkHref: /products/platform
   - category: Language models
     title: AI4EOSC LLM
     description: Large language model services tailored for research use cases on EOSC infrastructure.
-    icon: "🤖"
-    theme: dark
+    iconId: llm
+    theme: secondary
     linkLabel: Explore LLM ↗
     linkHref: /products/llm
+  - category: AI agents
+    title: AI4EOSC Agents
+    description: Autonomous AI agents for research automation, built on top of the EOSC infrastructure.
+    iconId: agents
+    theme: primary
+    linkLabel: Learn more ↗
+    linkHref: /products/agents
