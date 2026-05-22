@@ -3,9 +3,9 @@ import data from '../../data/who-is-it-for.yml';
 import SectionHeader from '../SectionHeader.astro';
 
 const gradients: Record<string, string> = {
-  institution: 'var(--gradient-eu-blue)',
-  research:    'var(--gradient-pink)',
-  developer:   'var(--gradient-primary)',
+  developer: 'var(--gradient-eu-blue)',
+  research: 'var(--gradient-pink)',
+  institution:  'var(--gradient-primary)',
 };
 ---
 
@@ -70,11 +70,6 @@ const gradients: Record<string, string> = {
   }
 
   /* ── Circles ── */
-  @keyframes pulsing {
-    0%, 100% { scale: 1; }
-    50%       { scale: 1.05; }
-  }
-
   .circle {
     position: absolute;
     right: 0;
@@ -146,9 +141,9 @@ const gradients: Record<string, string> = {
     text-decoration: none;
   }
 
-  .body.institution .link { color: #2e68d4; }
-  .body.research .link    { color: var(--color-secondary-700); }
-  .body.developer .link   { color: var(--color-primary-700); }
+  .body.research .link { color: var(--color-secondary-700); } 
+  .body.institution .link { color: var(--color-primary-700); }
+  .body.developer .link   { color: #2e68d4; }
 
   @media (max-width: 900px) {
     .grid {

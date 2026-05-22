@@ -15,7 +15,7 @@ items:
       iconId: platform
       theme: eu-blue
       linkLabel: Explore platform ↗
-      linkHref: /products/platform
+      linkHref: /products#platform
     - category: Language models
       title: AI4EOSC LLM
       status: Preview
@@ -23,7 +23,7 @@ items:
       iconId: llm
       theme: secondary
       linkLabel: Explore LLM ↗
-      linkHref: /products/llm
+      linkHref: /products#llm
     - category: AI agents
       title: AI4EOSC Agents
       status: Coming soon
@@ -31,4 +31,4 @@ items:
       iconId: agents
       theme: primary
       linkLabel: Learn more ↗
-      linkHref: /products/agents
+      linkHref: /products#agents

@@ -1,22 +1,22 @@
 label: Communities
 hero:
-  title: Scientific communities
-  description: AI4EOSC serves a growing number of research domains, connecting scientists with the AI tools they need.
-  buttonLabel: Explore communities
-  buttonHref: /ecosystem/communities
+    title: Scientific communities
+    description: AI4EOSC serves a growing number of research domains, connecting scientists with the AI tools they need.
+    buttonLabel: Explore communities
+    buttonHref: /communities
 more:
-  label: "+ more communities →"
-  href: /ecosystem/communities
+    label: "+ more communities →"
+    href: /communities
 items:
-  - title: Marine Science
-    iconId: marine
-    description: Underwater imaging, biodiversity
-    slug: marine-science
-  - title: Climate & Weather
-    iconId: climate
-    description: Forecasting, Earth observation
-    slug: climate-weather
-  - title: Bioinformatics
-    iconId: bioinformatics
-    description: Genomics, proteomics, drug discovery
-    slug: bioinformatics
+    - title: Marine Science
+      iconId: marine
+      description: Underwater imaging, biodiversity
+      slug: marine-science
+    - title: Climate & Weather
+      iconId: climate
+      description: Forecasting, Earth observation
+      slug: climate-weather
+    - title: Bioinformatics
+      iconId: bioinformatics
+      description: Genomics, proteomics, drug discovery
+      slug: bioinformatics

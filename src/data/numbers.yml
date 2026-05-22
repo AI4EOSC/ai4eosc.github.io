@@ -1,14 +1,20 @@
 label: The initiative in numbers
+title: Impact at scale
+description: Powering open AI infrastructure across Europe — from model training to scientific communities.
 items:
-  - value: 500
+  - value: "500"
     suffix: +
     label: Registered researchers & developers
-  - value: 8
+    tone: eu-blue
+  - value: "8"
     suffix: +
     label: EU-funded projects in the ecosystem
-  - value: 12
+    tone: secondary
+  - value: "12"
     suffix: +
     label: Active gateways across Europe
-  - value: 200
+    tone: primary
+  - value: "200"
     suffix: +
     label: AI models in the catalogue
+    tone: neutral

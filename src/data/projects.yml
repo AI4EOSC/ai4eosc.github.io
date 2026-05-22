@@ -1,35 +1,35 @@
 label: Ecosystem
 hero:
-  title: EU-funded projects
-  description: Horizon Europe projects collaborating and extending the AI4EOSC platform across the European research landscape.
-  buttonLabel: Explore projects
-  buttonHref: /ecosystem/projects
+    title: EU-funded projects
+    description: Horizon Europe projects collaborating and extending the AI4EOSC platform across the European research landscape.
+    buttonLabel: Explore projects
+    buttonHref: /projects
 more:
-  label: "+ more projects →"
-  href: /ecosystem/projects
+    label: "+ more projects →"
+    href: /projects
 items:
-  - tag: Origin
-    status: Active
-    title: AI4EOSC
-    description: The Horizon Europe project that started it all.
-    logo: /logos/AI4-horizontal-light.svg
-    url: https://ai4eosc.eu
-  - tag: Associated
-    status: New
-    title: EOSC-ARENA
-    description: Advancing AI agents on EOSC infrastructure.
-    url: https://eosc-arena.eu
-  - tag: Associated
-    status: Active
-    title: FLUID-AI
-    description: Energy-efficient and secure AI for research.
-  - tag: Associated
-    status: Active
-    title: interTwin
-    description: Digital twin engine for European science.
-    url: https://intertwin.eu
-  - tag: Associated
-    status: Active
-    title: AI4Life
-    description: AI tools for the life sciences community.
-    url: https://ai4life.eurobioimaging.eu
+    - tag: Origin
+      status: Active
+      title: AI4EOSC
+      description: The Horizon Europe project that started it all.
+      logo: /logos/AI4-horizontal-light.svg
+      url: https://ai4eosc.eu
+    - tag: Associated
+      status: New
+      title: EOSC-ARENA
+      description: Advancing AI agents on EOSC infrastructure.
+      url: https://eosc-arena.eu
+    - tag: Associated
+      status: Active
+      title: FLUID-AI
+      description: Energy-efficient and secure AI for research.
+    - tag: Associated
+      status: Active
+      title: interTwin
+      description: Digital twin engine for European science.
+      url: https://intertwin.eu
+    - tag: Associated
+      status: Active
+      title: AI4Life
+      description: AI tools for the life sciences community.
+      url: https://ai4life.eurobioimaging.eu
