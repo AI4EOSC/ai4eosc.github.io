@@ -2,6 +2,12 @@ label: Who is it for
 title: Find your path
 description: Whether you're a researcher looking for tools, a developer deploying models, or an institution building a gateway — AI4EOSC has a path for you.
 items:
+  - tag: Institution
+    tagStyle: institution
+    title: Build your own gateway
+    description: Deploy a customised instance of the platform for your project and join the ecosystem.
+    linkLabel: Join the ecosystem →
+    linkHref: /ecosystem
   - tag: Researcher
     tagStyle: research
     title: Find AI tools for your domain
@@ -14,9 +20,3 @@ items:
     description: Use our open-source platform to train, serve and publish AI models with EOSC-native auth.
     linkLabel: Explore products →
     linkHref: /products
-  - tag: Institution
-    tagStyle: institution
-    title: Build your own gateway
-    description: Deploy a customised instance of the platform for your project and join the ecosystem.
-    linkLabel: Join the ecosystem →
-    linkHref: /ecosystem

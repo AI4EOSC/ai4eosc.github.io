@@ -1,5 +1,6 @@
 ---
 import data from '../../data/testimonials.yml';
+import SectionHeader from '../SectionHeader.astro';
 ---
 
 <section>
@@ -7,21 +8,31 @@ import data from '../../data/testimonials.yml';
     <div class="container">{data.label}</div>
   </div>
   <div class="container">
-    <div class="grid">
-      {data.items.map((item) => (
-        <article class="card glass" key={item.name}>
-          <p class="quote">{item.quote}</p>
-          <div class="author">
-            <div class={`avatar ${item.tone}`}>
-              {item.initials}
+    <div class="section-card">
+      <SectionHeader title={data.title} subtitle={data.description} />
+      <div class="grid">
+        {data.items.map((item) => (
+          <article class={`card ${item.tone}`}>
+            <span class="circle circle--lg" aria-hidden="true"></span>
+            <span class="circle circle--md" aria-hidden="true"></span>
+            <span class="circle circle--sm" aria-hidden="true"></span>
+            <div class="accent-bar"></div>
+            <div class="card-body">
+              <svg class="quote-mark" width="28" height="22" viewBox="0 0 28 22" fill="none" aria-hidden="true">
+                <path d="M0 22V13.6C0 9.86667 0.933333 6.8 2.8 4.4C4.66667 2 7.2 0.533333 10.4 0L11.6 2.4C9.46667 2.93333 7.8 4 6.6 5.6C5.4 7.2 4.86667 9.06667 5 11.2H10.4V22H0ZM16.4 22V13.6C16.4 9.86667 17.3333 6.8 19.2 4.4C21.0667 2 23.6 0.533333 26.8 0L28 2.4C25.8667 2.93333 24.2 4 23 5.6C21.8 7.2 21.2667 9.06667 21.4 11.2H26.8V22H16.4Z" fill="currentColor"/>
+              </svg>
+              <p class="quote">{item.quote}</p>
+              <div class="author">
+                <div class={`avatar ${item.tone}`}>{item.initials}</div>
+                <div class="author-info">
+                  <span class="name">{item.name}</span>
+                  <span class="role">{item.role}</span>
+                </div>
+              </div>
             </div>
-            <div>
-              <div class="name">{item.name}</div>
-              <div class="role">{item.role}</div>
-            </div>
-          </div>
-        </article>
-      ))}
+          </article>
+        ))}
+      </div>
     </div>
   </div>
 </section>
@@ -30,37 +41,126 @@ import data from '../../data/testimonials.yml';
   .grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
-    padding-bottom: 20px;
+    gap: 20px;
+  }
+
+  @keyframes pulsing {
+    0%, 100% { scale: 1; }
+    50%       { scale: 1.05; }
   }
 
   .card {
     border-radius: var(--radius-md);
-    padding: 22px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
   }
+
+  .circle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translate(50%, 50%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: transparent;
+    pointer-events: none;
+    animation: pulsing 5s ease-in-out infinite;
+    z-index: 0;
+  }
+
+  .circle--lg { width: 45%; animation-delay: 2s; }
+  .circle--md { width: 30%; animation-delay: 1s; }
+  .circle--sm { width: 15%; animation-delay: 0s; }
+
+  .card.eu-blue .circle {
+    box-shadow:
+      0 0 0 1px rgba(46, 104, 212, 0.20),
+      0 0 24px rgba(46, 104, 212, 0.12),
+      0 0 50px rgba(46, 104, 212, 0.05);
+  }
+
+  .card.secondary .circle {
+    box-shadow:
+      0 0 0 1px rgba(236, 93, 128, 0.20),
+      0 0 24px rgba(236, 93, 128, 0.12),
+      0 0 50px rgba(236, 93, 128, 0.05);
+  }
+
+  .card.primary .circle {
+    box-shadow:
+      0 0 0 1px rgba(0, 135, 146, 0.20),
+      0 0 24px rgba(0, 135, 146, 0.12),
+      0 0 50px rgba(0, 135, 146, 0.05);
+  }
+
+  .card.secondary {
+    background: color-mix(in oklch, var(--color-secondary-50) 60%, white 40%);
+    border: 1px solid rgba(236, 93, 128, 0.14);
+  }
+
+  .card.primary {
+    background: color-mix(in oklch, var(--color-primary-50) 60%, white 40%);
+    border: 1px solid rgba(0, 135, 146, 0.14);
+  }
+
+  .card.eu-blue {
+    background: color-mix(in oklch, #eff4ff 60%, white 40%);
+    border: 1px solid rgba(46, 104, 212, 0.14);
+  }
+
+  .accent-bar {
+    height: 3px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card.secondary .accent-bar {
+    background: linear-gradient(90deg, var(--color-secondary-400), transparent);
+  }
+
+  .card.primary .accent-bar {
+    background: linear-gradient(90deg, var(--color-primary-400), transparent);
+  }
+
+  .card.eu-blue .accent-bar {
+    background: linear-gradient(90deg, #2e68d4, transparent);
+  }
+
+  .card-body {
+    padding: 22px 22px 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+  }
+
+  .quote-mark {
+    width: 30px;
+    height: auto;
+    margin-bottom: 14px;
+    opacity: 0.18;
+  }
+
+  .card.secondary .quote-mark { color: var(--color-secondary-500); }
+  .card.primary .quote-mark   { color: var(--color-primary-500); }
+  .card.eu-blue .quote-mark   { color: #2e68d4; }
 
   .quote {
-    font-size: 15px;
+    margin: 0 0 20px;
+    font-size: 16px;
+    line-height: 1.65;
     color: var(--color-neutral-600);
-    line-height: 1.5;
-    margin: 0 0 18px;
-    font-style: italic;
-  }
-
-  .quote::before {
-    content: '';
-    display: block;
-    width: 24px;
-    height: 2px;
-    margin-bottom: 12px;
-    background: linear-gradient(90deg, var(--color-primary-400), transparent);
-    border-radius: 1px;
+    flex: 1;
   }
 
   .author {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 16px;
   }
 
   .avatar {
@@ -70,35 +170,54 @@ import data from '../../data/testimonials.yml';
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
     flex-shrink: 0;
   }
 
   .avatar.secondary {
-    background: var(--color-secondary-100);
     color: var(--color-secondary-700);
-    box-shadow: 0 0 0 3px rgba(236, 93, 128, 0.15), 0 0 12px rgba(236, 93, 128, 0.20);
+    background: var(--color-secondary-100);
+    box-shadow:
+      0 0 0 2px rgba(236, 93, 128, 0.20),
+      0 0 10px rgba(236, 93, 128, 0.18);
   }
 
   .avatar.primary {
-    background: var(--color-primary-100);
     color: var(--color-primary-700);
-    box-shadow: 0 0 0 3px rgba(0, 135, 146, 0.15), 0 0 12px rgba(0, 135, 146, 0.20);
+    background: var(--color-primary-100);
+    box-shadow:
+      0 0 0 2px rgba(0, 135, 146, 0.20),
+      0 0 10px rgba(0, 135, 146, 0.18);
+  }
+
+  .avatar.eu-blue {
+    color: #2e68d4;
+    background: #dbeafe;
+    box-shadow:
+      0 0 0 2px rgba(46, 104, 212, 0.20),
+      0 0 10px rgba(46, 104, 212, 0.18);
+  }
+
+  .author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
   }
 
   .name {
     font-size: 16px;
     font-weight: 600;
-    line-height: 1.1;
     color: var(--color-neutral-900);
+    line-height: 1.2;
   }
 
   .role {
     font-size: 14px;
-    font-weight: 500;
-        line-height: 1.1;
+    font-weight: 400;
     color: var(--color-neutral-400);
+    line-height: 1.2;
   }
 
   @media (max-width: 900px) {

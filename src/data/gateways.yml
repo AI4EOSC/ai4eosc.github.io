@@ -12,11 +12,15 @@ items:
     status: Active
     title: iMagine
     description: AI for underwater imaging and marine biodiversity.
+    url: https://imagine-ai.eu
+    slug: imagine
   - tag: Climate
     status: Active
     title: OSCAR Gateway
     description: Serverless AI for Earth observation data.
+    slug: oscar-gateway
   - tag: Health
     status: New
     title: Health-RI
     description: Federated AI for European health research.
+    slug: health-ri

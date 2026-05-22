@@ -2,30 +2,33 @@ label: Products
 title: Our software
 description: Open-source tools built to make research-grade AI accessible across the European Open Science Cloud.
 action:
-  label: View all products →
-  href: /products
+    label: View all products →
+    href: /products
 more:
-  label: "+ more software →"
-  href: /products
+    label: "+ more software →"
+    href: /products
 items:
-  - category: Core platform
-    title: AI4EOSC Platform
-    description: The base infrastructure for deploying and managing AI models in EOSC.
-    iconId: platform
-    theme: eu-blue
-    linkLabel: Explore platform ↗
-    linkHref: /products/platform
-  - category: Language models
-    title: AI4EOSC LLM
-    description: Large language model services tailored for research use cases on EOSC infrastructure.
-    iconId: llm
-    theme: secondary
-    linkLabel: Explore LLM ↗
-    linkHref: /products/llm
-  - category: AI agents
-    title: AI4EOSC Agents
-    description: Autonomous AI agents for research automation, built on top of the EOSC infrastructure.
-    iconId: agents
-    theme: primary
-    linkLabel: Learn more ↗
-    linkHref: /products/agents
+    - category: Core platform
+      title: AI4EOSC Platform
+      status: Available
+      description: The base infrastructure for deploying and managing AI models in EOSC.
+      iconId: platform
+      theme: eu-blue
+      linkLabel: Explore platform ↗
+      linkHref: /products/platform
+    - category: Language models
+      title: AI4EOSC LLM
+      status: Preview
+      description: Large language model services tailored for research use cases on EOSC infrastructure.
+      iconId: llm
+      theme: secondary
+      linkLabel: Explore LLM ↗
+      linkHref: /products/llm
+    - category: AI agents
+      title: AI4EOSC Agents
+      status: Coming soon
+      description: Autonomous AI agents for research automation, built on top of the EOSC infrastructure.
+      iconId: agents
+      theme: primary
+      linkLabel: Learn more ↗
+      linkHref: /products/agents

@@ -9,8 +9,14 @@ more:
   href: /ecosystem/communities
 items:
   - title: Marine Science
+    iconId: marine
     description: Underwater imaging, biodiversity
+    slug: marine-science
   - title: Climate & Weather
+    iconId: climate
     description: Forecasting, Earth observation
+    slug: climate-weather
   - title: Bioinformatics
+    iconId: bioinformatics
     description: Genomics, proteomics, drug discovery
+    slug: bioinformatics

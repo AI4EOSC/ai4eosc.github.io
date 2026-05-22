@@ -1,5 +1,12 @@
 label: Testimonials
+title: What researchers say
+description: Feedback from scientists and developers building on the AI4EOSC platform.
 items:
+    - quote: "AI4EOSC's support and training resources empowered our team to optimize our AI workflows, accelerating our research outcomes."
+      name: S. Kim
+      role: BioAI Lab, University of Helsinki
+      initials: SK
+      tone: eu-blue
     - quote: "AI4EOSC gave us a ready-made infrastructure to deploy our marine imaging models — something that would have taken months to build from scratch."
       name: M. Rodriguez
       role: iMagine Project, CSIC
@@ -10,8 +17,3 @@ items:
       role: Climate Gateway, CNRS
       initials: JL
       tone: primary
-    - quote: "AI4EOSC's support and training resources empowered our team to optimize our AI workflows, accelerating our research outcomes."
-      name: S. Kim
-      role: BioAI Lab, University of Helsinki
-      initials: SK
-      tone: secondary

@@ -1,18 +1,24 @@
 label: Ecosystem
-title: Associated EU projects
-description: Projects collaborating with and extending the AI4EOSC initiative across the European research landscape.
-action:
-  label: View all →
+hero:
+  title: EU-funded projects
+  description: Horizon Europe projects collaborating and extending the AI4EOSC platform across the European research landscape.
+  buttonLabel: Explore projects
+  buttonHref: /ecosystem/projects
+more:
+  label: "+ more projects →"
   href: /ecosystem/projects
 items:
   - tag: Origin
     status: Active
     title: AI4EOSC
     description: The Horizon Europe project that started it all.
+    logo: /logos/AI4-horizontal-light.svg
+    url: https://ai4eosc.eu
   - tag: Associated
     status: New
     title: EOSC-ARENA
     description: Advancing AI agents on EOSC infrastructure.
+    url: https://eosc-arena.eu
   - tag: Associated
     status: Active
     title: FLUID-AI
@@ -21,10 +27,9 @@ items:
     status: Active
     title: interTwin
     description: Digital twin engine for European science.
+    url: https://intertwin.eu
   - tag: Associated
     status: Active
     title: AI4Life
     description: AI tools for the life sciences community.
-more:
-  label: + more projects →
-  href: /ecosystem/projects
+    url: https://ai4life.eurobioimaging.eu

@@ -1,6 +1,12 @@
 ---
 import data from '../../data/who-is-it-for.yml';
 import SectionHeader from '../SectionHeader.astro';
+
+const gradients: Record<string, string> = {
+  institution: 'var(--gradient-eu-blue)',
+  research:    'var(--gradient-pink)',
+  developer:   'var(--gradient-primary)',
+};
 ---
 
 <section>
@@ -12,11 +18,20 @@ import SectionHeader from '../SectionHeader.astro';
       <SectionHeader title={data.title} subtitle={data.description} />
       <div class="grid">
         {data.items.map((item) => (
-          <article class={`card glass ${item.tagStyle}`} key={item.title}>
-            <span class="tag">{item.tag}</span>
-            <h3>{item.title}</h3>
-            <p>{item.description}</p>
-            <a class="link" href={item.linkHref}>{item.linkLabel}</a>
+          <article class="card glass" key={item.title}>
+            <div class="screen" style={`background: ${gradients[item.tagStyle]}`}>
+              <span class="circle circle--lg" aria-hidden="true"></span>
+              <span class="circle circle--md" aria-hidden="true"></span>
+              <span class="circle circle--sm" aria-hidden="true"></span>
+              <div class="screen-content">
+                <span class="tag">{item.tag}</span>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </div>
+            </div>
+            <div class={`body ${item.tagStyle}`}>
+              <a class="link" href={item.linkHref}>{item.linkLabel}</a>
+            </div>
           </article>
         ))}
       </div>
@@ -28,60 +43,112 @@ import SectionHeader from '../SectionHeader.astro';
   .grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
+    gap: 20px;
   }
 
   .card {
     border-radius: var(--radius-md);
-    padding: 18px;
+    overflow: hidden;
+  }
+
+  /* ── Screen (main content zone) ── */
+  .screen {
+    position: relative;
+    overflow: hidden;
+    padding: 22px 22px 26px;
+  }
+
+  .screen::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 70% at 15% 20%, rgba(255, 255, 255, 0.10) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 40% at 85% 85%, rgba(0, 0, 0, 0.15) 0%, transparent 55%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Circles ── */
+  @keyframes pulsing {
+    0%, 100% { scale: 1; }
+    50%       { scale: 1.05; }
+  }
+
+  .circle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translate(50%, 50%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: transparent;
+    pointer-events: none;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.26),
+      0 0 30px rgba(255, 255, 255, 0.14),
+      0 0 60px rgba(255, 255, 255, 0.06),
+      inset 0 0 12px rgba(255, 255, 255, 0.05);
+    animation: pulsing 5s ease-in-out infinite;
+    z-index: 0;
+  }
+
+  .circle--lg { width: 85%; animation-delay: 2s; }
+  .circle--md { width: 58%; animation-delay: 1s; }
+  .circle--sm { width: 35%; animation-delay: 0s; }
+
+  /* ── Screen content ── */
+  .screen-content {
+    position: relative;
+    z-index: 2;
   }
 
   .tag {
     display: inline-flex;
     align-items: center;
-    padding: 4px 12px;
+    padding: 3px 10px;
     border-radius: 999px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
+    background: rgba(255, 255, 255, 0.18);
+    color: rgba(255, 255, 255, 0.92);
+    border: 0.5px solid rgba(255, 255, 255, 0.28);
+    backdrop-filter: blur(4px);
   }
 
   h3 {
-    margin: 0 0 6px;
-    font-size: 15px;
+    margin: 0 0 16px;
+    font-family: var(--font-headings);
+    font-size: 30px;
     font-weight: 600;
+    color: #ffffff;
+    line-height: 1.2;
+    max-width: 250px;
   }
 
-  p {
-    margin: 0 0 12px;
-    font-size: 14px;
-    line-height: 1.6;
-    color: var(--color-neutral-500);
+  .screen p {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.25;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  /* ── Body (link strip) ── */
+  .body {
+    padding: 14px 22px;
   }
 
   .link {
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 600;
     text-decoration: none;
   }
 
-  .research .tag,
-  .research .link {
-    color: var(--color-secondary-700);
-    background: color-mix(in oklch, var(--color-secondary-50) 70%, #ffffff 30%);
-  }
-
-  .developer .tag,
-  .developer .link {
-    color: var(--color-primary-700);
-    background: color-mix(in oklch, var(--color-primary-50) 70%, #ffffff 30%);
-  }
-
-  .institution .tag,
-  .institution .link {
-    color: #1a4a8a;
-    background: #e8f0ff;
-  }
+  .body.institution .link { color: #2e68d4; }
+  .body.research .link    { color: var(--color-secondary-700); }
+  .body.developer .link   { color: var(--color-primary-700); }
 
   @media (max-width: 900px) {
     .grid {
