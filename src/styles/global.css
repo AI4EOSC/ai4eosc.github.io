@@ -224,8 +224,13 @@
    ANIMATIONS
 ───────────────────────────────────────────────────────────────── */
 @keyframes pulsing {
-	0%, 100% { scale: 1; }
-	50%       { scale: 1.05; }
+	0%,
+	100% {
+		scale: 1;
+	}
+	50% {
+		scale: 1.05;
+	}
 }
 
 /* ─────────────────────────────────────────────────────────────────
@@ -315,7 +320,6 @@ svg {
 }
 
 .zone-impact {
-	background: color-mix(in oklch, var(--color-neutral-200) 18%, var(--page-bg) 82%);
 	padding: 4px 0 24px;
 }
 
