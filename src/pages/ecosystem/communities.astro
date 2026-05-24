@@ -1,0 +1,523 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/sections/PageHero.astro';
+import CtaFinal from '../../components/sections/CtaFinal.astro';
+import data from '../../data/communities.yml';
+
+const icons: Record<string, string> = {
+  marine: `<path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>`,
+  climate: `<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>`,
+  bioinformatics: `<path d="M2 3c4 2 6 5 6 9s-2 7-6 9"/><path d="M22 3c-4 2-6 5-6 9s2 7 6 9"/><path d="M6 7h12M6 17h12"/>`,
+  social: `<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`,
+  humanities: `<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>`,
+  physics: `<circle cx="12" cy="12" r="1"/><path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5z"/><path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5z"/>`,
+  earth: `<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>`,
+  astronomy: `<circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>`,
+};
+---
+
+<Layout title="Communities — AI4EOSC Ecosystem">
+  <PageHero
+    theme="pink"
+    breadcrumb="Communities"
+    breadcrumbParent={{ label: 'Ecosystem', href: '/ecosystem/projects' }}
+    title="AI tools for every scientific domain"
+    description="AI4EOSC brings research-grade AI to a growing number of scientific communities across Europe — from marine biology to climate science and beyond."
+  >
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-val">8<em>+</em></span><span class="hstat-lbl">Active communities</span></div>
+      <div class="hstat"><span class="hstat-val">1.2k<em>+</em></span><span class="hstat-lbl">Researchers served</span></div>
+      <div class="hstat"><span class="hstat-val">12<em>+</em></span><span class="hstat-lbl">Gateways deployed</span></div>
+    </div>
+  </PageHero>
+
+  <!-- Communities grid -->
+  <section class="p-section">
+    <div class="section-label"><div class="container">All communities</div></div>
+    <div class="container">
+      <div class="box">
+        <div class="box-hdr">
+          <h2 class="box-title">Research domains</h2>
+        </div>
+        <p class="box-sub">Click any community to see the AI tools available, related gateways and how to get access.</p>
+
+        <div class="comm-grid" x-data="{ open: null }">
+
+          {data.items.map((item: any) => (
+            <article
+              class="comm-card"
+              x-bind:class={`{ 'is-open': open === '${item.slug}' }`}
+            >
+              <button
+                class="comm-summary"
+                x-on:click={`open = open === '${item.slug}' ? null : '${item.slug}'`}
+                type="button"
+              >
+                <div class="screen">
+                  <span class="circle circle--lg" aria-hidden="true"></span>
+                  <span class="circle circle--md" aria-hidden="true"></span>
+                  <span class="circle circle--sm" aria-hidden="true"></span>
+                  <div class="screen-inner">
+                    <svg
+                      width="22" height="22" viewBox="0 0 24 24"
+                      fill="none" stroke="currentColor"
+                      stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
+                      aria-hidden="true"
+                      set:html={icons[item.iconId]}
+                    />
+                    <div class="chevron-wrap" aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body-top">
+                  <h3>{item.title}</h3>
+                  <p class="card-sub">{item.description}</p>
+                  {item.via && (
+                    <span class="via-tag">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                      via {item.via}
+                    </span>
+                  )}
+                </div>
+              </button>
+
+              <div class="comm-detail">
+                <div class="comm-detail-inner">
+                  <p class="detail-desc">{item.longDescription}</p>
+                  {item.tools && (
+                    <>
+                      <p class="feat-lbl">Available tools</p>
+                      <ul class="feats">
+                        {item.tools.map((t: string) => (
+                          <li class="feat-chip">{t}</li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+                  <div class="detail-links">
+                    {item.via && (
+                      <a
+                        class="detail-link"
+                        href={item.viaUrl ?? '/ecosystem/gateways'}
+                        target={item.viaUrl ? '_blank' : undefined}
+                        rel={item.viaUrl ? 'noopener' : undefined}
+                      >
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        Go to {item.via} gateway
+                      </a>
+                    )}
+                    <a class="detail-link" href="/products">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                      Browse models
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))}
+
+          <!-- "Your community" placeholder -->
+          <div class="comm-placeholder">
+            <div class="plus-wrap">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </div>
+            <p class="placeholder-title">Your community</p>
+            <p class="placeholder-sub">Get in touch to join</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to join -->
+  <section class="p-section">
+    <div class="section-label"><div class="container">How to join</div></div>
+    <div class="container">
+      <div class="box">
+        <div class="box-hdr">
+          <h2 class="box-title">Bring AI4EOSC to your domain</h2>
+        </div>
+        <p class="box-sub">Whether you're a researcher looking for tools or an institution wanting to deploy a community gateway, here's how to get started.</p>
+        <div class="how-grid">
+          <div class="how-card">
+            <div class="step-screen">
+              <span class="circle circle--lg" aria-hidden="true"></span>
+              <span class="circle circle--md" aria-hidden="true"></span>
+              <span class="circle circle--sm" aria-hidden="true"></span>
+              <span class="step-num">01</span>
+            </div>
+            <div class="step-body">
+              <h4>Find your domain</h4>
+              <p>Browse the communities above to see if your scientific area is already covered and what AI tools are available.</p>
+              <a class="step-link" href="#comm-grid">Browse communities →</a>
+            </div>
+          </div>
+          <div class="how-card">
+            <div class="step-screen">
+              <span class="circle circle--lg" aria-hidden="true"></span>
+              <span class="circle circle--md" aria-hidden="true"></span>
+              <span class="circle circle--sm" aria-hidden="true"></span>
+              <span class="step-num">02</span>
+            </div>
+            <div class="step-body">
+              <h4>Access via a gateway</h4>
+              <p>Each community has a dedicated gateway — a tailored instance of the platform with domain-specific models and workflows.</p>
+              <a class="step-link" href="/ecosystem/gateways">Explore gateways →</a>
+            </div>
+          </div>
+          <div class="how-card">
+            <div class="step-screen">
+              <span class="circle circle--lg" aria-hidden="true"></span>
+              <span class="circle circle--md" aria-hidden="true"></span>
+              <span class="circle circle--sm" aria-hidden="true"></span>
+              <span class="step-num">03</span>
+            </div>
+            <div class="step-body">
+              <h4>Deploy your own</h4>
+              <p>If your domain isn't covered yet, get in touch. We can help you deploy a new community gateway on AI4EOSC.</p>
+              <a class="step-link" href="/support/contact">Contact the team →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gateway teaser -->
+  <section class="p-section">
+    <div class="section-label"><div class="container">Related</div></div>
+    <div class="container">
+      <div class="box box-slim">
+        <div class="gw-teaser">
+          <div class="gw-left">
+            <h4>Each community has a dedicated gateway</h4>
+            <p>Gateways are specialised deployments of the AI4EOSC platform tailored to a specific scientific domain. Each gives researchers direct access to the tools and models for their field.</p>
+          </div>
+          <a class="btn-pink" href="/ecosystem/gateways">Explore gateways →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaFinal
+    theme="pink"
+    title="Is your scientific domain missing?"
+    description="If your research area isn't covered yet, we'd love to hear from you. We can help set up a dedicated community gateway on AI4EOSC."
+    button={{ label: 'Get in touch', href: '/support/contact' }}
+  />
+</Layout>
+
+<style>
+  /* ── Hero stats ─────────────────────────────────────── */
+  .hero-stats { display: flex; gap: 32px; margin-top: 28px; flex-wrap: wrap; }
+  .hstat { display: flex; flex-direction: column; gap: 3px; }
+  .hstat-val {
+    font-family: var(--font-headings); font-size: 30px; font-weight: 600;
+    color: #fff; letter-spacing: -0.03em; line-height: 1;
+  }
+  .hstat-val em { font-style: normal; color: rgba(255,255,255,0.45); font-size: 22px; }
+  .hstat-lbl { font-size: 11px; color: rgba(255,255,255,0.45); }
+
+  /* ── Page layout ────────────────────────────────────── */
+  .p-section { padding: 0 0 24px; }
+
+  .box {
+    background: var(--card-bg);
+    border: 0.5px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 28px 28px 24px;
+  }
+  .box-slim { padding: 20px 24px; }
+
+  .box-hdr { margin-bottom: 6px; }
+  .box-title {
+    font-size: 17px; font-weight: 600; color: var(--color-neutral-900);
+    font-family: var(--font-headings); letter-spacing: -0.01em;
+  }
+  .box-sub {
+    font-size: 13px; color: var(--color-neutral-500);
+    line-height: 1.6; max-width: 520px; margin-bottom: 22px;
+  }
+
+  /* ── Communities grid ───────────────────────────────── */
+  .comm-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  /* ── Community card ─────────────────────────────────── */
+  .comm-card {
+    background: var(--page-bg);
+    border: 0.5px solid rgba(201, 75, 114, 0.22);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+  }
+
+  .comm-card.is-open {
+    border-color: rgba(201, 75, 114, 0.55);
+  }
+
+  .comm-summary {
+    width: 100%; text-align: left;
+    background: transparent; border: none; padding: 0;
+    cursor: pointer; font: inherit; color: inherit;
+    display: block;
+  }
+
+  /* Screen: pink soft gradient + circles */
+  .screen {
+    height: 72px;
+    background: var(--gradient-pink-soft);
+    border-bottom: 1px solid rgba(201, 75, 114, 0.15);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center;
+    padding: 0 16px;
+    color: var(--color-secondary-600);
+    transition: background 0.2s ease;
+  }
+
+  .comm-card.is-open .screen {
+    background: linear-gradient(135deg, rgba(192, 32, 96, 0.14), rgba(236, 93, 128, 0.09));
+  }
+
+  .circle {
+    position: absolute; right: 0; bottom: 0;
+    transform: translate(50%, 50%);
+    aspect-ratio: 1; border-radius: 50%;
+    background: transparent; pointer-events: none;
+    animation: pulsing 5s ease-in-out infinite; z-index: 0;
+  }
+  .circle--lg { width: 90%; animation-delay: 2s; }
+  .circle--md { width: 62%; animation-delay: 1s; }
+  .circle--sm { width: 38%; animation-delay: 0s; }
+
+  .screen .circle {
+    box-shadow:
+      0 0 0 1px rgba(201, 75, 114, 0.20),
+      0 0 30px rgba(201, 75, 114, 0.11),
+      0 0 60px rgba(201, 75, 114, 0.05);
+  }
+
+  .comm-card.is-open .screen .circle {
+    box-shadow:
+      0 0 0 1px rgba(201, 75, 114, 0.35),
+      0 0 30px rgba(201, 75, 114, 0.20),
+      0 0 60px rgba(201, 75, 114, 0.10);
+  }
+
+  .screen-inner {
+    position: relative; z-index: 2;
+    width: 100%; display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .chevron-wrap {
+    width: 24px; height: 24px; border-radius: 50%;
+    border: 0.5px solid rgba(201, 75, 114, 0.25);
+    background: white;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(201, 75, 114, 0.7);
+    flex-shrink: 0;
+    transition: transform 0.25s ease, background 0.15s ease;
+  }
+
+  .comm-card.is-open .chevron-wrap {
+    transform: rotate(180deg);
+    background: rgba(201, 75, 114, 0.08);
+  }
+
+  /* Card summary text */
+  .card-body-top {
+    padding: 14px 16px 16px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+
+  .comm-card h3 {
+    font-size: 13px; font-weight: 600;
+    color: var(--color-neutral-900); margin: 0;
+  }
+
+  .card-sub {
+    font-size: 11px; color: var(--color-neutral-400); margin: 0;
+  }
+
+  .via-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 10px; font-weight: 500;
+    color: var(--color-secondary-700);
+    background: rgba(201, 75, 114, 0.08);
+    border-radius: 999px; padding: 2px 8px;
+    width: fit-content; margin-top: 4px;
+  }
+
+  /* ── Accordion detail ───────────────────────────────── */
+  .comm-detail {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+
+  .comm-card.is-open .comm-detail {
+    max-height: 420px;
+  }
+
+  .comm-detail-inner {
+    border-top: 0.5px solid rgba(201, 75, 114, 0.18);
+    padding: 16px;
+    background: white;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+
+  .detail-desc {
+    font-size: 12px; color: var(--color-neutral-500);
+    line-height: 1.65; margin: 0;
+  }
+
+  .feat-lbl {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--color-neutral-400); margin: 0;
+  }
+
+  .feats {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-wrap: wrap; gap: 4px;
+  }
+
+  .feat-chip {
+    font-size: 10px; font-weight: 500;
+    color: var(--color-secondary-700);
+    background: rgba(201, 75, 114, 0.07);
+    border: 0.5px solid rgba(201, 75, 114, 0.2);
+    border-radius: 999px; padding: 2px 8px;
+  }
+
+  .detail-links { display: flex; flex-direction: column; gap: 6px; }
+
+  .detail-link {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 500;
+    color: var(--color-secondary-600); text-decoration: none;
+  }
+  .detail-link:hover { color: var(--color-secondary-700); }
+
+  /* ── Placeholder card ───────────────────────────────── */
+  .comm-placeholder {
+    background: transparent;
+    border: 0.5px dashed rgba(201, 75, 114, 0.3);
+    border-radius: var(--radius-md);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 180px; gap: 6px; padding: 20px;
+  }
+
+  .plus-wrap {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(201, 75, 114, 0.08);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--color-secondary-600); margin-bottom: 4px;
+  }
+
+  .placeholder-title {
+    font-size: 12px; font-weight: 500; color: var(--color-secondary-600); margin: 0;
+  }
+
+  .placeholder-sub {
+    font-size: 11px; color: var(--color-neutral-400); margin: 0;
+  }
+
+  /* ── How to join ────────────────────────────────────── */
+  .how-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  }
+
+  .how-card {
+    border-radius: var(--radius-md); overflow: hidden;
+    border: 0.5px solid var(--card-border);
+    background: var(--card-bg);
+  }
+
+  .step-screen {
+    position: relative; overflow: hidden;
+    height: 72px; padding: 0 20px;
+    display: flex; align-items: center;
+    background:
+      radial-gradient(ellipse 60% 80% at 0% 50%, rgba(201, 75, 114, 0.14) 0%, transparent 65%),
+      linear-gradient(140deg, #6b0828 0%, #a01848 38%, #ec5d80 100%);
+  }
+
+  .step-screen .circle {
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.22),
+      0 0 28px rgba(255, 120, 160, 0.25),
+      0 0 55px rgba(255, 120, 160, 0.10),
+      inset 0 0 10px rgba(255,255,255,0.04);
+  }
+
+  .step-num {
+    position: relative; z-index: 2;
+    font-family: var(--font-headings); font-size: 26px; font-weight: 600;
+    color: rgba(255,255,255,0.85); letter-spacing: -0.02em; line-height: 1;
+  }
+
+  .step-body { padding: 18px 20px 20px; }
+
+  .step-body h4 {
+    font-size: 13px; font-weight: 600;
+    color: var(--color-neutral-900); margin: 0 0 6px;
+  }
+
+  .step-body p {
+    font-size: 12px; color: var(--color-neutral-500);
+    line-height: 1.65; margin: 0 0 12px;
+  }
+
+  .step-link {
+    font-size: 12px; font-weight: 500;
+    color: var(--color-secondary-600); text-decoration: none;
+  }
+  .step-link:hover { color: var(--color-secondary-700); }
+
+  /* ── Gateway teaser ─────────────────────────────────── */
+  .gw-teaser {
+    background: var(--page-bg);
+    border-radius: var(--radius-sm);
+    padding: 20px 22px;
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 20px;
+  }
+
+  .gw-left h4 {
+    font-size: 13px; font-weight: 600;
+    color: var(--color-neutral-900); margin: 0 0 5px;
+  }
+
+  .gw-left p {
+    font-size: 12px; color: var(--color-neutral-500);
+    line-height: 1.6; max-width: 420px; margin: 0;
+  }
+
+  .btn-pink {
+    display: inline-flex; align-items: center;
+    background: var(--color-secondary-600); color: white;
+    border-radius: 999px; padding: 8px 18px;
+    font-size: 12px; font-weight: 500;
+    text-decoration: none; white-space: nowrap; flex-shrink: 0;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .btn-pink:hover { background: var(--color-secondary-700); transform: translateY(-1px); }
+
+  /* ── Responsive ─────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .comm-grid { grid-template-columns: 1fr 1fr; }
+    .how-grid  { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .comm-grid { grid-template-columns: 1fr; }
+    .gw-teaser { flex-direction: column; align-items: flex-start; }
+  }
+</style>

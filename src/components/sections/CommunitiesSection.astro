@@ -2,18 +2,26 @@
 import data from '../../data/communities.yml';
 
 const MAX_ITEMS = 3;
+const label = 'Communities';
+const hero = {
+  title: 'Scientific communities',
+  description: 'AI4EOSC serves a growing number of research domains, connecting scientists with the AI tools they need.',
+  buttonLabel: 'Explore communities',
+  buttonHref: '/ecosystem/communities',
+};
+const more = { label: '+ more communities →', href: '/ecosystem/communities' };
 ---
 
 <section class="wrap">
   <div class="section-label">
-    <div class="container">{data.label}</div>
+    <div class="container">{label}</div>
   </div>
   <div class="container">
     <div class="hero">
       <div class="hero-content">
-        <h2>{data.hero.title}</h2>
-        <p>{data.hero.description}</p>
-        <a class="button-pill ghost" href={data.hero.buttonHref}>{data.hero.buttonLabel}</a>
+        <h2>{hero.title}</h2>
+        <p>{hero.description}</p>
+        <a class="button-pill ghost" href={hero.buttonHref}>{hero.buttonLabel}</a>
       </div>
       <div class="hero-circles" aria-hidden="true">
         <span class="circle circle--lg"></span>
@@ -29,7 +37,7 @@ const MAX_ITEMS = 3;
           <p>{item.description}</p>
         </article>
       ))}
-      <a class="card more" href={data.more.href}>{data.more.label}</a>
+      <a class="card more" href={more.href}>{more.label}</a>
     </div>
   </div>
 </section>

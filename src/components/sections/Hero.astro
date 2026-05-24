@@ -1,18 +1,24 @@
 ---
-import hero from '../../data/hero.yml';
+const badge = { text: 'AI4EOSC Initiative · Powered by EOSC', dotLabel: true };
+const title = 'Accelerating Artificial Intelligence in the European Open Science Cloud';
+const description = 'A shared foundation for deploying, extending, and accessing research-grade AI services across the European Open Science Cloud.';
+const cta = {
+  primary:   { label: 'Explore products', href: '/products' },
+  secondary: { label: 'Learn more',       href: '/about'    },
+};
 ---
 
 <section class="hero">
   <div class="hero-container">
     <div class="hero-badge">
-      {hero.badge.dotLabel && <span class="dot" aria-hidden="true"></span>}
-      {hero.badge.text}
+      {badge.dotLabel && <span class="dot" aria-hidden="true"></span>}
+      {badge.text}
     </div>
-    <h1>{hero.title}</h1>
-    <p>{hero.description}</p>
+    <h1>{title}</h1>
+    <p>{description}</p>
     <div class="hero-actions">
-      <a class="button-pill primary" href={hero.cta.primary.href}>{hero.cta.primary.label}</a>
-      <a class="button-pill ghost" href={hero.cta.secondary.href}>{hero.cta.secondary.label}</a>
+      <a class="button-pill primary" href={cta.primary.href}>{cta.primary.label}</a>
+      <a class="button-pill ghost" href={cta.secondary.href}>{cta.secondary.label}</a>
     </div>
   </div>
   <div class="hero-circles" aria-hidden="true">

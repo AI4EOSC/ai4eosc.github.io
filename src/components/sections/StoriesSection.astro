@@ -23,8 +23,11 @@ const posGradients = ['dark', 'secondary', 'primary'];
       />
       <div class="grid">
         {sortedStories.map((story, i) => (
-          <article class="card glass" key={story.data.title}>
-            <div class={`image ${posGradients[i % 3]}`}>
+          <a href={`/stories/${story.id}`} class="card glass">
+            <div class={`image ${story.data.gradient ?? posGradients[i % 3]}`}>
+              <span class="circle circle--lg" aria-hidden="true"></span>
+              <span class="circle circle--md" aria-hidden="true"></span>
+              <span class="circle circle--sm" aria-hidden="true"></span>
               {story.data.image && (
                 <img src={story.data.image} alt="" class="cover" loading="lazy" />
               )}
@@ -42,7 +45,7 @@ const posGradients = ['dark', 'secondary', 'primary'];
               <h4>{story.data.title}</h4>
               <p>{story.data.excerpt}</p>
             </div>
-          </article>
+          </a>
         ))}
       </div>
     </div>
@@ -59,12 +62,37 @@ const posGradients = ['dark', 'secondary', 'primary'];
   .card {
     border-radius: var(--radius-md);
     overflow: hidden;
+    text-decoration: none;
+    display: block;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.10);
   }
 
   .image {
     height: 220px;
     position: relative;
     overflow: hidden;
+  }
+
+  /* Gradient backgrounds */
+  .image.dark {
+    background:
+      radial-gradient(ellipse 55% 60% at 15% 15%, rgba(255,255,255,0.07) 0%, transparent 55%),
+      linear-gradient(140deg, #111418 0%, #1a1f24 50%, #1e2228 100%);
+  }
+  .image.secondary {
+    background:
+      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255,255,255,0.10) 0%, transparent 55%),
+      linear-gradient(140deg, #6b0828 0%, #a01848 38%, #ec5d80 100%);
+  }
+  .image.primary {
+    background:
+      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255,255,255,0.12) 0%, transparent 55%),
+      linear-gradient(140deg, #002d30 0%, #005060 38%, #008792 100%);
   }
 
   /* Imagen encima de los círculos, semitransparente */
@@ -75,7 +103,7 @@ const posGradients = ['dark', 'secondary', 'primary'];
     height: 100%;
     object-fit: cover;
     opacity: 1;
-    z-index: -1;
+    z-index: 1;
   }
 
   /* Círculos debajo de la imagen — su neon se filtra a través */
@@ -152,7 +180,10 @@ const posGradients = ['dark', 'secondary', 'primary'];
     font-weight: 600;
     color: var(--color-neutral-800);
     line-height: 1.35;
+    transition: color 0.15s ease;
   }
+
+  .card:hover h4 { color: var(--color-primary-700); }
 
   p {
     margin: 0;

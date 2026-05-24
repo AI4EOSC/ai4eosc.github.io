@@ -399,3 +399,5 @@ svg {
 		margin-top: 20px;
 	}
 }
+
+[x-cloak] { display: none !important; }

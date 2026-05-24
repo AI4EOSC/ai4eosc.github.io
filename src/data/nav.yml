@@ -11,15 +11,15 @@ links:
       dropdown:
           - label: Projects
             description: EU-funded associated projects
-            href: /projects
+            href: /ecosystem/projects
             hoverGradient: eu-blue
           - label: Communities
             description: Scientific research domains
-            href: /communities
+            href: /ecosystem/communities
             hoverGradient: pink
           - label: Gateways
             description: Platforms built on AI4EOSC
-            href: /gateways
+            href: /ecosystem/gateways
             hoverGradient: green
     - label: Stories
       href: /stories
@@ -27,11 +27,11 @@ links:
       dropdown:
           - label: Contact
             description: Get in touch with the team
-            href: /contact
+            href: /support/contact
             hoverGradient: eu-blue
           - label: FAQ
             description: Frequently asked questions
-            href: /faq
+            href: /support/faq
             hoverGradient: pink
           - label: Documentation
             description: Technical guides and resources

@@ -1,0 +1,75 @@
+categories:
+  - id: general
+    label: General
+    items:
+      - question: What is AI4EOSC?
+        answer: AI4EOSC is a Horizon Europe initiative providing open-source infrastructure for developing, deploying and sharing AI models within the European Open Science Cloud (EOSC). It unifies a platform, a model catalogue, gateways for specific scientific domains, and a growing ecosystem of associated EU projects.
+
+      - question: Who can use the platform?
+        answer: Researchers, developers and institutions working in European science can access the platform. It is designed to be accessible regardless of technical background — from data scientists training custom models to biologists using ready-made inference endpoints.
+
+      - question: Is the platform free to use?
+        answer: The AI4EOSC software is fully open source and free to use. Compute resources (GPUs, HPC time) are provided through EOSC infrastructure and are subject to standard EOSC allocation processes. Most academic researchers can apply for a free compute allocation.
+
+      - question: What is the difference between the platform and a gateway?
+        answer: The AI4EOSC Platform is the core shared infrastructure — training, serving, the model catalogue and all the underlying tooling. A gateway is a dedicated deployment of that infrastructure for a specific scientific project or community (e.g. iMagine for marine sciences), with domain-specific models, branding and access controls on top.
+
+  - id: access
+    label: Access & accounts
+    items:
+      - question: How do I get access?
+        answer: Access is managed through the EOSC Authentication and Authorisation Infrastructure (AAI). If your institution is part of EOSC (most European research universities are), you can log in directly with your institutional credentials. If you do not have an EOSC account, you can register at eosc.eu.
+
+      - question: Do I need special credentials to use the platform?
+        answer: No special registration is required beyond a standard EOSC account. You sign in with your institutional identity provider via the EOSC AAI — there is no separate AI4EOSC account to create.
+
+      - question: Can researchers outside Europe use the platform?
+        answer: The platform is primarily designed for European research institutions and EOSC-affiliated projects. International collaborators within an eligible project can typically get access — contact the team to discuss your specific situation.
+
+      - question: How do I request compute resources?
+        answer: Compute allocations for training jobs are requested through the EOSC allocation mechanism. For smaller workloads, a standard allocation is usually available immediately. For large-scale GPU campaigns, you can apply for a dedicated allocation via the team — describe your use case and expected resource needs when you get in touch.
+
+  - id: platform
+    label: Platform & models
+    items:
+      - question: What is DEEPaaS?
+        answer: DEEPaaS (Deep Learning as a Service) is the standardised REST API that AI4EOSC uses to wrap and serve AI models. It provides a consistent interface for training, prediction and model management, regardless of the underlying framework (TensorFlow, PyTorch, scikit-learn, etc.). Models published via DEEPaaS are immediately accessible to all platform users without additional setup.
+
+      - question: What is OSCAR?
+        answer: OSCAR (Open Source Serverless Computing for Data-Processing Applications) is the event-driven, serverless inference layer of AI4EOSC. It allows you to deploy models that scale automatically to demand — scaling to zero when idle and scaling up as inference requests arrive. This makes it ideal for research workloads with unpredictable or bursty usage.
+
+      - question: How do I publish a model on the catalogue?
+        answer: Package your model as a DEEPaaS-compatible Docker image, write a short metadata file describing it (architecture, task, dataset, licence), and open a pull request against the AI4EOSC catalogue repository on GitHub. The team reviews new submissions and merges them within a few days. Full instructions are in the documentation.
+
+      - question: Does the platform support federated learning?
+        answer: Yes. AI4EOSC includes federated learning support for datasets that cannot leave national borders due to data sovereignty requirements. Federated training jobs coordinate across sites without centralising raw data. Contact the team if your use case involves sensitive or restricted datasets.
+
+  - id: ecosystem
+    label: Ecosystem & projects
+    items:
+      - question: What is the difference between a project and a gateway?
+        answer: Projects are EU-funded research initiatives that build on or extend the AI4EOSC platform (e.g. EOSC-ARENA adding agent capabilities, FLUID-AI adding energy monitoring). Gateways are operational deployments of the platform for a specific scientific domain, often produced by a project but serving an ongoing user community beyond the project's lifetime.
+
+      - question: How can my project join the ecosystem?
+        answer: If your project uses AI4EOSC infrastructure or builds extensions on top of it, it can be listed in the ecosystem. Get in touch with a short description of your project, its relationship to the platform and your current status. We list both active and new projects.
+
+      - question: Can I deploy my own gateway?
+        answer: Yes. Gateways are fully supported as a deployment model. The team can help you set up a branded instance of the platform with your domain-specific model catalogue and access controls. Contact us with your requirements — typical setup takes 4–8 weeks depending on complexity.
+
+      - question: How do communities relate to gateways?
+        answer: Communities are the scientific domains that AI4EOSC serves (marine science, climate, bioinformatics, etc.). A gateway is the technical deployment through which a community accesses the platform. One community can have one or more gateways, and a gateway can serve multiple related communities.
+
+  - id: technical
+    label: Technical
+    items:
+      - question: Which ML frameworks does the platform support?
+        answer: The platform is framework-agnostic at the API layer. DEEPaaS wraps any model that can be packaged in a Docker container — TensorFlow, PyTorch, JAX, scikit-learn, Hugging Face Transformers, and others are all supported. The training infrastructure provides GPU nodes with CUDA support.
+
+      - question: Is there a limit on model size or training job duration?
+        answer: Standard allocations include limits on wall-clock time and GPU hours per job. These are set by the EOSC site hosting the job. For large models or long campaigns, you can request a larger allocation — contact the team with your estimated resource needs.
+
+      - question: Where can I find the API documentation?
+        answer: The DEEPaaS API documentation is available at docs.ai4eosc.eu. The OpenAPI spec for each deployed model is also served directly from the model's endpoint, so you can explore any model's API interactively via the built-in Swagger UI.
+
+      - question: Is the source code publicly available?
+        answer: Yes. All core components of AI4EOSC — the DEEPaaS API, the dashboard, the OSCAR integration, the catalogue tooling — are published under open-source licences on the AI4EOSC GitHub organisation at github.com/ai4eosc. Contributions and issue reports are welcome.

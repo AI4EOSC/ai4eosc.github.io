@@ -1,9 +1,568 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/sections/PageHero.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import NumbersSection from '../components/sections/NumbersSection.astro';
 import CtaFinal from '../components/sections/CtaFinal.astro';
-import Marquee from '../components/sections/Marquee.astro';
+import about from '../data/about.yml';
+import partners from '../data/partners.yml';
+
+const logoUrls = import.meta.glob<string>(
+  '../assets/logos/*',
+  { eager: true, query: '?url', import: 'default' }
+);
+
+const partnerItems = partners.items.map(item => ({
+  ...item,
+  src: logoUrls[`../assets/logos/${item.logo}`] ?? ''
+}));
+
+const hero = {
+  title: 'Building open AI infrastructure for European science',
+  description: 'AI4EOSC is a Horizon Europe initiative bringing together a platform, a growing ecosystem of projects, and a network of scientific communities to make research-grade AI accessible across Europe.',
+};
+
+const story = {
+  label: 'Our story',
+  title: 'Where we come from',
+  subtitle: 'From a single Horizon Europe project to a living initiative connecting platforms, communities and institutions across European research.',
+};
+
+const mission = {
+  label: 'Mission',
+  title: 'What we stand for',
+  subtitle: 'AI4EOSC is built on the belief that research-grade AI should be open, interoperable and accessible to any scientific community in Europe.',
+  items: [
+    { icon: '🔓', title: 'Open by default', description: 'All software is open source. Models are openly published. Infrastructure is built on open standards. No lock-in, no black boxes.' },
+    { icon: '🔗', title: 'Interoperable with EOSC', description: 'Native integration with EOSC authentication, storage and compute means researchers can start without rebuilding their stack.' },
+    { icon: '🌍', title: 'Built for European science', description: 'Designed around the needs of European research institutions, following EU values on data sovereignty, ethics and sustainability.' },
+    { icon: '🤝', title: 'Community-driven', description: 'Shaped by the scientific communities that use it — from marine biologists to climate scientists — and the developers who build on it.' },
+  ],
+};
+
+const principles = {
+  label: 'Principles',
+  title: 'How we work',
+  subtitle: 'The principles that guide every decision — from architecture to governance.',
+  items: [
+    { tag: 'Transparency', title: 'Open development', description: 'All code, roadmaps and governance decisions are public. We build in the open.' },
+    { tag: 'Sustainability', title: 'Long-term thinking', description: 'Beyond individual project cycles, we build infrastructure that outlasts funding.' },
+    { tag: 'Inclusivity', title: 'Low barrier to entry', description: 'Any research community in Europe should be able to join, regardless of technical capacity.' },
+  ],
+};
+
+const partnersSection = {
+  label: 'Partners & institutions',
+  title: 'Who\'s behind the initiative',
+  subtitle: 'A network of European research institutions, infrastructure providers and cloud partners building together.',
+};
+
+const funding = {
+  title: 'Funded by Horizon Europe',
+  description: 'The original <strong>AI4EOSC project</strong> was funded by the European Union under the Horizon Europe research and innovation programme. Associated projects within the initiative are independently funded through their own EU grants.',
+  link: { label: 'Explore all projects in the ecosystem →', href: '/ecosystem/projects' },
+  badge: { title: 'Horizon Europe', grant: 'No. 101058593' },
+};
+
+const cta = {
+  title: 'Join the AI4EOSC community',
+  description: 'Whether you\'re a researcher, developer or institution, there\'s a place for you in the ecosystem. Start by exploring what the platform can do for you.',
+  button: { label: 'Explore the platform', href: '/products' },
+};
 ---
-<Layout title="About - AI4EOSC Initiative">
-  <Marquee/>
-  <CtaFinal />
+
+<Layout
+  title="About - AI4EOSC Initiative"
+  description={hero.description}
+>
+  <main>
+
+    <!-- PAGE HERO -->
+    <PageHero
+      theme="teal"
+      breadcrumb="About"
+      title={hero.title}
+      description={hero.description}
+    />
+
+    <!-- OUR STORY -->
+    <div class="section-label"><div class="container">{story.label}</div></div>
+    <div class="container">
+      <div class="section-card">
+        <SectionHeader title={story.title} subtitle={story.subtitle} />
+        <div class="timeline">
+          {about.timeline.map((item, i) => (
+            <div class={`tl-item${i === about.timeline.length - 1 ? ' tl-last' : ''}`}>
+              <div class="tl-year">{item.year}</div>
+              <div class="tl-connector" aria-hidden="true">
+                <span class="tl-dot"></span>
+                <span class="tl-line"></span>
+              </div>
+              <div class="tl-body">
+                <h4>{item.title}</h4>
+                <p>{item.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- MISSION -->
+    <div class="section-label"><div class="container">{mission.label}</div></div>
+    <div class="container">
+      <div class="section-card">
+        <SectionHeader title={mission.title} subtitle={mission.subtitle} />
+        <div class="mission-grid">
+          {mission.items.map(item => (
+            <div class="mission-card">
+              <div class="mission-icon" aria-hidden="true">{item.icon}</div>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- PRINCIPLES -->
+    <div class="section-label"><div class="container">{principles.label}</div></div>
+    <div class="container">
+      <div class="section-card">
+        <SectionHeader title={principles.title} subtitle={principles.subtitle} />
+        <div class="principles-grid">
+          {principles.items.map(item => (
+            <div class="principle-card">
+              <span class="principle-tag">{item.tag}</span>
+              <h4>{item.title}</h4>
+              <p>{item.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- NUMBERS -->
+    <NumbersSection />
+
+    <!-- PARTNERS -->
+    <div class="section-label"><div class="container">{partnersSection.label}</div></div>
+    <div class="container">
+      <div class="section-card">
+        <SectionHeader title={partnersSection.title} subtitle={partnersSection.subtitle} />
+        <div class="partners-grid">
+          {partnerItems.map(partner => (
+            <a href={partner.url} target="_blank" rel="noopener noreferrer" class="partner-card" aria-label={partner.name}>
+              <img src={partner.src} alt={partner.name} class="partner-logo" loading="lazy" />
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- EU FUNDING -->
+    <div class="container eu-wrap">
+      <div class="eu-card">
+        <div class="eu-circles" aria-hidden="true">
+          <span class="eu-circle eu-circle--lg"></span>
+          <span class="eu-circle eu-circle--md"></span>
+          <span class="eu-circle eu-circle--sm"></span>
+        </div>
+        <div class="eu-left">
+          <h3>{funding.title}</h3>
+          <p set:html={funding.description} />
+          <a href={funding.link.href} class="eu-link">{funding.link.label}</a>
+        </div>
+        <div class="eu-badge">
+          <span class="eu-flag" aria-label="European Union flag">🇪🇺</span>
+          <strong>{funding.badge.title}</strong>
+          <p>Grant agreement<br/>{funding.badge.grant}</p>
+        </div>
+      </div>
+    </div>
+
+    <CtaFinal
+      theme="teal"
+      title={cta.title}
+      description={cta.description}
+      button={cta.button}
+    />
+
+  </main>
 </Layout>
+
+<style>
+  /* ── TIMELINE ─────────────────────────────────────── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+  }
+
+  .tl-item {
+    display: grid;
+    grid-template-columns: 72px 28px 1fr;
+    gap: 0 16px;
+    padding-bottom: 28px;
+  }
+
+  .tl-last {
+    padding-bottom: 0;
+  }
+
+  .tl-year {
+    font-family: var(--font-headings);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-primary-500);
+    text-align: right;
+    padding-top: 1px;
+    letter-spacing: -0.02em;
+  }
+
+  .tl-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tl-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--color-primary-400);
+    flex-shrink: 0;
+    margin-top: 5px;
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-primary-400) 20%, transparent 80%);
+  }
+
+  .tl-line {
+    flex: 1;
+    width: 1px;
+    background: var(--card-border);
+    margin-top: 6px;
+  }
+
+  .tl-last .tl-line {
+    display: none;
+  }
+
+  .tl-body h4 {
+    font-size: 15px;
+    font-weight: 650;
+    color: var(--color-neutral-900);
+    margin: 0 0 6px;
+    line-height: 1.35;
+  }
+
+  .tl-body p {
+    font-size: 14px;
+    color: var(--color-neutral-500);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* ── MISSION ──────────────────────────────────────── */
+  .mission-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .mission-card {
+    background: color-mix(in oklch, var(--color-neutral-100) 55%, white 45%);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    padding: 22px 24px 24px;
+  }
+
+  .mission-icon {
+    font-size: 24px;
+    margin-bottom: 14px;
+    line-height: 1;
+  }
+
+  .mission-card h3 {
+    font-size: 15px;
+    font-weight: 650;
+    color: var(--color-neutral-900);
+    margin: 0 0 8px;
+  }
+
+  .mission-card p {
+    font-size: 14px;
+    color: var(--color-neutral-500);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* ── PRINCIPLES ───────────────────────────────────── */
+  .principles-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .principle-card {
+    background: color-mix(in oklch, var(--color-neutral-100) 55%, white 45%);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    padding: 20px 22px 22px;
+  }
+
+  .principle-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-primary-600);
+    background: color-mix(in oklch, var(--color-primary-100) 60%, white 40%);
+    border-radius: 999px;
+    padding: 3px 10px;
+    margin-bottom: 12px;
+  }
+
+  .principle-card h4 {
+    font-size: 14px;
+    font-weight: 650;
+    color: var(--color-neutral-900);
+    margin: 0 0 7px;
+  }
+
+  .principle-card p {
+    font-size: 13px;
+    color: var(--color-neutral-500);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* ── PARTNERS ─────────────────────────────────────── */
+  .partners-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .partner-card {
+    background: color-mix(in oklch, var(--color-neutral-100) 55%, white 45%);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    padding: 20px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+    text-decoration: none;
+    transition:
+      background var(--transition-fast),
+      border-color var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  .partner-card:hover {
+    background: white;
+    border-color: color-mix(in oklch, var(--card-border) 80%, var(--color-primary-200) 20%);
+    transform: translateY(-1px);
+  }
+
+  .partner-logo {
+    max-height: 36px;
+    max-width: 100%;
+    object-fit: contain;
+    filter: grayscale(1) opacity(0.65);
+    transition: filter var(--transition-fast);
+  }
+
+  .partner-card:hover .partner-logo {
+    filter: grayscale(0) opacity(1);
+  }
+
+  /* ── EU FUNDING ───────────────────────────────────── */
+  .eu-wrap {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  .eu-card {
+    background:
+      radial-gradient(ellipse 55% 48% at 14% 16%, rgba(255, 255, 255, 0.13) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 42% at 82% 86%, rgba(0, 5, 50, 0.5) 0%, transparent 55%),
+      linear-gradient(140deg, #000f5e 0%, #002299 38%, #0033cc 70%, #1040dd 100%);
+    border-radius: var(--radius-lg);
+    padding: 44px 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    position: relative;
+    overflow: hidden;
+    color: #ffffff;
+  }
+
+  .eu-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    z-index: 0;
+  }
+
+  .eu-circles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: visible;
+  }
+
+  .eu-circle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translate(50%, 50%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.12),
+      0 0 40px rgba(60, 100, 255, 0.18),
+      inset 0 0 16px rgba(255, 255, 255, 0.04);
+    animation: pulsing 6s ease-in-out infinite;
+  }
+
+  .eu-circle--lg { width: 70%; animation-delay: 2s; }
+  .eu-circle--md { width: 48%; animation-delay: 1s; }
+  .eu-circle--sm { width: 28%; animation-delay: 0s; }
+
+  .eu-left {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+  }
+
+  .eu-left h3 {
+    font-family: var(--font-headings);
+    font-size: 40px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin: 0 0 14px;
+  }
+
+  .eu-left p {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.7;
+    max-width: 600px;
+    margin: 0;
+  }
+
+  .eu-left p strong {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+  }
+
+  .eu-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 18px;
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .eu-link:hover {
+    color: #ffffff;
+  }
+
+  .eu-badge {
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: var(--radius-md);
+    padding: 20px 28px;
+    text-align: center;
+    flex-shrink: 0;
+    backdrop-filter: blur(8px);
+  }
+
+  .eu-flag {
+    font-size: 32px;
+    display: block;
+    margin-bottom: 10px;
+    line-height: 1;
+  }
+
+  .eu-badge strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+  }
+
+  .eu-badge p {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* ── RESPONSIVE ───────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .partners-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .mission-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .principles-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .partners-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .eu-card {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 36px 32px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .tl-item {
+      grid-template-columns: 52px 24px 1fr;
+    }
+
+    .tl-year {
+      font-size: 15px;
+    }
+
+    .principles-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .partners-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

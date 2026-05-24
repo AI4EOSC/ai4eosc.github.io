@@ -1,0 +1,246 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/sections/PageHero.astro';
+import CtaFinal from '../../components/sections/CtaFinal.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const stories = await getCollection('stories');
+  return stories.map(story => ({
+    params: { slug: story.id },
+    props: { story },
+  }));
+}
+
+const { story } = Astro.props;
+const { Content } = await render(story);
+
+const allStories = await getCollection('stories');
+const related = allStories
+  .filter(s => s.id !== story.id)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const tagCls: Record<string, string> = {
+  'Case study': 'tag-teal',
+  'News':       'tag-blue',
+  'Research':   'tag-amber',
+};
+
+function formatDate(d: Date, short = false) {
+  return d.toLocaleDateString('en-GB', short
+    ? { month: 'short', year: 'numeric' }
+    : { day: 'numeric', month: 'long', year: 'numeric' });
+}
+---
+
+<Layout title={`${story.data.title} — AI4EOSC Stories`} description={story.data.excerpt}>
+  <PageHero
+    theme="teal"
+    breadcrumb={story.data.type}
+    breadcrumbParent={{ label: 'Stories', href: '/stories' }}
+    title={story.data.title}
+    description={story.data.excerpt}
+  >
+    <div class="hero-meta">
+      <span class={`type-tag ${tagCls[story.data.type] ?? 'tag-teal'}`}>{story.data.type}</span>
+      <span class="hero-date">{formatDate(story.data.date)}</span>
+    </div>
+  </PageHero>
+
+  <!-- Article -->
+  <section class="p-section has-top">
+    <div class="container">
+      <article class="article-body">
+        {story.data.image && (
+          <div class={`article-image grad-${story.data.gradient ?? 'dark'}`}>
+            <span class="circle circle--lg" aria-hidden="true"></span>
+            <span class="circle circle--md" aria-hidden="true"></span>
+            <span class="circle circle--sm" aria-hidden="true"></span>
+            <img src={story.data.image} alt="" class="cover" loading="eager" />
+          </div>
+        )}
+        <div class="article-topbar">
+          <a class="back-link" href="/stories">← All stories</a>
+          <span class="topbar-date">{formatDate(story.data.date)}</span>
+        </div>
+        <div class="prose">
+          <Content />
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <CtaFinal
+    theme="teal"
+    title="Share your story"
+    description="Are you using AI4EOSC in your research? We'd love to feature your work and help others discover what's possible on the platform."
+    button={{ label: 'Get in touch', href: '/support/contact' }}
+  />
+</Layout>
+
+<style>
+  /* ── Hero extras ────────────────────────────────────── */
+  .hero-meta {
+    display: flex; align-items: center; gap: 10px; margin-top: 22px;
+  }
+  .hero-date { font-size: 13px; color: rgba(255,255,255,0.45); }
+  .hero-meta .type-tag {
+    color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.18);
+  }
+
+  /* ── Layout ─────────────────────────────────────────── */
+  .p-section { padding: 0 0 24px; }
+  .p-section.has-top { padding-top: 10px; }
+
+  /* ── Article ────────────────────────────────────────── */
+  .article-body {
+    background: var(--card-bg);
+    border: 0.5px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .article-image {
+    height: 320px; position: relative; overflow: hidden;
+  }
+
+  .article-topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 48px;
+    border-bottom: 0.5px solid var(--card-border);
+  }
+
+  .back-link {
+    font-size: 12px; font-weight: 500;
+    color: var(--color-neutral-400); text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .back-link:hover { color: var(--color-primary-600); }
+
+  .topbar-date {
+    font-size: 12px; color: var(--color-neutral-400);
+  }
+
+  /* ── Prose ──────────────────────────────────────────── */
+  .prose {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 44px 48px 60px;
+    font-size: 16.5px; line-height: 1.85;
+    color: var(--color-neutral-600);
+  }
+
+  .prose :global(h2) {
+    font-family: var(--font-headings);
+    font-size: 22px; font-weight: 600;
+    color: var(--color-neutral-900);
+    letter-spacing: -0.02em; line-height: 1.25;
+    margin: 48px 0 16px;
+    padding-top: 48px;
+    border-top: 0.5px solid var(--card-border);
+  }
+
+  .prose :global(h2:first-child) {
+    margin-top: 0; padding-top: 0; border-top: none;
+  }
+
+  .prose :global(h3) {
+    font-family: var(--font-headings);
+    font-size: 17px; font-weight: 600;
+    color: var(--color-neutral-800);
+    letter-spacing: -0.01em;
+    margin: 30px 0 10px;
+  }
+
+  .prose :global(p) { margin: 0 0 20px; }
+  .prose :global(p:last-child) { margin-bottom: 0; }
+
+  .prose :global(ul), .prose :global(ol) {
+    margin: 0 0 20px; padding-left: 24px;
+  }
+  .prose :global(li) { margin-bottom: 8px; line-height: 1.7; }
+
+  .prose :global(a) {
+    color: var(--color-primary-600);
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+
+  .prose :global(strong) { color: var(--color-neutral-900); font-weight: 600; }
+
+  .prose :global(blockquote) {
+    border-left: 3px solid var(--color-primary-400);
+    margin: 28px 0; padding: 16px 22px;
+    background: var(--page-bg);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    color: var(--color-neutral-600);
+  }
+
+  .prose :global(blockquote p) { margin: 0; font-style: italic; }
+
+  .prose :global(blockquote p + p) {
+    margin-top: 10px; font-style: normal;
+    font-size: 13px; color: var(--color-neutral-400); font-weight: 500;
+  }
+
+  .prose :global(code) {
+    font-size: 13px; background: var(--page-bg);
+    border: 0.5px solid var(--card-border);
+    border-radius: 4px; padding: 1px 6px;
+    color: var(--color-primary-700);
+  }
+
+  /* Shared gradients + circles (article image & related thumbs) */
+  .cover {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; object-fit: cover; z-index: 1;
+  }
+
+  .grad-dark {
+    background:
+      radial-gradient(ellipse 55% 60% at 15% 15%, rgba(255,255,255,0.07) 0%, transparent 55%),
+      linear-gradient(140deg, #111418 0%, #1a1f24 50%, #1e2228 100%);
+  }
+  .grad-secondary {
+    background:
+      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255,255,255,0.10) 0%, transparent 55%),
+      linear-gradient(140deg, #6b0828 0%, #a01848 38%, #ec5d80 100%);
+  }
+  .grad-primary {
+    background:
+      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255,255,255,0.12) 0%, transparent 55%),
+      linear-gradient(140deg, #002d30 0%, #005060 38%, #008792 100%);
+  }
+
+  .circle {
+    position: absolute; right: 0; bottom: 0;
+    transform: translate(50%, 50%);
+    aspect-ratio: 1; border-radius: 50%;
+    background: transparent; pointer-events: none;
+    animation: pulsing 5s ease-in-out infinite; z-index: 0;
+  }
+  .circle--lg { width: 70%; animation-delay: 2s; }
+  .circle--md { width: 50%; animation-delay: 1s; }
+  .circle--sm { width: 30%; animation-delay: 0s; }
+
+  .grad-dark .circle {
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.18), 0 0 30px rgba(46,104,212,0.45), 0 0 65px rgba(46,104,212,0.20);
+  }
+  .grad-secondary .circle {
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.20), 0 0 30px rgba(236,93,128,0.50), 0 0 65px rgba(236,93,128,0.22);
+  }
+  .grad-primary .circle {
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.20), 0 0 30px rgba(0,200,215,0.48), 0 0 65px rgba(0,200,215,0.20);
+  }
+
+  /* ── Responsive ─────────────────────────────────────── */
+  @media (max-width: 960px) {
+    .article-topbar { padding: 12px 24px; }
+    .prose { padding: 32px 24px 44px; }
+  }
+
+  @media (max-width: 600px) {
+    .prose { padding: 24px 20px 36px; font-size: 15.5px; }
+    .article-image { height: 220px; }
+  }
+</style>

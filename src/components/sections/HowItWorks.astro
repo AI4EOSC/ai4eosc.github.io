@@ -1,6 +1,15 @@
 ---
-import howItWorks from '../../data/how-it-works.yml';
 import SectionHeader from '../SectionHeader.astro';
+
+const label = 'How it works';
+const title = 'How AI4EOSC works';
+const description = 'Three layers working together to bring open AI infrastructure to European research.';
+
+const items = [
+  { title: 'Products',   theme: 'eu-blue',   iconId: 'products',  description: 'Open-source software for training, serving and cataloguing AI models — built for EOSC.' },
+  { title: 'Ecosystem',  theme: 'secondary', iconId: 'ecosystem', description: 'EU-funded projects and scientific communities extending and using the platform.' },
+  { title: 'Gateways',   theme: 'primary',   iconId: 'gateways',  description: 'Domain-specific deployments giving researchers direct access to AI tools in their field.' },
+];
 
 const gradients: Record<string, string> = {
   'eu-blue': 'var(--gradient-eu-blue)',
@@ -17,13 +26,13 @@ const icons: Record<string, string> = {
 
 <section>
   <div class="section-label">
-    <div class="container">{howItWorks.label}</div>
+    <div class="container">{label}</div>
   </div>
   <div class="container">
     <div class="section-card">
-      <SectionHeader title={howItWorks.title} subtitle={howItWorks.description} />
+      <SectionHeader title={title} subtitle={description} />
       <div class="grid">
-        {howItWorks.items.map((item) => (
+        {items.map((item) => (
           <article class="card glass" key={item.title}>
             <div class="header" style={`background: ${gradients[item.theme]}`}>
               <span class="circle circle--lg" aria-hidden="true"></span>

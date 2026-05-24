@@ -2,6 +2,11 @@
 import data from '../../data/products.yml';
 import SectionHeader from '../SectionHeader.astro';
 
+const label = 'Products';
+const title = 'Our software';
+const description = 'Open-source tools built to make research-grade AI accessible across the European Open Science Cloud.';
+const action = { label: 'View all products →', href: '/products' };
+
 const icons: Record<string, string> = {
   platform: `<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>`,
   llm: `<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>`,
@@ -11,15 +16,15 @@ const icons: Record<string, string> = {
 
 <section>
   <div class="section-label">
-    <div class="container">{data.label}</div>
+    <div class="container">{label}</div>
   </div>
   <div class="container">
     <div class="section-card">
       <SectionHeader
-        title={data.title}
-        subtitle={data.description}
-        actionLabel={data.action.label}
-        actionHref={data.action.href}
+        title={title}
+        subtitle={description}
+        actionLabel={action.label}
+        actionHref={action.href}
       />
       <div class="grid">
         {data.items.map((item) => (

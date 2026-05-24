@@ -13,17 +13,17 @@ columns:
     - title: Ecosystem
       links:
           - label: Projects
-            href: /projects
+            href: /ecosystem/projects
           - label: Communities
-            href: /communities
+            href: /ecosystem/communities
           - label: Gateways
-            href: /gateways
+            href: /ecosystem/gateways
     - title: Support
       links:
           - label: Contact
-            href: /contact
+            href: /support/contact
           - label: FAQ
-            href: /faq
+            href: /support/faq
           - label: Documentation
             href: https://docs.ai4eosc.eu
 bottom:

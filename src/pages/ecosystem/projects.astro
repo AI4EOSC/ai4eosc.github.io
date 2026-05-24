@@ -1,0 +1,412 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/sections/PageHero.astro';
+import CtaFinal from '../../components/sections/CtaFinal.astro';
+import data from '../../data/projects.yml';
+
+const typeBadge: Record<string, { label: string; cls: string }> = {
+  origin:     { label: 'Origin project',    cls: 'b-origin' },
+  associated: { label: 'Associated',         cls: 'b-assoc'  },
+  extension:  { label: 'Platform extension', cls: 'b-ext'    },
+};
+
+const statusBadge: Record<string, { label: string; cls: string }> = {
+  active:    { label: 'Active',    cls: 'b-active' },
+  new:       { label: 'New',       cls: 'b-new'    },
+  completed: { label: 'Completed', cls: 'b-comp'   },
+};
+---
+
+<Layout title="Projects — AI4EOSC Ecosystem">
+  <PageHero
+    theme="blue"
+    breadcrumb="Projects"
+    breadcrumbParent={{ label: 'Ecosystem', href: '/ecosystem/projects' }}
+    title="EU-funded projects building the future of open AI"
+    description="From the original AI4EOSC project to a growing network of associated initiatives — each extending the platform with new capabilities for European science."
+  >
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-val">6<em>+</em></span><span class="hstat-lbl">Active projects</span></div>
+      <div class="hstat"><span class="hstat-val">24<em>+</em></span><span class="hstat-lbl">Partner institutions</span></div>
+      <div class="hstat"><span class="hstat-val">€12M<em>+</em></span><span class="hstat-lbl">Total EU funding</span></div>
+    </div>
+  </PageHero>
+
+  <section class="p-section">
+    <div class="section-label"><div class="container">All projects</div></div>
+    <div class="container">
+      <div class="box">
+        <div class="box-hdr">
+          <h2 class="box-title">Project catalogue</h2>
+        </div>
+        <p class="box-sub">EU-funded projects that originated or extend the AI4EOSC platform. Select any project to see details, partners and outputs.</p>
+
+        <div class="catalogue" x-data={`{ active: '${data.items[0].id}' }`}>
+
+          <!-- Sidebar -->
+          <div class="cat-sidebar">
+            {data.items.map((item: any) => (
+              <button
+                class="sidebar-item"
+                x-bind:class={`{ 'is-active': active === '${item.id}' }`}
+                x-on:click={`active = '${item.id}'`}
+                type="button"
+              >
+                <span class="circle circle--lg" aria-hidden="true"></span>
+                <span class="circle circle--md" aria-hidden="true"></span>
+                <span class="circle circle--sm" aria-hidden="true"></span>
+                <span class="sidebar-name">{item.title}</span>
+              </button>
+            ))}
+          </div>
+
+          <!-- Detail panels -->
+          <div class="cat-detail">
+            {data.items.map((item: any) => (
+              <div class="detail-panel" x-show={`active === '${item.id}'`} x-cloak>
+                <div class="detail-inner">
+
+                  <!-- Left: copy -->
+                  <div class="pdl">
+                    <div class="pdl-top">
+                      <span class={`badge ${typeBadge[item.type].cls}`}>{typeBadge[item.type].label}</span>
+                      <span class={`badge ${statusBadge[item.status].cls}`}>{statusBadge[item.status].label}</span>
+                    </div>
+                    <h3 class="pdl-title">{item.title}</h3>
+                    <p class="pdl-tagline">{item.tagline}</p>
+                    <p class="pdl-desc">{item.description}</p>
+
+                    <p class="feat-lbl">{item.outputsLabel}</p>
+                    <ul class="feats">
+                      {item.outputs.map((o: string) => (
+                        <li class="feat-chip">{o}</li>
+                      ))}
+                    </ul>
+
+                    {(item.lead || item.partners) && (
+                      <div class="partners-block">
+                        {item.lead && (
+                          <div class="partners-row">
+                            <span class="partners-lbl">Lead</span>
+                            <div class="pchips"><span class="pchip pchip-lead">{item.lead}</span></div>
+                          </div>
+                        )}
+                        {item.partners && (
+                          <div class="partners-row">
+                            <span class="partners-lbl">Partners</span>
+                            <div class="pchips">
+                              {item.partners.map((p: string) => <span class="pchip">{p}</span>)}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    <div class="pdl-actions">
+                      {item.url && (
+                        <a class="btn-visit" href={item.url} target="_blank" rel="noopener">Visit project ↗</a>
+                      )}
+                      {item.publishUrl && (
+                        <a class="btn-docs" href={item.publishUrl} target="_blank" rel="noopener">Publications ↗</a>
+                      )}
+                    </div>
+                  </div>
+
+                  <!-- Right: meta -->
+                  <div class="pdr">
+                    {item.logo && (
+                      <div class="meta-logo-wrap">
+                        <img src={item.logo} alt={`${item.title} logo`} class="meta-logo" />
+                      </div>
+                    )}
+                    <div class="meta-block">
+                      {item.grant && (
+                        <div class="meta-item">
+                          <span class="meta-lbl">Grant</span>
+                          <span class="meta-val">{item.grant}</span>
+                        </div>
+                      )}
+                      <div class="meta-item">
+                        <span class="meta-lbl">Programme</span>
+                        <span class="meta-val">{item.programme}</span>
+                      </div>
+                      <div class="meta-item">
+                        <span class="meta-lbl">Period</span>
+                        <span class="meta-val">{item.period}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaFinal
+    theme="blue"
+    title="Is your project part of the AI4EOSC ecosystem?"
+    description="If your EU-funded project uses or extends the AI4EOSC platform, get in touch to be listed here and connect with the community."
+    button={{ label: 'Submit your project', href: '/support/contact' }}
+  />
+</Layout>
+
+<style>
+  /* ── Hero stats ────────────────────────────────────── */
+  .hero-stats { display: flex; gap: 32px; margin-top: 28px; flex-wrap: wrap; }
+  .hstat { display: flex; flex-direction: column; gap: 3px; }
+  .hstat-val {
+    font-family: var(--font-headings); font-size: 30px; font-weight: 600;
+    color: #fff; letter-spacing: -0.03em; line-height: 1;
+  }
+  .hstat-val em { font-style: normal; color: rgba(255,255,255,0.45); font-size: 22px; }
+  .hstat-lbl { font-size: 11px; color: rgba(255,255,255,0.45); }
+
+  /* ── Page / box ────────────────────────────────────── */
+  .p-section { padding: 0 0 24px; }
+
+  .box {
+    background: var(--card-bg);
+    border: 0.5px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 28px 28px 24px;
+  }
+  .box-hdr { margin-bottom: 6px; }
+  .box-title {
+    font-size: 17px; font-weight: 600; color: var(--color-neutral-900);
+    font-family: var(--font-headings); letter-spacing: -0.01em;
+  }
+  .box-sub {
+    font-size: 13px; color: var(--color-neutral-500);
+    line-height: 1.6; max-width: 520px; margin-bottom: 20px;
+  }
+
+  /* ── Catalogue layout ──────────────────────────────── */
+  .catalogue {
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+
+  .cat-sidebar {
+    flex: 0 0 26%; width: 26%;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+
+  .cat-detail { flex: 1 1 0; min-width: 0; }
+
+  /* ── Sidebar items (light screen — same as index cards) */
+  .sidebar-item {
+    width: 100%; height: 65px;
+    display: flex; align-items: center; padding: 0 20px;
+    cursor: pointer; position: relative; overflow: hidden;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(46, 104, 212, 0.15);
+    background: var(--gradient-eu-blue-soft);
+    font: inherit; color: inherit; text-align: left; outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .sidebar-item:hover:not(.is-active) {
+    border-color: rgba(46, 104, 212, 0.28);
+    box-shadow: 0 2px 8px rgba(46, 104, 212, 0.08);
+  }
+
+  .sidebar-item:focus-visible {
+    outline: 2px solid rgba(46,104,212,0.4); outline-offset: 2px;
+  }
+
+  .sidebar-item.is-active {
+    border-color: rgba(46, 104, 212, 0.45);
+    box-shadow: 0 2px 14px rgba(46, 104, 212, 0.14);
+  }
+
+  .sidebar-item.is-active .sidebar-name { color: #2e68d4; font-weight: 600; }
+
+  /* Circles */
+  .circle {
+    position: absolute; right: 0; bottom: 0;
+    transform: translate(50%, 50%);
+    aspect-ratio: 1; border-radius: 50%;
+    background: transparent; pointer-events: none;
+    animation: pulsing 5s ease-in-out infinite; z-index: 0;
+  }
+  .circle--lg { width: 90%; animation-delay: 2s; }
+  .circle--md { width: 62%; animation-delay: 1s; }
+  .circle--sm { width: 38%; animation-delay: 0s; }
+
+  .sidebar-item .circle {
+    box-shadow:
+      0 0 0 1px rgba(46, 104, 212, 0.18),
+      0 0 30px rgba(46, 104, 212, 0.10),
+      0 0 60px rgba(46, 104, 212, 0.05);
+  }
+
+  .sidebar-item.is-active .circle {
+    box-shadow:
+      0 0 0 1px rgba(46, 104, 212, 0.32),
+      0 0 30px rgba(46, 104, 212, 0.18),
+      0 0 60px rgba(46, 104, 212, 0.09);
+  }
+
+  .sidebar-name {
+    position: relative; z-index: 2;
+    font-size: 14px; font-weight: 500; color: var(--color-neutral-700);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  /* ── Detail panel ──────────────────────────────────── */
+  .detail-panel {
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+    animation: panelFadeIn 0.22s ease;
+  }
+
+  @keyframes panelFadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .detail-inner {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    min-height: 380px;
+  }
+
+  /* Left */
+  .pdl {
+    padding: 26px 30px;
+    background: var(--page-bg);
+    display: flex; flex-direction: column; align-items: flex-start;
+  }
+
+  .pdl-top {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;
+  }
+
+  .badge {
+    font-size: 9px; font-weight: 600; border-radius: 999px; padding: 2px 9px;
+  }
+  .b-origin { color: #185fa5; background: #e6f1fb; }
+  .b-assoc  { color: #3c3489; background: #eeedfe; }
+  .b-ext    { color: #0f6e56; background: #e1f5ee; }
+
+  .pdl-title {
+    font-family: var(--font-headings);
+    font-size: 22px; font-weight: 600; letter-spacing: -0.02em;
+    color: var(--color-neutral-900); margin: 0 0 6px;
+  }
+
+  .pdl-tagline {
+    font-size: 13px; font-weight: 500;
+    color: var(--color-neutral-700); margin: 0 0 10px;
+  }
+
+  .pdl-desc {
+    font-size: 13px; line-height: 1.65;
+    color: var(--color-neutral-500); margin: 0 0 18px;
+  }
+
+  .feat-lbl {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--color-neutral-400); margin: 0 0 8px;
+  }
+
+  .feats {
+    list-style: none; padding: 0; margin: 0 0 18px;
+    display: flex; flex-wrap: wrap; gap: 5px;
+  }
+
+  .feat-chip {
+    font-size: 11px; font-weight: 500; color: var(--color-neutral-700);
+    background: white; border: 0.5px solid var(--card-border);
+    border-radius: 999px; padding: 2px 9px;
+  }
+
+  /* Partners */
+  .partners-block {
+    display: flex; flex-direction: column; gap: 8px;
+    width: 100%; margin-bottom: 20px;
+    padding: 12px 14px;
+    background: white; border: 0.5px solid var(--card-border);
+    border-radius: var(--radius-xs);
+  }
+
+  .partners-row { display: flex; align-items: flex-start; gap: 10px; }
+
+  .partners-lbl {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.07em;
+    text-transform: uppercase; color: var(--color-neutral-400);
+    width: 50px; flex-shrink: 0; padding-top: 3px;
+  }
+
+  .pchips { display: flex; flex-wrap: wrap; gap: 4px; }
+
+  .pchip {
+    font-size: 10px; color: var(--color-neutral-600);
+    background: var(--page-bg); border: 0.5px solid var(--card-border);
+    border-radius: 6px; padding: 2px 8px;
+  }
+
+  .pchip-lead {
+    color: #2e68d4; background: rgba(46,104,212,0.07);
+    border-color: rgba(46,104,212,0.2); font-weight: 600;
+  }
+
+  .pdl-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; }
+
+  .btn-visit, .btn-docs {
+    display: inline-flex; align-items: center;
+    border-radius: 999px; padding: 7px 14px;
+    font-size: 12px; font-weight: 500; text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  }
+
+  .btn-visit {
+    background: var(--color-neutral-900); color: #fff; border: 1px solid transparent;
+  }
+  .btn-visit:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.18); }
+
+  .btn-docs {
+    background: transparent; color: var(--color-neutral-700); border: 1px solid var(--card-border);
+  }
+  .btn-docs:hover { background: white; border-color: var(--color-neutral-300); transform: translateY(-1px); }
+
+  /* Right: meta */
+  .pdr {
+    background:
+      radial-gradient(ellipse 55% 80% at 5% 50%, rgba(21, 66, 139, 0.08) 0%, transparent 60%),
+      linear-gradient(140deg, #111418 0%, #1a1f24 50%, #1e2228 100%);
+    border-left: 0.5px solid var(--card-border);
+    padding: 22px 18px;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+
+  .meta-logo-wrap {
+    padding: 10px 12px; background: white;
+    border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .meta-logo { max-width: 100%; max-height: 28px; object-fit: contain; }
+
+  .meta-block { display: flex; flex-direction: column; gap: 12px; }
+  .meta-item { display: flex; flex-direction: column; gap: 3px; }
+  .meta-lbl {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.07em;
+    text-transform: uppercase; color: rgba(255,255,255,0.35);
+  }
+  .meta-val { font-size: 12px; color: rgba(255,255,255,0.75); font-weight: 500; }
+
+  /* ── Responsive ────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .catalogue { flex-direction: column; }
+    .cat-sidebar { flex: none; width: 100%; }
+    .cat-detail { width: 100%; }
+    .detail-inner { grid-template-columns: 1fr; }
+    .pdr { border-left: none; border-top: 0.5px solid var(--card-border); }
+  }
+</style>

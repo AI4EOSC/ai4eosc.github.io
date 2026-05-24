@@ -1,15 +1,19 @@
 ---
 import data from '../../data/testimonials.yml';
 import SectionHeader from '../SectionHeader.astro';
+
+const label = 'Testimonials';
+const title = 'What researchers say';
+const description = 'Feedback from scientists and developers building on the AI4EOSC platform.';
 ---
 
 <section>
   <div class="section-label">
-    <div class="container">{data.label}</div>
+    <div class="container">{label}</div>
   </div>
   <div class="container">
     <div class="section-card">
-      <SectionHeader title={data.title} subtitle={data.description} />
+      <SectionHeader title={title} subtitle={description} />
       <div class="grid">
         {data.items.map((item) => (
           <article class={`card ${item.tone}`}>

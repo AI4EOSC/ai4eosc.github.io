@@ -1,26 +1,107 @@
-label: Gateways
-hero:
-    title: Gateways built on AI4EOSC
-    description: Specialised platforms and projects that use AI4EOSC products to serve their own scientific communities.
-    buttonLabel: Explore gateways
-    buttonHref: /gateways
-more:
-    label: "+ more gateways →"
-    href: /gateways
 items:
-    - tag: Marine
-      status: Active
-      title: iMagine
+    - title: iMagine
+      type: marine
+      domain: Marine
+      status: active
+      tagline: AI for underwater imaging and marine biodiversity research
       description: AI for underwater imaging and marine biodiversity.
+      longDescription: iMagine provides researchers with AI tools for underwater image classification, species identification and marine biodiversity monitoring. Built as part of the iMagine EU project, it uses the AI4EOSC platform to offer a tailored experience for marine scientists across Europe.
+      euProject: iMagine
+      community: Marine Science
+      operatedBy:
+          - CNRS
+          - IFCA-CSIC
+      accessType: Open to researchers
+      accessDesc: Register with your institutional EOSC account to access the full model catalogue.
+      tools:
+          - Species classifier
+          - Image segmentation
+          - Biodiversity monitor
+          - DEEPaaS API
+          - OSCAR inference
       url: https://imagine-ai.eu
       slug: imagine
-    - tag: Climate
-      status: Active
-      title: OSCAR Gateway
+
+    - title: OSCAR Gateway
+      type: climate
+      domain: Climate
+      status: active
+      tagline: Serverless AI processing for Earth observation and climate data
       description: Serverless AI for Earth observation data.
+      longDescription: The OSCAR Gateway provides event-driven, serverless AI inference for Earth observation and climate data processing. Integrated with Copernicus datasets and EOSC storage, it enables large-scale climate model execution without managing infrastructure.
+      community: Climate & Weather
+      operatedBy:
+          - IFCA-CSIC
+          - EGI
+      accessType: Open to researchers
+      accessDesc: EOSC authentication required. Free for European academic institutions.
+      tools:
+          - Weather forecasting
+          - Climate downscaling
+          - EO processing
+          - Serverless inference
       slug: oscar-gateway
-    - tag: Health
-      status: New
-      title: Health-RI
+
+    - title: Health-RI
+      type: health
+      domain: Health
+      status: new
+      tagline: Federated AI for European health research infrastructure
       description: Federated AI for European health research.
+      longDescription: Health-RI deploys AI4EOSC's federated learning capabilities for health research, enabling institutions to train models on distributed patient data without centralising sensitive information. Fully GDPR-compliant and built for European health data spaces.
+      community: Health Research
+      operatedBy:
+          - Health-RI
+          - CNRS
+      accessType: By request
+      accessDesc: Access requires institutional approval due to the sensitive nature of health data.
+      tools:
+          - Federated learning
+          - Medical imaging AI
+          - GDPR-compliant
+          - Privacy-preserving
       slug: health-ri
+
+    - title: AI4Life
+      type: life
+      domain: Life sciences
+      status: active
+      tagline: AI tools for bioimaging, genomics and drug discovery
+      description: AI tools for bioimaging and genomics via BioImage.IO.
+      longDescription: AI4Life provides life scientists with access to state-of-the-art AI models for bioimaging, genomic analysis and drug discovery. Hosts the BioImage.IO model zoo and integrates with major European life science data repositories.
+      euProject: AI4Life
+      community: Bioinformatics
+      operatedBy:
+          - EMBL
+          - CNRS
+      accessType: Open to researchers
+      accessDesc: Free access with EOSC institutional credentials.
+      tools:
+          - BioImage.IO
+          - Sequence analysis
+          - Protein prediction
+          - Drug screening
+      url: https://ai4life.eurobioimaging.eu
+      slug: ai4life
+
+    - title: interTwin Physics
+      type: physics
+      domain: Physics
+      status: active
+      tagline: Digital twin AI for particle physics and astrophysics
+      description: AI digital twins for particle physics and astrophysics simulations.
+      longDescription: Developed as part of the interTwin project, this gateway provides physicists and astrophysicists with AI models for event classification, simulation and digital twin construction. Designed for high-energy physics, gravitational wave research and large-scale simulation workloads.
+      euProject: interTwin
+      community: Physics & Astrophysics
+      operatedBy:
+          - CERN
+          - IFCA-CSIC
+      accessType: Open to researchers
+      accessDesc: EOSC authentication required. CERN institutional access also accepted.
+      tools:
+          - Event classification
+          - Digital twin AI
+          - Simulation inference
+          - HEP models
+      url: https://intertwin.eu
+      slug: intertwin-physics

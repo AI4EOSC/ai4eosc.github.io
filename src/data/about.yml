@@ -1,0 +1,13 @@
+timeline:
+    - year: "2022"
+      title: AI4EOSC project kicks off
+      description: The Horizon Europe project begins with the goal of providing a platform for developing, deploying and sharing AI models within the European Open Science Cloud.
+    - year: "2023"
+      title: First gateways go live
+      description: Early adopter projects like iMagine deploy their own instances of the platform, validating the gateway model for domain-specific scientific communities.
+    - year: "2024"
+      title: Project completes, initiative continues
+      description: The original AI4EOSC Horizon Europe project concludes. The platform, the community and the infrastructure live on under the AI4EOSC Initiative umbrella.
+    - year: "2025 →"
+      title: New projects extend the ecosystem
+      description: EOSC-ARENA, FLUID-AI and other EU-funded projects join the initiative, adding AI agents, energy efficiency, security and new scientific communities.

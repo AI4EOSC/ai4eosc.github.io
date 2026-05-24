@@ -1,15 +1,19 @@
 ---
 import data from '../../data/numbers.yml';
 import SectionHeader from '../SectionHeader.astro';
+
+const label = 'The initiative in numbers';
+const title = 'Impact at scale';
+const description = 'Powering open AI infrastructure across Europe — from model training to scientific communities.';
 ---
 
 <section>
   <div class="section-label">
-    <div class="container">{data.label}</div>
+    <div class="container">{label}</div>
   </div>
   <div class="container">
     <div class="section-card">
-      <SectionHeader title={data.title} subtitle={data.description} />
+      <SectionHeader title={title} subtitle={description} />
       <div class="grid">
         {data.items.map((item) => (
           <article class={`stat-card ${item.tone}`}>

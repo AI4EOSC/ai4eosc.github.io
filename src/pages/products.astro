@@ -1,9 +1,715 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/sections/PageHero.astro';
 import CtaFinal from '../components/sections/CtaFinal.astro';
 import OpenSourceBanner from '../components/sections/OpenSourceBanner.astro';
+import data from '../data/products.yml';
+
+const productIcons: Record<string, string> = {
+  platform: `<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>`,
+  llm: `<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>`,
+  agents: `<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/>`,
+};
 ---
-<Layout title="Products - AI4EOSC Initiative">
+
+<Layout title="Products — AI4EOSC Initiative">
+  <PageHero
+    title="AI4EOSC Software Products"
+    description="Open infrastructure and services for AI in European Open Science. Built for researchers, by researchers."
+    breadcrumb="Products"
+    theme="black"
+  />
+
+  <!-- ── Catalogue ────────────────────────────────────── -->
+  <section class="p-section">
+    <div class="section-label"><div class="container">All products</div></div>
+    <div class="container">
+      <div class="box">
+        <div class="box-hdr">
+          <h2 class="box-title">Software catalogue</h2>
+        </div>
+        <p class="box-sub">Production-ready tools for the European Open Science Cloud. Select any product to see the full description, features and links.</p>
+
+        <div class="catalogue" x-data="{ active: 'platform' }">
+
+          <!-- Sidebar -->
+          <div class="cat-sidebar">
+            {data.items.map((item: any) => (
+              <button
+                class={`sidebar-item screen-${item.theme}`}
+                x-bind:class={`{ 'is-active': active === '${item.iconId}' }`}
+                x-on:click={`active = '${item.iconId}'`}
+                type="button"
+              >
+                <span class="circle circle--lg" aria-hidden="true"></span>
+                <span class="circle circle--md" aria-hidden="true"></span>
+                <span class="circle circle--sm" aria-hidden="true"></span>
+                <div class="sidebar-item-inner">
+                  <div class="sidebar-item-left">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                      stroke="white" stroke-width="1.75" stroke-linecap="round"
+                      stroke-linejoin="round" aria-hidden="true"
+                      set:html={productIcons[item.iconId]} />
+                    <span class="sidebar-name">{item.title}</span>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          <!-- Detail panels -->
+          <div class="cat-detail">
+            {data.items.map((item: any) => (
+              <div class="detail-panel" x-show={`active === '${item.iconId}'`} x-cloak>
+                <div class="prod-detail-inner">
+
+                  <div class="pdl">
+                    <span class="screen-badge">{item.category}</span>
+                    <h3 class="pdl-title">{item.title}</h3>
+                    <p class="prod-tagline">{item.tagline}</p>
+                    <p class="prod-desc">{item.detailDescription}</p>
+
+                    <p class="feat-lbl">Features</p>
+                    <ul class="feats">
+                      {item.features.map((f: string) => (
+                        <li class="feat-chip">{f}</li>
+                      ))}
+                    </ul>
+
+                    <div class="prod-actions">
+                      <a class="btn-visit" href={item.visitHref} target="_blank" rel="noopener">{item.visitLabel}</a>
+                      {item.docsHref && (
+                        <a class="btn-docs" href={item.docsHref} target="_blank" rel="noopener">Documentation ↗</a>
+                      )}
+                    </div>
+                  </div>
+
+                  <div class="pdr">
+                    {item.iconId === 'platform' && (
+                      <div class="illus">
+                        <div class="illus-chrome chrome-blue">
+                          <span class="illus-dot" style="background:#93c5fd"></span>
+                          <span class="illus-dot" style="background:#bfdbfe"></span>
+                          <span class="illus-dot" style="background:#dbeafe"></span>
+                          <span class="illus-url" style="color:#2e68d4">dashboard.ai4eosc.eu</span>
+                        </div>
+                        <div class="illus-body">
+                          <div class="pl-stat-row">
+                            <div class="pl-stat" style="background:#eff6ff;border:0.5px solid #bfdbfe">
+                              <span class="pl-num" style="color:#2e68d4">247</span>
+                              <span class="pl-lbl">Models</span>
+                            </div>
+                            <div class="pl-stat" style="background:#eff6ff;border:0.5px solid #bfdbfe">
+                              <span class="pl-num" style="color:#2e68d4">1.2k</span>
+                              <span class="pl-lbl">Users</span>
+                            </div>
+                            <div class="pl-stat" style="background:#eff6ff;border:0.5px solid #bfdbfe">
+                              <span class="pl-num" style="color:#2e68d4">12</span>
+                              <span class="pl-lbl">Gateways</span>
+                            </div>
+                          </div>
+                          <div class="illus-div"></div>
+                          <div class="pl-job">
+                            <div class="pl-job-row">
+                              <span class="pl-job-name">Training #142</span>
+                              <span class="pl-job-pct" style="color:#2e68d4">68%</span>
+                            </div>
+                            <div class="pl-track"><div class="pl-fill" style="width:68%;background:#2e68d4"></div></div>
+                          </div>
+                          <div class="pl-job">
+                            <div class="pl-job-row">
+                              <span class="pl-job-name">Serving #89</span>
+                              <span class="pl-job-pct" style="color:#2e68d4">Active</span>
+                            </div>
+                            <div class="pl-track"><div class="pl-fill" style="width:100%;background:#2e68d4;opacity:0.5"></div></div>
+                          </div>
+                        </div>
+                        <span class="illus-caption">Platform dashboard</span>
+                      </div>
+                    )}
+
+                    {item.iconId === 'llm' && (
+                      <div class="illus">
+                        <div class="illus-chrome" style="background:#fdf2f6">
+                          <span class="illus-dot" style="background:#f9a8c9"></span>
+                          <span class="illus-dot" style="background:#fbc8db"></span>
+                          <span class="illus-dot" style="background:#fde8f0"></span>
+                          <span class="illus-url" style="color:#be3a6e">llm.ai4eosc.eu</span>
+                        </div>
+                        <div class="illus-body" style="gap:8px">
+                          <div class="llm-header">
+                            <span class="llm-badge" style="color:#be3a6e;background:#fdf2f6;border-color:#f9a8c9">Mixtral-8x7B</span>
+                            <span class="llm-badge" style="color:#4b7c6f;background:#eef6f3;border-color:#a7d4c8">EU-hosted</span>
+                          </div>
+                          <div class="chat-row" style="flex-direction:row">
+                            <div class="chat-av" style="background:#e2e8f0;color:#475569">U</div>
+                            <div class="chat-bubble" style="background:#f1f5f9;color:#374151;border-radius:8px 8px 0 8px">Summarise this research paper…</div>
+                          </div>
+                          <div class="chat-row" style="flex-direction:row;justify-content:flex-end">
+                            <div class="chat-bubble" style="background:#fdf2f6;color:#7c1d40;border-radius:8px 0 8px 8px;border:0.5px solid #fbc8db">The paper presents a novel approach to federated learning with privacy guarantees…</div>
+                            <div class="chat-av" style="background:#fdf2f6;color:#be3a6e;border:0.5px solid #f9a8c9">AI</div>
+                          </div>
+                        </div>
+                        <span class="illus-caption">LLM API interface</span>
+                      </div>
+                    )}
+
+                    {item.iconId === 'agents' && (
+                      <div class="illus">
+                        <div class="illus-chrome" style="background:#eefbfc">
+                          <span class="illus-dot" style="background:#67e0e8"></span>
+                          <span class="illus-dot" style="background:#9decf1"></span>
+                          <span class="illus-dot" style="background:#c2f5f8"></span>
+                          <span class="illus-url" style="color:#007d88">agents.ai4eosc.eu</span>
+                        </div>
+                        <div class="illus-body">
+                          <div class="ag-pipeline">
+                            <div class="ag-node" style="background:#eefbfc;border-color:#67e0e8;color:#007d88">
+                              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                            <div class="ag-line" style="background:#67e0e8"></div>
+                            <div class="ag-node" style="background:#00c8d7;border-color:#009aaa;color:white;box-shadow:0 0 10px rgba(0,200,215,0.5)">
+                              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3"/></svg>
+                            </div>
+                            <div class="ag-line" style="background:#dee2e6"></div>
+                            <div class="ag-node" style="background:#f8f9fa;border-color:#dee2e6;color:#9ca3af">
+                              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            </div>
+                          </div>
+                          <div class="ag-labels"><span>Retrieve</span><span>Process</span><span>Deliver</span></div>
+                          <div class="illus-div"></div>
+                          <div class="ag-status">
+                            <span class="ag-dot"></span>
+                            Running step 2 of 3
+                          </div>
+                          <div class="ag-note">In development · EOSC-ARENA early access</div>
+                        </div>
+                        <span class="illus-caption">Agent workflow preview</span>
+                      </div>
+                    )}
+                  </div>
+
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Open source banner ────────────────────────────── -->
   <OpenSourceBanner />
-  <CtaFinal />
+
+  <!-- ── Tech stack ───────────────────────────────────── -->
+  <section class="p-section">
+    <div class="section-label"><div class="container">Under the hood</div></div>
+    <div class="container">
+      <div class="box">
+        <div class="box-hdr">
+          <h2 class="box-title">Built on open standards</h2>
+        </div>
+        <p class="box-sub">The technology stack behind AI4EOSC is built entirely on open-source components and open standards.</p>
+        <div class="tech-grid">
+          <div class="tech-card">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="tech-icon"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            <h4>DEEPaaS API</h4>
+            <p>Standardised REST API for exposing AI models as services, regardless of framework.</p>
+          </div>
+          <div class="tech-card">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="tech-icon"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+            <h4>OSCAR</h4>
+            <p>Serverless computing framework for data-driven AI inference on hybrid cloud.</p>
+          </div>
+          <div class="tech-card">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="tech-icon"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <h4>EOSC AAI</h4>
+            <p>Federated authentication and authorisation via the EOSC identity provider.</p>
+          </div>
+          <div class="tech-card">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="tech-icon"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>
+            <h4>oneData</h4>
+            <p>EOSC-native distributed storage for datasets and model artefacts.</p>
+          </div>
+          <div class="tech-card">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="tech-icon"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <h4>MLflow</h4>
+            <p>Experiment tracking and model registry integrated into the training pipeline.</p>
+          </div>
+          <div class="tech-card">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="tech-icon"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+            <h4>Kubernetes</h4>
+            <p>Containerised deployment on Kubernetes for reproducibility and scalability.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Get started steps ─────────────────────────────── -->
+  <section class="p-section">
+    <div class="section-label"><div class="container">Get started</div></div>
+    <div class="container">
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-screen screen-eu-blue">
+            <span class="circle circle--lg" aria-hidden="true"></span>
+            <span class="circle circle--md" aria-hidden="true"></span>
+            <span class="circle circle--sm" aria-hidden="true"></span>
+            <span class="step-num">01</span>
+          </div>
+          <div class="step-body">
+            <h4>Create an EOSC account</h4>
+            <p>Sign up via the EOSC Portal using your institutional credentials. Access is free for European researchers.</p>
+            <a class="step-link link-blue" href="https://eosc-portal.eu" target="_blank" rel="noopener">Go to EOSC Portal →</a>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-screen screen-secondary">
+            <span class="circle circle--lg" aria-hidden="true"></span>
+            <span class="circle circle--md" aria-hidden="true"></span>
+            <span class="circle circle--sm" aria-hidden="true"></span>
+            <span class="step-num">02</span>
+          </div>
+          <div class="step-body">
+            <h4>Explore the platform</h4>
+            <p>Browse the AI model catalogue, clone an existing model or register your own using the DEEPaaS API template.</p>
+            <a class="step-link link-pink" href="https://docs.ai4eosc.eu" target="_blank" rel="noopener">Read the docs →</a>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-screen screen-primary">
+            <span class="circle circle--lg" aria-hidden="true"></span>
+            <span class="circle circle--md" aria-hidden="true"></span>
+            <span class="circle circle--sm" aria-hidden="true"></span>
+            <span class="step-num">03</span>
+          </div>
+          <div class="step-body">
+            <h4>Deploy and share</h4>
+            <p>Train on EOSC compute, serve via OSCAR and publish your model to the catalogue for the community.</p>
+            <a class="step-link link-teal" href="https://docs.ai4eosc.eu" target="_blank" rel="noopener">Deployment guide →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaFinal
+    title="Ready to build on EOSC?"
+    description="Join hundreds of researchers already using AI4EOSC to accelerate their AI workflows on European infrastructure."
+    button={{ label: "Get started ↗", href: "https://ai4eosc.eu" }}
+    theme="black"
+  />
 </Layout>
+
+<style>
+  /* ── Layout ────────────────────────────────────────── */
+  .p-section { padding: 0 0 24px; }
+
+  /* ── White box container ───────────────────────────── */
+  .box {
+    background: var(--card-bg);
+    border: 0.5px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 28px 28px 24px;
+  }
+
+  .box-hdr { margin-bottom: 6px; }
+
+  .box-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--color-neutral-900);
+    font-family: var(--font-headings);
+    letter-spacing: -0.01em;
+  }
+
+  .box-sub {
+    font-size: 13px;
+    color: var(--color-neutral-500);
+    line-height: 1.6;
+    max-width: 520px;
+    margin-bottom: 22px;
+  }
+
+  /* ── Catalogue sidebar layout ──────────────────────── */
+  .catalogue {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .cat-sidebar {
+    flex: 0 0 26%;
+    width: 26%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .cat-detail { flex: 1 1 0; min-width: 0; }
+
+  /* ── Sidebar items ─────────────────────────────────── */
+  .sidebar-item {
+    width: 100%;
+    height: 76px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid transparent;
+    background:
+      radial-gradient(ellipse 55% 80% at 5% 50%, rgba(0, 135, 146, 0.14) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 70% at 92% 50%, rgba(236, 93, 128, 0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 50%),
+      linear-gradient(140deg, #111418 0%, #1a1f24 50%, #1e2228 100%);
+    font: inherit; color: inherit; text-align: left; outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .sidebar-item:focus-visible {
+    outline: 2px solid rgba(255,255,255,0.4);
+    outline-offset: 2px;
+  }
+
+  .screen-eu-blue.is-active  { border-color: rgba(46,104,212,0.7); box-shadow: 0 4px 20px rgba(46,104,212,0.18); }
+  .screen-secondary.is-active{ border-color: rgba(236,93,128,0.7); box-shadow: 0 4px 20px rgba(236,93,128,0.18); }
+  .screen-primary.is-active  { border-color: rgba(0,200,215,0.7);  box-shadow: 0 4px 20px rgba(0,200,215,0.18); }
+
+  .sidebar-item-inner {
+    position: relative; z-index: 2;
+    display: flex; align-items: center; width: 100%; gap: 10px;
+  }
+
+  .sidebar-item-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+
+  .sidebar-name {
+    font-size: 14px; font-weight: 500; color: white;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  /* ── Circles (sidebar + step cards) ───────────────── */
+  .circle {
+    position: absolute; right: 0; bottom: 0;
+    transform: translate(50%, 50%);
+    aspect-ratio: 1; border-radius: 50%;
+    background: transparent; pointer-events: none;
+    animation: pulsing 5s ease-in-out infinite; z-index: 0;
+  }
+  .circle--lg { width: 90%; animation-delay: 2s; }
+  .circle--md { width: 62%; animation-delay: 1s; }
+  .circle--sm { width: 38%; animation-delay: 0s; }
+
+  /* Resting glows */
+  .screen-eu-blue .circle  { box-shadow: 0 0 0 1px rgba(255,255,255,0.18), 0 0 30px rgba(46,104,212,0.22),  0 0 60px rgba(46,104,212,0.10),  inset 0 0 12px rgba(255,255,255,0.03); }
+  .screen-secondary .circle{ box-shadow: 0 0 0 1px rgba(255,255,255,0.18), 0 0 30px rgba(236,93,128,0.22),  0 0 60px rgba(236,93,128,0.10),  inset 0 0 12px rgba(255,255,255,0.03); }
+  .screen-primary .circle  { box-shadow: 0 0 0 1px rgba(255,255,255,0.18), 0 0 30px rgba(0,200,215,0.22),   0 0 60px rgba(0,200,215,0.10),   inset 0 0 12px rgba(255,255,255,0.03); }
+
+  /* Active (saturated) glows */
+  .screen-eu-blue.is-active .circle  { box-shadow: 0 0 0 1px rgba(255,255,255,0.55), 0 0 30px rgba(46,104,212,0.6),  0 0 70px rgba(46,104,212,0.35),  inset 0 0 14px rgba(255,255,255,0.08); }
+  .screen-secondary.is-active .circle{ box-shadow: 0 0 0 1px rgba(255,255,255,0.55), 0 0 30px rgba(236,93,128,0.6),  0 0 70px rgba(236,93,128,0.35),  inset 0 0 14px rgba(255,255,255,0.08); }
+  .screen-primary.is-active .circle  { box-shadow: 0 0 0 1px rgba(255,255,255,0.55), 0 0 30px rgba(0,200,215,0.6),   0 0 70px rgba(0,200,215,0.35),   inset 0 0 14px rgba(255,255,255,0.08); }
+
+  /* ── Detail panel ──────────────────────────────────── */
+  .detail-panel {
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+    animation: panelFadeIn 0.22s ease;
+  }
+
+  @keyframes panelFadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .prod-detail-inner {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    min-height: 380px;
+  }
+
+  /* ── Detail left ───────────────────────────────────── */
+  .pdl {
+    padding: 28px 32px;
+    background: var(--page-bg);
+    display: flex; flex-direction: column; align-items: flex-start;
+  }
+
+  .screen-badge {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.07em;
+    text-transform: uppercase; color: var(--color-neutral-500);
+    background: white; border: 1px solid var(--card-border);
+    border-radius: 999px; padding: 2px 9px; margin-bottom: 14px;
+    display: inline-block;
+  }
+
+  .pdl-title {
+    font-family: var(--font-headings);
+    font-size: 22px; font-weight: 600; letter-spacing: -0.02em;
+    color: var(--color-neutral-900); margin: 0 0 6px;
+  }
+
+  .prod-tagline {
+    font-size: 13px; font-weight: 500;
+    color: var(--color-neutral-900); margin: 0 0 10px;
+  }
+
+  .prod-desc {
+    font-size: 13px; line-height: 1.65;
+    color: var(--color-neutral-500); margin: 0 0 20px;
+  }
+
+  .feat-lbl {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--color-neutral-400);
+    margin: 0 0 8px;
+  }
+
+  .feats {
+    list-style: none; padding: 0; margin: 0 0 22px;
+    display: flex; flex-wrap: wrap; gap: 5px;
+  }
+
+  .feat-chip {
+    font-size: 11px; font-weight: 500; color: var(--color-neutral-700);
+    background: white; border: 0.5px solid var(--card-border);
+    border-radius: 999px; padding: 2px 9px;
+  }
+
+  .prod-actions {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto;
+  }
+
+  .btn-visit, .btn-docs {
+    display: inline-flex; align-items: center;
+    border-radius: 999px; padding: 8px 16px;
+    font-size: 13px; font-weight: 500;
+    text-decoration: none; cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  }
+
+  .btn-visit {
+    background: var(--color-neutral-900);
+    color: #ffffff;
+    border: 1px solid transparent;
+  }
+
+  .btn-visit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  }
+
+  .btn-docs {
+    background: transparent;
+    color: var(--color-neutral-700);
+    border: 1px solid var(--card-border);
+  }
+
+  .btn-docs:hover {
+    background: white;
+    border-color: var(--color-neutral-300);
+    transform: translateY(-1px);
+  }
+
+  /* ── Detail right (illustration) ──────────────────── */
+  .pdr {
+    background: var(--page-bg);
+    display: flex; align-items: center; justify-content: center;
+    padding: 28px 20px;
+    border-left: 0.5px solid var(--card-border);
+  }
+
+  /* ── Illustration ──────────────────────────────────── */
+  .illus {
+    width: 100%; max-width: 260px;
+    border-radius: 10px; overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.06);
+    border: 0.5px solid var(--card-border);
+  }
+
+  .illus-chrome {
+    height: 30px; display: flex; align-items: center;
+    gap: 5px; padding: 0 10px; flex-shrink: 0;
+  }
+
+  .illus-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+  .illus-url {
+    font-size: 10px; font-weight: 500; margin-left: 5px; opacity: 0.9;
+  }
+
+  .illus-body {
+    padding: 12px; display: flex; flex-direction: column;
+    gap: 9px; background: white;
+  }
+
+  .illus-div { height: 0.5px; background: #e5e7eb; }
+
+  .illus-caption {
+    display: block; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.04em; text-align: center;
+    padding: 6px 10px;
+    background: color-mix(in oklch, var(--color-neutral-100) 55%, white 45%);
+    color: var(--color-neutral-400);
+    border-top: 0.5px solid var(--card-border);
+  }
+
+  /* Platform */
+  .chrome-blue { background: #eff6ff; }
+  .pl-stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; }
+  .pl-stat { display: flex; flex-direction: column; align-items: center; padding: 6px 4px; border-radius: 6px; gap: 2px; }
+  .pl-num { font-size: 14px; font-weight: 700; line-height: 1; }
+  .pl-lbl { font-size: 9px; color: #94a3b8; font-weight: 500; }
+  .pl-job { display: flex; flex-direction: column; gap: 5px; }
+  .pl-job-row { display: flex; justify-content: space-between; align-items: center; }
+  .pl-job-name { font-size: 11px; color: #374151; font-weight: 500; }
+  .pl-job-pct  { font-size: 11px; font-weight: 600; }
+  .pl-track { height: 4px; background: #f1f5f9; border-radius: 99px; overflow: hidden; }
+  .pl-fill  { height: 100%; border-radius: 99px; }
+
+  /* LLM */
+  .llm-header { display: flex; gap: 6px; align-items: center; }
+  .llm-badge { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 999px; border: 0.5px solid; }
+  .chat-row { display: flex; align-items: flex-end; gap: 6px; }
+  .chat-av { width: 20px; height: 20px; border-radius: 50%; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .chat-bubble { font-size: 11px; line-height: 1.5; padding: 7px 9px; max-width: 80%; }
+
+  /* Agents */
+  .ag-pipeline { display: flex; align-items: center; justify-content: center; padding: 4px 0; }
+  .ag-node { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .ag-line { flex: 1; height: 1.5px; }
+  .ag-labels { display: flex; justify-content: space-between; padding: 0 4px; font-size: 9px; color: #9ca3af; font-weight: 500; }
+  .ag-status { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 500; color: #374151; }
+  .ag-dot { width: 6px; height: 6px; border-radius: 50%; background: #00c8d7; box-shadow: 0 0 5px rgba(0,200,215,0.6); flex-shrink: 0; }
+  .ag-note { font-size: 10px; color: #9ca3af; font-weight: 500; }
+
+  /* ── Tech stack ────────────────────────────────────── */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .tech-card {
+    background: var(--page-bg);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+  }
+
+  .tech-icon {
+    color: var(--color-primary-500);
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .tech-card h4 {
+    font-size: 13px; font-weight: 600;
+    color: var(--color-neutral-900); margin: 0 0 5px;
+  }
+
+  .tech-card p {
+    font-size: 12px; color: var(--color-neutral-500); line-height: 1.55; margin: 0;
+  }
+
+  /* ── Step cards ────────────────────────────────────── */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .step-card {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 0.5px solid var(--card-border);
+    background: var(--card-bg);
+  }
+
+  /* Colored screen top — uses same .screen-* classes + circle glows */
+  .step-screen {
+    position: relative;
+    overflow: hidden;
+    padding: 24px 24px 20px;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .step-screen.screen-eu-blue {
+    background:
+      radial-gradient(ellipse 55% 48% at 14% 16%, rgba(255,255,255,0.13) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 42% at 82% 86%, rgba(0,5,50,0.5) 0%, transparent 55%),
+      linear-gradient(140deg, #000f5e 0%, #002299 38%, #0033cc 70%, #1040dd 100%);
+  }
+
+  .step-screen.screen-secondary {
+    background:
+      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255,255,255,0.13) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 45% at 85% 88%, rgba(80,10,30,0.45) 0%, transparent 58%),
+      linear-gradient(140deg, #6b0828 0%, #a01848 38%, #ec5d80 100%);
+  }
+
+  .step-screen.screen-primary {
+    background:
+      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255,255,255,0.14) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 45% at 85% 88%, rgba(0,40,44,0.45) 0%, transparent 58%),
+      linear-gradient(140deg, #002d30 0%, #005060 38%, #008792 100%);
+  }
+
+  .step-num {
+    font-family: var(--font-headings);
+    font-size: 52px; font-weight: 600;
+    letter-spacing: -0.04em; line-height: 1;
+    color: rgba(255,255,255,0.9);
+    position: relative; z-index: 2;
+  }
+
+  /* White body below the screen */
+  .step-body {
+    padding: 20px 22px 22px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+
+  .step-card h4 {
+    font-size: 14px; font-weight: 600;
+    color: var(--color-neutral-900); margin: 0; line-height: 1.3;
+  }
+
+  .step-card p {
+    font-size: 12px; color: var(--color-neutral-500);
+    line-height: 1.65; margin: 0;
+  }
+
+  .step-link {
+    font-size: 12px; font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.15s ease;
+    margin-top: 4px;
+    display: inline-block;
+  }
+
+  .step-link:hover { opacity: 0.7; }
+  .link-blue { color: #2e68d4; }
+  .link-pink { color: #ec5d80; }
+  .link-teal { color: var(--color-primary-600); }
+
+  /* ── Responsive ────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .catalogue { flex-direction: column; }
+    .cat-sidebar { flex: none; width: 100%; }
+    .cat-detail  { width: 100%; }
+    .prod-detail-inner { grid-template-columns: 1fr; }
+    .pdr { border-left: none; border-top: 0.5px solid var(--card-border); }
+    .tech-grid  { grid-template-columns: repeat(2, 1fr); }
+    .steps-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .tech-grid  { grid-template-columns: 1fr; }
+    .box { padding: 20px 18px; }
+  }
+</style>

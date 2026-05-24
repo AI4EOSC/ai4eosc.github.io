@@ -1,7 +1,39 @@
 ---
-import projects from '../../data/projects.yml';
-import communities from '../../data/communities.yml';
-import gateways from '../../data/gateways.yml';
+import projectsData from '../../data/projects.yml';
+import communitiesData from '../../data/communities.yml';
+import gatewaysData from '../../data/gateways.yml';
+
+const typeLabel: Record<string, string> = {
+  origin: 'Origin',
+  associated: 'Associated',
+  extension: 'Extension',
+};
+
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+const projectsHero = {
+  title: 'EU-funded projects',
+  description: 'Horizon Europe projects collaborating and extending the AI4EOSC platform across the European research landscape.',
+  buttonLabel: 'Explore projects',
+  buttonHref: '/ecosystem/projects',
+};
+const projectsMore = { label: '+ more projects →', href: '/ecosystem/projects' };
+
+const communitiesHero = {
+  title: 'Scientific communities',
+  description: 'AI4EOSC serves a growing number of research domains, connecting scientists with the AI tools they need.',
+  buttonLabel: 'Explore communities',
+  buttonHref: '/ecosystem/communities',
+};
+const communitiesMore = { label: '+ more communities →', href: '/ecosystem/communities' };
+
+const gatewaysHero = {
+  title: 'Gateways built on AI4EOSC',
+  description: 'Specialised platforms and projects that use AI4EOSC products to serve their own scientific communities.',
+  buttonLabel: 'Explore gateways',
+  buttonHref: '/ecosystem/gateways',
+};
+const gatewaysMore = { label: '+ more gateways →', href: '/ecosystem/gateways' };
 
 const communityIcons: Record<string, string> = {
   marine: `<path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>`,
@@ -20,9 +52,9 @@ const communityIcons: Record<string, string> = {
     <div class="sub-block">
       <div class="hero eu-blue">
         <div class="hero-content">
-          <h2>{projects.hero.title}</h2>
-          <p>{projects.hero.description}</p>
-          <a class="button-pill ghost" href={projects.hero.buttonHref}>{projects.hero.buttonLabel}</a>
+          <h2>{projectsHero.title}</h2>
+          <p>{projectsHero.description}</p>
+          <a class="button-pill ghost" href={projectsHero.buttonHref}>{projectsHero.buttonLabel}</a>
         </div>
         <div class="hero-circles" aria-hidden="true">
           <span class="circle circle--lg"></span>
@@ -31,7 +63,7 @@ const communityIcons: Record<string, string> = {
         </div>
       </div>
       <div class="grid">
-        {projects.items.slice(0, 5).map((item) => (
+        {projectsData.items.slice(0, 5).map((item) => (
           <article class="card glass">
             <div class="screen eu-blue">
               <span class="circle circle--lg" aria-hidden="true"></span>
@@ -40,20 +72,20 @@ const communityIcons: Record<string, string> = {
               <div class="screen-content row">
                 <h4>{item.title}</h4>
                 <div class="screen-pills">
-                  <span class="pill tag">{item.tag}</span>
-                  <span class={`pill status ${item.status.toLowerCase()}`}>{item.status}</span>
+                  <span class="pill tag">{typeLabel[item.type] ?? item.type}</span>
+                  <span class={`pill status ${item.status}`}>{capitalize(item.status)}</span>
                 </div>
               </div>
             </div>
             <div class="body">
-              <p>{item.description}</p>
+              <p>{item.shortDescription}</p>
               {item.url && (
                 <a class="link eu-blue" href={item.url} target="_blank" rel="noopener noreferrer">→ Visit website</a>
               )}
             </div>
           </article>
         ))}
-        <a class="card more eu-blue" href={projects.more.href}>{projects.more.label}</a>
+        <a class="card more eu-blue" href={projectsMore.href}>{projectsMore.label}</a>
       </div>
     </div>
 
@@ -61,9 +93,9 @@ const communityIcons: Record<string, string> = {
     <div class="sub-block">
       <div class="hero secondary">
         <div class="hero-content">
-          <h2>{communities.hero.title}</h2>
-          <p>{communities.hero.description}</p>
-          <a class="button-pill ghost" href={communities.hero.buttonHref}>{communities.hero.buttonLabel}</a>
+          <h2>{communitiesHero.title}</h2>
+          <p>{communitiesHero.description}</p>
+          <a class="button-pill ghost" href={communitiesHero.buttonHref}>{communitiesHero.buttonLabel}</a>
         </div>
         <div class="hero-circles" aria-hidden="true">
           <span class="circle circle--lg"></span>
@@ -72,7 +104,7 @@ const communityIcons: Record<string, string> = {
         </div>
       </div>
       <div class="grid">
-        {communities.items.map((item) => (
+        {communitiesData.items.map((item) => (
           <article class="card glass">
             <div class="screen secondary">
               <span class="circle circle--lg" aria-hidden="true"></span>
@@ -101,7 +133,7 @@ const communityIcons: Record<string, string> = {
             </div>
           </article>
         ))}
-        <a class="card more secondary" href={communities.more.href}>{communities.more.label}</a>
+        <a class="card more secondary" href={communitiesMore.href}>{communitiesMore.label}</a>
       </div>
     </div>
 
@@ -109,9 +141,9 @@ const communityIcons: Record<string, string> = {
     <div class="sub-block last">
       <div class="hero primary">
         <div class="hero-content">
-          <h2>{gateways.hero.title}</h2>
-          <p>{gateways.hero.description}</p>
-          <a class="button-pill ghost" href={gateways.hero.buttonHref}>{gateways.hero.buttonLabel}</a>
+          <h2>{gatewaysHero.title}</h2>
+          <p>{gatewaysHero.description}</p>
+          <a class="button-pill ghost" href={gatewaysHero.buttonHref}>{gatewaysHero.buttonLabel}</a>
         </div>
         <div class="hero-circles" aria-hidden="true">
           <span class="circle circle--lg"></span>
@@ -120,7 +152,7 @@ const communityIcons: Record<string, string> = {
         </div>
       </div>
       <div class="grid">
-        {gateways.items.map((item) => (
+        {gatewaysData.items.map((item) => (
           <article class="card glass">
             <div class="screen primary">
               <span class="circle circle--lg" aria-hidden="true"></span>
@@ -129,8 +161,8 @@ const communityIcons: Record<string, string> = {
               <div class="screen-content row">
                 <h4>{item.title}</h4>
                 <div class="screen-pills">
-                  <span class="pill tag">{item.tag}</span>
-                  <span class={`pill status ${item.status.toLowerCase()}`}>{item.status}</span>
+                  <span class="pill tag">{item.domain ?? typeLabel[item.type] ?? item.type}</span>
+                  <span class={`pill status ${item.status}`}>{capitalize(item.status)}</span>
                 </div>
               </div>
             </div>
@@ -141,13 +173,13 @@ const communityIcons: Record<string, string> = {
                   <a class="link primary" href={item.url} target="_blank" rel="noopener noreferrer">→ Visit gateway</a>
                 )}
                 {item.slug && (
-                  <a class="link" href={`/ecosystem/gateways/${item.slug}`}>→ Learn more</a>
+                  <a class="link" href={`/ecosystem/gateways`}>→ Learn more</a>
                 )}
               </div>
             </div>
           </article>
         ))}
-        <a class="card more primary" href={gateways.more.href}>{gateways.more.label}</a>
+        <a class="card more primary" href={gatewaysMore.href}>{gatewaysMore.label}</a>
       </div>
     </div>
 

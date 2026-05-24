@@ -1,22 +1,87 @@
-label: Communities
-hero:
-    title: Scientific communities
-    description: AI4EOSC serves a growing number of research domains, connecting scientists with the AI tools they need.
-    buttonLabel: Explore communities
-    buttonHref: /communities
-more:
-    label: "+ more communities →"
-    href: /communities
 items:
     - title: Marine Science
       iconId: marine
       description: Underwater imaging, biodiversity
+      longDescription: AI models for underwater image classification, species identification and marine biodiversity monitoring. Deployed through the iMagine gateway, which provides researchers with a specialised instance of the AI4EOSC platform.
+      via: iMagine
+      viaUrl: https://imagine-ai.eu
+      tools:
+          - Species classifier
+          - Image segmentation
+          - Biodiversity monitor
       slug: marine-science
+
     - title: Climate & Weather
       iconId: climate
       description: Forecasting, Earth observation
+      longDescription: Machine learning models for weather forecasting, climate downscaling and Earth observation data processing. Integrated with Copernicus datasets and EOSC storage for large-scale analysis.
+      via: OSCAR Gateway
+      tools:
+          - Weather forecasting
+          - Climate downscaling
+          - EO processing
       slug: climate-weather
+
     - title: Bioinformatics
       iconId: bioinformatics
       description: Genomics, proteomics, drug discovery
+      longDescription: Deep learning tools for genomic sequence analysis, protein structure prediction and drug discovery pipelines. Built in collaboration with AI4Life and the BioImage.IO model zoo.
+      via: AI4Life
+      viaUrl: https://ai4life.eurobioimaging.eu
+      tools:
+          - Sequence analysis
+          - Protein prediction
+          - BioImage.IO
       slug: bioinformatics
+
+    - title: Social Sciences
+      iconId: social
+      description: Text analysis, social media, surveys
+      longDescription: Natural language processing and machine learning tools for social science research, including text classification, sentiment analysis and large-scale survey data processing for European research communities.
+      tools:
+          - Text classification
+          - Sentiment analysis
+          - Survey processing
+      slug: social-sciences
+
+    - title: Digital Humanities
+      iconId: humanities
+      description: Text mining, cultural analytics
+      longDescription: AI tools for cultural heritage data analysis, historical text mining and digital preservation, connecting humanities researchers with state-of-the-art machine learning capabilities on EOSC infrastructure.
+      tools:
+          - Historical OCR
+          - Text mining
+          - Cultural analytics
+      slug: digital-humanities
+
+    - title: High Energy Physics
+      iconId: physics
+      description: Particle physics, simulation
+      longDescription: AI models for particle physics event classification, gravitational wave detection and astrophysical simulation. Built as part of the interTwin digital twin engine project for cross-domain scientific workflows.
+      via: interTwin
+      viaUrl: https://intertwin.eu
+      tools:
+          - Event classification
+          - Digital twins
+          - Simulation AI
+      slug: high-energy-physics
+
+    - title: Earth Sciences
+      iconId: earth
+      description: Geosciences, remote sensing
+      longDescription: Machine learning models for geophysical data analysis, remote sensing image processing and natural hazard monitoring. Integrated with satellite data sources across European research infrastructure.
+      tools:
+          - Remote sensing
+          - Geophysical analysis
+          - Hazard monitoring
+      slug: earth-sciences
+
+    - title: Astronomy
+      iconId: astronomy
+      description: Astrophysics, cosmology, space science
+      longDescription: Deep learning for astronomical image classification, galaxy morphology analysis and cosmological parameter estimation using large-scale survey data from next-generation observatories.
+      tools:
+          - Galaxy classification
+          - Morphology analysis
+          - Cosmological ML
+      slug: astronomy

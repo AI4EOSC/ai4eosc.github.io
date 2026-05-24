@@ -2,18 +2,26 @@
 import data from '../../data/gateways.yml';
 
 const MAX_ITEMS = 3;
+const label = 'Gateways';
+const hero = {
+  title: 'Gateways built on AI4EOSC',
+  description: 'Specialised platforms and projects that use AI4EOSC products to serve their own scientific communities.',
+  buttonLabel: 'Explore gateways',
+  buttonHref: '/ecosystem/gateways',
+};
+const more = { label: '+ more gateways →', href: '/ecosystem/gateways' };
 ---
 
 <section class="wrap">
   <div class="section-label">
-    <div class="container">{data.label}</div>
+    <div class="container">{label}</div>
   </div>
   <div class="container">
     <div class="hero">
       <div class="hero-content">
-        <h2>{data.hero.title}</h2>
-        <p>{data.hero.description}</p>
-        <a class="button-pill ghost" href={data.hero.buttonHref}>{data.hero.buttonLabel}</a>
+        <h2>{hero.title}</h2>
+        <p>{hero.description}</p>
+        <a class="button-pill ghost" href={hero.buttonHref}>{hero.buttonLabel}</a>
       </div>
       <div class="hero-circles" aria-hidden="true">
         <span class="circle circle--lg"></span>
@@ -32,7 +40,7 @@ const MAX_ITEMS = 3;
           <p>{item.description}</p>
         </article>
       ))}
-      <a class="card more" href={data.more.href}>{data.more.label}</a>
+      <a class="card more" href={more.href}>{more.label}</a>
     </div>
   </div>
 </section>

@@ -1,6 +1,15 @@
 ---
-import data from '../../data/who-is-it-for.yml';
 import SectionHeader from '../SectionHeader.astro';
+
+const label = 'Who is it for';
+const title = 'Find your path';
+const description = 'Whether you\'re a researcher looking for tools, a developer deploying models, or an institution building a gateway — AI4EOSC has a path for you.';
+
+const items = [
+  { tag: 'Developer',   tagStyle: 'developer',   title: 'Deploy your models on EOSC',   description: 'Use our open-source platform to train, serve and publish AI models with EOSC-native auth.',                        linkLabel: 'Explore products →',    linkHref: '/products' },
+  { tag: 'Researcher',  tagStyle: 'research',     title: 'Find AI tools for your domain', description: 'Access ready-to-use AI models and computing resources tailored to your scientific field.',                          linkLabel: 'Explore communities →', linkHref: '/ecosystem/communities' },
+  { tag: 'Institution', tagStyle: 'institution',  title: 'Build your own gateway',        description: 'Deploy a customised instance of the platform for your project and join the ecosystem.',                              linkLabel: 'Join the ecosystem →',  linkHref: '/ecosystem/gateways' },
+];
 
 const gradients: Record<string, string> = {
   developer: 'var(--gradient-eu-blue)',
@@ -11,13 +20,13 @@ const gradients: Record<string, string> = {
 
 <section>
   <div class="section-label">
-    <div class="container">{data.label}</div>
+    <div class="container">{label}</div>
   </div>
   <div class="container">
     <div class="section-card">
-      <SectionHeader title={data.title} subtitle={data.description} />
+      <SectionHeader title={title} subtitle={description} />
       <div class="grid">
-        {data.items.map((item) => (
+        {items.map((item) => (
           <article class="card glass" key={item.title}>
             <div class="screen" style={`background: ${gradients[item.tagStyle]}`}>
               <span class="circle circle--lg" aria-hidden="true"></span>

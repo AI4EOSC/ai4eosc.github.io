@@ -1,0 +1,217 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  breadcrumb: string;
+  breadcrumbParent?: { label: string; href: string };
+  theme: 'teal' | 'black' | 'blue' | 'pink';
+}
+
+const { title, description, breadcrumb, breadcrumbParent, theme } = Astro.props;
+---
+
+<section class={`page-hero theme-${theme}`}>
+  <div class="hero-content">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">›</span>
+      {breadcrumbParent && (
+        <>
+          <a href={breadcrumbParent.href}>{breadcrumbParent.label}</a>
+          <span aria-hidden="true">›</span>
+        </>
+      )}
+      <span aria-current="page">{breadcrumb}</span>
+    </nav>
+    <h1>{title}</h1>
+    <p>{description}</p>
+    <slot />
+  </div>
+  <div class="hero-circles" aria-hidden="true">
+    <span class="circle circle--lg"></span>
+    <span class="circle circle--md"></span>
+    <span class="circle circle--sm"></span>
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    width: min(1320px, 100% - 20px);
+    margin: 0 auto;
+    padding: calc(var(--nav-offset) + 48px) 72px 60px;
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+    position: relative;
+    overflow: hidden;
+    color: #ffffff;
+  }
+
+  .page-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    z-index: 1;
+  }
+
+  /* ── Theme gradients ───────────────────────────────── */
+  .theme-teal {
+    background:
+      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255, 255, 255, 0.14) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 45% at 85% 88%, rgba(0, 40, 44, 0.45) 0%, transparent 58%),
+      radial-gradient(ellipse 40% 35% at 55% 48%, rgba(0, 200, 215, 0.12) 0%, transparent 55%),
+      linear-gradient(140deg, #002d30 0%, #005060 38%, #008792 100%);
+  }
+
+  .theme-black {
+    background:
+      radial-gradient(ellipse 55% 80% at 5% 50%, rgba(0, 135, 146, 0.14) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 70% at 92% 50%, rgba(236, 93, 128, 0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 50%),
+      linear-gradient(140deg, #111418 0%, #1a1f24 50%, #1e2228 100%);
+  }
+
+  .theme-blue {
+    background:
+      radial-gradient(ellipse 55% 48% at 14% 16%, rgba(255, 255, 255, 0.13) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 42% at 82% 86%, rgba(0, 5, 50, 0.5) 0%, transparent 55%),
+      linear-gradient(140deg, #000f5e 0%, #002299 38%, #0033cc 70%, #1040dd 100%);
+  }
+
+  .theme-pink {
+    background:
+      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255, 255, 255, 0.13) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 45% at 85% 88%, rgba(80, 10, 30, 0.45) 0%, transparent 58%),
+      radial-gradient(ellipse 40% 35% at 55% 48%, rgba(255, 120, 160, 0.12) 0%, transparent 55%),
+      linear-gradient(140deg, #6b0828 0%, #a01848 38%, #ec5d80 100%);
+  }
+
+  /* ── Content ───────────────────────────────────────── */
+  .hero-content {
+    position: relative;
+    z-index: 3;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 28px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.38);
+  }
+
+  .breadcrumb a {
+    color: rgba(255, 255, 255, 0.38);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .breadcrumb a:hover {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .breadcrumb [aria-current="page"] {
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  h1 {
+    font-family: var(--font-headings);
+    font-size: 50px;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin: 0 0 20px;
+    max-width: 620px;
+    color: #ffffff;
+  }
+
+  p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.58);
+    max-width: 500px;
+    margin: 0;
+  }
+
+  /* ── Decorative circles ────────────────────────────── */
+  .hero-circles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    overflow: visible;
+  }
+
+  .circle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translate(50%, 50%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: transparent;
+    animation: pulsing 5s ease-in-out infinite;
+  }
+
+  .circle--lg { width: 72%; animation-delay: 2s; }
+  .circle--md { width: 50%; animation-delay: 1s; }
+  .circle--sm { width: 30%; animation-delay: 0s; }
+
+  /* Theme circle glows */
+  .theme-teal .circle {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.1),
+      0 0 40px rgba(0, 200, 215, 0.20),
+      0 0 80px rgba(0, 200, 215, 0.08),
+      inset 0 0 16px rgba(255, 255, 255, 0.04);
+  }
+
+  .theme-black .circle {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.3),
+      0 0 40px rgba(0, 200, 215, 0.20),
+      0 0 80px rgba(0, 200, 215, 0.10),
+      inset 0 0 16px rgba(255, 255, 255, 0.03);
+  }
+
+  .theme-blue .circle {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.1),
+      0 0 40px rgba(60, 100, 255, 0.18),
+      0 0 80px rgba(60, 100, 255, 0.07),
+      inset 0 0 16px rgba(255, 255, 255, 0.04);
+  }
+
+  .theme-pink .circle {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.1),
+      0 0 40px rgba(255, 120, 160, 0.22),
+      0 0 80px rgba(255, 120, 160, 0.09),
+      inset 0 0 16px rgba(255, 255, 255, 0.04);
+  }
+
+  /* ── Responsive ────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .page-hero {
+      padding: calc(var(--nav-offset) + 28px) 40px 48px;
+    }
+
+    h1 {
+      font-size: 38px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .page-hero {
+      padding: calc(var(--nav-offset) + 20px) 24px 40px;
+    }
+
+    h1 {
+      font-size: 30px;
+    }
+  }
+</style>

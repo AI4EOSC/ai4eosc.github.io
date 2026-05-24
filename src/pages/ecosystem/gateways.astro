@@ -1,0 +1,511 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/sections/PageHero.astro';
+import CtaFinal from '../../components/sections/CtaFinal.astro';
+import data from '../../data/gateways.yml';
+
+const icons: Record<string, string> = {
+  marine:  `<path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>`,
+  climate: `<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>`,
+  health:  `<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>`,
+  life:    `<path d="M2 3c4 2 6 5 6 9s-2 7-6 9"/><path d="M22 3c-4 2-6 5-6 9s2 7 6 9"/><path d="M6 7h12M6 17h12"/>`,
+  physics: `<circle cx="12" cy="12" r="1"/><path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5z"/><path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5z"/>`,
+};
+
+const explainerIcons: Record<string, string> = {
+  copy:   `<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>`,
+  adjust: `<line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/>`,
+  building: `<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M8 10h.01M16 10h.01M8 14h.01M16 14h.01M12 14h.01"/>`,
+  network:  `<circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v4M6.5 17.5l4-3M17.5 17.5l-4-3"/>`,
+};
+
+const domains = ['all', 'marine', 'climate', 'health', 'life', 'physics'];
+const domainLabels: Record<string, string> = {
+  all: 'All', marine: 'Marine', climate: 'Climate',
+  health: 'Health', life: 'Life sciences', physics: 'Physics',
+};
+---
+
+<Layout title="Gateways — AI4EOSC Ecosystem">
+  <PageHero
+    theme="teal"
+    breadcrumb="Gateways"
+    breadcrumbParent={{ label: 'Ecosystem', href: '/ecosystem/projects' }}
+    title="Specialised AI platforms built on AI4EOSC"
+    description="Gateways are domain-specific deployments of the AI4EOSC platform — each one tailored to a scientific community and providing direct access to AI tools and models in their field."
+  >
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-val">12<em>+</em></span><span class="hstat-lbl">Active gateways</span></div>
+      <div class="hstat"><span class="hstat-val">5<em>+</em></span><span class="hstat-lbl">Scientific domains</span></div>
+      <div class="hstat"><span class="hstat-val">1.2k<em>+</em></span><span class="hstat-lbl">Researchers with access</span></div>
+    </div>
+  </PageHero>
+
+  <!-- What is a gateway -->
+  <section class="p-section">
+    <div class="section-label"><div class="container">What is a gateway</div></div>
+    <div class="container">
+      <div class="box">
+        <div class="box-hdr">
+          <h2 class="box-title">Gateways explained</h2>
+        </div>
+        <p class="box-sub">A gateway is a customised, independently-operated instance of the AI4EOSC platform deployed for a specific project or scientific community.</p>
+        <div class="explainer-grid">
+          {[
+            { icon: 'copy',     title: 'Based on AI4EOSC',        desc: 'Every gateway uses the same open-source AI4EOSC platform as its foundation — same API, same authentication, same model catalogue format.' },
+            { icon: 'adjust',   title: 'Domain-specific',          desc: 'Each gateway is customised with the models, datasets and workflows relevant to its scientific community — researchers find exactly what they need.' },
+            { icon: 'building', title: 'Independently operated',   desc: 'Gateways are run by the institutions or projects that deploy them — they own their data, their users and their infrastructure choices.' },
+            { icon: 'network',  title: 'Part of the network',      desc: 'All gateways are connected to the AI4EOSC initiative — models and tools developed in one gateway can be shared across the whole network.' },
+          ].map(card => (
+            <div class="exp-card">
+              <div class="exp-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={explainerIcons[card.icon]} />
+              </div>
+              <h4>{card.title}</h4>
+              <p>{card.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gateway catalogue -->
+  <section class="p-section">
+    <div class="section-label"><div class="container">All gateways</div></div>
+    <div class="container">
+      <div class="box">
+        <div class="box-hdr">
+          <h2 class="box-title">Gateway catalogue</h2>
+        </div>
+        <p class="box-sub">Click any gateway to see full details, available tools, access instructions and the community it serves.</p>
+
+        <div x-data="{ filter: 'all', open: null }">
+
+          <!-- Filters -->
+          <div class="filters">
+            {domains.map(d => (
+              <button
+                class="filter-btn"
+                x-bind:class={`{ 'is-active': filter === '${d}' }`}
+                x-on:click={`filter = '${d}'; open = null`}
+                type="button"
+              >
+                {domainLabels[d]}
+              </button>
+            ))}
+          </div>
+
+          <!-- Gateway cards -->
+          {data.items.map((item: any) => (
+            <article
+              class="gw-card"
+              x-show={`filter === 'all' || filter === '${item.type}'`}
+              x-bind:class={`{ 'is-open': open === '${item.slug}' }`}
+            >
+              <button
+                class="gw-summary"
+                x-on:click={`open = open === '${item.slug}' ? null : '${item.slug}'`}
+                type="button"
+              >
+                <div class="gw-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[item.type]} />
+                </div>
+                <div class="gw-info">
+                  <div class="gw-top">
+                    <span class="gw-name">{item.title}</span>
+                    <span class="badge b-domain">{item.domain}</span>
+                    <span class={`badge b-${item.status}`}>{item.status === 'active' ? 'Active' : item.status === 'new' ? 'New' : 'Coming soon'}</span>
+                  </div>
+                  <p class="gw-tagline">{item.tagline}</p>
+                </div>
+                <div class="gw-chevron" aria-hidden="true">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </div>
+              </button>
+
+              <div class="gw-detail">
+                <div class="gw-detail-inner">
+
+                  <!-- Left: content -->
+                  <div class="gdl">
+                    <p class="gw-desc">{item.longDescription}</p>
+                    <p class="feat-lbl">Available tools</p>
+                    <ul class="feats">
+                      {item.tools.map((t: string) => <li class="feat">{t}</li>)}
+                    </ul>
+                    <div class="gw-actions">
+                      {item.url && (
+                        <a class="btn-visit" href={item.url} target="_blank" rel="noopener">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                          Go to gateway
+                        </a>
+                      )}
+                      <a class="btn-docs" href="/products">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                        Browse models
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- Right: meta -->
+                  <div class="gdr">
+                    <div class="meta-block">
+                      {item.euProject && (
+                        <div class="meta-item">
+                          <span class="meta-lbl">EU project</span>
+                          <span class="meta-val">{item.euProject}</span>
+                        </div>
+                      )}
+                      <div class="meta-item">
+                        <span class="meta-lbl">Community</span>
+                        <div class="pchips"><span class="comm-chip">{item.community}</span></div>
+                      </div>
+                      <div class="meta-item">
+                        <span class="meta-lbl">Operated by</span>
+                        <div class="pchips">
+                          {item.operatedBy.map((p: string) => <span class="pchip">{p}</span>)}
+                        </div>
+                      </div>
+                      <div class="meta-item">
+                        <span class="meta-lbl">Access</span>
+                        <div class="access-box">
+                          <h5>{item.accessType}</h5>
+                          <p>{item.accessDesc}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </article>
+          ))}
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deploy your own -->
+  <section class="p-section">
+    <div class="section-label"><div class="container">Deploy your own</div></div>
+    <div class="container">
+      <div class="box">
+        <div class="box-hdr">
+          <h2 class="box-title">Build a gateway for your community</h2>
+        </div>
+        <p class="box-sub">Any EU-funded project or research institution can deploy their own gateway on the AI4EOSC platform.</p>
+        <div class="deploy-stack">
+          <div class="deploy-card">
+            <div class="deploy-left">
+              <h4>What you get</h4>
+              <p>A fully operational instance of the AI4EOSC platform — with your own branding, your own model catalogue, EOSC authentication and access to shared compute resources.</p>
+            </div>
+            <a class="btn-teal" href="/support/contact">Read the deployment guide →</a>
+          </div>
+          <div class="deploy-card">
+            <div class="deploy-left">
+              <h4>Need help getting started?</h4>
+              <p>The AI4EOSC team can support you through the deployment process, from infrastructure setup to community onboarding.</p>
+            </div>
+            <a class="btn-teal" href="/support/contact">Contact the team →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaFinal
+    theme="teal"
+    title="Want to build your own gateway?"
+    description="If your project or institution wants to deploy a tailored AI platform on EOSC, get in touch — we'll help you set it up."
+    button={{ label: 'Get in touch', href: '/support/contact' }}
+  />
+</Layout>
+
+<style>
+  /* ── Hero stats ─────────────────────────────────────── */
+  .hero-stats { display: flex; gap: 32px; margin-top: 28px; flex-wrap: wrap; }
+  .hstat { display: flex; flex-direction: column; gap: 3px; }
+  .hstat-val {
+    font-family: var(--font-headings); font-size: 30px; font-weight: 600;
+    color: #fff; letter-spacing: -0.03em; line-height: 1;
+  }
+  .hstat-val em { font-style: normal; color: rgba(255,255,255,0.45); font-size: 22px; }
+  .hstat-lbl { font-size: 11px; color: rgba(255,255,255,0.45); }
+
+  /* ── Layout ─────────────────────────────────────────── */
+  .p-section { padding: 0 0 24px; }
+
+  .box {
+    background: var(--card-bg);
+    border: 0.5px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 28px 28px 24px;
+  }
+
+  .box-hdr { margin-bottom: 6px; }
+  .box-title {
+    font-size: 17px; font-weight: 600; color: var(--color-neutral-900);
+    font-family: var(--font-headings); letter-spacing: -0.01em;
+  }
+  .box-sub {
+    font-size: 13px; color: var(--color-neutral-500);
+    line-height: 1.6; max-width: 520px; margin-bottom: 22px;
+  }
+
+  /* ── Explainer grid ─────────────────────────────────── */
+  .explainer-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+
+  .exp-card {
+    background: var(--page-bg); border-radius: var(--radius-md); padding: 18px 20px;
+  }
+
+  .exp-icon {
+    width: 34px; height: 34px; border-radius: 10px;
+    background: var(--color-primary-100);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--color-primary-700); margin-bottom: 12px;
+  }
+
+  .exp-card h4 {
+    font-size: 12px; font-weight: 600; color: var(--color-neutral-900); margin: 0 0 5px;
+  }
+
+  .exp-card p {
+    font-size: 11px; color: var(--color-neutral-400); line-height: 1.65; margin: 0;
+  }
+
+  /* ── Filters ────────────────────────────────────────── */
+  .filters { display: flex; gap: 6px; margin-bottom: 18px; flex-wrap: wrap; }
+
+  .filter-btn {
+    font-size: 11px; font-weight: 500;
+    border-radius: 999px; padding: 5px 14px;
+    cursor: pointer; font: inherit;
+    border: 0.5px solid var(--card-border);
+    background: var(--page-bg); color: var(--color-neutral-500);
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .filter-btn:hover:not(.is-active) {
+    background: white; border-color: var(--color-neutral-300);
+  }
+
+  .filter-btn.is-active {
+    background: var(--color-primary-700); color: white; border-color: var(--color-primary-700);
+  }
+
+  /* ── Gateway cards ──────────────────────────────────── */
+  .gw-card {
+    background: var(--page-bg);
+    border: 0.5px solid rgba(0, 134, 146, 0.25);
+    border-radius: var(--radius-md);
+    overflow: hidden; margin-bottom: 8px;
+    transition: border-color 0.2s ease;
+  }
+
+  .gw-card:last-child { margin-bottom: 0; }
+
+  .gw-card.is-open {
+    border-color: var(--color-primary-500);
+  }
+
+  .gw-summary {
+    display: grid; grid-template-columns: 52px 1fr auto;
+    align-items: center; gap: 14px; padding: 16px 18px;
+    cursor: pointer; width: 100%; text-align: left;
+    background: transparent; border: none; font: inherit; color: inherit;
+  }
+
+  .gw-icon {
+    width: 48px; height: 48px; border-radius: 10px;
+    background: var(--color-primary-100);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--color-primary-700); flex-shrink: 0;
+  }
+
+  .gw-info { min-width: 0; }
+
+  .gw-top {
+    display: flex; align-items: center; gap: 7px; margin-bottom: 4px; flex-wrap: wrap;
+  }
+
+  .gw-name {
+    font-size: 14px; font-weight: 600; color: var(--color-neutral-900);
+  }
+
+  .badge {
+    font-size: 9px; font-weight: 600; border-radius: 999px; padding: 2px 9px;
+  }
+
+  .b-domain  { color: var(--color-primary-700); background: var(--color-primary-100); }
+  .b-active  { color: #3b6d11; background: #eaf3de; }
+  .b-new     { color: #854f0b; background: #faeeda; }
+  .b-coming-soon { color: var(--color-secondary-700); background: var(--color-secondary-100); }
+
+  .gw-tagline {
+    font-size: 12px; color: var(--color-neutral-400);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  .gw-chevron {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 0.5px solid rgba(0, 134, 146, 0.3);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; color: var(--color-primary-600); background: white;
+    transition: transform 0.25s ease, background 0.15s ease;
+  }
+
+  .gw-card.is-open .gw-chevron {
+    transform: rotate(180deg); background: var(--color-primary-100);
+  }
+
+  /* ── Expandable detail ──────────────────────────────── */
+  .gw-detail {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .gw-card.is-open .gw-detail { max-height: 700px; }
+
+  .gw-detail-inner {
+    border-top: 0.5px solid rgba(0, 134, 146, 0.2);
+    display: grid; grid-template-columns: 1fr 240px;
+  }
+
+  .gdl {
+    padding: 20px; display: flex; flex-direction: column;
+  }
+
+  .gdr {
+    border-left: 0.5px solid rgba(0, 134, 146, 0.15);
+    background: white; padding: 20px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+
+  .gw-desc {
+    font-size: 12px; color: var(--color-neutral-500);
+    line-height: 1.65; margin: 0 0 14px;
+  }
+
+  .feat-lbl {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--color-neutral-400); margin: 0 0 8px;
+  }
+
+  .feats {
+    list-style: none; padding: 0; margin: 0 0 16px;
+    display: flex; flex-wrap: wrap; gap: 5px;
+  }
+
+  .feat {
+    font-size: 10px; font-weight: 500;
+    color: var(--color-primary-700);
+    background: var(--color-primary-100);
+    border: 0.5px solid rgba(0, 134, 146, 0.25);
+    border-radius: 999px; padding: 2px 9px;
+  }
+
+  .gw-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; }
+
+  .btn-visit, .btn-docs {
+    display: inline-flex; align-items: center; gap: 5px;
+    border-radius: 999px; padding: 7px 14px;
+    font-size: 11px; font-weight: 500; text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .btn-visit {
+    background: var(--color-primary-700); color: white; border: none;
+  }
+  .btn-visit:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,80,90,0.2); }
+
+  .btn-docs {
+    background: transparent; color: var(--color-neutral-600);
+    border: 0.5px solid var(--card-border);
+  }
+  .btn-docs:hover { background: white; border-color: var(--color-neutral-300); transform: translateY(-1px); }
+
+  /* ── Meta panel ─────────────────────────────────────── */
+  .meta-block { display: flex; flex-direction: column; gap: 12px; }
+  .meta-item  { display: flex; flex-direction: column; gap: 3px; }
+
+  .meta-lbl {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.07em;
+    text-transform: uppercase; color: var(--color-neutral-400);
+  }
+
+  .meta-val { font-size: 12px; color: var(--color-neutral-700); font-weight: 500; }
+
+  .pchips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 2px; }
+
+  .pchip {
+    font-size: 10px; color: var(--color-neutral-600);
+    background: var(--page-bg); border: 0.5px solid var(--card-border);
+    border-radius: 6px; padding: 2px 8px;
+  }
+
+  .comm-chip {
+    font-size: 10px; color: var(--color-secondary-700);
+    background: var(--color-secondary-100);
+    border: 0.5px solid rgba(236, 93, 128, 0.2);
+    border-radius: 6px; padding: 2px 8px;
+  }
+
+  .access-box {
+    background: var(--color-primary-100); border-radius: 8px; padding: 10px 12px;
+  }
+
+  .access-box h5 {
+    font-size: 11px; font-weight: 600; color: var(--color-primary-700); margin: 0 0 3px;
+  }
+
+  .access-box p {
+    font-size: 10px; color: var(--color-primary-700); line-height: 1.55; margin: 0;
+  }
+
+  /* ── Deploy your own ────────────────────────────────── */
+  .deploy-stack { display: flex; flex-direction: column; gap: 8px; }
+
+  .deploy-card {
+    background: var(--page-bg); border-radius: var(--radius-md); padding: 20px 22px;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  }
+
+  .deploy-left h4 {
+    font-size: 13px; font-weight: 600; color: var(--color-neutral-900); margin: 0 0 5px;
+  }
+
+  .deploy-left p {
+    font-size: 12px; color: var(--color-neutral-500); line-height: 1.6; max-width: 420px; margin: 0;
+  }
+
+  .btn-teal {
+    display: inline-flex; align-items: center;
+    background: var(--color-primary-700); color: white;
+    border-radius: 999px; padding: 8px 18px;
+    font-size: 12px; font-weight: 500;
+    text-decoration: none; white-space: nowrap; flex-shrink: 0;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .btn-teal:hover { background: var(--color-primary-800); transform: translateY(-1px); }
+
+  /* ── Responsive ─────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .explainer-grid { grid-template-columns: 1fr; }
+    .gw-detail-inner { grid-template-columns: 1fr; }
+    .gdr { border-left: none; border-top: 0.5px solid rgba(0, 134, 146, 0.15); }
+    .deploy-card { flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (max-width: 640px) {
+    .gw-summary { grid-template-columns: 44px 1fr auto; gap: 10px; }
+    .explainer-grid { grid-template-columns: 1fr; }
+  }
+</style>

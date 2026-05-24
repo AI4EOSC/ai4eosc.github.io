@@ -1,0 +1,167 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/sections/PageHero.astro';
+import CtaFinal from '../../components/sections/CtaFinal.astro';
+import data from '../../data/faq.yml';
+---
+
+<Layout
+  title="FAQ — AI4EOSC Initiative"
+  description="Answers to common questions about the AI4EOSC platform, access, the model catalogue, and the ecosystem of projects and gateways."
+>
+  <PageHero
+    theme="pink"
+    breadcrumb="FAQ"
+    breadcrumbParent={{ label: 'Support', href: '/support/contact' }}
+    title="Frequently asked questions"
+    description="Answers to the most common questions about the AI4EOSC platform, access, the ecosystem and the technical stack."
+  />
+
+  <section class="p-section has-top">
+    <div class="container">
+      <div class="faq-wrap">
+
+        {data.categories.map((cat: any) => (
+          <div class="faq-row" id={cat.id}>
+
+            <!-- Sticky category label -->
+            <div class="cat-col">
+              <div class="cat-sticky">
+                <span class="cat-num">{String(data.categories.indexOf(cat) + 1).padStart(2, '0')}</span>
+                <h2 class="cat-title">{cat.label}</h2>
+                <span class="cat-count">{cat.items.length} questions</span>
+              </div>
+            </div>
+
+            <!-- Questions -->
+            <div class="qa-col">
+              {cat.items.map((item: any, i: number) => (
+                <div class={`qa-item${i === cat.items.length - 1 ? ' is-last' : ''}`}>
+                  <p class="q-text">{item.question}</p>
+                  <p class="qa-a">{item.answer}</p>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        ))}
+
+      </div>
+    </div>
+  </section>
+
+  <CtaFinal
+    theme="pink"
+    title="Still have questions?"
+    description="If you didn't find what you were looking for, our team is happy to help. Reach out directly and we'll get back to you."
+    button={{ label: 'Contact the team', href: '/support/contact' }}
+  />
+</Layout>
+
+<style>
+  .p-section { padding: 0 0 24px; }
+  .p-section.has-top { padding-top: 10px; }
+
+  /* ── Wrapper ─────────────────────────────────────────── */
+  .faq-wrap {
+    background: var(--card-bg);
+    border: 0.5px solid var(--card-border);
+    border-radius: var(--radius-lg);
+  }
+
+  /* ── Row: one per category ───────────────────────────── */
+  .faq-row {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    border-bottom: 0.5px solid var(--card-border);
+  }
+
+  .faq-row:last-child { border-bottom: none; }
+
+  /* ── Category column (sticky title) ─────────────────── */
+  .cat-col {
+    border-right: 0.5px solid var(--card-border);
+    padding: 40px 32px;
+  }
+
+  .cat-sticky {
+    position: sticky;
+    top: calc(var(--nav-offset) + 16px);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .cat-num {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--color-neutral-300);
+  }
+
+  .cat-title {
+    font-family: var(--font-headings);
+    font-size: 28px; font-weight: 500;
+    line-height: 1.1; letter-spacing: -0.02em;
+    color: var(--color-neutral-900);
+    margin: 0;
+  }
+
+  .cat-count {
+    font-size: 11px; color: var(--color-neutral-300);
+    margin-top: 2px;
+  }
+
+  /* ── Q&A column ──────────────────────────────────────── */
+  .qa-col {
+    padding: 0;
+  }
+
+  /* ── Individual Q&A item ─────────────────────────────── */
+  .qa-item {
+    padding: 32px 40px;
+    border-bottom: 0.5px solid var(--card-border);
+  }
+
+  .qa-item.is-last { border-bottom: none; }
+
+  .q-text {
+    font-size: 16px; font-weight: 600;
+    color: var(--color-neutral-900);
+    line-height: 1.4; letter-spacing: -0.01em;
+    margin: 0 0 12px;
+  }
+
+  .qa-a {
+    font-size: 14px; line-height: 1.8;
+    color: var(--color-neutral-500);
+    margin: 0;
+  }
+
+  /* ── Responsive ──────────────────────────────────────── */
+  @media (max-width: 860px) {
+    .faq-row {
+      grid-template-columns: 1fr;
+    }
+    .cat-col {
+      border-right: none;
+      border-bottom: 0.5px solid var(--card-border);
+      padding: 28px 28px 22px;
+    }
+    .cat-sticky {
+      position: static;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .cat-title { font-size: 20px; }
+    .cat-num, .cat-count { display: none; }
+    .qa-item { padding: 24px 28px; }
+  }
+
+  @media (max-width: 600px) {
+    .qa-item { padding: 20px; }
+    .qa-a { padding-left: 0; }
+    .q-text { font-size: 15px; }
+  }
+</style>

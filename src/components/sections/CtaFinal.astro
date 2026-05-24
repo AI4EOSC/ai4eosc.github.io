@@ -1,14 +1,21 @@
 ---
-import data from '../../data/cta.yml';
+interface Props {
+  title: string;
+  description: string;
+  button: { label: string; href: string };
+  theme: 'teal' | 'black' | 'blue' | 'pink';
+}
+
+const { title, description, button, theme } = Astro.props;
 ---
 
 <section class="cta-wrap">
   <div class="container">
-    <div class="cta">
+    <div class={`cta theme-${theme}`}>
       <div class="cta-content">
-        <h2>{data.title}</h2>
-        <p>{data.description}</p>
-        <a class="button-pill primary" href={data.button.href}>{data.button.label}</a>
+        <h2>{title}</h2>
+        <p>{description}</p>
+        <a class="cta-btn" href={button.href}>{button.label}</a>
       </div>
       <div class="cta-circles" aria-hidden="true">
         <span class="circle circle--lg"></span>
@@ -25,12 +32,6 @@ import data from '../../data/cta.yml';
   }
 
   .cta {
-    background:
-      radial-gradient(ellipse 55% 48% at 14% 16%, rgba(255, 255, 255, 0.15) 0%, transparent 55%),
-      radial-gradient(ellipse 50% 42% at 82% 86%, rgba(0, 35, 40, 0.45) 0%, transparent 55%),
-      radial-gradient(ellipse 38% 32% at 48% 50%, rgba(0, 200, 215, 0.12) 0%, transparent 55%),
-      radial-gradient(ellipse 35% 28% at 75% 20%, rgba(0, 180, 195, 0.10) 0%, transparent 50%),
-      linear-gradient(140deg, #002d30 0%, #005060 38%, #007d88 70%, #008792 100%);
     border-radius: 24px 24px 0 0;
     padding: 56px;
     position: relative;
@@ -50,6 +51,40 @@ import data from '../../data/cta.yml';
     z-index: 1;
   }
 
+  /* ── Theme gradients ───────────────────────────────── */
+  .theme-teal {
+    background:
+      radial-gradient(ellipse 55% 48% at 14% 16%, rgba(255, 255, 255, 0.15) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 42% at 82% 86%, rgba(0, 35, 40, 0.45) 0%, transparent 55%),
+      radial-gradient(ellipse 38% 32% at 48% 50%, rgba(0, 200, 215, 0.12) 0%, transparent 55%),
+      radial-gradient(ellipse 35% 28% at 75% 20%, rgba(0, 180, 195, 0.10) 0%, transparent 50%),
+      linear-gradient(140deg, #002d30 0%, #005060 38%, #007d88 70%, #008792 100%);
+  }
+
+  .theme-black {
+    background:
+      radial-gradient(ellipse 55% 80% at 5% 50%, rgba(0, 135, 146, 0.14) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 70% at 92% 50%, rgba(236, 93, 128, 0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 50%),
+      linear-gradient(140deg, #111418 0%, #1a1f24 50%, #1e2228 100%);
+  }
+
+  .theme-blue {
+    background:
+      radial-gradient(ellipse 55% 48% at 14% 16%, rgba(255, 255, 255, 0.13) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 42% at 82% 86%, rgba(0, 5, 50, 0.5) 0%, transparent 55%),
+      linear-gradient(140deg, #000f5e 0%, #002299 38%, #0033cc 70%, #1040dd 100%);
+  }
+
+  .theme-pink {
+    background:
+      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255, 255, 255, 0.13) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 45% at 85% 88%, rgba(80, 10, 30, 0.45) 0%, transparent 58%),
+      radial-gradient(ellipse 40% 35% at 55% 48%, rgba(255, 120, 160, 0.12) 0%, transparent 55%),
+      linear-gradient(140deg, #6b0828 0%, #a01848 38%, #ec5d80 100%);
+  }
+
+  /* ── Content ───────────────────────────────────────── */
   h2 {
     margin: 0 0 12px;
     font-family: var(--font-headings);
@@ -71,6 +106,7 @@ import data from '../../data/cta.yml';
     z-index: 3;
   }
 
+  /* ── Decorative circles ────────────────────────────── */
   .cta-circles {
     position: absolute;
     inset: 0;
@@ -87,11 +123,6 @@ import data from '../../data/cta.yml';
     aspect-ratio: 1;
     border-radius: 50%;
     background: transparent;
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.26),
-      0 0 40px rgba(0, 200, 215, 0.20),
-      0 0 80px rgba(0, 200, 215, 0.08),
-      inset 0 0 16px rgba(255, 255, 255, 0.06);
     animation: pulsing 5s ease-in-out infinite;
     transition: scale 2s ease;
   }
@@ -103,6 +134,65 @@ import data from '../../data/cta.yml';
   .cta:hover .circle {
     scale: 1.10;
   }
+
+  /* Theme circle glows */
+  .theme-teal .circle {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.26),
+      0 0 40px rgba(0, 200, 215, 0.20),
+      0 0 80px rgba(0, 200, 215, 0.08),
+      inset 0 0 16px rgba(255, 255, 255, 0.06);
+  }
+
+  .theme-black .circle {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.3),
+      0 0 40px rgba(0, 200, 215, 0.20),
+      0 0 80px rgba(0, 200, 215, 0.10),
+      inset 0 0 16px rgba(255, 255, 255, 0.03);
+  }
+
+  .theme-blue .circle {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.22),
+      0 0 40px rgba(60, 100, 255, 0.20),
+      0 0 80px rgba(60, 100, 255, 0.08),
+      inset 0 0 16px rgba(255, 255, 255, 0.06);
+  }
+
+  .theme-pink .circle {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.24),
+      0 0 40px rgba(255, 120, 160, 0.24),
+      0 0 80px rgba(255, 120, 160, 0.10),
+      inset 0 0 16px rgba(255, 255, 255, 0.06);
+  }
+
+  /* ── CTA button ────────────────────────────────────── */
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 10px 24px;
+    font-family: var(--font-body);
+    font-size: 15px; font-weight: 600;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    background: #ffffff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.14);
+  }
+
+  .theme-teal  .cta-btn { color: var(--color-primary-700); }
+  .theme-black .cta-btn { color: var(--color-neutral-900); }
+  .theme-blue  .cta-btn { color: #0033cc; }
+  .theme-pink  .cta-btn { color: #a01848; }
 
   @media (max-width: 720px) {
     .cta {
