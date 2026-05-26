@@ -29,3 +29,8 @@ columns:
 bottom:
     left: AI4EOSC Initiative. All rights reserved.
     right: "An initiative coordinated by the Spanish National Research Council (CSIC)"
+    policies:
+        - label: Acceptable Use Policy
+          href: /acceptable-use-policy
+        - label: Privacy Policy
+          href: /privacy-policy

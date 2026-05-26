@@ -6,6 +6,7 @@ import NumbersSection from '../components/sections/NumbersSection.astro';
 import CtaFinal from '../components/sections/CtaFinal.astro';
 import about from '../data/about.yml';
 import partners from '../data/partners.yml';
+import euLogo from '../assets/en-v-funded-by-the-eu_black-outline.png';
 
 const logoUrls = import.meta.glob<string>(
   '../assets/logos/*',
@@ -174,7 +175,7 @@ const cta = {
           <a href={funding.link.href} class="eu-link">{funding.link.label}</a>
         </div>
         <div class="eu-badge">
-          <span class="eu-flag" aria-label="European Union flag">🇪🇺</span>
+          <img class="eu-flag" src={euLogo.src} alt="Co-funded by the European Union" />
           <strong>{funding.badge.title}</strong>
           <p>Grant agreement<br/>{funding.badge.grant}</p>
         </div>
@@ -499,15 +500,16 @@ const cta = {
   }
 
   .eu-flag {
-    font-size: 32px;
     display: block;
-    margin-bottom: 10px;
-    line-height: 1;
+    width: 130px;
+    height: auto;
+    margin: 0 auto 10px;
+    filter: invert(1);
   }
 
   .eu-badge strong {
     display: block;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 700;
     color: #ffffff;
     margin-bottom: 6px;
@@ -515,7 +517,7 @@ const cta = {
   }
 
   .eu-badge p {
-    font-size: 11px;
+    font-size: 14px;
     color: rgba(255, 255, 255, 0.6);
     line-height: 1.55;
     margin: 0;
