@@ -5,9 +5,9 @@ timeline:
     - year: "2023"
       title: First gateways go live
       description: Early adopter projects like iMagine deploy their own instances of the platform, validating the gateway model for domain-specific scientific communities.
-    - year: "2024"
+    - year: "2025"
       title: Project completes, initiative continues
-      description: The original AI4EOSC Horizon Europe project concludes. The platform, the community and the infrastructure live on under the AI4EOSC Initiative umbrella.
-    - year: "2025 →"
+      description: The original AI4EOSC Horizon Europe project finishes. The platform, the community and the infrastructure continue under the AI4EOSC Initiative.
+    - year: "2026 →"
       title: New projects extend the ecosystem
-      description: EOSC-ARENA, FLUID-AI and other EU-funded projects join the initiative, adding AI agents, energy efficiency, security and new scientific communities.
+      description: EOSC-ARENA, FLUID-AI and other EU-funded projects join the initiative, adding AI agents, interoperability layers and new scientific communities.

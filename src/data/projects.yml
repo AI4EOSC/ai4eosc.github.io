@@ -1,9 +1,9 @@
 items:
     - id: ai4eosc
       type: origin
-      status: completed
+      status: finished
       title: AI4EOSC
-      tagline: The Horizon Europe project that started it all — AI platform for EOSC
+      tagline: The Horizon Europe project that started the initiative. Artificial Intelligence for the EOSC
       shortDescription: The Horizon Europe project that created the AI4EOSC platform.
       description: The original Horizon Europe project that created the AI4EOSC platform. Developed the core infrastructure for training, serving and cataloguing AI models within the EOSC, establishing the foundation that all subsequent projects build upon.
       logo: /logos/AI4-horizontal-dark.svg
@@ -19,94 +19,209 @@ items:
       period: "2022 – 2024"
       lead: IFCA-CSIC
       partners:
-          - EGI
-          - CNRS
+          - CSIC
+          - KIT
+          - IISAS
           - INFN
-          - GÉANT
-          - "+8 more"
+          - UPV
+          - PSNC
+          - LIP
+          - Predictia
+          - MicroStep MIS
+          - WODR
       url: https://ai4eosc.eu
-      publishUrl: https://ai4eosc.eu/publications
 
     - id: eosc-arena
-      type: associated
+      type: extension
       status: new
       title: EOSC-ARENA
-      tagline: Advancing autonomous AI agents on EOSC infrastructure
-      shortDescription: Advancing AI agents on EOSC infrastructure.
-      description: EOSC-ARENA extends the AI4EOSC platform with autonomous AI agent capabilities, enabling researchers to build and deploy multi-step AI workflows that operate without constant manual intervention. Focuses on agent orchestration, tool use and workflow automation within EOSC.
+      tagline: AI Research Enhancement through Networked Agents
+      shortDescription: AI Research Enhancement through Networked Agents
+      description: EOSC-ARENA extends the AI4EOSC platform with AI agent capabilities focused on scientific research.
       outputsLabel: Adding to AI4EOSC
       outputs:
           - AI agent framework
-          - Multi-step workflows
-          - Tool use
-          - Agent monitoring
+          - Federated GenAI
+          - GenAI for science
+          - Responsible GenAI
+          - Agent observability
       programme: Horizon Europe
-      period: "2025 – 2027"
+      period: "2026 – 2029"
       partners:
-          - IFCA-CSIC
-          - EGI
-          - "+5 more"
-      url: https://eosc-arena.eu
+          - PSNC
+          - CSIC
+          - CERTH
+          - GreenMatterAI
+          - IISLAFE
+          - KIT
+          - KNAW
+          - MRI
+          - Predictia
+          - PMT
+          - RDA
+          - STUBA
+          - UGent
+          - IISAS
+          - UNIPD
+          - UPV
+          - US
+          - CSC
+      url: https://arena.ai4eosc.eu
 
     - id: fluid-ai
-      type: associated
-      status: active
+      type: extension
+      status: new
       title: FLUID-AI
-      tagline: Energy-efficient and secure AI computing for European research
-      shortDescription: Energy-efficient and secure AI for research.
-      description: FLUID-AI focuses on making AI workloads on the AI4EOSC platform more energy-efficient and secure. Develops green computing metrics, energy monitoring tools and privacy-preserving techniques for AI model training and inference across EOSC infrastructure.
-      outputsLabel: Adding to AI4EOSC
+      tagline: FAIR Liquidity Unifying Interoperable Data and AI
+      shortDescription: FAIR Liquidity Unifying Interoperable Data and AI.
+      description: FLUID-AI aims to transform the EOSC into a dynamic, AI-ready ecosystem. The overarching goal is to significantly enhance the interoperability, machine-actionability, and AI readiness of data and models across European RIs and EOSC.
       outputs:
-          - Energy monitoring
-          - Green AI metrics
-          - Privacy-preserving ML
-          - Secure inference
+          - Model and data interoperability
+          - Data liquidity
+          - AI-ready data and models
+          - Federated infrastructure
+          - Easy to use platform
+          - ML/AI model deployment
       programme: Horizon Europe
-      period: "2024 – 2026"
+      period: "2026 – 2029"
       partners:
-          - CNRS
+          - CSIC
+          - PSNC
+          - KIT
+          - IISAS
+          - LIP 
           - INFN
-          - "+4 more"
+          - UvA
+          - UPV
+          - EGI
+          - INRAE
+          - CNRS
+          - IRD
+          - EMBL
+          - MARIS
+          - EURO-BIOIMAGING
+          - Predictia
+          - UCA
+          - RDAF
+          - INRIA
+          - KTH
+          - UC3M
+          - ARIADNE
+          - INGV
+          - ULIEGE
+          - OGS
+          - UFZ
+          - STUBA
+          - IFREMER
 
     - id: intertwin
       type: associated
-      status: active
+      status: finished
       title: interTwin
-      tagline: Digital twin engine for science, using AI4EOSC for model deployment
-      shortDescription: Digital twin engine for European science.
-      description: interTwin develops a blueprint for a cross-domain digital twin engine, leveraging AI4EOSC as its AI model deployment layer. Enables researchers to build digital twins of complex scientific systems — from climate models to particle physics simulations.
-      outputsLabel: Use of AI4EOSC
+      tagline: Co-designing and prototyping an interdisciplinary Digital Twin Engine
+      shortDescription: Co-designing and prototyping an interdisciplinary Digital Twin Engine.
+      description: interTwin develops a blueprint for a cross-domain digital twin engine, leveraging AI4EOSC as its AI model deployment layer. It aims to extend the technical capabilities of the European Open Science Cloud with modelling and simulation tools and to simplify DT application development.
       outputs:
-          - Digital twin AI models
-          - Cross-domain workflows
+          - Digital twin engine
+          - Model and simulation tools
+          - Data fusion
           - EOSC integration
       programme: Horizon Europe
       period: "2022 – 2025"
       partners:
-          - CERN
           - EGI
-          - IFCA-CSIC
-          - "+10 more"
+          - CERN
+          - CESNET
+          - CMCC
+          - CNRS
+          - CSIC
+          - Cyfronet
+          - Deltares
+          - DESY
+          - ECMWF
+          - EODC
+          - ETHZ
+          - EURAC
+          - FZJ
+          - GRNET
+          - INFN
+          - JSI/IZUM
+          - KIT
+          - KBFI
+          - LIP
+          - MPG
+          - PSNC
+          - TU Wien
+          - UHEI
+          - UNITN
+          - UPV
+          - VU
+          - WWU
       url: https://intertwin.eu
 
     - id: ai4life
       type: associated
-      status: active
+      status: finished
       title: AI4Life
-      tagline: AI tools and resources for the life sciences community on EOSC
-      shortDescription: AI tools for the life sciences community.
-      description: AI4Life builds a suite of AI tools and resources specifically tailored for the life sciences community, deployed on the AI4EOSC platform. Covers bioimaging, genomics, proteomics and drug discovery, making state-of-the-art AI accessible to biologists across Europe.
+      tagline: AI models and methods for the life sciences
+      shortDescription: AI models and methods for the life sciences.
+      description: AI4Life builds a suite of AI tools and resources specifically tailored for the life sciences community, deployed on a scpefici catalog in the AI4EOSC platform. It support life scientists in the adoption of machine learning solutions that improve the utility and interpretability of image data.
       outputsLabel: Key areas
       outputs:
-          - Bioimaging AI
-          - Genomics
-          - Proteomics
-          - Drug discovery
+          - Bio-imaging 
+          - Life sciences
+          - Model deployment
+          - FAIR access
           - BioImage.IO
       programme: Horizon Europe
       period: "2022 – 2025"
       partners:
           - EMBL
-          - CNRS
-          - "+6 more"
+          - EMBL_EBI
+          - EMBRC
+          - EMPHASIS
+          - EURO-BIOIMAGING
+          - EU OPENSCREEN
+          - HUMAN TECHNOPOLE
+          - IGC
+          - Intruct-ERIC
+          - KTH
+          - UC3M
       url: https://ai4life.eurobioimaging.eu
+
+    - id: imagine
+      type: associated
+      status: finished
+      title: iMagine
+      tagline: Imaging data and services for aquatic science
+      shortDescription: AI tools for the life sciences community.
+      description: iMagine develops imaging data and services for aquatic science, leveraging the AI4EOSC platform. 
+      outputs:
+          - Aquatic sciences
+          - Image analysis
+      programme: Horizon Europe
+      period: "2022 – 2025"
+      partners:
+          - EGI
+          - CSIC
+          - CMCC
+          - DFKI 
+          - EMSO-ERIC
+          - GRNET
+          - IFREMER
+          - KIT
+          - LIEC
+          - LIP
+          - Marine Institute
+          - MARIS
+          - OGS
+          - ORBITAL
+          - SOCIB
+          - Sorbonne Université
+          - TÜBITAK
+          - UNITN
+          - UPC
+          - UPV
+          - VLIZ
+          - WALTON
+      url: https://www.imagine-ai.eu/
