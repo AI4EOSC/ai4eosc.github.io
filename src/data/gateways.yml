@@ -3,6 +3,7 @@ items:
       type: marine
       domain: Marine
       status: active
+      users: 280
       tagline: AI for underwater imaging and marine biodiversity research
       description: AI for underwater imaging and marine biodiversity.
       longDescription: iMagine provides researchers with AI tools for underwater image classification, species identification and marine biodiversity monitoring. Built as part of the iMagine EU project, it uses the AI4EOSC platform to offer a tailored experience for marine scientists across Europe.
@@ -26,6 +27,7 @@ items:
       type: climate
       domain: Climate
       status: active
+      users: 340
       tagline: Serverless AI processing for Earth observation and climate data
       description: Serverless AI for Earth observation data.
       longDescription: The OSCAR Gateway provides event-driven, serverless AI inference for Earth observation and climate data processing. Integrated with Copernicus datasets and EOSC storage, it enables large-scale climate model execution without managing infrastructure.
@@ -46,6 +48,7 @@ items:
       type: health
       domain: Health
       status: new
+      users: 150
       tagline: Federated AI for European health research infrastructure
       description: Federated AI for European health research.
       longDescription: Health-RI deploys AI4EOSC's federated learning capabilities for health research, enabling institutions to train models on distributed patient data without centralising sensitive information. Fully GDPR-compliant and built for European health data spaces.
@@ -66,6 +69,7 @@ items:
       type: life
       domain: Life sciences
       status: active
+      users: 260
       tagline: AI tools for bioimaging, genomics and drug discovery
       description: AI tools for bioimaging and genomics via BioImage.IO.
       longDescription: AI4Life provides life scientists with access to state-of-the-art AI models for bioimaging, genomic analysis and drug discovery. Hosts the BioImage.IO model zoo and integrates with major European life science data repositories.
@@ -88,6 +92,7 @@ items:
       type: physics
       domain: Physics
       status: active
+      users: 170
       tagline: Digital twin AI for particle physics and astrophysics
       description: AI digital twins for particle physics and astrophysics simulations.
       longDescription: Developed as part of the interTwin project, this gateway provides physicists and astrophysicists with AI models for event classification, simulation and digital twin construction. Designed for high-energy physics, gravitational wave research and large-scale simulation workloads.

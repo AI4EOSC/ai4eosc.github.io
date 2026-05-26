@@ -4,6 +4,34 @@ import PageHero from '../../components/sections/PageHero.astro';
 import CtaFinal from '../../components/sections/CtaFinal.astro';
 import data from '../../data/projects.yml';
 
+function formatFunding(amount: number): string {
+  if (amount >= 1_000_000_000) {
+    const v = amount / 1_000_000_000;
+    return `€${Number.isInteger(v) ? v : v.toFixed(1)}B`;
+  }
+  if (amount >= 1_000_000) {
+    const v = amount / 1_000_000;
+    return `€${Number.isInteger(v) ? v : v.toFixed(1)}M`;
+  }
+  if (amount >= 1_000) {
+    const v = amount / 1_000;
+    return `€${Number.isInteger(v) ? v : v.toFixed(1)}K`;
+  }
+  return `€${amount}`;
+}
+
+// Computed header stats
+const totalProjects = data.items.length;
+
+const allInstitutions = new Set<string>();
+data.items.forEach((item: any) => {
+  if (item.lead) allInstitutions.add(item.lead.trim());
+  if (item.partners) item.partners.forEach((p: string) => allInstitutions.add(p.trim()));
+});
+const totalInstitutions = allInstitutions.size;
+
+const totalFunding = data.items.reduce((acc: number, item: any) => acc + (item.funding ?? 0), 0);
+
 const typeBadge: Record<string, { label: string; cls: string }> = {
   origin:     { label: 'Origin project',    cls: 'b-origin' },
   associated: { label: 'Associated',         cls: 'b-assoc'  },
@@ -26,9 +54,9 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
     description="From the original AI4EOSC project to a growing network of associated initiatives - each extending the platform with new capabilities for the European Open Science Cloud."
   >
     <div class="hero-stats">
-      <div class="hstat"><span class="hstat-val">6<em>+</em></span><span class="hstat-lbl">Related projects</span></div>
-      <div class="hstat"><span class="hstat-val">50<em>+</em></span><span class="hstat-lbl">Involved institutions</span></div>
-      <div class="hstat"><span class="hstat-val">€30M<em>+</em></span><span class="hstat-lbl">Total EU funding</span></div>
+      <div class="hstat"><span class="hstat-val">{totalProjects}<em>+</em></span><span class="hstat-lbl">Related projects</span></div>
+      <div class="hstat"><span class="hstat-val">{totalInstitutions}<em>+</em></span><span class="hstat-lbl">Involved institutions</span></div>
+      <div class="hstat"><span class="hstat-val">{formatFunding(totalFunding)}<em>+</em></span><span class="hstat-lbl">Total EU funding</span></div>
     </div>
   </PageHero>
 
@@ -120,6 +148,10 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
                       </div>
                     )}
                     <div class="meta-block">
+                      <div class="meta-item">
+                        <span class="meta-lbl">Programme</span>
+                        <span class="meta-val">{item.programme}</span>
+                      </div>
                       {item.grant && (
                         <div class="meta-item">
                           <span class="meta-lbl">Grant</span>
@@ -127,13 +159,15 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
                         </div>
                       )}
                       <div class="meta-item">
-                        <span class="meta-lbl">Programme</span>
-                        <span class="meta-val">{item.programme}</span>
-                      </div>
-                      <div class="meta-item">
                         <span class="meta-lbl">Period</span>
                         <span class="meta-val">{item.period}</span>
                       </div>
+                      {item.funding && (
+                        <div class="meta-item">
+                          <span class="meta-lbl">Funding</span>
+                          <span class="meta-val">{formatFunding(item.funding)}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
 

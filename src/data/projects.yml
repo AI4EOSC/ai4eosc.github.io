@@ -14,6 +14,7 @@ items:
           - Model catalogue
           - OSCAR integration
           - Federated learning
+      funding: 5000000
       grant: "No. 101058593"
       programme: Horizon Europe
       period: "2022 – 2024"
@@ -45,6 +46,7 @@ items:
           - Federated infrastructure
           - Easy to use platform
           - ML/AI model deployment
+      funding: 5000000
       programme: Horizon Europe
       period: "2026 – 2029"
       lead: CSIC
@@ -92,6 +94,7 @@ items:
           - GenAI for science
           - Responsible GenAI
           - Agent observability
+      funding: 5000000
       programme: Horizon Europe
       period: "2026 – 2029"
       lead: PSNC
@@ -125,6 +128,7 @@ items:
       outputs:
           - Aquatic sciences
           - Image analysis
+      funding: 5000000
       programme: Horizon Europe
       period: "2022 – 2025"
       lead: EGI
@@ -165,6 +169,7 @@ items:
           - Model and simulation tools
           - Data fusion
           - EOSC integration
+      funding: 5000000
       programme: Horizon Europe
       period: "2022 – 2025"
       lead: EGI
@@ -207,11 +212,12 @@ items:
       description: AI4Life builds a suite of AI tools and resources specifically tailored for the life sciences community, deployed on a scpefici catalog in the AI4EOSC platform. It support life scientists in the adoption of machine learning solutions that improve the utility and interpretability of image data.
       outputsLabel: Key areas
       outputs:
-          - Bio-imaging 
+          - Bio-imaging
           - Life sciences
           - Model deployment
           - FAIR access
           - BioImage.IO
+      funding: 5000000
       programme: Horizon Europe
       period: "2022 – 2025"
       lead: EURO-BIOIMAGING

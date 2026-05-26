@@ -19,6 +19,22 @@ const explainerIcons: Record<string, string> = {
   network:  `<circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v4M6.5 17.5l4-3M17.5 17.5l-4-3"/>`,
 };
 
+function formatUsers(count: number): string {
+  if (count >= 1_000_000) {
+    const v = count / 1_000_000;
+    return `${Number.isInteger(v) ? v : v.toFixed(1)}M`;
+  }
+  if (count >= 1_000) {
+    const v = count / 1_000;
+    return `${Number.isInteger(v) ? v : v.toFixed(1)}k`;
+  }
+  return `${count}`;
+}
+
+const totalGateways = data.items.length;
+const distinctDomains = new Set(data.items.map((i: any) => i.domain as string)).size;
+const totalUsers = data.items.reduce((acc: number, item: any) => acc + (item.users ?? 0), 0);
+
 const domains = ['all', 'marine', 'climate', 'health', 'life', 'physics'];
 const domainLabels: Record<string, string> = {
   all: 'All', marine: 'Marine', climate: 'Climate',
@@ -35,9 +51,9 @@ const domainLabels: Record<string, string> = {
     description="Gateways are domain-specific deployments of the AI4EOSC platform — each one tailored to a scientific community and providing direct access to AI tools and models in their field."
   >
     <div class="hero-stats">
-      <div class="hstat"><span class="hstat-val">12<em>+</em></span><span class="hstat-lbl">Active gateways</span></div>
-      <div class="hstat"><span class="hstat-val">5<em>+</em></span><span class="hstat-lbl">Scientific domains</span></div>
-      <div class="hstat"><span class="hstat-val">1.2k<em>+</em></span><span class="hstat-lbl">Researchers with access</span></div>
+      <div class="hstat"><span class="hstat-val">{totalGateways}<em>+</em></span><span class="hstat-lbl">Active gateways</span></div>
+      <div class="hstat"><span class="hstat-val">{distinctDomains}<em>+</em></span><span class="hstat-lbl">Scientific domains</span></div>
+      <div class="hstat"><span class="hstat-val">{formatUsers(totalUsers)}<em>+</em></span><span class="hstat-lbl">Researchers with access</span></div>
     </div>
   </PageHero>
 

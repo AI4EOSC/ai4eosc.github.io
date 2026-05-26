@@ -1,6 +1,7 @@
 items:
     - title: Marine Science
       iconId: marine
+      users: 150
       description: Underwater imaging, biodiversity
       longDescription: AI models for underwater image classification, species identification and marine biodiversity monitoring. Deployed through the iMagine gateway, which provides researchers with a specialised instance of the AI4EOSC platform.
       via: iMagine
@@ -13,6 +14,7 @@ items:
 
     - title: Climate & Weather
       iconId: climate
+      users: 200
       description: Forecasting, Earth observation
       longDescription: Machine learning models for weather forecasting, climate downscaling and Earth observation data processing. Integrated with Copernicus datasets and EOSC storage for large-scale analysis.
       via: OSCAR Gateway
@@ -24,6 +26,7 @@ items:
 
     - title: Bioinformatics
       iconId: bioinformatics
+      users: 180
       description: Genomics, proteomics, drug discovery
       longDescription: Deep learning tools for genomic sequence analysis, protein structure prediction and drug discovery pipelines. Built in collaboration with AI4Life and the BioImage.IO model zoo.
       via: AI4Life
@@ -36,6 +39,7 @@ items:
 
     - title: Social Sciences
       iconId: social
+      users: 120
       description: Text analysis, social media, surveys
       longDescription: Natural language processing and machine learning tools for social science research, including text classification, sentiment analysis and large-scale survey data processing for European research communities.
       tools:
@@ -46,6 +50,7 @@ items:
 
     - title: Digital Humanities
       iconId: humanities
+      users: 100
       description: Text mining, cultural analytics
       longDescription: AI tools for cultural heritage data analysis, historical text mining and digital preservation, connecting humanities researchers with state-of-the-art machine learning capabilities on EOSC infrastructure.
       tools:
@@ -56,6 +61,7 @@ items:
 
     - title: High Energy Physics
       iconId: physics
+      users: 200
       description: Particle physics, simulation
       longDescription: AI models for particle physics event classification, gravitational wave detection and astrophysical simulation. Built as part of the interTwin digital twin engine project for cross-domain scientific workflows.
       via: interTwin
@@ -68,6 +74,7 @@ items:
 
     - title: Earth Sciences
       iconId: earth
+      users: 130
       description: Geosciences, remote sensing
       longDescription: Machine learning models for geophysical data analysis, remote sensing image processing and natural hazard monitoring. Integrated with satellite data sources across European research infrastructure.
       tools:
@@ -78,6 +85,7 @@ items:
 
     - title: Astronomy
       iconId: astronomy
+      users: 120
       description: Astrophysics, cosmology, space science
       longDescription: Deep learning for astronomical image classification, galaxy morphology analysis and cosmological parameter estimation using large-scale survey data from next-generation observatories.
       tools:
