@@ -17,9 +17,8 @@ items:
       grant: "No. 101058593"
       programme: Horizon Europe
       period: "2022 – 2024"
-      lead: IFCA-CSIC
+      lead: CSIC
       partners:
-          - CSIC
           - KIT
           - IISAS
           - INFN
@@ -31,42 +30,6 @@ items:
           - WODR
       url: https://ai4eosc.eu
 
-    - id: eosc-arena
-      type: extension
-      status: new
-      title: EOSC-ARENA
-      tagline: AI Research Enhancement through Networked Agents
-      shortDescription: AI Research Enhancement through Networked Agents
-      description: EOSC-ARENA extends the AI4EOSC platform with AI agent capabilities focused on scientific research.
-      outputsLabel: Adding to AI4EOSC
-      outputs:
-          - AI agent framework
-          - Federated GenAI
-          - GenAI for science
-          - Responsible GenAI
-          - Agent observability
-      programme: Horizon Europe
-      period: "2026 – 2029"
-      partners:
-          - PSNC
-          - CSIC
-          - CERTH
-          - GreenMatterAI
-          - IISLAFE
-          - KIT
-          - KNAW
-          - MRI
-          - Predictia
-          - PMT
-          - RDA
-          - STUBA
-          - UGent
-          - IISAS
-          - UNIPD
-          - UPV
-          - US
-          - CSC
-      url: https://arena.ai4eosc.eu
 
     - id: fluid-ai
       type: extension
@@ -84,8 +47,8 @@ items:
           - ML/AI model deployment
       programme: Horizon Europe
       period: "2026 – 2029"
+      lead: CSIC
       partners:
-          - CSIC
           - PSNC
           - KIT
           - IISAS
@@ -114,6 +77,82 @@ items:
           - STUBA
           - IFREMER
 
+
+    - id: eosc-arena
+      type: extension
+      status: new
+      title: EOSC-ARENA
+      tagline: AI Research Enhancement through Networked Agents
+      shortDescription: AI Research Enhancement through Networked Agents
+      description: EOSC-ARENA extends the AI4EOSC platform with AI agent capabilities focused on scientific research.
+      outputsLabel: Adding to AI4EOSC
+      outputs:
+          - AI agent framework
+          - Federated GenAI
+          - GenAI for science
+          - Responsible GenAI
+          - Agent observability
+      programme: Horizon Europe
+      period: "2026 – 2029"
+      lead: PSNC
+      partners:
+          - CSIC
+          - CERTH
+          - GreenMatterAI
+          - IISLAFE
+          - KIT
+          - KNAW
+          - MRI
+          - Predictia
+          - PMT
+          - RDA
+          - STUBA
+          - UGent
+          - IISAS
+          - UNIPD
+          - UPV
+          - US
+          - CSC
+      url: https://arena.ai4eosc.eu
+
+    - id: imagine
+      type: associated
+      status: finished
+      title: iMagine
+      tagline: Imaging data and services for aquatic science
+      shortDescription: AI tools for the life sciences community.
+      description: iMagine develops imaging data and services for aquatic science, leveraging the AI4EOSC platform. 
+      outputs:
+          - Aquatic sciences
+          - Image analysis
+      programme: Horizon Europe
+      period: "2022 – 2025"
+      lead: EGI
+      partners:
+          - CSIC
+          - CMCC
+          - DFKI 
+          - EMSO-ERIC
+          - GRNET
+          - IFREMER
+          - KIT
+          - LIEC
+          - LIP
+          - Marine Institute
+          - MARIS
+          - OGS
+          - ORBITAL
+          - SOCIB
+          - Sorbonne Université
+          - TÜBITAK
+          - UNITN
+          - UPC
+          - UPV
+          - VLIZ
+          - WALTON
+      url: https://www.imagine-ai.eu/
+
+
     - id: intertwin
       type: associated
       status: finished
@@ -128,8 +167,8 @@ items:
           - EOSC integration
       programme: Horizon Europe
       period: "2022 – 2025"
+      lead: EGI
       partners:
-          - EGI
           - CERN
           - CESNET
           - CMCC
@@ -175,12 +214,12 @@ items:
           - BioImage.IO
       programme: Horizon Europe
       period: "2022 – 2025"
+      lead: EURO-BIOIMAGING
       partners:
           - EMBL
           - EMBL_EBI
           - EMBRC
           - EMPHASIS
-          - EURO-BIOIMAGING
           - EU OPENSCREEN
           - HUMAN TECHNOPOLE
           - IGC
@@ -189,39 +228,3 @@ items:
           - UC3M
       url: https://ai4life.eurobioimaging.eu
 
-    - id: imagine
-      type: associated
-      status: finished
-      title: iMagine
-      tagline: Imaging data and services for aquatic science
-      shortDescription: AI tools for the life sciences community.
-      description: iMagine develops imaging data and services for aquatic science, leveraging the AI4EOSC platform. 
-      outputs:
-          - Aquatic sciences
-          - Image analysis
-      programme: Horizon Europe
-      period: "2022 – 2025"
-      partners:
-          - EGI
-          - CSIC
-          - CMCC
-          - DFKI 
-          - EMSO-ERIC
-          - GRNET
-          - IFREMER
-          - KIT
-          - LIEC
-          - LIP
-          - Marine Institute
-          - MARIS
-          - OGS
-          - ORBITAL
-          - SOCIB
-          - Sorbonne Université
-          - TÜBITAK
-          - UNITN
-          - UPC
-          - UPV
-          - VLIZ
-          - WALTON
-      url: https://www.imagine-ai.eu/
