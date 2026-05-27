@@ -14,7 +14,7 @@ items:
           - Model catalogue
           - OSCAR integration
           - Federated learning
-      funding: 5000000
+      funding: 4997125
       grant: "No. 101058593"
       programme: Horizon Europe
       period: "2022 – 2024"
@@ -46,7 +46,7 @@ items:
           - Federated infrastructure
           - Easy to use platform
           - ML/AI model deployment
-      funding: 5000000
+      funding: 7489443.75 
       programme: Horizon Europe
       period: "2026 – 2029"
       lead: CSIC
@@ -94,7 +94,7 @@ items:
           - GenAI for science
           - Responsible GenAI
           - Agent observability
-      funding: 5000000
+      funding: 8391245
       programme: Horizon Europe
       period: "2026 – 2029"
       lead: PSNC
@@ -128,7 +128,7 @@ items:
       outputs:
           - Aquatic sciences
           - Image analysis
-      funding: 5000000
+      funding: 4500000
       programme: Horizon Europe
       period: "2022 – 2025"
       lead: EGI
@@ -169,7 +169,7 @@ items:
           - Model and simulation tools
           - Data fusion
           - EOSC integration
-      funding: 5000000
+      funding: 11731666.75
       programme: Horizon Europe
       period: "2022 – 2025"
       lead: EGI
@@ -217,7 +217,7 @@ items:
           - Model deployment
           - FAIR access
           - BioImage.IO
-      funding: 5000000
+      funding: 4141166
       programme: Horizon Europe
       period: "2022 – 2025"
       lead: EURO-BIOIMAGING
