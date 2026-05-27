@@ -3,17 +3,9 @@ import { getCollection } from 'astro:content';
 import SectionHeader from '../SectionHeader.astro';
 
 const stories = await getCollection('stories');
-const sortedStories = stories.sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-);
-
-const placeholderColors: Record<string, string> = {
-  dark:      'var(--color-neutral-800)',
-  secondary: 'var(--color-secondary-700)',
-  primary:   'var(--color-primary-700)',
-};
-
-const posGradients = ['dark', 'secondary', 'primary'];
+const sortedStories = stories
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
 ---
 
 <section>
@@ -29,32 +21,27 @@ const posGradients = ['dark', 'secondary', 'primary'];
         actionHref="/stories"
       />
       <div class="grid">
-        {sortedStories.map((story, i) => {
-          const gradient = story.data.gradient ?? posGradients[i % 3];
-          const bgColor = placeholderColors[gradient];
-          return (
-            <a href={`/stories/${story.id}`} class="card reveal" style={`transition-delay: ${i * 80}ms`}>
-              <div class="image" style={`background-color: ${bgColor}`}>
-                {story.data.image && (
-                  <img src={story.data.image} alt="" class="cover" loading="lazy" />
-                )}
+        {sortedStories.map((story, i) => (
+          <a href={`/stories/${story.id}`} class={`item reveal${story.data.image ? ' has-image' : ''}`} style={`transition-delay: ${i * 80}ms`}>
+            {story.data.image && (
+              <div class="image">
+                <img src={story.data.image} alt="" loading="lazy" />
               </div>
-              <div class="body">
-                <div class="meta">
-                  <span class="tag">{story.data.type}</span>
-                  <span class="date">
-                    {story.data.date.toLocaleDateString('en-GB', {
-                      month: 'short',
-                      year: 'numeric'
-                    })}
-                  </span>
-                </div>
-                <h4>{story.data.title}</h4>
-                <p>{story.data.excerpt}</p>
+            )}
+            <div class="body">
+              <div class="meta">
+                <span class="tag">{story.data.type}</span>
+                <span class="dot" aria-hidden="true"></span>
+                <span class="date">
+                  {story.data.date.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}
+                </span>
               </div>
-            </a>
-          );
-        })}
+              <h4>{story.data.title}</h4>
+              <p>{story.data.excerpt}</p>
+              <span class="read-link">Read story →</span>
+            </div>
+          </a>
+        ))}
       </div>
     </div>
   </div>
@@ -64,31 +51,32 @@ const posGradients = ['dark', 'secondary', 'primary'];
   .grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
+    gap: 0;
+    margin-top: 24px;
+    border-top: 1px solid var(--card-border);
   }
 
-  .card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius-md);
-    overflow: hidden;
+  .item {
+    border-right: 1px solid var(--card-border);
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
-    display: block;
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    overflow: hidden;
   }
 
-  .card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-2);
-  }
+  .item:last-child { border-right: none; }
 
+  /* Image: full-width bleed, no radius, flush to top */
   .image {
-    height: 160px;
+    width: 100%;
+    height: 150px;
+    flex-shrink: 0;
     position: relative;
     overflow: hidden;
+    border-bottom: 1px solid var(--card-border);
   }
 
-  .cover {
+  .image img {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -96,14 +84,24 @@ const posGradients = ['dark', 'secondary', 'primary'];
     object-fit: cover;
   }
 
+  /* Body carries the horizontal padding */
   .body {
-    padding: 18px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 24px 32px 28px 0;
   }
+
+  .item + .item .body { padding-left: 32px; }
+  .item:last-child .body { padding-right: 0; }
+
+  /* No top padding on body when there's no image */
+  .item:not(.has-image) .body { padding-top: 28px; }
 
   .meta {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     margin-bottom: 10px;
   }
 
@@ -115,13 +113,21 @@ const posGradients = ['dark', 'secondary', 'primary'];
     color: var(--color-primary-600);
   }
 
+  .dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--color-neutral-300);
+    flex-shrink: 0;
+  }
+
   .date {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--color-neutral-400);
   }
 
   h4 {
-    margin: 0 0 6px;
+    margin: 0 0 10px;
     font-family: var(--font-headings);
     font-size: 17px;
     font-weight: 650;
@@ -131,18 +137,37 @@ const posGradients = ['dark', 'secondary', 'primary'];
     transition: color var(--transition-fast);
   }
 
-  .card:hover h4 { color: var(--color-primary-700); }
+  .item:hover h4 { color: var(--color-primary-700); }
 
   p {
-    margin: 0;
+    margin: 0 0 20px;
     font-size: 14px;
     color: var(--color-neutral-500);
     line-height: 1.6;
+    flex: 1;
   }
+
+  .read-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-primary-700);
+    margin-top: auto;
+    transition: color var(--transition-fast);
+  }
+
+  .item:hover .read-link { color: var(--color-primary-600); }
 
   @media (max-width: 900px) {
     .grid {
       grid-template-columns: 1fr;
+      border-top: none;
     }
+
+    .item {
+      border-right: none;
+      border-top: 1px solid var(--card-border);
+    }
+
+    .body { padding: 24px 0 24px 0 !important; }
   }
 </style>
