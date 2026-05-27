@@ -30,7 +30,7 @@ items:
           - MicroStep MIS
           - WODR
       url: https://ai4eosc.eu
-
+      cordisUrl: https://cordis.europa.eu/project/id/101058593
 
     - id: fluid-ai
       type: extension
@@ -46,7 +46,7 @@ items:
           - Federated infrastructure
           - Easy to use platform
           - ML/AI model deployment
-      funding: 5000000
+      funding: 8000000
       programme: Horizon Europe
       period: "2026 – 2029"
       lead: CSIC
@@ -54,7 +54,7 @@ items:
           - PSNC
           - KIT
           - IISAS
-          - LIP 
+          - LIP
           - INFN
           - UvA
           - UPV
@@ -78,7 +78,6 @@ items:
           - UFZ
           - STUBA
           - IFREMER
-
 
     - id: eosc-arena
       type: extension
@@ -119,12 +118,13 @@ items:
       url: https://arena.ai4eosc.eu
 
     - id: imagine
+
       type: associated
       status: finished
       title: iMagine
       tagline: Imaging data and services for aquatic science
       shortDescription: AI tools for the life sciences community.
-      description: iMagine develops imaging data and services for aquatic science, leveraging the AI4EOSC platform. 
+      description: iMagine develops imaging data and services for aquatic science, leveraging the AI4EOSC platform.
       outputs:
           - Aquatic sciences
           - Image analysis
@@ -135,7 +135,7 @@ items:
       partners:
           - CSIC
           - CMCC
-          - DFKI 
+          - DFKI
           - EMSO-ERIC
           - GRNET
           - IFREMER
@@ -155,7 +155,7 @@ items:
           - VLIZ
           - WALTON
       url: https://www.imagine-ai.eu/
-
+      cordisUrl: https://cordis.europa.eu/project/id/101058625
 
     - id: intertwin
       type: associated
@@ -169,7 +169,7 @@ items:
           - Model and simulation tools
           - Data fusion
           - EOSC integration
-      funding: 5000000
+      funding: 12000000
       programme: Horizon Europe
       period: "2022 – 2025"
       lead: EGI
@@ -202,6 +202,7 @@ items:
           - VU
           - WWU
       url: https://intertwin.eu
+      cordisUrl: https://cordis.europa.eu/project/id/101058386
 
     - id: ai4life
       type: associated
@@ -217,7 +218,7 @@ items:
           - Model deployment
           - FAIR access
           - BioImage.IO
-      funding: 5000000
+      funding: 4000000
       programme: Horizon Europe
       period: "2022 – 2025"
       lead: EURO-BIOIMAGING
@@ -233,4 +234,4 @@ items:
           - KTH
           - UC3M
       url: https://ai4life.eurobioimaging.eu
-
+      cordisUrl: https://cordis.europa.eu/project/id/101057970

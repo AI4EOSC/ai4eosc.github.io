@@ -134,6 +134,9 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
                       {item.url && (
                         <a class="btn-visit" href={item.url} target="_blank" rel="noopener">Visit project ↗</a>
                       )}
+                      {item.cordisUrl && (
+                        <a class="btn-cordis" href={item.cordisUrl} target="_blank" rel="noopener">CORDIS ↗</a>
+                      )}
                       {item.publishUrl && (
                         <a class="btn-docs" href={item.publishUrl} target="_blank" rel="noopener">Publications ↗</a>
                       )}
@@ -403,6 +406,11 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
     background: var(--color-neutral-900); color: #fff; border: 1px solid transparent;
   }
   .btn-visit:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.18); }
+
+  .btn-cordis {
+    background: transparent; color: #1a4f8c; border: 1px solid rgba(26,79,140,0.25);
+  }
+  .btn-cordis:hover { background: rgba(26,79,140,0.06); border-color: rgba(26,79,140,0.4); transform: translateY(-1px); }
 
   .btn-docs {
     background: transparent; color: var(--color-neutral-700); border: 1px solid var(--card-border);
