@@ -82,6 +82,38 @@ const items = (numbersData.items as Array<Record<string, string>>).map((item, i)
   </div>
 </section>
 
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      obs.unobserve(entry.target);
+
+      const valueEl = entry.target.querySelector<HTMLElement>('.value');
+      const suffixEl = entry.target.querySelector<HTMLElement>('.suffix');
+      if (!valueEl) return;
+
+      const raw = valueEl.textContent?.trim() ?? '0';
+      const isDecimal = raw.includes('.');
+      const target = parseFloat(raw);
+      const isK = suffixEl?.textContent?.includes('K');
+      const duration = isK ? 1600 : 1200;
+      const start = performance.now();
+
+      function tick(now: number) {
+        const p = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 4);
+        valueEl.textContent = isDecimal
+          ? (target * eased).toFixed(1)
+          : String(Math.round(target * eased));
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+  }, { threshold: 0.6 });
+
+  document.querySelectorAll('.stat').forEach(el => obs.observe(el));
+</script>
+
 <style>
   .grid {
     display: grid;

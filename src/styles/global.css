@@ -236,15 +236,18 @@
 /* ── Scroll reveal ── */
 .reveal {
 	opacity: 0;
-	transform: translateY(14px);
+	transform: translateY(16px);
+	filter: blur(4px);
 	transition:
-		opacity 0.55s ease,
-		transform 0.55s ease;
+		opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+		transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+		filter 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal.is-visible {
 	opacity: 1;
 	transform: none;
+	filter: blur(0);
 }
 
 @media (prefers-reduced-motion: reduce) {

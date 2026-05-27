@@ -208,10 +208,20 @@ import SectionHeader from '../SectionHeader.astro';
     display: flex;
     flex-direction: column;
     text-decoration: none;
-    transition: background var(--transition-fast);
+    position: relative;
+    transition:
+      background var(--transition-fast),
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 0;
   }
 
-  .cell:hover { background: var(--color-neutral-50); }
+  .cell:hover {
+    background: var(--color-neutral-50);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.09), 0 2px 8px rgba(0,0,0,0.04);
+    z-index: 1;
+  }
 
   /* ── Preview illustration ── */
   .product-render {
@@ -222,6 +232,27 @@ import SectionHeader from '../SectionHeader.astro';
     overflow: hidden;
     flex: 0 0 245px;
     max-height: 245px;
+    position: relative;
+  }
+
+  .product-render::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.22) 50%,
+      transparent 70%
+    );
+    transform: translateX(-120%) skewX(-12deg);
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .cell:hover .product-render::after {
+    transform: translateX(220%) skewX(-12deg);
   }
 
   .chrome {

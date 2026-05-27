@@ -40,12 +40,26 @@ const ogImageUrl = new URL('/og/ai4eosc-og.png', Astro.url).href;
     <meta name="twitter:image" content={ogImageUrl} />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <style>
+    #scroll-bar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, var(--color-primary-400), var(--color-primary-600));
+      transform-origin: left;
+      transform: scaleX(0);
+      z-index: 9999;
+      pointer-events: none;
+    }
+  </style>
   </head>
   <body>
+    <div id="scroll-bar" aria-hidden="true"></div>
     <Navbar />
       <slot />
     <Footer />
     <script>
+      // Scroll reveal
       const observer = new IntersectionObserver(
         (entries) => entries.forEach(e => {
           if (e.isIntersecting) {
@@ -56,6 +70,15 @@ const ogImageUrl = new URL('/og/ai4eosc-og.png', Astro.url).href;
         { threshold: 0.08 }
       );
       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+      // Scroll progress bar
+      const bar = document.getElementById('scroll-bar');
+      if (bar) {
+        window.addEventListener('scroll', () => {
+          const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+          bar.style.transform = `scaleX(${pct / 100})`;
+        }, { passive: true });
+      }
     </script>
   </body>
 </html>
