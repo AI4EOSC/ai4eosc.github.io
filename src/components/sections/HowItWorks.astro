@@ -1,21 +1,11 @@
 ---
 import SectionHeader from '../SectionHeader.astro';
 
-const label = 'How it works';
-const title = 'How AI4EOSC works';
-const description = 'Three layers working together to bring open AI infrastructure to European research.';
-
 const items = [
-  { title: 'Products',   theme: 'eu-blue',   iconId: 'products',  description: 'Open-source software for training, serving and cataloguing AI models — built for EOSC.' },
-  { title: 'Ecosystem',  theme: 'secondary', iconId: 'ecosystem', description: 'EU-funded projects and scientific communities extending and using the platform.' },
-  { title: 'Gateways',   theme: 'primary',   iconId: 'gateways',  description: 'Domain-specific deployments giving researchers direct access to AI tools in their field.' },
+  { title: 'Products',   step: '01', iconId: 'products',  description: 'Open-source software for training, serving and cataloguing AI models — built for EOSC.' },
+  { title: 'Ecosystem',  step: '02', iconId: 'ecosystem', description: 'EU-funded projects and scientific communities extending and using the platform.' },
+  { title: 'Gateways',   step: '03', iconId: 'gateways',  description: 'Domain-specific deployments giving researchers direct access to AI tools in their field.' },
 ];
-
-const gradients: Record<string, string> = {
-  'eu-blue': 'var(--gradient-eu-blue)',
-  secondary: 'var(--gradient-pink)',
-  primary:   'var(--gradient-primary)',
-};
 
 const icons: Record<string, string> = {
   products:  `<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>`,
@@ -26,37 +16,33 @@ const icons: Record<string, string> = {
 
 <section>
   <div class="section-label">
-    <div class="container">{label}</div>
+    <div class="container">How it works</div>
   </div>
   <div class="container">
     <div class="section-card">
-      <SectionHeader title={title} subtitle={description} />
+      <SectionHeader title="How AI4EOSC works" subtitle="Three layers working together to bring open AI infrastructure to European research." />
       <div class="grid">
-        {items.map((item) => (
-          <article class="card glass" key={item.title}>
-            <div class="header" style={`background: ${gradients[item.theme]}`}>
-              <span class="circle circle--lg" aria-hidden="true"></span>
-              <span class="circle circle--md" aria-hidden="true"></span>
-              <span class="circle circle--sm" aria-hidden="true"></span>
+        {items.map((item, i) => (
+          <div class="item reveal" style={`transition-delay: ${i * 80}ms`}>
+            <div class="item-top">
               <svg
                 class="icon"
-                width="32"
-                height="32"
+                width="18"
+                height="18"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="white"
-                stroke-width="1.5"
+                stroke="currentColor"
+                stroke-width="1.75"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 aria-hidden="true"
                 set:html={icons[item.iconId]}
               />
+              <span class="step">{item.step}</span>
             </div>
-            <div class="body">
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-            </div>
-          </article>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+          </div>
         ))}
       </div>
     </div>
@@ -67,82 +53,56 @@ const icons: Record<string, string> = {
   .grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-    margin-bottom: 28px;
+    gap: 0;
+    margin-top: 24px;
+    border-top: 1px solid var(--card-border);
   }
 
-  .card {
-    border-radius: var(--radius-md);
-    overflow: hidden;
+  .item {
+    padding: 28px 32px 4px 0;
+    border-right: 1px solid var(--card-border);
   }
 
-  .header {
-    height: 110px;
+  .item:last-child {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .item + .item {
+    padding-left: 32px;
+  }
+
+  .item-top {
     display: flex;
     align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
+    justify-content: space-between;
+    margin-bottom: 18px;
   }
-
-  .header::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 80% 70% at 15% 20%, rgba(255, 255, 255, 0.10) 0%, transparent 55%),
-      radial-gradient(ellipse 50% 40% at 85% 85%, rgba(0, 0, 0, 0.15) 0%, transparent 55%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* ── Circles ── */
-  .circle {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    transform: translate(50%, 50%);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: transparent;
-    pointer-events: none;
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.26),
-      0 0 30px rgba(255, 255, 255, 0.14),
-      0 0 60px rgba(255, 255, 255, 0.06),
-      inset 0 0 12px rgba(255, 255, 255, 0.05);
-    animation: pulsing 5s ease-in-out infinite;
-    z-index: 0;
-  }
-
-  .circle--lg { width: 85%; animation-delay: 2s; }
-  .circle--md { width: 58%; animation-delay: 1s; }
-  .circle--sm { width: 35%; animation-delay: 0s; }
 
   .icon {
-    position: relative;
-    z-index: 2;
-    opacity: 0.92;
-    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.35));
+    color: var(--color-neutral-400);
   }
 
-  /* ── Body ── */
-  .body {
-    padding: 20px 22px 26px;
+  .step {
+    font-family: var(--font-headings);
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-primary-200);
   }
 
   h3 {
-    margin: 0 0 8px;
+    margin: 0 0 10px;
     font-family: var(--font-headings);
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 650;
     letter-spacing: -0.02em;
     color: var(--color-neutral-900);
   }
 
   p {
     margin: 0;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.65;
     color: var(--color-neutral-500);
   }
@@ -150,6 +110,18 @@ const icons: Record<string, string> = {
   @media (max-width: 900px) {
     .grid {
       grid-template-columns: 1fr;
+      border-top: none;
+    }
+
+    .item {
+      padding: 0 0 24px;
+      border-right: none;
+      border-top: 1px solid var(--card-border);
+      padding-top: 24px;
+    }
+
+    .item + .item {
+      padding-left: 0;
     }
   }
 </style>

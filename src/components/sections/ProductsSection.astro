@@ -2,64 +2,52 @@
 import data from '../../data/products.yml';
 import SectionHeader from '../SectionHeader.astro';
 
-const label = 'Products';
-const title = 'Our software';
-const description = 'Open-source tools built to make research-grade AI accessible across the European Open Science Cloud.';
-const action = { label: 'View all products →', href: '/products' };
-
 const icons: Record<string, string> = {
   platform: `<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>`,
-  llm: `<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>`,
-  agents: `<circle cx="12" cy="7" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/>`,
+  llm:      `<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>`,
+  agents:   `<circle cx="12" cy="7" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/>`,
 };
 ---
 
 <section>
   <div class="section-label">
-    <div class="container">{label}</div>
+    <div class="container">Products</div>
   </div>
   <div class="container">
     <div class="section-card">
       <SectionHeader
-        title={title}
-        subtitle={description}
-        actionLabel={action.label}
-        actionHref={action.href}
+        title="Our software"
+        subtitle="Open-source tools built to make research-grade AI accessible across the European Open Science Cloud."
+        actionLabel="View all products →"
+        actionHref="/products"
       />
       <div class="grid">
-        {data.items.map((item) => (
-          <article class="card glass" key={item.title}>
-            <div class={`screen ${item.theme}`}>
-              <span class="circle circle--lg" aria-hidden="true"></span>
-              <span class="circle circle--md" aria-hidden="true"></span>
-              <span class="circle circle--sm" aria-hidden="true"></span>
-              <div class="screen-label">
+        {data.items.map((item, i) => (
+          <div class="cell reveal" style={`transition-delay: ${i * 60}ms`}>
+            <div class="cell-top">
+              <div class="icon-wrap">
                 <svg
-                  width="20"
-                  height="20"
+                  width="15"
+                  height="15"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="white"
+                  stroke="currentColor"
                   stroke-width="1.75"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   aria-hidden="true"
                   set:html={icons[item.iconId]}
                 />
-                <span class="screen-name">{item.title}</span>
               </div>
+              {item.status && (
+                <span class={`status ${item.status.toLowerCase().replace(/ /g, '-')}`}>{item.status}</span>
+              )}
             </div>
-            <div class="body">
-              <div class="body-header">
-                <span class="badge">{item.category}</span>
-                {item.status && (
-                  <span class={`status-pill ${item.status.toLowerCase().replace(' ', '-')}`}>{item.status}</span>
-                )}
-              </div>
-              <p>{item.description}</p>
-              <a class="link" href={item.linkHref}>{item.linkLabel}</a>
-            </div>
-          </article>
+            <h3>{item.title}</h3>
+            <span class="category">{item.category}</span>
+            <p>{item.description}</p>
+            <a class="link" href={item.linkHref}>{item.linkLabel}</a>
+          </div>
         ))}
       </div>
     </div>
@@ -70,147 +58,90 @@ const icons: Record<string, string> = {
   .grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-  }
-
-  .card {
-    border-radius: var(--radius-md);
+    gap: 1px;
+    background: var(--card-border);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-xs);
     overflow: hidden;
+    margin-top: 24px;
   }
 
-  .screen {
-    height: 90px;
+  .cell {
+    background: var(--card-bg);
+    padding: 28px 24px 24px;
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 0 0 0 22px;
-    position: relative;
-    overflow: hidden;
-    background:
-      radial-gradient(ellipse 55% 80% at 5% 50%, rgba(0, 135, 146, 0.14) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 70% at 92% 50%, rgba(236, 93, 128, 0.10) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 50%),
-      linear-gradient(140deg, #111418 0%, #1a1f24 50%, #1e2228 100%);
+    flex-direction: column;
   }
 
-  .circle {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    transform: translate(50%, 50%);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: transparent;
-    pointer-events: none;
-    animation: pulsing 5s ease-in-out infinite;
-    z-index: 0;
-  }
-
-  .circle--lg { width: 90%; animation-delay: 2s; }
-  .circle--md { width: 62%; animation-delay: 1s; }
-  .circle--sm { width: 38%; animation-delay: 0s; }
-
-  .screen.eu-blue .circle {
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.3),
-      0 0 30px rgba(46, 104, 212, 0.2),
-      0 0 60px rgba(46, 104, 212, 0.1),
-      inset 0 0 12px rgba(255, 255, 255, 0.03);
-  }
-
-  .screen.secondary .circle {
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.3),
-      0 0 30px rgba(236, 93, 128, 0.2),
-      0 0 60px rgba(236, 93, 128, 0.10),
-      inset 0 0 12px rgba(255, 255, 255, 0.03);
-  }
-
-  .screen.primary .circle {
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.3),
-      0 0 30px rgba(0, 200, 215, 0.2),
-      0 0 60px rgba(0, 200, 215, 0.1),
-      inset 0 0 12px rgba(255, 255, 255, 0.03);
-  }
-
-  .screen-label {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    padding-left: 4px;
-  }
-
-  .screen-name {
-    font-size: 20px;
-    font-weight: 500;
-    color: white;
-    white-space: nowrap;
-  }
-
-  .body {
-    padding: 16px 18px 20px;
-  }
-
-  .body-header {
+  .cell-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 12px;
+    margin-bottom: 20px;
   }
 
-  .badge {
-    display: inline-block;
-    font-size: 12px;
+  .icon-wrap {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-neutral-100);
+    border-radius: var(--radius-xs);
+    color: var(--color-neutral-500);
+    flex-shrink: 0;
+  }
+
+  .status {
+    font-size: 10px;
     font-weight: 600;
-    color: var(--color-primary-700);
-    background: var(--color-primary-100);
+    padding: 2px 7px;
     border-radius: 999px;
-    padding: 3px 10px;
+    border: 1px solid;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
   }
 
-  .status-pill {
-    font-size: 12px;
-    font-weight: 600;
-    border-radius: 999px;
-    padding: 3px 9px;
+  .status.available   { color: #059669; border-color: #a7f3d0; background: #f0fdf4; }
+  .status.preview     { color: #b45309; border-color: #fde68a; background: #fffbeb; }
+  .status.coming-soon { color: var(--color-neutral-400); border-color: var(--card-border); background: transparent; }
+
+  h3 {
+    margin: 0 0 4px;
+    font-family: var(--font-headings);
+    font-size: 17px;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    color: var(--color-neutral-900);
   }
 
-  .status-pill.available {
-    color: #059669;
-    background: #d1fae5;
-    border: 0.5px solid #6ee7b7;
-    box-shadow: 0 0 6px rgba(52, 211, 153, 0.22);
-  }
-
-  .status-pill.preview {
-    color: #b45309;
-    background: #fef3c7;
-    border: 0.5px solid #fcd34d;
-    box-shadow: 0 0 6px rgba(251, 191, 36, 0.22);
-  }
-
-  .status-pill.coming-soon {
-    color: #7c3aed;
-    background: #ede9fe;
-    border: 0.5px solid #c4b5fd;
-    box-shadow: 0 0 6px rgba(167, 139, 250, 0.20);
+  .category {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--color-neutral-400);
+    margin-bottom: 14px;
   }
 
   p {
-    margin: 0 0 10px;
-    font-size: 16px;
+    margin: 0 0 20px;
+    font-size: 14px;
     line-height: 1.6;
     color: var(--color-neutral-500);
+    flex: 1;
   }
 
   .link {
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 600;
     color: var(--color-primary-700);
     text-decoration: none;
+    margin-top: auto;
+  }
+
+  .link:hover {
+    color: var(--color-primary-600);
   }
 
   @media (max-width: 900px) {

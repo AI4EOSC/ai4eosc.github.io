@@ -4,41 +4,28 @@ import communitiesData from '../../data/communities.yml';
 import gatewaysData from '../../data/gateways.yml';
 
 const typeLabel: Record<string, string> = {
-  origin: 'Origin',
+  origin:     'Origin',
   associated: 'Associated',
-  extension: 'Extension',
+  extension:  'Extension',
 };
 
-const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
-
-const projectsHero = {
-  title: 'EU-funded projects',
-  description: 'Horizon Europe projects collaborating and extending the AI4EOSC platform across the European research landscape.',
-  buttonLabel: 'Explore projects',
-  buttonHref: '/ecosystem/projects',
+const statusLabel: Record<string, string> = {
+  active:        'Active',
+  new:           'New',
+  finished:      'Completed',
+  'coming-soon': 'Coming soon',
 };
-const projectsMore = { label: '+ more projects →', href: '/ecosystem/projects' };
 
-const communitiesHero = {
-  title: 'Scientific communities',
-  description: 'AI4EOSC serves a growing number of research domains, connecting scientists with the AI tools they need.',
-  buttonLabel: 'Explore communities',
-  buttonHref: '/ecosystem/communities',
-};
-const communitiesMore = { label: '+ more communities →', href: '/ecosystem/communities' };
-
-const gatewaysHero = {
-  title: 'Gateways built on AI4EOSC',
-  description: 'Specialised platforms and projects that use AI4EOSC products to serve their own scientific communities.',
-  buttonLabel: 'Explore gateways',
-  buttonHref: '/ecosystem/gateways',
-};
-const gatewaysMore = { label: '+ more gateways →', href: '/ecosystem/gateways' };
-
+// Exact icons from /ecosystem/communities page
 const communityIcons: Record<string, string> = {
-  marine: `<path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>`,
-  climate: `<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>`,
+  marine:         `<path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>`,
+  climate:        `<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>`,
   bioinformatics: `<path d="M2 3c4 2 6 5 6 9s-2 7-6 9"/><path d="M22 3c-4 2-6 5-6 9s2 7 6 9"/><path d="M6 7h12M6 17h12"/>`,
+  social:         `<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`,
+  humanities:     `<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>`,
+  physics:        `<circle cx="12" cy="12" r="1"/><path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5z"/><path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5z"/>`,
+  earth:          `<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/>`,
+  astronomy:      `<circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>`,
 };
 ---
 
@@ -48,13 +35,13 @@ const communityIcons: Record<string, string> = {
   </div>
   <div class="container">
 
-    <!-- Projects sub-block (eu-blue) -->
+    <!-- Projects -->
     <div class="sub-block">
       <div class="hero eu-blue">
         <div class="hero-content">
-          <h2>{projectsHero.title}</h2>
-          <p>{projectsHero.description}</p>
-          <a class="button-pill ghost" href={projectsHero.buttonHref}>{projectsHero.buttonLabel}</a>
+          <h2>EU-funded projects</h2>
+          <p>Horizon Europe projects collaborating and extending the AI4EOSC platform across the European research landscape.</p>
+          <a class="button-pill ghost" href="/ecosystem/projects">Explore projects</a>
         </div>
         <div class="hero-circles" aria-hidden="true">
           <span class="circle circle--lg"></span>
@@ -62,40 +49,47 @@ const communityIcons: Record<string, string> = {
           <span class="circle circle--sm"></span>
         </div>
       </div>
-      <div class="grid">
-        {projectsData.items.slice(0, 5).map((item) => (
-          <article class="card glass">
-            <div class="screen eu-blue">
-              <span class="circle circle--lg" aria-hidden="true"></span>
-              <span class="circle circle--md" aria-hidden="true"></span>
-              <span class="circle circle--sm" aria-hidden="true"></span>
-              <div class="screen-content row">
-                <h4>{item.title}</h4>
-                <div class="screen-pills">
-                  <span class="pill tag">{typeLabel[item.type] ?? item.type}</span>
-                  <span class={`pill status ${item.status}`}>{capitalize(item.status)}</span>
-                </div>
+      <div class="tile-grid">
+        {projectsData.items.slice(0, 5).map((item, i) => (
+          <div class="tile reveal" style={`transition-delay: ${i * 40}ms`}>
+            <div class="tile-head">
+              <h4>{item.title}</h4>
+              <div class="tile-tags">
+                <span class="pill type">{typeLabel[item.type] ?? item.type}</span>
+                <span class={`pill status ${item.status}`}>{statusLabel[item.status] ?? item.status}</span>
               </div>
             </div>
-            <div class="body">
-              <p>{item.shortDescription}</p>
+            <p class="tagline">{item.tagline}</p>
+            <div class="tile-links">
+              <a class="link-project" href="/ecosystem/projects">View project →</a>
               {item.url && (
-                <a class="link eu-blue" href={item.url} target="_blank" rel="noopener noreferrer">→ Visit website</a>
+                <a class="link-ext" href={item.url} target="_blank" rel="noopener noreferrer">Visit website ↗</a>
               )}
             </div>
-          </article>
+          </div>
         ))}
-        <a class="card more eu-blue" href={projectsMore.href}>{projectsMore.label}</a>
+        <a class="tile tile-viewall tile-viewall--projects" href="/ecosystem/projects">
+          <div class="va-dots" aria-hidden="true"></div>
+          <div class="va-inner">
+            <div class="va-circle">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+            <div class="va-text">
+              <p class="va-label">View all projects</p>
+              <span class="va-count">{projectsData.items.length} projects total</span>
+            </div>
+          </div>
+        </a>
       </div>
     </div>
 
-    <!-- Communities sub-block (secondary/pink) -->
+    <!-- Communities -->
     <div class="sub-block">
       <div class="hero secondary">
         <div class="hero-content">
-          <h2>{communitiesHero.title}</h2>
-          <p>{communitiesHero.description}</p>
-          <a class="button-pill ghost" href={communitiesHero.buttonHref}>{communitiesHero.buttonLabel}</a>
+          <h2>Scientific communities</h2>
+          <p>AI4EOSC serves a growing number of research domains, connecting scientists with the AI tools they need.</p>
+          <a class="button-pill ghost" href="/ecosystem/communities">Explore communities</a>
         </div>
         <div class="hero-circles" aria-hidden="true">
           <span class="circle circle--lg"></span>
@@ -103,18 +97,14 @@ const communityIcons: Record<string, string> = {
           <span class="circle circle--sm"></span>
         </div>
       </div>
-      <div class="grid">
-        {communitiesData.items.map((item) => (
-          <article class="card glass">
-            <div class="screen secondary">
-              <span class="circle circle--lg" aria-hidden="true"></span>
-              <span class="circle circle--md" aria-hidden="true"></span>
-              <span class="circle circle--sm" aria-hidden="true"></span>
-              <div class="screen-content inline">
+      <div class="tile-grid">
+        {communitiesData.items.slice(0, 5).map((item, i) => (
+          <div class="tile community-tile reveal" style={`transition-delay: ${i * 40}ms`}>
+            <div class="comm-header">
+              <div class="comm-icon">
                 <svg
-                  class="screen-icon"
-                  width="22"
-                  height="22"
+                  width="14"
+                  height="14"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -122,28 +112,37 @@ const communityIcons: Record<string, string> = {
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   aria-hidden="true"
-                  set:html={communityIcons[item.iconId]}
+                  set:html={communityIcons[item.iconId] ?? communityIcons.earth}
                 />
-                <h4>{item.title}</h4>
               </div>
+              <span class="comm-title">{item.title}</span>
             </div>
-            <div class="body">
-              <p>{item.description}</p>
-              <a class="link secondary" href={`/ecosystem/communities#${item.slug}`}>→ Learn more</a>
-            </div>
-          </article>
+            <p class="tagline comm-desc">{item.description}</p>
+            <a class="link-community" href={`/ecosystem/communities#${item.slug}`}>View community →</a>
+          </div>
         ))}
-        <a class="card more secondary" href={communitiesMore.href}>{communitiesMore.label}</a>
+        <a class="tile tile-viewall tile-viewall--communities" href="/ecosystem/communities">
+          <div class="va-dots" aria-hidden="true"></div>
+          <div class="va-inner">
+            <div class="va-circle">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+            <div class="va-text">
+              <p class="va-label">View all communities</p>
+              <span class="va-count">{communitiesData.items.length} communities total</span>
+            </div>
+          </div>
+        </a>
       </div>
     </div>
 
-    <!-- Gateways sub-block (primary/green) -->
+    <!-- Gateways -->
     <div class="sub-block last">
       <div class="hero primary">
         <div class="hero-content">
-          <h2>{gatewaysHero.title}</h2>
-          <p>{gatewaysHero.description}</p>
-          <a class="button-pill ghost" href={gatewaysHero.buttonHref}>{gatewaysHero.buttonLabel}</a>
+          <h2>Gateways built on AI4EOSC</h2>
+          <p>Specialised platforms and projects that use AI4EOSC products to serve their own scientific communities.</p>
+          <a class="button-pill ghost" href="/ecosystem/gateways">Explore gateways</a>
         </div>
         <div class="hero-circles" aria-hidden="true">
           <span class="circle circle--lg"></span>
@@ -151,35 +150,37 @@ const communityIcons: Record<string, string> = {
           <span class="circle circle--sm"></span>
         </div>
       </div>
-      <div class="grid">
-        {gatewaysData.items.map((item) => (
-          <article class="card glass">
-            <div class="screen primary">
-              <span class="circle circle--lg" aria-hidden="true"></span>
-              <span class="circle circle--md" aria-hidden="true"></span>
-              <span class="circle circle--sm" aria-hidden="true"></span>
-              <div class="screen-content row">
-                <h4>{item.title}</h4>
-                <div class="screen-pills">
-                  <span class="pill tag">{item.domain ?? typeLabel[item.type] ?? item.type}</span>
-                  <span class={`pill status ${item.status}`}>{capitalize(item.status)}</span>
-                </div>
+      <div class="tile-grid">
+        {gatewaysData.items.map((item, i) => (
+          <div class="tile reveal" style={`transition-delay: ${i * 40}ms`}>
+            <div class="tile-head">
+              <h4>{item.title}</h4>
+              <div class="tile-tags">
+                <span class="pill domain">{item.domain}</span>
+                <span class={`pill status ${item.status}`}>{statusLabel[item.status] ?? item.status}</span>
               </div>
             </div>
-            <div class="body">
-              <p>{item.description}</p>
-              <div class="card-links">
-                {item.url && (
-                  <a class="link primary" href={item.url} target="_blank" rel="noopener noreferrer">→ Visit gateway</a>
-                )}
-                {item.slug && (
-                  <a class="link" href={`/ecosystem/gateways`}>→ Learn more</a>
-                )}
-              </div>
+            <p class="tagline">{item.tagline}</p>
+            <div class="tile-links">
+              <a class="link-gateway" href="/ecosystem/gateways">View gateway →</a>
+              {item.url && (
+                <a class="link-ext" href={item.url} target="_blank" rel="noopener noreferrer">Visit gateway ↗</a>
+              )}
             </div>
-          </article>
+          </div>
         ))}
-        <a class="card more primary" href={gatewaysMore.href}>{gatewaysMore.label}</a>
+        <a class="tile tile-viewall tile-viewall--gateways" href="/ecosystem/gateways">
+          <div class="va-dots" aria-hidden="true"></div>
+          <div class="va-inner">
+            <div class="va-circle">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+            <div class="va-text">
+              <p class="va-label">View all gateways</p>
+              <span class="va-count">{gatewaysData.items.length} gateways total</span>
+            </div>
+          </div>
+        </a>
       </div>
     </div>
 
@@ -192,7 +193,7 @@ const communityIcons: Record<string, string> = {
   }
 
   .sub-block {
-    margin-bottom: 48px;
+    margin-bottom: 40px;
   }
 
   .sub-block.last {
@@ -206,30 +207,29 @@ const communityIcons: Record<string, string> = {
     border-radius: var(--radius-lg);
     padding: 36px 40px;
     color: #ffffff;
-    margin-bottom: 20px;
+    margin-bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
   .hero.eu-blue {
     background:
-      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255, 255, 255, 0.12) 0%, transparent 55%),
-      radial-gradient(ellipse 55% 45% at 85% 88%, rgba(5, 15, 50, 0.50) 0%, transparent 58%),
-      radial-gradient(ellipse 40% 35% at 55% 48%, rgba(46, 104, 212, 0.14) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255,255,255,0.12) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 45% at 85% 88%, rgba(5,15,50,0.50) 0%, transparent 58%),
       linear-gradient(140deg, #081435 0%, #102680 38%, #2e68d4 100%);
   }
 
   .hero.secondary {
     background:
-      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255, 255, 255, 0.13) 0%, transparent 55%),
-      radial-gradient(ellipse 55% 45% at 85% 88%, rgba(80, 10, 30, 0.45) 0%, transparent 58%),
-      radial-gradient(ellipse 40% 35% at 55% 48%, rgba(255, 120, 160, 0.12) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255,255,255,0.13) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 45% at 85% 88%, rgba(80,10,30,0.45) 0%, transparent 58%),
       linear-gradient(140deg, #6b0828 0%, #a01848 38%, #ec5d80 100%);
   }
 
   .hero.primary {
     background:
-      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255, 255, 255, 0.14) 0%, transparent 55%),
-      radial-gradient(ellipse 55% 45% at 85% 88%, rgba(0, 40, 44, 0.45) 0%, transparent 58%),
-      radial-gradient(ellipse 40% 35% at 55% 48%, rgba(0, 200, 215, 0.12) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255,255,255,0.14) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 45% at 85% 88%, rgba(0,40,44,0.45) 0%, transparent 58%),
       linear-gradient(140deg, #002d30 0%, #005060 38%, #008792 100%);
   }
 
@@ -247,26 +247,284 @@ const communityIcons: Record<string, string> = {
 
   .hero-content {
     position: relative;
-    z-index: 3;
+    z-index: 2;
   }
 
   h2 {
-    margin: 0 0 10px;
+    margin: 0 0 8px;
     font-family: var(--font-headings);
-    font-size: 46px;
+    font-size: 36px;
     font-weight: 600;
     letter-spacing: -0.02em;
   }
 
   .hero p {
-    margin: 0 0 20px;
-    font-size: 16px;
-    color: rgba(255, 255, 255, 0.72);
-    max-width: 380px;
+    margin: 0 0 18px;
+    font-size: 15px;
+    color: rgba(255,255,255,0.72);
+    max-width: 400px;
     line-height: 1.6;
   }
 
-  /* ── Hero circles ── */
+  /* ── Shared tile grid ── */
+  .tile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--card-border);
+    border: 1px solid var(--card-border);
+    border-top: none;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    overflow: hidden;
+  }
+
+  /* ── Base tile ── */
+  .tile {
+    background: var(--card-bg);
+    padding: 20px 22px 18px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Project / Gateway tile header ── */
+  .tile-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  h4 {
+    margin: 0;
+    font-family: var(--font-headings);
+    font-size: 15px;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    color: var(--color-neutral-900);
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tile-tags {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    justify-content: flex-end;
+  }
+
+  /* ── Tagline: flex:1 makes it fill remaining row space dynamically ── */
+  .tagline {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--color-neutral-500);
+    margin: 0 0 14px;
+    flex: 1;
+  }
+
+  /* ── Links row ── */
+  .tile-links {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-top: auto;
+  }
+
+  /* Project/gateway "View" link — blue */
+  .link-project {
+    font-size: 12px;
+    font-weight: 600;
+    color: #2563eb;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .link-project:hover { color: #1d4ed8; }
+
+  /* Gateway "View gateway" link — teal */
+  .link-gateway {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-primary-600);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .link-gateway:hover { color: var(--color-primary-700); }
+
+  .link-ext {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-neutral-400);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .link-ext:hover { color: var(--color-neutral-600); }
+
+  /* ── View all tile ── */
+  .tile-viewall {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 22px;
+    text-decoration: none;
+    overflow: hidden;
+    transition: background var(--transition-fast);
+  }
+
+  .va-dots {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
+    background-size: 16px 16px;
+    opacity: 0.09;
+    pointer-events: none;
+  }
+
+  .va-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .va-circle {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform var(--transition-fast), background var(--transition-base), color var(--transition-base), border-color var(--transition-base);
+  }
+
+  .tile-viewall:hover .va-circle { transform: translateX(4px); }
+
+  .va-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+  }
+
+  .va-label {
+    font-size: 13px;
+    font-weight: 650;
+    font-family: var(--font-headings);
+    letter-spacing: -0.01em;
+    margin: 0;
+    line-height: 1.25;
+  }
+
+  .va-count {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+
+  /* Projects — blue */
+  .tile-viewall--projects { background: #eff6ff; color: #bfdbfe; }
+  .tile-viewall--projects .va-circle { color: #2563eb; border-color: #bfdbfe; }
+  .tile-viewall--projects:hover { background: #dbeafe; }
+  .tile-viewall--projects:hover .va-circle { background: #2563eb; color: white; border-color: #2563eb; }
+  .tile-viewall--projects .va-label { color: #2563eb; }
+  .tile-viewall--projects .va-count { color: #93c5fd; }
+
+  /* Communities — pink */
+  .tile-viewall--communities { background: var(--color-secondary-50); color: var(--color-secondary-200); }
+  .tile-viewall--communities .va-circle { color: var(--color-secondary-600); border-color: var(--color-secondary-200); }
+  .tile-viewall--communities:hover { background: var(--color-secondary-100); }
+  .tile-viewall--communities:hover .va-circle { background: var(--color-secondary-600); color: white; border-color: var(--color-secondary-600); }
+  .tile-viewall--communities .va-label { color: var(--color-secondary-600); }
+  .tile-viewall--communities .va-count { color: var(--color-secondary-300); }
+
+  /* Gateways — teal */
+  .tile-viewall--gateways { background: var(--color-primary-50); color: var(--color-primary-200); }
+  .tile-viewall--gateways .va-circle { color: var(--color-primary-600); border-color: var(--color-primary-200); }
+  .tile-viewall--gateways:hover { background: var(--color-primary-100); }
+  .tile-viewall--gateways:hover .va-circle { background: var(--color-primary-600); color: white; border-color: var(--color-primary-600); }
+  .tile-viewall--gateways .va-label { color: var(--color-primary-600); }
+  .tile-viewall--gateways .va-count { color: var(--color-primary-300); }
+
+  /* ── Pills ── */
+  .pill {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 999px;
+    border: 1px solid;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+
+  /* Type: blue tones */
+  .pill.type     { color: #2563eb; border-color: #bfdbfe; background: #eff6ff; }
+  /* Domain (gateways): pink/secondary tones */
+  .pill.domain   { color: var(--color-secondary-700); border-color: var(--color-secondary-200); background: var(--color-secondary-50); }
+  /* Status */
+  .pill.status.active   { color: #059669; border-color: #a7f3d0; background: #f0fdf4; }
+  .pill.status.new      { color: #b45309; border-color: #fde68a; background: #fffbeb; }
+  .pill.status.finished { color: #059669; border-color: #a7f3d0; background: #f0fdf4; }
+
+  /* ── Community tiles ── */
+  .community-tile {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .comm-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .comm-icon {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-secondary-50);
+    border-radius: var(--radius-xs);
+    color: var(--color-secondary-600);
+    flex-shrink: 0;
+  }
+
+  .comm-title {
+    font-size: 14px;
+    font-weight: 650;
+    color: var(--color-neutral-900);
+    letter-spacing: -0.01em;
+    font-family: var(--font-headings);
+    line-height: 1.2;
+  }
+
+  .comm-desc {
+    color: var(--color-neutral-400);
+  }
+
+  /* Community "View community" link — secondary/pink */
+  .link-community {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-secondary-600);
+    text-decoration: none;
+    white-space: nowrap;
+    margin-top: auto;
+  }
+
+  .link-community:hover { color: var(--color-secondary-700); }
+
+  /* ── Decorative circles (same pattern as Hero) ── */
   .hero-circles {
     position: absolute;
     inset: 0;
@@ -275,7 +533,7 @@ const communityIcons: Record<string, string> = {
     overflow: visible;
   }
 
-  .hero .circle {
+  .circle {
     position: absolute;
     right: 0;
     bottom: 0;
@@ -287,31 +545,31 @@ const communityIcons: Record<string, string> = {
     transition: scale 2s ease;
   }
 
-  .hero .circle--lg { width: 90%; animation-delay: 2s; }
-  .hero .circle--md { width: 64%; animation-delay: 1s; }
-  .hero .circle--sm { width: 40%; animation-delay: 0s; }
+  .circle--lg { width: 82%; animation-delay: 2s; }
+  .circle--md { width: 58%; animation-delay: 1s; }
+  .circle--sm { width: 36%; animation-delay: 0s; }
 
   .hero.eu-blue .circle {
     box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.26),
-      0 0 40px rgba(46, 104, 212, 0.22),
-      0 0 80px rgba(46, 104, 212, 0.09),
+      0 0 0 1px rgba(255, 255, 255, 0.22),
+      0 0 40px rgba(80, 140, 255, 0.25),
+      0 0 80px rgba(80, 140, 255, 0.10),
       inset 0 0 16px rgba(255, 255, 255, 0.06);
   }
 
   .hero.secondary .circle {
     box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.26),
-      0 0 40px rgba(255, 120, 160, 0.22),
-      0 0 80px rgba(255, 120, 160, 0.09),
+      0 0 0 1px rgba(255, 255, 255, 0.22),
+      0 0 40px rgba(236, 93, 128, 0.30),
+      0 0 80px rgba(236, 93, 128, 0.12),
       inset 0 0 16px rgba(255, 255, 255, 0.06);
   }
 
   .hero.primary .circle {
     box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.26),
-      0 0 40px rgba(0, 200, 215, 0.20),
-      0 0 80px rgba(0, 200, 215, 0.08),
+      0 0 0 1px rgba(255, 255, 255, 0.22),
+      0 0 40px rgba(0, 200, 215, 0.25),
+      0 0 80px rgba(0, 200, 215, 0.10),
       inset 0 0 16px rgba(255, 255, 255, 0.06);
   }
 
@@ -319,227 +577,12 @@ const communityIcons: Record<string, string> = {
     scale: 1.10;
   }
 
-  /* ── Grid ── */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-  }
-
-  /* ── Cards ── */
-  .card {
-    border-radius: var(--radius-md);
-    overflow: hidden;
-  }
-
-  /* ── Screen (light band) ── */
-  .screen {
-    height: 65px;
-    display: flex;
-    align-items: center;
-    padding: 0 25px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .screen.eu-blue {
-    background: var(--gradient-eu-blue-soft);
-    border-bottom: 1px solid rgba(46, 104, 212, 0.2);
-  }
-
-  .screen.secondary {
-    background: var(--gradient-pink-soft);
-    border-bottom: 1px solid rgba(236, 93, 128, 0.2);
-  }
-
-  .screen.primary {
-    background: var(--gradient-primary-soft);
-    border-bottom: 1px solid rgba(0, 135, 146, 0.2);
-  }
-
-  /* ── Screen circles (light-friendly colored rings) ── */
-  .screen .circle {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    transform: translate(50%, 50%);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: transparent;
-    pointer-events: none;
-    animation: pulsing 5s ease-in-out infinite;
-    z-index: 0;
-  }
-
-  .screen .circle--lg { width: 90%; animation-delay: 2s; }
-  .screen .circle--md { width: 62%; animation-delay: 1s; }
-  .screen .circle--sm { width: 38%; animation-delay: 0s; }
-
-  .screen.eu-blue .circle {
-    box-shadow:
-      0 0 0 1px rgba(46, 104, 212, 0.22),
-      0 0 30px rgba(46, 104, 212, 0.14),
-      0 0 60px rgba(46, 104, 212, 0.06);
-  }
-
-  .screen.secondary .circle {
-    box-shadow:
-      0 0 0 1px rgba(236, 93, 128, 0.22),
-      0 0 30px rgba(236, 93, 128, 0.14),
-      0 0 60px rgba(236, 93, 128, 0.06);
-  }
-
-  .screen.primary .circle {
-    box-shadow:
-      0 0 0 1px rgba(0, 135, 146, 0.22),
-      0 0 30px rgba(0, 135, 146, 0.14),
-      0 0 60px rgba(0, 135, 146, 0.06);
-  }
-
-  .screen-content {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-  }
-
-  .screen-content.row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-  }
-
-  .screen-content.inline {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .screen h4 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex-shrink: 1;
-    min-width: 0;
-  }
-
-  .screen.eu-blue h4   { color: #2e68d4; }
-  .screen.secondary h4 { color: var(--color-secondary-600); }
-  .screen.primary h4   { color: var(--color-primary-700); }
-
-  .screen-pills {
-    display: flex;
-    gap: 10px;
-  }
-
-  .pill {
-    font-size: 12px;
-    font-weight: 600;
-    border-radius: 999px;
-    padding: 3px 10px;
-    backdrop-filter: blur(16px);
-    flex-shrink: 0;
-  }
-
-  /* Projects — tag pill in eu-blue glass */
-  .screen.eu-blue .pill.tag {
-    color: #2e68d4;
-    background: rgba(46, 104, 212, 0.25);
-    border: 0.5px solid rgba(46, 104, 212, 0.28);
-  }
-
-  /* Gateways — domain/community tag in pink glass */
-  .screen.primary .pill.tag {
-    color: var(--color-secondary-600);
-    background: rgba(236, 93, 128, 0.25);
-    border: 0.5px solid rgba(236, 93, 128, 0.28);
-  }
-
-  /* Active status — green neon */
-  .screen.eu-blue .pill.status.active,
-  .screen.primary .pill.status.active {
-    color: #059669;
-    background: #d1fae5;
-    border: 0.5px solid #6ee7b7;
-    box-shadow: 0 0 6px rgba(52, 211, 153, 0.22);
-  }
-
-  /* New status — amber neon */
-  .screen.eu-blue .pill.status.new,
-  .screen.primary .pill.status.new {
-    color: #b45309;
-    background: #fef3c7;
-    border: 0.5px solid #fcd34d;
-    box-shadow: 0 0 6px rgba(251, 191, 36, 0.22);
-  }
-
-  .screen-icon {
-    color: var(--color-secondary-500);
-    flex-shrink: 0;
-  }
-
-  /* ── Body (white zone) ── */
-  .body {
-    padding: 16px 18px 20px;
-  }
-
-  .body p {
-    margin: 0 0 12px;
-    font-size: 16px;
-    color: var(--color-neutral-500);
-    line-height: 1.6;
-  }
-
-  .link {
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    color: var(--color-neutral-500);
-  }
-
-  .link.eu-blue   { color: #2e68d4; }
-  .link.secondary { color: var(--color-secondary-600); }
-  .link.primary   { color: var(--color-primary-700); }
-
-  .card-links {
-    display: flex;
-    gap: 18px;
-    flex-wrap: wrap;
-  }
-
-  /* ── More card ── */
-  .more {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    min-height: 80px;
-    font-size: 13px;
-    font-weight: 500;
-    border-radius: var(--radius-sm);
-  }
-
-  .more.eu-blue {
-    border: 0.5px dashed rgba(46, 104, 212, 0.35);
-    color: rgba(46, 104, 212, 0.70);
-  }
-
-  .more.secondary {
-    border: 0.5px dashed var(--color-neutral-300);
-    color: var(--color-neutral-400);
-  }
-
-  .more.primary {
-    border: 0.5px dashed var(--color-neutral-300);
-    color: var(--color-neutral-400);
-  }
-
   @media (max-width: 900px) {
-    .grid {
-      grid-template-columns: 1fr;
-    }
+    .hero-circles { display: none; }
+    .tile-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .tile-grid { grid-template-columns: 1fr; }
   }
 </style>

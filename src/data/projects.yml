@@ -3,7 +3,7 @@ items:
       type: origin
       status: finished
       title: AI4EOSC
-      tagline: The Horizon Europe project that started the initiative. Artificial Intelligence for the EOSC
+      tagline: Artificial Intelligence for the European Open Science Cloud
       shortDescription: The Horizon Europe project that created the AI4EOSC platform.
       description: The original Horizon Europe project that created the AI4EOSC platform. Developed the core infrastructure for training, serving and cataloguing AI models within the EOSC, establishing the foundation that all subsequent projects build upon.
       logo: /logos/AI4-horizontal-dark.svg

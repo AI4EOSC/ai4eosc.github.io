@@ -1,30 +1,23 @@
 ---
 import data from '../../data/numbers.yml';
 import SectionHeader from '../SectionHeader.astro';
-
-const label = 'The initiative in numbers';
-const title = 'Impact at scale';
-const description = 'Powering open AI infrastructure across Europe — from model training to scientific communities.';
 ---
 
 <section>
   <div class="section-label">
-    <div class="container">{label}</div>
+    <div class="container">The initiative in numbers</div>
   </div>
   <div class="container">
     <div class="section-card">
-      <SectionHeader title={title} subtitle={description} />
+      <SectionHeader title="Impact at scale" subtitle="Powering open AI infrastructure across Europe — from model training to scientific communities." />
       <div class="grid">
-        {data.items.map((item) => (
-          <article class={`stat-card ${item.tone}`}>
-            <div class="accent-bar"></div>
-            <div class="body">
-              <div class="value">
-                {item.value}<span class="suffix">{item.suffix}</span>
-              </div>
-              <p class="label">{item.label}</p>
+        {data.items.map((item, i) => (
+          <div class="stat reveal" style={`transition-delay: ${i * 80}ms`}>
+            <div class="value">
+              {item.value}<span class="suffix">{item.suffix}</span>
             </div>
-          </article>
+            <p class="label">{item.label}</p>
+          </div>
         ))}
       </div>
     </div>
@@ -35,104 +28,71 @@ const description = 'Powering open AI infrastructure across Europe — from mode
   .grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 16px;
+    margin-top: 20px;
   }
 
-  /* ── Stat card ── */
-  .stat-card {
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+  .stat {
+    padding: 4px 32px;
+    border-right: 1px solid var(--card-border);
   }
 
-  .stat-card.eu-blue {
-    background: color-mix(in oklch, rgba(223, 233, 255, 0.6) 60%, white 40%);
-    border: 1px solid rgba(46, 104, 212, 0.14);
-  }
+  .stat:first-child { padding-left: 0; }
+  .stat:last-child { border-right: none; padding-right: 0; }
 
-  .stat-card.secondary {
-    background: color-mix(in oklch, var(--color-secondary-50) 60%, white 40%);
-    border: 1px solid rgba(236, 93, 128, 0.14);
-  }
-
-  .stat-card.primary {
-    background: color-mix(in oklch, var(--color-primary-50) 60%, white 40%);
-    border: 1px solid rgba(0, 135, 146, 0.14);
-  }
-
-  .stat-card.neutral {
-    background: color-mix(in oklch, var(--color-neutral-100) 50%, white 50%);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-  }
-
-  /* ── Accent bar ── */
-  .accent-bar {
-    height: 3px;
-    flex-shrink: 0;
-  }
-
-  .stat-card.eu-blue .accent-bar {
-    background: linear-gradient(90deg, #2e68d4, transparent);
-  }
-
-  .stat-card.secondary .accent-bar {
-    background: linear-gradient(90deg, var(--color-secondary-400), transparent);
-  }
-
-  .stat-card.primary .accent-bar {
-    background: linear-gradient(90deg, var(--color-primary-400), transparent);
-  }
-
-  .stat-card.neutral .accent-bar {
-    background: linear-gradient(90deg, var(--color-neutral-500), transparent);
-  }
-
-  /* ── Body ── */
-  .body {
-    padding: 20px 22px 24px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
-
-  /* ── Value ── */
   .value {
     font-family: var(--font-headings);
-    font-size: 60px;
+    font-size: 64px;
     font-weight: 600;
     line-height: 1;
     letter-spacing: -0.03em;
+    color: var(--color-neutral-900);
     margin-bottom: 10px;
   }
 
-  .stat-card.eu-blue .value  { color: #2e68d4; }
-  .stat-card.secondary .value { color: var(--color-secondary-500); }
-  .stat-card.primary .value   { color: var(--color-primary-600); }
-  .stat-card.neutral .value   { color: var(--color-neutral-700); }
-
   .suffix {
-    font-size: 40px;
-    opacity: 0.65;
+    font-size: 42px;
+    color: var(--color-primary-500);
   }
 
-  /* ── Label ── */
   .label {
     margin: 0;
     font-size: 15px;
     font-weight: 500;
     color: var(--color-neutral-500);
+    line-height: 1.4;
+    max-width: 160px;
   }
 
   @media (max-width: 900px) {
     .grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 32px 0;
+    }
+
+    .stat {
+      padding: 0 24px;
+      border-right: 1px solid var(--card-border);
+    }
+
+    .stat:nth-child(2n) {
+      border-right: none;
+      padding-right: 0;
+    }
+
+    .stat:nth-child(2n+1) {
+      padding-left: 0;
     }
   }
 
   @media (max-width: 520px) {
     .grid {
       grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .stat {
+      padding: 0;
+      border-right: none;
     }
   }
 </style>

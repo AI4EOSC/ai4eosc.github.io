@@ -1,47 +1,28 @@
 ---
 import SectionHeader from '../SectionHeader.astro';
 
-const label = 'Who is it for';
-const title = 'Find your path';
-const description = 'Whether you\'re a researcher looking for tools, a developer deploying models, or an institution building a gateway — AI4EOSC has a path for you.';
-
 const items = [
-  { tag: 'Developer',   tagStyle: 'developer',   title: 'Deploy your models on EOSC',   description: 'Use our open-source platform to train, serve and publish AI models with EOSC-native auth.',                        linkLabel: 'Explore products →',    linkHref: '/products' },
-  { tag: 'Researcher',  tagStyle: 'research',     title: 'Find AI tools for your domain', description: 'Access ready-to-use AI models and computing resources tailored to your scientific field.',                          linkLabel: 'Explore communities →', linkHref: '/ecosystem/communities' },
-  { tag: 'Institution', tagStyle: 'institution',  title: 'Build your own gateway',        description: 'Deploy a customised instance of the platform for your project and join the ecosystem.',                              linkLabel: 'Join the ecosystem →',  linkHref: '/ecosystem/gateways' },
+  { tag: 'Developer',   title: 'Deploy your models on EOSC',   description: 'Use our open-source platform to train, serve and publish AI models with EOSC-native auth.',                        linkLabel: 'Explore products →',    linkHref: '/products' },
+  { tag: 'Researcher',  title: 'Find AI tools for your domain', description: 'Access ready-to-use AI models and computing resources tailored to your scientific field.',                          linkLabel: 'Explore communities →', linkHref: '/ecosystem/communities' },
+  { tag: 'Institution', title: 'Build your own gateway',        description: 'Deploy a customised instance of the platform for your project and join the ecosystem.',                              linkLabel: 'Join the ecosystem →',  linkHref: '/ecosystem/gateways' },
 ];
-
-const gradients: Record<string, string> = {
-  developer: 'var(--gradient-eu-blue)',
-  research: 'var(--gradient-pink)',
-  institution:  'var(--gradient-primary)',
-};
 ---
 
 <section>
   <div class="section-label">
-    <div class="container">{label}</div>
+    <div class="container">Who is it for</div>
   </div>
   <div class="container">
     <div class="section-card">
-      <SectionHeader title={title} subtitle={description} />
+      <SectionHeader title="Find your path" subtitle="Whether you're a researcher looking for tools, a developer deploying models, or an institution building a gateway — AI4EOSC has a path for you." />
       <div class="grid">
-        {items.map((item) => (
-          <article class="card glass" key={item.title}>
-            <div class="screen" style={`background: ${gradients[item.tagStyle]}`}>
-              <span class="circle circle--lg" aria-hidden="true"></span>
-              <span class="circle circle--md" aria-hidden="true"></span>
-              <span class="circle circle--sm" aria-hidden="true"></span>
-              <div class="screen-content">
-                <span class="tag">{item.tag}</span>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-              </div>
-            </div>
-            <div class={`body ${item.tagStyle}`}>
-              <a class="link" href={item.linkHref}>{item.linkLabel}</a>
-            </div>
-          </article>
+        {items.map((item, i) => (
+          <div class="item reveal" style={`transition-delay: ${i * 80}ms`}>
+            <span class="role">{item.tag}</span>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+            <a class="link" href={item.linkHref}>{item.linkLabel}</a>
+          </div>
         ))}
       </div>
     </div>
@@ -52,111 +33,81 @@ const gradients: Record<string, string> = {
   .grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
+    gap: 0;
+    margin-top: 24px;
+    border-top: 1px solid var(--card-border);
   }
 
-  .card {
-    border-radius: var(--radius-md);
-    overflow: hidden;
+  .item {
+    padding: 28px 32px 8px 0;
+    border-right: 1px solid var(--card-border);
+    display: flex;
+    flex-direction: column;
   }
 
-  /* ── Screen (main content zone) ── */
-  .screen {
-    position: relative;
-    overflow: hidden;
-    padding: 22px 22px 26px;
+  .item:last-child {
+    border-right: none;
+    padding-right: 0;
   }
 
-  .screen::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 80% 70% at 15% 20%, rgba(255, 255, 255, 0.10) 0%, transparent 55%),
-      radial-gradient(ellipse 50% 40% at 85% 85%, rgba(0, 0, 0, 0.15) 0%, transparent 55%);
-    pointer-events: none;
-    z-index: 0;
+  .item + .item {
+    padding-left: 32px;
   }
 
-  /* ── Circles ── */
-  .circle {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    transform: translate(50%, 50%);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: transparent;
-    pointer-events: none;
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.26),
-      0 0 30px rgba(255, 255, 255, 0.14),
-      0 0 60px rgba(255, 255, 255, 0.06),
-      inset 0 0 12px rgba(255, 255, 255, 0.05);
-    animation: pulsing 5s ease-in-out infinite;
-    z-index: 0;
-  }
-
-  .circle--lg { width: 85%; animation-delay: 2s; }
-  .circle--md { width: 58%; animation-delay: 1s; }
-  .circle--sm { width: 35%; animation-delay: 0s; }
-
-  /* ── Screen content ── */
-  .screen-content {
-    position: relative;
-    z-index: 2;
-  }
-
-  .tag {
-    display: inline-flex;
-    align-items: center;
-    padding: 3px 10px;
-    border-radius: 999px;
-    font-size: 14px;
+  .role {
+    display: block;
+    font-size: 11px;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-neutral-400);
     margin-bottom: 14px;
-    background: rgba(255, 255, 255, 0.18);
-    color: rgba(255, 255, 255, 0.92);
-    border: 0.5px solid rgba(255, 255, 255, 0.28);
-    backdrop-filter: blur(4px);
   }
 
   h3 {
-    margin: 0 0 16px;
+    margin: 0 0 12px;
     font-family: var(--font-headings);
-    font-size: 30px;
-    font-weight: 600;
-    color: #ffffff;
+    font-size: 20px;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+    color: var(--color-neutral-900);
     line-height: 1.2;
-    max-width: 250px;
   }
 
-  .screen p {
-    margin: 0;
-    font-size: 17px;
-    font-weight: 500;
-    line-height: 1.25;
-    color: rgba(255, 255, 255, 0.85);
-  }
-
-  /* ── Body (link strip) ── */
-  .body {
-    padding: 14px 22px;
+  p {
+    margin: 0 0 20px;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--color-neutral-500);
+    flex: 1;
   }
 
   .link {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
+    color: var(--color-primary-700);
     text-decoration: none;
+    margin-top: auto;
   }
 
-  .body.research .link { color: var(--color-secondary-700); } 
-  .body.institution .link { color: var(--color-primary-700); }
-  .body.developer .link   { color: #2e68d4; }
+  .link:hover {
+    color: var(--color-primary-600);
+  }
 
   @media (max-width: 900px) {
     .grid {
       grid-template-columns: 1fr;
+      border-top: none;
+    }
+
+    .item {
+      padding: 24px 0;
+      border-right: none;
+      border-top: 1px solid var(--card-border);
+    }
+
+    .item + .item {
+      padding-left: 0;
     }
   }
 </style>

@@ -45,5 +45,17 @@ const ogImageUrl = new URL('/og/ai4eosc-og.png', Astro.url).href;
     <Navbar />
       <slot />
     <Footer />
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            observer.unobserve(e.target);
+          }
+        }),
+        { threshold: 0.08 }
+      );
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
   </body>
 </html>
