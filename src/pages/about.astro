@@ -33,6 +33,10 @@ const partnerItems = Array.from(allNames)
     return { name, src: src || undefined, url: meta?.url };
   });
 
+const GRID_COLS = 6;
+const remainder = partnerItems.length % GRID_COLS;
+const moreSpan = remainder === 0 ? 0 : GRID_COLS - remainder;
+
 const hero = {
   title: 'Building open AI infrastructure for European science',
   description: 'AI4EOSC is a Horizon Europe initiative bringing together a platform, a growing ecosystem of projects, and a network of scientific communities to make research-grade AI accessible across Europe.',
@@ -108,7 +112,7 @@ const cta = {
         <SectionHeader title={story.title} subtitle={story.subtitle} />
         <div class="timeline">
           {about.timeline.map((item, i) => (
-            <div class={`tl-item${i === about.timeline.length - 1 ? ' tl-last' : ''}`}>
+            <div class={`tl-item reveal${i === about.timeline.length - 1 ? ' tl-last' : ''}`} style={`transition-delay:${i * 80}ms`}>
               <div class="tl-year">{item.year}</div>
               <div class="tl-connector" aria-hidden="true">
                 <span class="tl-dot"></span>
@@ -130,8 +134,8 @@ const cta = {
       <div class="section-card">
         <SectionHeader title={mission.title} subtitle={mission.subtitle} />
         <div class="mission-grid">
-          {mission.items.map(item => (
-            <div class="mission-card">
+          {mission.items.map((item, i) => (
+            <div class="mission-card reveal" style={`transition-delay:${i * 70}ms`}>
               <div class="mission-icon" aria-hidden="true">{item.icon}</div>
               <h3>{item.title}</h3>
               <p>{item.description}</p>
@@ -147,8 +151,8 @@ const cta = {
       <div class="section-card">
         <SectionHeader title={principles.title} subtitle={principles.subtitle} />
         <div class="principles-grid">
-          {principles.items.map(item => (
-            <div class="principle-card">
+          {principles.items.map((item, i) => (
+            <div class="principle-card reveal" style={`transition-delay:${i * 80}ms`}>
               <span class="principle-tag">{item.tag}</span>
               <h4>{item.title}</h4>
               <p>{item.description}</p>
@@ -167,7 +171,7 @@ const cta = {
       <div class="section-card">
         <SectionHeader title={partnersSection.title} subtitle={partnersSection.subtitle} />
         <div class="partners-grid">
-          {partnerItems.map(partner => (
+          {partnerItems.map((partner) => (
             partner.src ? (
               <a href={partner.url || undefined} target={partner.url ? '_blank' : undefined} rel={partner.url ? 'noopener noreferrer' : undefined} class="partner-card" aria-label={partner.name}>
                 <img src={partner.src} alt={partner.name} class="partner-logo" loading="lazy" />
@@ -178,13 +182,18 @@ const cta = {
               </div>
             )
           ))}
+          {moreSpan > 0 && (
+            <div class="partner-more" style={`grid-column: span ${moreSpan}`}>
+              and more to join
+            </div>
+          )}
         </div>
       </div>
     </div>
 
     <!-- EU FUNDING -->
     <div class="container eu-wrap">
-      <div class="eu-card">
+      <div class="eu-card reveal">
         <div class="eu-circles" aria-hidden="true">
           <span class="eu-circle eu-circle--lg"></span>
           <span class="eu-circle eu-circle--md"></span>
@@ -218,14 +227,14 @@ const cta = {
   .timeline {
     display: flex;
     flex-direction: column;
-    margin-top: 8px;
+    margin-top: 20px;
   }
 
   .tl-item {
     display: grid;
-    grid-template-columns: 72px 28px 1fr;
-    gap: 0 16px;
-    padding-bottom: 28px;
+    grid-template-columns: 88px 32px 1fr;
+    gap: 0 20px;
+    padding-bottom: 56px;
   }
 
   .tl-last {
@@ -234,12 +243,13 @@ const cta = {
 
   .tl-year {
     font-family: var(--font-headings);
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 22px;
+    font-weight: 650;
     color: var(--color-primary-500);
     text-align: right;
-    padding-top: 1px;
-    letter-spacing: -0.02em;
+    padding-top: 2px;
+    letter-spacing: -0.03em;
+    line-height: 1;
   }
 
   .tl-connector {
@@ -249,39 +259,46 @@ const cta = {
   }
 
   .tl-dot {
-    width: 9px;
-    height: 9px;
+    width: 13px;
+    height: 13px;
     border-radius: 50%;
     background: var(--color-primary-400);
     flex-shrink: 0;
-    margin-top: 5px;
-    box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-primary-400) 20%, transparent 80%);
+    margin-top: 3px;
+    box-shadow: 0 0 0 4px color-mix(in oklch, var(--color-primary-400) 18%, transparent 82%);
   }
 
   .tl-line {
     flex: 1;
     width: 1px;
-    background: var(--card-border);
-    margin-top: 6px;
+    background: linear-gradient(to bottom, var(--card-border) 0%, transparent 100%);
+    margin-top: 10px;
   }
 
   .tl-last .tl-line {
     display: none;
   }
 
+  .tl-body {
+    padding-bottom: 4px;
+  }
+
   .tl-body h4 {
-    font-size: 15px;
+    font-family: var(--font-headings);
+    font-size: 19px;
     font-weight: 650;
     color: var(--color-neutral-900);
-    margin: 0 0 6px;
-    line-height: 1.35;
+    margin: 0 0 10px;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
   }
 
   .tl-body p {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--color-neutral-500);
-    line-height: 1.65;
+    line-height: 1.75;
     margin: 0;
+    max-width: 560px;
   }
 
   /* ── MISSION ──────────────────────────────────────── */
@@ -289,33 +306,41 @@ const cta = {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
-    margin-top: 8px;
+    margin-top: 24px;
   }
 
   .mission-card {
     background: color-mix(in oklch, var(--color-neutral-100) 55%, white 45%);
     border: 1px solid var(--card-border);
     border-radius: var(--radius-md);
-    padding: 22px 24px 24px;
+    padding: 28px 28px 30px;
+    transition: background var(--transition-fast), border-color var(--transition-fast);
+  }
+
+  .mission-card:hover {
+    background: white;
+    border-color: color-mix(in oklch, var(--card-border) 60%, var(--color-primary-200) 40%);
   }
 
   .mission-icon {
-    font-size: 24px;
-    margin-bottom: 14px;
+    font-size: 26px;
+    margin-bottom: 16px;
     line-height: 1;
   }
 
   .mission-card h3 {
-    font-size: 15px;
+    font-family: var(--font-headings);
+    font-size: 17px;
     font-weight: 650;
     color: var(--color-neutral-900);
-    margin: 0 0 8px;
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
   }
 
   .mission-card p {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--color-neutral-500);
-    line-height: 1.65;
+    line-height: 1.7;
     margin: 0;
   }
 
@@ -324,14 +349,20 @@ const cta = {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 12px;
-    margin-top: 8px;
+    margin-top: 24px;
   }
 
   .principle-card {
     background: color-mix(in oklch, var(--color-neutral-100) 55%, white 45%);
     border: 1px solid var(--card-border);
     border-radius: var(--radius-md);
-    padding: 20px 22px 22px;
+    padding: 26px 26px 28px;
+    transition: background var(--transition-fast), border-color var(--transition-fast);
+  }
+
+  .principle-card:hover {
+    background: white;
+    border-color: color-mix(in oklch, var(--card-border) 60%, var(--color-primary-200) 40%);
   }
 
   .principle-tag {
@@ -344,20 +375,22 @@ const cta = {
     background: color-mix(in oklch, var(--color-primary-100) 60%, white 40%);
     border-radius: 999px;
     padding: 3px 10px;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
   }
 
   .principle-card h4 {
-    font-size: 14px;
+    font-family: var(--font-headings);
+    font-size: 16px;
     font-weight: 650;
     color: var(--color-neutral-900);
-    margin: 0 0 7px;
+    margin: 0 0 9px;
+    letter-spacing: -0.01em;
   }
 
   .principle-card p {
-    font-size: 13px;
+    font-size: 14px;
     color: var(--color-neutral-500);
-    line-height: 1.65;
+    line-height: 1.7;
     margin: 0;
   }
 
@@ -365,38 +398,27 @@ const cta = {
   .partners-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
-    margin-top: 8px;
+    gap: 1px;
+    background: var(--card-border);
+    margin-top: 24px;
   }
 
   .partner-card {
-    background: color-mix(in oklch, var(--color-neutral-100) 55%, white 45%);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius-sm);
-    padding: 20px 16px;
+    background: #ffffff;
+    padding: 22px 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 80px;
+    min-height: 84px;
     text-decoration: none;
-    transition:
-      background var(--transition-fast),
-      border-color var(--transition-fast),
-      transform var(--transition-fast);
-  }
-
-  .partner-card:hover {
-    background: white;
-    border-color: color-mix(in oklch, var(--card-border) 80%, var(--color-primary-200) 20%);
-    transform: translateY(-1px);
   }
 
   .partner-logo {
     max-height: 36px;
     max-width: 100%;
     object-fit: contain;
-    filter: grayscale(1) opacity(0.65);
-    transition: filter var(--transition-fast);
+    filter: grayscale(1) opacity(0.55);
+    transition: filter var(--transition-base);
   }
 
   .partner-card:hover .partner-logo {
@@ -413,8 +435,17 @@ const cta = {
     line-height: 1.3;
   }
 
-  .partner-text:hover .partner-name {
-    color: var(--color-neutral-600);
+  .partner-more {
+    background: #ffffff;
+    min-height: 84px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-neutral-300);
+    letter-spacing: 0.04em;
+    font-style: italic;
   }
 
   /* ── EU FUNDING ───────────────────────────────────── */
@@ -559,7 +590,13 @@ const cta = {
   }
 
   /* ── RESPONSIVE ───────────────────────────────────── */
-  @media (max-width: 1024px) {
+  @media (max-width: 1100px) {
+    .partners-grid {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  @media (max-width: 860px) {
     .partners-grid {
       grid-template-columns: repeat(4, 1fr);
     }
@@ -576,6 +613,7 @@ const cta = {
 
     .partners-grid {
       grid-template-columns: repeat(3, 1fr);
+      background: var(--card-border);
     }
 
     .eu-card {
@@ -587,11 +625,17 @@ const cta = {
 
   @media (max-width: 640px) {
     .tl-item {
-      grid-template-columns: 52px 24px 1fr;
+      grid-template-columns: 60px 28px 1fr;
+      gap: 0 14px;
+      padding-bottom: 40px;
     }
 
     .tl-year {
-      font-size: 15px;
+      font-size: 17px;
+    }
+
+    .tl-body h4 {
+      font-size: 16px;
     }
 
     .principles-grid {
@@ -601,5 +645,6 @@ const cta = {
     .partners-grid {
       grid-template-columns: repeat(2, 1fr);
     }
+
   }
 </style>
