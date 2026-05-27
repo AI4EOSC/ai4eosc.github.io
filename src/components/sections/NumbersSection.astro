@@ -1,14 +1,17 @@
 ---
-import data from '../../data/numbers.yml';
+import numbersData from '../../data/numbers.yml';
+import projectsData from '../../data/projects.yml';
+import communitiesData from '../../data/communities.yml';
+import gatewaysData from '../../data/gateways.yml';
 import SectionHeader from '../SectionHeader.astro';
 
 type Tone = 'eu-blue' | 'secondary' | 'primary' | 'neutral';
 
-const toneConfig: Record<Tone, { bg: string; color: string; suffix: string }> = {
-  'eu-blue':   { bg: '#dbeafe', color: '#2563eb', suffix: '#3b82f6' },
-  'secondary': { bg: 'var(--color-secondary-50)', color: 'var(--color-secondary-600)', suffix: 'var(--color-secondary-500)' },
-  'primary':   { bg: 'var(--color-primary-50)',   color: 'var(--color-primary-600)',   suffix: 'var(--color-primary-500)'   },
-  'neutral':   { bg: 'var(--color-neutral-100)',  color: 'var(--color-neutral-500)',   suffix: 'var(--color-neutral-400)'   },
+const toneConfig: Record<Tone, { bg: string; color: string }> = {
+  'eu-blue':   { bg: '#dbeafe', color: '#2563eb' },
+  'secondary': { bg: 'var(--color-secondary-50)', color: 'var(--color-secondary-600)' },
+  'primary':   { bg: 'var(--color-primary-50)',   color: 'var(--color-primary-600)'   },
+  'neutral':   { bg: 'var(--color-neutral-100)',  color: 'var(--color-neutral-500)'   },
 };
 
 const iconSvg: Record<string, string> = {
@@ -17,6 +20,37 @@ const iconSvg: Record<string, string> = {
   server: `<rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>`,
   box:    `<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>`,
 };
+
+const projectCount = projectsData.items.length;
+const userCount = (communitiesData.items as Array<{ users?: number }>)
+  .reduce((sum, c) => sum + (c.users ?? 0), 0);
+const gatewayCount = gatewaysData.items.length;
+
+function formatCount(n: number): { value: string; suffix: string } {
+  if (n >= 1_000_000) {
+    const v = n / 1_000_000;
+    return { value: v % 1 === 0 ? String(v) : v.toFixed(1), suffix: 'M+' };
+  }
+  if (n >= 1_000) {
+    const v = n / 1_000;
+    return { value: v % 1 === 0 ? String(v) : v.toFixed(1), suffix: 'K+' };
+  }
+  return { value: String(n), suffix: '+' };
+}
+
+const computedFormatted = [
+  formatCount(projectCount),
+  formatCount(userCount),
+  formatCount(gatewayCount),
+];
+
+const items = (numbersData.items as Array<Record<string, string>>).map((item, i) => {
+  if (i < computedFormatted.length) {
+    const fmt = computedFormatted[i];
+    return { ...item, value: fmt.value, suffix: fmt.suffix };
+  }
+  return item;
+});
 ---
 
 <section>
@@ -27,7 +61,7 @@ const iconSvg: Record<string, string> = {
     <div class="section-card">
       <SectionHeader title="Impact at scale" subtitle="Powering open AI infrastructure across Europe — from model training to scientific communities." />
       <div class="grid">
-        {data.items.map((item, i) => {
+        {items.map((item, i) => {
           const tone = toneConfig[item.tone as Tone] ?? toneConfig.neutral;
           const svg = iconSvg[item.icon] ?? iconSvg.box;
           return (
@@ -36,7 +70,7 @@ const iconSvg: Record<string, string> = {
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={svg} />
               </div>
               <div class="number">
-                <span class="value">{item.value}</span><span class="suffix" style={`color: ${tone.suffix};`}>{item.suffix}</span>
+                <span class="value">{item.value}</span><span class="suffix">{item.suffix}</span>
               </div>
               <p class="label">{item.label}</p>
               {item.detail && <p class="detail">{item.detail}</p>}
@@ -97,23 +131,24 @@ const iconSvg: Record<string, string> = {
     font-weight: 600;
     letter-spacing: -0.02em;
     line-height: 1;
+    color: var(--color-neutral-900);
   }
 
   .label {
     margin: 0 0 5px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     color: var(--color-neutral-700);
     line-height: 1.4;
-    max-width: 170px;
+    max-width: 190px;
   }
 
   .detail {
     margin: 0;
-    font-size: 12px;
+    font-size: 14px;
     color: var(--color-neutral-400);
     line-height: 1.4;
-    max-width: 170px;
+    max-width: 190px;
   }
 
   @media (max-width: 900px) {

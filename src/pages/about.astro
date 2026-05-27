@@ -6,6 +6,7 @@ import NumbersSection from '../components/sections/NumbersSection.astro';
 import CtaFinal from '../components/sections/CtaFinal.astro';
 import about from '../data/about.yml';
 import partners from '../data/partners.yml';
+import projectsData from '../data/projects.yml';
 import euLogo from '../assets/en-v-funded-by-the-eu_black-outline.png';
 
 const logoUrls = import.meta.glob<string>(
@@ -13,10 +14,24 @@ const logoUrls = import.meta.glob<string>(
   { eager: true, query: '?url', import: 'default' }
 );
 
-const partnerItems = partners.items.map(item => ({
-  ...item,
-  src: logoUrls[`../assets/logos/${item.logo}`] ?? ''
-}));
+const partnerMeta = new Map(
+  (partners.items as Array<{ name: string; logo?: string; url?: string }>)
+    .map(p => [p.name, p])
+);
+
+const allNames = new Set<string>();
+for (const project of projectsData.items as Array<{ lead?: string; partners?: string[] }>) {
+  if (project.lead) allNames.add(project.lead);
+  for (const p of project.partners ?? []) allNames.add(p);
+}
+
+const partnerItems = Array.from(allNames)
+  .sort((a, b) => a.localeCompare(b))
+  .map(name => {
+    const meta = partnerMeta.get(name);
+    const src = meta?.logo ? (logoUrls[`../assets/logos/${meta.logo}`] ?? '') : '';
+    return { name, src: src || undefined, url: meta?.url };
+  });
 
 const hero = {
   title: 'Building open AI infrastructure for European science',
@@ -153,9 +168,15 @@ const cta = {
         <SectionHeader title={partnersSection.title} subtitle={partnersSection.subtitle} />
         <div class="partners-grid">
           {partnerItems.map(partner => (
-            <a href={partner.url} target="_blank" rel="noopener noreferrer" class="partner-card" aria-label={partner.name}>
-              <img src={partner.src} alt={partner.name} class="partner-logo" loading="lazy" />
-            </a>
+            partner.src ? (
+              <a href={partner.url || undefined} target={partner.url ? '_blank' : undefined} rel={partner.url ? 'noopener noreferrer' : undefined} class="partner-card" aria-label={partner.name}>
+                <img src={partner.src} alt={partner.name} class="partner-logo" loading="lazy" />
+              </a>
+            ) : (
+              <div class="partner-card partner-text" title={partner.name}>
+                <span class="partner-name">{partner.name}</span>
+              </div>
+            )
           ))}
         </div>
       </div>
@@ -343,7 +364,7 @@ const cta = {
   /* ── PARTNERS ─────────────────────────────────────── */
   .partners-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 10px;
     margin-top: 8px;
   }
@@ -380,6 +401,20 @@ const cta = {
 
   .partner-card:hover .partner-logo {
     filter: grayscale(0) opacity(1);
+  }
+
+  .partner-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-neutral-400);
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .partner-text:hover .partner-name {
+    color: var(--color-neutral-600);
   }
 
   /* ── EU FUNDING ───────────────────────────────────── */

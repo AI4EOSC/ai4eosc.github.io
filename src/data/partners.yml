@@ -29,3 +29,36 @@ items:
     - name: WODR
       logo: WODR.png
       url: https://www.wodr.pl
+    - name: EGI
+      logo: EGI.png
+      url: https://www.egi.eu
+    - name: CERN
+      logo: CERN.png
+      url: https://home.cern
+    - name: INRAE
+      logo: INRAE.webp
+      url: https://www.inrae.fr
+    - name: IRD
+      logo: IRD.png
+      url: https://www.ird.fr
+    - name: EMBL
+      logo: EMBL.png
+      url: https://www.embl.org
+    - name: EMBL_EBI
+      logo: EMBL_EBI.png
+      url: https://www.ebi.ac.uk
+    - name: CNRS
+      logo: CNRS.png
+      url: https://www.cnrs.fr
+    - name: DESY
+      logo: DESY.png
+      url: https://www.desy.de
+    - name: CESNET
+      logo: CESNET.png
+      url: https://www.cesnet.cz
+    - name: UvA
+      logo: UvA.png
+      url: https://www.uva.nl
+    - name: INRIA
+      logo: INRIA.png
+      url: https://www.inria.fr

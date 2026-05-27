@@ -4,7 +4,6 @@ items:
       status: finished
       title: AI4EOSC
       tagline: Artificial Intelligence for the European Open Science Cloud
-      shortDescription: The Horizon Europe project that created the AI4EOSC platform.
       description: The original Horizon Europe project that created the AI4EOSC platform. Developed the core infrastructure for training, serving and cataloguing AI models within the EOSC, establishing the foundation that all subsequent projects build upon.
       logo: /logos/AI4-horizontal-dark.svg
       outputsLabel: Key outputs
@@ -37,7 +36,6 @@ items:
       status: new
       title: FLUID-AI
       tagline: FAIR Liquidity Unifying Interoperable Data and AI
-      shortDescription: FAIR Liquidity Unifying Interoperable Data and AI.
       description: FLUID-AI aims to transform the EOSC into a dynamic, AI-ready ecosystem. The overarching goal is to significantly enhance the interoperability, machine-actionability, and AI readiness of data and models across European RIs and EOSC.
       outputs:
           - Model and data interoperability
@@ -78,13 +76,14 @@ items:
           - UFZ
           - STUBA
           - IFREMER
+      url: https://fluid.ai4eosc.eu
+      cordisUrl: https://cordis.europa.eu/project/id/
 
     - id: eosc-arena
       type: extension
       status: new
       title: EOSC-ARENA
       tagline: AI Research Enhancement through Networked Agents
-      shortDescription: AI Research Enhancement through Networked Agents
       description: EOSC-ARENA extends the AI4EOSC platform with AI agent capabilities focused on scientific research.
       outputsLabel: Adding to AI4EOSC
       outputs:
@@ -123,7 +122,6 @@ items:
       status: finished
       title: iMagine
       tagline: Imaging data and services for aquatic science
-      shortDescription: AI tools for the life sciences community.
       description: iMagine develops imaging data and services for aquatic science, leveraging the AI4EOSC platform.
       outputs:
           - Aquatic sciences
@@ -162,7 +160,6 @@ items:
       status: finished
       title: interTwin
       tagline: Co-designing and prototyping an interdisciplinary Digital Twin Engine
-      shortDescription: Co-designing and prototyping an interdisciplinary Digital Twin Engine.
       description: interTwin develops a blueprint for a cross-domain digital twin engine, leveraging AI4EOSC as its AI model deployment layer. It aims to extend the technical capabilities of the European Open Science Cloud with modelling and simulation tools and to simplify DT application development.
       outputs:
           - Digital twin engine
@@ -209,7 +206,6 @@ items:
       status: finished
       title: AI4Life
       tagline: AI models and methods for the life sciences
-      shortDescription: AI models and methods for the life sciences.
       description: AI4Life builds a suite of AI tools and resources specifically tailored for the life sciences community, deployed on a scpefici catalog in the AI4EOSC platform. It support life scientists in the adoption of machine learning solutions that improve the utility and interpretability of image data.
       outputsLabel: Key areas
       outputs:

@@ -1,33 +1,60 @@
 ---
-import partners from '../../data/partners.yml';
+import projectsData from '../../data/projects.yml';
+import partnersData from '../../data/partners.yml';
+
+// partners.yml is a lookup: name → { logo, url }
+const partnerMeta = new Map(
+  (partnersData.items as Array<{ name: string; logo?: string; url?: string }>)
+    .map(p => [p.name, p])
+);
+
+// Collect every unique partner name from all projects (lead + partners lists)
+const allNames = new Set<string>();
+for (const project of projectsData.items as Array<{ lead?: string; partners?: string[] }>) {
+  if (project.lead) allNames.add(project.lead);
+  for (const p of project.partners ?? []) allNames.add(p);
+}
 
 const logoUrls = import.meta.glob<string>(
   '../../assets/logos/*',
   { eager: true, query: '?url', import: 'default' }
 );
 
-const items = partners.items.map(item => ({
-  ...item,
-  src: logoUrls[`../../assets/logos/${item.logo}`] ?? ''
-}));
+// Resolve each name: check partners.yml for logo + url
+const items: Array<{ name: string; src?: string; url?: string }> = Array.from(allNames)
+  .sort((a, b) => a.localeCompare(b))
+  .map(name => {
+    const meta = partnerMeta.get(name);
+    const src = meta?.logo ? (logoUrls[`../../assets/logos/${meta.logo}`] ?? '') : '';
+    return { name, src: src || undefined, url: meta?.url };
+  });
 ---
 
 <section class="marquee">
-  <p class="label">Trusted by leading research organizations across Europe</p>
+  <p class="label">Powered by leading research institutions and organizations across Europe</p>
   <div class="track-wrap">
     <div class="track">
       {[...items, ...items].map((item, i) => (
-        <a
-          href={item.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="logo-link"
-          aria-label={item.name}
-          aria-hidden={i >= items.length ? 'true' : undefined}
-          tabindex={i >= items.length ? -1 : undefined}
-        >
-          <img src={item.src} alt={item.name} class="logo-img" loading="lazy" />
-        </a>
+        item.src ? (
+          <a
+            href={item.url || undefined}
+            target={item.url ? '_blank' : undefined}
+            rel={item.url ? 'noopener noreferrer' : undefined}
+            class="logo-link"
+            aria-label={item.name}
+            aria-hidden={i >= items.length ? 'true' : undefined}
+            tabindex={i >= items.length ? -1 : undefined}
+          >
+            <img src={item.src} alt={item.name} class="logo-img" loading="lazy" />
+          </a>
+        ) : (
+          <span
+            class="name-pill"
+            aria-hidden={i >= items.length ? 'true' : undefined}
+          >
+            {item.name}
+          </span>
+        )
       ))}
     </div>
   </div>
@@ -81,10 +108,10 @@ const items = partners.items.map(item => ({
   .track {
     display: flex;
     align-items: center;
-    gap: 75px;
+    gap: 60px;
     width: max-content;
     padding: 0 28px;
-    animation: marquee-scroll 36s linear infinite;
+    animation: marquee-scroll 60s linear infinite;
   }
 
   .logo-link {
@@ -110,5 +137,16 @@ const items = partners.items.map(item => ({
   .logo-link:hover .logo-img {
     filter: none;
     opacity: 1;
+  }
+
+  .name-pill {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--color-neutral-400);
+    white-space: nowrap;
+    flex-shrink: 0;
+    opacity: 0.75;
+    text-transform: uppercase;
   }
 </style>

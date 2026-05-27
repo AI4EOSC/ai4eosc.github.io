@@ -1,6 +1,6 @@
 brand:
     name: AI4EOSC
-    description: A clean, interoperable foundation for research-grade AI in Europe.
+    description: A shared foundation for deploying, extending, and accessing research-grade AI services in the EOSC.
 columns:
     - title: Navigate
       links:
