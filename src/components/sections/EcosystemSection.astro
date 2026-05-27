@@ -588,10 +588,10 @@ const communityIcons: Record<string, string> = {
   .hero .button-pill,
   .hero .hero-circles { opacity: 0; }
 
-  .hero.is-visible h2           { animation: ecoChildIn 0.75s cubic-bezier(0.16,1,0.3,1) 0.05s both; }
-  .hero.is-visible p            { animation: ecoChildIn 0.75s cubic-bezier(0.16,1,0.3,1) 0.18s both; }
-  .hero.is-visible .button-pill { animation: ecoChildIn 0.75s cubic-bezier(0.16,1,0.3,1) 0.30s both; }
-  .hero.is-visible .hero-circles { animation: ecoChildIn 1s cubic-bezier(0.16,1,0.3,1) 0.10s both; }
+  .hero.is-visible h2           { animation: ecoChildIn 1s cubic-bezier(0.16,1,0.3,1) 0.05s both; }
+  .hero.is-visible p            { animation: ecoChildIn 1s cubic-bezier(0.16,1,0.3,1) 0.22s both; }
+  .hero.is-visible .button-pill { animation: ecoChildIn 1s cubic-bezier(0.16,1,0.3,1) 0.38s both; }
+  .hero.is-visible .hero-circles { animation: ecoChildIn 1.3s cubic-bezier(0.16,1,0.3,1) 0.10s both; }
 
   /* ── Tonal tile hover glow per section ── */
   .tile:not(.tile-viewall) {
@@ -624,26 +624,30 @@ const communityIcons: Record<string, string> = {
 </style>
 
 <script>
-  function equalizeEcosystemTiles() {
-    document.querySelectorAll<HTMLElement>('.tile-grid').forEach(grid => {
-      const tiles = Array.from(grid.querySelectorAll<HTMLElement>('.tile:not(.tile-viewall)'));
-      tiles.forEach(t => (t.style.minHeight = ''));
-      const max = Math.max(...tiles.map(t => t.getBoundingClientRect().height));
-      if (max > 0) tiles.forEach(t => (t.style.minHeight = max + 'px'));
-    });
+  function initEcosystem() {
+    function equalizeEcosystemTiles() {
+      document.querySelectorAll<HTMLElement>('.tile-grid').forEach(grid => {
+        const tiles = Array.from(grid.querySelectorAll<HTMLElement>('.tile:not(.tile-viewall)'));
+        tiles.forEach(t => (t.style.minHeight = ''));
+        const max = Math.max(...tiles.map(t => t.getBoundingClientRect().height));
+        if (max > 0) tiles.forEach(t => (t.style.minHeight = max + 'px'));
+      });
+    }
+
+    equalizeEcosystemTiles();
+    window.addEventListener('resize', equalizeEcosystemTiles);
+
+    // Hero banner staggered entrance
+    const heroObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('is-visible');
+        heroObs.unobserve(e.target);
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll<HTMLElement>('.hero').forEach(h => heroObs.observe(h));
   }
 
-  equalizeEcosystemTiles();
-  window.addEventListener('resize', equalizeEcosystemTiles);
-
-  // Hero banner staggered entrance
-  const heroObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (!e.isIntersecting) return;
-      e.target.classList.add('is-visible');
-      heroObs.unobserve(e.target);
-    });
-  }, { threshold: 0.2 });
-
-  document.querySelectorAll<HTMLElement>('.hero').forEach(h => heroObs.observe(h));
+  document.addEventListener('astro:page-load', initEcosystem);
 </script>

@@ -402,72 +402,75 @@ import nav from '../../data/nav.yml';
 </style>
 
 <script>
-  /* ── Desktop dropdown ─────────────────────────────── */
-  const nav     = document.querySelector('[data-nav]') as HTMLElement | null;
-  const buttons = document.querySelectorAll<HTMLElement>('[data-menu]');
-  const noMenus = document.querySelectorAll('[data-no-menu]');
+  function initNav() {
+    /* ── Desktop dropdown ─────────────────────────────── */
+    const nav     = document.querySelector('[data-nav]') as HTMLElement | null;
+    const buttons = document.querySelectorAll<HTMLElement>('[data-menu]');
+    const noMenus = document.querySelectorAll('[data-no-menu]');
 
-  const closeDesktop = () => {
-    if (!nav) return;
-    nav.classList.remove('open');
-    nav.removeAttribute('data-active');
-    buttons.forEach(b => b.classList.remove('active'));
-  };
-
-  buttons.forEach(btn => {
-    btn.addEventListener('mouseenter', () => {
-      const menu = btn.getAttribute('data-menu');
-      if (!menu || !nav) return;
-      nav.classList.add('open');
-      nav.setAttribute('data-active', menu);
+    const closeDesktop = () => {
+      if (!nav) return;
+      nav.classList.remove('open');
+      nav.removeAttribute('data-active');
       buttons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+    };
+
+    buttons.forEach(btn => {
+      btn.addEventListener('mouseenter', () => {
+        const menu = btn.getAttribute('data-menu');
+        if (!menu || !nav) return;
+        nav.classList.add('open');
+        nav.setAttribute('data-active', menu);
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+      btn.addEventListener('click', () => {
+        const menu = btn.getAttribute('data-menu');
+        if (!menu || !nav) return;
+        if (nav.getAttribute('data-active') === menu) { closeDesktop(); return; }
+        nav.classList.add('open');
+        nav.setAttribute('data-active', menu);
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
     });
-    btn.addEventListener('click', () => {
-      const menu = btn.getAttribute('data-menu');
-      if (!menu || !nav) return;
-      if (nav.getAttribute('data-active') === menu) { closeDesktop(); return; }
-      nav.classList.add('open');
-      nav.setAttribute('data-active', menu);
-      buttons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+
+    nav?.addEventListener('mouseleave', closeDesktop);
+    noMenus.forEach(link => link.addEventListener('mouseenter', closeDesktop));
+    document.addEventListener('click', e => {
+      if (!(e.target instanceof Element)) return;
+      if (!e.target.closest('[data-nav]')) closeDesktop();
     });
-  });
 
-  nav?.addEventListener('mouseleave', closeDesktop);
-  noMenus.forEach(link => link.addEventListener('mouseenter', closeDesktop));
-  document.addEventListener('click', e => {
-    if (!(e.target instanceof Element)) return;
-    if (!e.target.closest('[data-nav]')) closeDesktop();
-  });
+    /* ── Mobile hamburger ─────────────────────────────── */
+    const hamburger  = document.querySelector('[data-hamburger]') as HTMLElement | null;
+    const mobileMenu = document.querySelector('[data-mobile-menu]') as HTMLElement | null;
 
-  /* ── Mobile hamburger ─────────────────────────────── */
-  const hamburger  = document.querySelector('[data-hamburger]') as HTMLElement | null;
-  const mobileMenu = document.querySelector('[data-mobile-menu]') as HTMLElement | null;
-
-  hamburger?.addEventListener('click', () => {
-    const isOpen = nav?.classList.toggle('mob-open');
-    hamburger.setAttribute('aria-expanded', String(isOpen));
-    if (mobileMenu) mobileMenu.setAttribute('aria-hidden', String(!isOpen));
-  });
-
-  /* Close mobile on nav link click */
-  mobileMenu?.querySelectorAll('.mob-link, .mob-sub-link, .mob-cta').forEach(link => {
-    link.addEventListener('click', () => {
-      nav?.classList.remove('mob-open');
-      hamburger?.setAttribute('aria-expanded', 'false');
-      if (mobileMenu) mobileMenu.setAttribute('aria-hidden', 'true');
+    hamburger?.addEventListener('click', () => {
+      const isOpen = nav?.classList.toggle('mob-open');
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+      if (mobileMenu) mobileMenu.setAttribute('aria-hidden', String(!isOpen));
     });
-  });
 
-  /* ── Mobile group accordions ──────────────────────── */
-  document.querySelectorAll<HTMLElement>('[data-mob-trigger]').forEach(trigger => {
-    trigger.addEventListener('click', () => {
-      const group = trigger.getAttribute('data-mob-trigger');
-      const groupEl = trigger.closest('.mob-group') as HTMLElement | null;
-      if (!groupEl) return;
-      const isOpen = groupEl.classList.toggle('mob-group-open');
-      trigger.setAttribute('aria-expanded', String(isOpen));
+    /* Close mobile on nav link click */
+    mobileMenu?.querySelectorAll('.mob-link, .mob-sub-link, .mob-cta').forEach(link => {
+      link.addEventListener('click', () => {
+        nav?.classList.remove('mob-open');
+        hamburger?.setAttribute('aria-expanded', 'false');
+        if (mobileMenu) mobileMenu.setAttribute('aria-hidden', 'true');
+      });
     });
-  });
+
+    /* ── Mobile group accordions ──────────────────────── */
+    document.querySelectorAll<HTMLElement>('[data-mob-trigger]').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const groupEl = trigger.closest('.mob-group') as HTMLElement | null;
+        if (!groupEl) return;
+        const isOpen = groupEl.classList.toggle('mob-group-open');
+        trigger.setAttribute('aria-expanded', String(isOpen));
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initNav);
 </script>

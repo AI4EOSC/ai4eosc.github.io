@@ -96,7 +96,7 @@ const items = (numbersData.items as Array<Record<string, string>>).map((item, i)
       const isDecimal = raw.includes('.');
       const target = parseFloat(raw);
       const isK = suffixEl?.textContent?.includes('K');
-      const duration = isK ? 1600 : 1200;
+      const duration = isK ? 2200 : 1700;
       const start = performance.now();
 
       function tick(now: number) {
