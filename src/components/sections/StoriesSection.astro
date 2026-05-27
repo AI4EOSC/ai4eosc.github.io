@@ -22,7 +22,12 @@ const sortedStories = stories
       />
       <div class="grid">
         {sortedStories.map((story, i) => (
-          <a href={`/stories/${story.id}`} class={`item reveal${story.data.image ? ' has-image' : ''}`} style={`transition-delay: ${i * 80}ms`}>
+          <a
+            href={story.data.externalUrl ?? `/stories/${story.id}`}
+            class={`item reveal${story.data.image ? ' has-image' : ''}`}
+            style={`transition-delay: ${i * 80}ms`}
+            {...(story.data.externalUrl ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          >
             {story.data.image && (
               <div class="image">
                 <img src={story.data.image} alt="" loading="lazy" />
@@ -38,7 +43,7 @@ const sortedStories = stories
               </div>
               <h4>{story.data.title}</h4>
               <p>{story.data.excerpt}</p>
-              <span class="read-link">Read story →</span>
+              <span class="read-link">{story.data.externalUrl ? 'View on external site ↗' : 'Read story →'}</span>
             </div>
           </a>
         ))}

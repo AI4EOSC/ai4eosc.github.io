@@ -6,10 +6,12 @@ import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const stories = await getCollection('stories');
-  return stories.map(story => ({
-    params: { slug: story.id },
-    props: { story },
-  }));
+  return stories
+    .filter(s => !s.data.externalUrl)
+    .map(story => ({
+      params: { slug: story.id },
+      props: { story },
+    }));
 }
 
 const { story } = Astro.props;
@@ -17,7 +19,7 @@ const { Content } = await render(story);
 
 const allStories = await getCollection('stories');
 const related = allStories
-  .filter(s => s.id !== story.id)
+  .filter(s => s.id !== story.id && !s.data.externalUrl)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
 

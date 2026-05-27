@@ -2,22 +2,13 @@
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/sections/PageHero.astro';
 import CtaFinal from '../../components/sections/CtaFinal.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
 import { getCollection } from 'astro:content';
 
 const stories = await getCollection('stories');
 const sorted = stories.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const types = ['All', 'Case study', 'News', 'Research'];
-
-const tagCls: Record<string, string> = {
-  'Case study': 'tag-teal',
-  'News':       'tag-blue',
-  'Research':   'tag-amber',
-};
-
-function formatDate(d: Date) {
-  return d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
-}
+const types = ['All', ...Array.from(new Set(sorted.map(s => s.data.type))).sort()];
 ---
 
 <Layout title="Stories — AI4EOSC Initiative">
@@ -28,61 +19,78 @@ function formatDate(d: Date) {
     description="Case studies, research highlights and updates from the scientific communities, projects and developers building on AI4EOSC."
   />
 
-  <section class="p-section">
-    <div class="section-label"><div class="container">All stories</div></div>
-    <div class="container">
-      <div class="box" x-data="{ filter: 'All' }">
+  <div class="section-label"><div class="container">All stories</div></div>
+  <div class="container">
+    <div class="section-card" x-data="{
+      filter: 'All',
+      syncBorders() {
+        const all = [...this.$el.querySelectorAll('.item')];
+        const vis = all.filter(el => this.filter === 'All' || el.dataset.type === this.filter);
+        all.forEach(el => el.classList.remove('is-row-start', 'is-new-row'));
+        vis.forEach((el, i) => {
+          if (i % 3 === 0) el.classList.add('is-row-start');
+          if (i >= 3 && i % 3 === 0) el.classList.add('is-new-row');
+        });
+      }
+    }" x-effect="filter; syncBorders()">
+      <SectionHeader
+        title="From the initiative"
+        subtitle="News, case studies and research highlights from across the AI4EOSC ecosystem."
+      />
 
-        <!-- Filters -->
-        <div class="filters">
-          {types.map(t => (
-            <button
-              class="filter-btn"
-              x-bind:class={`{ 'is-active': filter === '${t}' }`}
-              x-on:click={`filter = '${t}'`}
-              type="button"
-            >
-              {t}
-            </button>
-          ))}
-        </div>
+      <!-- Filters -->
+      <div class="filters">
+        {types.map(t => (
+          <button
+            class="filter-btn"
+            x-bind:class={`{ 'is-active': filter === '${t}' }`}
+            x-on:click={`filter = '${t}'`}
+            type="button"
+          >
+            {t}
+          </button>
+        ))}
+      </div>
 
-        <!-- Grid -->
-        <div class="stories-grid">
-          {sorted.map(story => (
-            <article
-              class="story-card"
-              x-show={`filter === 'All' || filter === '${story.data.type}'`}
-              x-cloak
-            >
-              <a href={`/stories/${story.id}`} class="card-link" tabindex="-1" aria-hidden="true">
-                <div class={`card-image grad-${story.data.gradient ?? 'dark'}`}>
-                  <span class="circle circle--lg" aria-hidden="true"></span>
-                  <span class="circle circle--md" aria-hidden="true"></span>
-                  <span class="circle circle--sm" aria-hidden="true"></span>
-                  {story.data.image && (
-                    <img src={story.data.image} alt="" class="cover" loading="lazy" />
-                  )}
-                </div>
-              </a>
-              <div class="card-body">
-                <div class="card-meta">
-                  <span class={`type-tag ${tagCls[story.data.type] ?? 'tag-teal'}`}>{story.data.type}</span>
-                  <span class="card-date">{formatDate(story.data.date)}</span>
-                </div>
-                <h3>
-                  <a href={`/stories/${story.id}`}>{story.data.title}</a>
-                </h3>
-                <p>{story.data.excerpt}</p>
-                <a class="read-more" href={`/stories/${story.id}`}>Read story →</a>
+      <!-- Grid -->
+      <div class="grid">
+        {sorted.map((story, i) => (
+          <a
+            href={story.data.externalUrl ?? `/stories/${story.id}`}
+            class={`item${story.data.image ? ' has-image' : ''}`}
+            data-type={story.data.type}
+            x-show={`filter === 'All' || filter === '${story.data.type}'`}
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 translate-y-2"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-2"
+            x-cloak
+            {...(story.data.externalUrl ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          >
+            {story.data.image && (
+              <div class="image">
+                <img src={story.data.image} alt="" loading="lazy" />
               </div>
-            </article>
-          ))}
-        </div>
-
+            )}
+            <div class="body">
+              <div class="meta">
+                <span class="tag">{story.data.type}</span>
+                <span class="dot" aria-hidden="true"></span>
+                <span class="date">
+                  {story.data.date.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}
+                </span>
+              </div>
+              <h4>{story.data.title}</h4>
+              <p>{story.data.excerpt}</p>
+              <span class="read-link">{story.data.externalUrl ? 'View on external site ↗' : 'Read story →'}</span>
+            </div>
+          </a>
+        ))}
       </div>
     </div>
-  </section>
+  </div>
 
   <CtaFinal
     theme="teal"
@@ -93,174 +101,169 @@ function formatDate(d: Date) {
 </Layout>
 
 <style>
-  .p-section { padding: 0 0 24px; }
-
-  .box {
-    background: var(--card-bg);
-    border: 0.5px solid var(--card-border);
-    border-radius: var(--radius-lg);
-    padding: 28px 28px 24px;
-  }
-
   /* ── Filters ────────────────────────────────────────── */
-  .filters { display: flex; gap: 6px; margin-bottom: 24px; flex-wrap: wrap; }
+  .filters {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
 
   .filter-btn {
-    font-size: 11px; font-weight: 500;
-    border-radius: 999px; padding: 5px 14px;
-    cursor: pointer; font: inherit;
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 999px;
+    padding: 5px 14px;
+    cursor: pointer;
+    font: inherit;
     border: 0.5px solid var(--card-border);
-    background: var(--page-bg); color: var(--color-neutral-500);
-    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    background: var(--page-bg);
+    color: var(--color-neutral-500);
+    transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
   }
 
-  .filter-btn:hover:not(.is-active) { background: white; border-color: var(--color-neutral-300); }
+  .filter-btn:hover:not(.is-active) {
+    background: white;
+    border-color: var(--color-neutral-300);
+  }
 
   .filter-btn.is-active {
-    background: var(--color-neutral-900); color: white; border-color: var(--color-neutral-900);
+    background: var(--color-neutral-900);
+    color: white;
+    border-color: var(--color-neutral-900);
   }
 
   /* ── Grid ───────────────────────────────────────────── */
-  .stories-grid {
+  .grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
+    gap: 0;
+    margin-top: 24px;
+    border-top: 1px solid var(--card-border);
   }
 
-  /* ── Card ───────────────────────────────────────────── */
-  .story-card {
-    border-radius: var(--radius-md);
+  .item {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
     overflow: hidden;
-    border: 0.5px solid var(--card-border);
-    background: var(--card-bg);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
-  .story-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 28px rgba(0,0,0,0.10);
+  /* ── Image ──────────────────────────────────────────── */
+  .image {
+    width: 100%;
+    height: 150px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--card-border);
+    background: linear-gradient(135deg, #001a1c 0%, var(--color-primary-800) 60%, var(--color-primary-700) 100%);
   }
 
-  /* Image area */
-  .card-link { display: block; }
-
-  .card-image {
-    height: 200px; position: relative; overflow: hidden;
+  .image img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mix-blend-mode: luminosity;
+    opacity: 0.55;
   }
 
-  .cover {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%; object-fit: cover;
-    z-index: 1;
+  /* ── Body ───────────────────────────────────────────── */
+  .body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 24px 32px 28px 0;
   }
 
-  /* Gradient backgrounds */
-  .grad-dark {
-    background:
-      radial-gradient(ellipse 55% 60% at 15% 15%, rgba(255,255,255,0.07) 0%, transparent 55%),
-      linear-gradient(140deg, #111418 0%, #1a1f24 50%, #1e2228 100%);
+  .item:not(.is-row-start) .body {
+    padding-left: 31px;
+    border-left: 1px solid var(--card-border);
   }
 
-  .grad-secondary {
-    background:
-      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255,255,255,0.10) 0%, transparent 55%),
-      radial-gradient(ellipse 55% 45% at 85% 88%, rgba(80,10,30,0.4) 0%, transparent 55%),
-      linear-gradient(140deg, #6b0828 0%, #a01848 38%, #ec5d80 100%);
+  /* Row separators — set dynamically by Alpine via .is-row-start */
+  .item.is-new-row {
+    border-top: 1px solid var(--card-border);
   }
 
-  .grad-primary {
-    background:
-      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255,255,255,0.12) 0%, transparent 55%),
-      radial-gradient(ellipse 55% 45% at 85% 88%, rgba(0,40,44,0.4) 0%, transparent 55%),
-      linear-gradient(140deg, #002d30 0%, #005060 38%, #008792 100%);
+  .item:last-child .body { padding-right: 0; }
+  .item:not(.has-image) .body { padding-top: 28px; }
+
+  /* ── Meta ───────────────────────────────────────────── */
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
   }
 
-  /* Circles */
-  .circle {
-    position: absolute; right: 0; bottom: 0;
-    transform: translate(50%, 50%);
-    aspect-ratio: 1; border-radius: 50%;
-    background: transparent; pointer-events: none;
-    animation: pulsing 5s ease-in-out infinite; z-index: 0;
-  }
-  .circle--lg { width: 70%; animation-delay: 2s; }
-  .circle--md { width: 50%; animation-delay: 1s; }
-  .circle--sm { width: 30%; animation-delay: 0s; }
-
-  .grad-dark .circle {
-    box-shadow:
-      0 0 0 1px rgba(255,255,255,0.18),
-      0 0 30px rgba(46,104,212,0.45),
-      0 0 65px rgba(46,104,212,0.20),
-      inset 0 0 10px rgba(255,255,255,0.04);
+  .tag {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-primary-600);
   }
 
-  .grad-secondary .circle {
-    box-shadow:
-      0 0 0 1px rgba(255,255,255,0.20),
-      0 0 30px rgba(236,93,128,0.50),
-      0 0 65px rgba(236,93,128,0.22),
-      inset 0 0 10px rgba(255,255,255,0.04);
+  .dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--color-neutral-300);
+    flex-shrink: 0;
   }
 
-  .grad-primary .circle {
-    box-shadow:
-      0 0 0 1px rgba(255,255,255,0.20),
-      0 0 30px rgba(0,200,215,0.48),
-      0 0 65px rgba(0,200,215,0.20),
-      inset 0 0 10px rgba(255,255,255,0.04);
+  .date {
+    font-size: 13px;
+    color: var(--color-neutral-400);
   }
 
-  /* Body */
-  .card-body { padding: 18px 20px 22px; }
-
-  .card-meta {
-    display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
-  }
-
-  .type-tag {
-    font-size: 10px; font-weight: 600; border-radius: 999px; padding: 2px 9px;
-  }
-
-  .tag-teal   { color: var(--color-primary-700);   background: var(--color-primary-100); }
-  .tag-blue   { color: #185fa5; background: #e6f1fb; }
-  .tag-amber  { color: #854f0b; background: #faeeda; }
-
-  .card-date {
-    font-size: 12px; color: var(--color-neutral-400);
-  }
-
-  .card-body h3 {
-    margin: 0 0 8px;
+  h4 {
+    margin: 0 0 10px;
     font-family: var(--font-headings);
-    font-size: 16px; font-weight: 600; line-height: 1.35;
+    font-size: 19px;
+    font-weight: 650;
+    color: var(--color-neutral-800);
+    line-height: 1.3;
     letter-spacing: -0.01em;
+    transition: color var(--transition-fast);
   }
 
-  .card-body h3 a {
-    color: var(--color-neutral-900); text-decoration: none;
-  }
-  .card-body h3 a:hover { color: var(--color-primary-700); }
+  .item:hover h4 { color: var(--color-primary-700); }
 
-  .card-body p {
-    font-size: 13px; color: var(--color-neutral-500);
-    line-height: 1.65; margin: 0 0 14px;
-    display: -webkit-box; -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical; overflow: hidden;
+  p {
+    margin: 0 0 20px;
+    font-size: 16px;
+    color: var(--color-neutral-500);
+    line-height: 1.6;
+    flex: 1;
   }
 
-  .read-more {
-    font-size: 12px; font-weight: 500;
-    color: var(--color-primary-600); text-decoration: none;
+  .read-link {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-primary-700);
+    margin-top: auto;
+    transition: color var(--transition-fast);
   }
-  .read-more:hover { color: var(--color-primary-700); }
+
+  .item:hover .read-link { color: var(--color-primary-600); }
 
   /* ── Responsive ─────────────────────────────────────── */
   @media (max-width: 900px) {
-    .stories-grid { grid-template-columns: 1fr 1fr; }
-  }
+    .grid {
+      grid-template-columns: 1fr;
+      border-top: none;
+    }
 
-  @media (max-width: 600px) {
-    .stories-grid { grid-template-columns: 1fr; }
+    .item {
+      border-top: 1px solid var(--card-border);
+    }
+
+    .item:nth-child(n+4) { border-top: 1px solid var(--card-border); }
+
+    .body { padding: 24px 0 !important; border-left: none !important; }
   }
 </style>

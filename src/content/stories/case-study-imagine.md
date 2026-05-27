@@ -3,7 +3,6 @@ title: How iMagine uses AI4EOSC to classify marine species at scale
 type: Case study
 date: 2026-05-01
 excerpt: The iMagine project deployed a suite of underwater imaging models on AI4EOSC, enabling automated species identification across thousands of images from European marine research sites.
-icon: "📡"
 gradient: primary
 image: /images/stories/placeholder1.jpeg
 ---

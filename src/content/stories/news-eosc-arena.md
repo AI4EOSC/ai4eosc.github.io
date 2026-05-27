@@ -3,7 +3,6 @@ title: EOSC-ARENA joins the ecosystem with new agent capabilities
 type: News
 date: 2026-04-10
 excerpt: The AI4EOSC initiative welcomes EOSC-ARENA, a new Horizon Europe project that will extend the platform with autonomous AI agent capabilities and multi-step workflow orchestration.
-icon: "🌍"
 gradient: secondary
 image: /images/stories/placeholder2.jpg
 ---

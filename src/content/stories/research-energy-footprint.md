@@ -3,7 +3,6 @@ title: Measuring the energy footprint of AI model training in EOSC
 type: Research
 date: 2026-03-15
 excerpt: FLUID-AI publishes first results on green computing metrics for AI workloads on the AI4EOSC platform, revealing significant variation in energy cost across model types and infrastructure configurations.
-icon: "⚡"
 gradient: dark
 image: /images/stories/placeholder3.png
 ---
@@ -32,7 +31,7 @@ Jobs were anonymised and tagged with model architecture family, dataset size and
 
 **Transfer learning reduces energy cost by 60–85%.** Fine-tuning a pre-trained model on a domain-specific dataset consumed between 15% and 40% of the energy of training from scratch, with no statistically significant difference in final task accuracy for the datasets studied.
 
-> "We expected to find that bigger models were more expensive — that was obvious. What surprised us was how much the *when* and *where* of training mattered. The same model, trained at the same site, at different times of day, could have a 2× difference in carbon footprint."
+> "We expected to find that bigger models were more expensive — that was obvious. What surprised us was how much the _when_ and _where_ of training mattered. The same model, trained at the same site, at different times of day, could have a 2× difference in carbon footprint."
 >
 > — Dr. Antoine Moreau, FLUID-AI, CNRS
 

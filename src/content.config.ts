@@ -10,7 +10,8 @@ const stories = defineCollection({
     excerpt: z.string(),
     icon: z.string().optional(),
     gradient: z.enum(['primary', 'secondary', 'dark']).optional(),
-    image: z.string().optional()
+    image: z.string().optional(),
+    externalUrl: z.string().url().optional()
   })
 });
 
