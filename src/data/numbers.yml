@@ -2,16 +2,24 @@ items:
     - value: "8"
       suffix: +
       label: EU-funded projects in the ecosystem
+      detail: Origin + associated projects across Europe
       tone: eu-blue
+      icon: star
     - value: "500"
       suffix: +
       label: Registered researchers & developers
+      detail: Active members of the community
       tone: secondary
+      icon: users
     - value: "12"
       suffix: +
       label: Active gateways across Europe
+      detail: Domain-specific science deployments
       tone: primary
+      icon: server
     - value: "200"
       suffix: +
       label: AI models in the catalogue
+      detail: Ready to train, fine-tune and deploy
       tone: neutral
+      icon: box

@@ -1,11 +1,5 @@
 ---
 import SectionHeader from '../SectionHeader.astro';
-
-const items = [
-  { tag: 'Developer',   title: 'Deploy your models on EOSC',   description: 'Use our open-source platform to train, serve and publish AI models with EOSC-native auth.',                        linkLabel: 'Explore products →',    linkHref: '/products' },
-  { tag: 'Researcher',  title: 'Find AI tools for your domain', description: 'Access ready-to-use AI models and computing resources tailored to your scientific field.',                          linkLabel: 'Explore communities →', linkHref: '/ecosystem/communities' },
-  { tag: 'Institution', title: 'Build your own gateway',        description: 'Deploy a customised instance of the platform for your project and join the ecosystem.',                              linkLabel: 'Join the ecosystem →',  linkHref: '/ecosystem/gateways' },
-];
 ---
 
 <section>
@@ -14,22 +8,143 @@ const items = [
   </div>
   <div class="container">
     <div class="section-card">
-      <SectionHeader title="Find your path" subtitle="Whether you're a researcher looking for tools, a developer deploying models, or an institution building a gateway — AI4EOSC has a path for you." />
+      <SectionHeader
+        title="Find your path"
+        subtitle="Whether you're a researcher looking for tools, a developer deploying models, or an institution building a gateway — AI4EOSC has a path for you."
+      />
       <div class="grid">
-        {items.map((item, i) => (
-          <div class="item reveal" style={`transition-delay: ${i * 80}ms`}>
-            <span class="role">{item.tag}</span>
-            <h3>{item.title}</h3>
-            <p>{item.description}</p>
-            <a class="link" href={item.linkHref}>{item.linkLabel}</a>
+
+        <!-- Developer -->
+        <a class="item reveal" href="/products">
+          <div class="illus illus--dev">
+            <div class="terminal">
+              <div class="term-chrome">
+                <span class="tdot tdot--r"></span>
+                <span class="tdot tdot--y"></span>
+                <span class="tdot tdot--g"></span>
+                <span class="win-label">deepaas-cli</span>
+              </div>
+              <div class="term-body">
+                <p class="tl"><span class="tprompt">$</span><span class="tcmd"> deepaas-run <em>--model</em> climate</span></p>
+                <p class="tl tmuted">Loading model weights...</p>
+                <p class="tl tok"><span class="tok-check">✓</span> Served at port 5000</p>
+                <p class="tl tok"><span class="tok-check">✓</span> EOSC auth enabled</p>
+                <p class="tl tcursor">▋</p>
+              </div>
+            </div>
           </div>
-        ))}
+          <div class="body">
+            <span class="role">Developer</span>
+            <h3>Deploy your models on EOSC</h3>
+            <p>Use our open-source platform to train, serve and publish AI models with EOSC-native authentication.</p>
+            <span class="link">Explore products →</span>
+          </div>
+        </a>
+
+        <!-- Researcher -->
+        <a class="item reveal" href="/ecosystem/communities" style="transition-delay: 80ms">
+          <div class="illus illus--res">
+            <div class="catalogue">
+              <div class="term-chrome">
+                <span class="tdot tdot--r"></span>
+                <span class="tdot tdot--y"></span>
+                <span class="tdot tdot--g"></span>
+                <span class="win-label">ai4eosc-catalogue</span>
+              </div>
+              <div class="cat-search">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <span class="cat-query">climate models</span><span class="cat-cursor">|</span>
+              </div>
+              <div class="cat-list">
+                <div class="cat-row">
+                  <div class="cat-thumb cat-t1"></div>
+                  <div class="cat-meta">
+                    <span class="cat-name">climate-seg-v3</span>
+                    <span class="cat-domain">Marine · iMagine</span>
+                  </div>
+                  <span class="cat-acc">94%</span>
+                </div>
+                <div class="cat-row">
+                  <div class="cat-thumb cat-t2"></div>
+                  <div class="cat-meta">
+                    <span class="cat-name">flood-detect-xl</span>
+                    <span class="cat-domain">Climate · FLUID-AI</span>
+                  </div>
+                  <span class="cat-acc">91%</span>
+                </div>
+                <div class="cat-row cat-row--dim">
+                  <div class="cat-thumb cat-t3"></div>
+                  <div class="cat-meta">
+                    <span class="cat-name">bio-seg-marine</span>
+                    <span class="cat-domain">Biology · iMagine</span>
+                  </div>
+                  <span class="cat-acc">88%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="body">
+            <span class="role">Researcher</span>
+            <h3>Find AI tools for your domain</h3>
+            <p>Access ready-to-use AI models and computing resources tailored to your scientific field.</p>
+            <span class="link">Explore communities →</span>
+          </div>
+        </a>
+
+        <!-- Institution -->
+        <a class="item reveal" href="/ecosystem/gateways" style="transition-delay: 160ms">
+          <div class="illus illus--inst">
+            <div class="gwpanel">
+              <div class="term-chrome">
+                <span class="tdot tdot--r"></span>
+                <span class="tdot tdot--y"></span>
+                <span class="tdot tdot--g"></span>
+                <span class="win-label">gateway-panel</span>
+              </div>
+              <div class="gw-header">
+                <span class="gw-name">iMagine Gateway</span>
+                <span class="gw-active"><span class="gw-dot"></span>Active</span>
+              </div>
+              <div class="gw-grid">
+                <div class="gw-cell">
+                  <span class="gw-val">847</span>
+                  <span class="gw-key">users</span>
+                </div>
+                <div class="gw-cell">
+                  <span class="gw-val">23</span>
+                  <span class="gw-key">models</span>
+                </div>
+                <div class="gw-cell">
+                  <span class="gw-val">3</span>
+                  <span class="gw-key">communities</span>
+                </div>
+                <div class="gw-cell">
+                  <span class="gw-val">142</span>
+                  <span class="gw-key">GPU jobs/mo</span>
+                </div>
+              </div>
+              <div class="gw-bar-row">
+                <span class="gw-bar-label">GPU load</span>
+                <div class="gw-bar"><div class="gw-fill" style="width:73%"></div></div>
+                <span class="gw-bar-val">73%</span>
+              </div>
+            </div>
+          </div>
+          <div class="body">
+            <span class="role">Institution</span>
+            <h3>Build your own gateway</h3>
+            <p>Deploy a customised instance of the platform for your project and join the ecosystem.</p>
+            <span class="link">Join the ecosystem →</span>
+          </div>
+        </a>
+
       </div>
     </div>
   </div>
 </section>
 
 <style>
+  /* ── Grid / open-column layout ───────────────────────────────── */
   .grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -39,20 +154,40 @@ const items = [
   }
 
   .item {
-    padding: 28px 32px 8px 0;
     border-right: 1px solid var(--card-border);
     display: flex;
     flex-direction: column;
+    text-decoration: none;
+    overflow: hidden;
   }
 
-  .item:last-child {
-    border-right: none;
-    padding-right: 0;
+  .item:last-child { border-right: none; }
+
+  /* ── Illustration area ───────────────────────────────────────── */
+  .illus {
+    height: 196px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--card-border);
+    flex-shrink: 0;
+    overflow: hidden;
   }
 
-  .item + .item {
-    padding-left: 32px;
+  .illus--dev  { background: var(--color-primary-50); }
+  .illus--res  { background: var(--color-primary-50); }
+  .illus--inst { background: var(--color-primary-50); }
+
+  /* ── Body ───────────────────────────────────────────────────── */
+  .body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 24px 32px 28px 0;
   }
+
+  .item + .item .body { padding-left: 32px; }
+  .item:last-child .body { padding-right: 0; }
 
   .role {
     display: block;
@@ -72,7 +207,10 @@ const items = [
     letter-spacing: -0.02em;
     color: var(--color-neutral-900);
     line-height: 1.2;
+    transition: color var(--transition-fast);
   }
+
+  .item:hover h3 { color: var(--color-primary-700); }
 
   p {
     margin: 0 0 20px;
@@ -86,14 +224,267 @@ const items = [
     font-size: 14px;
     font-weight: 600;
     color: var(--color-primary-700);
-    text-decoration: none;
     margin-top: auto;
+    transition: color var(--transition-fast);
   }
 
-  .link:hover {
-    color: var(--color-primary-600);
+  .item:hover .link { color: var(--color-primary-600); }
+
+  /* ── Shared: dark window chrome ──────────────────────────────── */
+  .terminal,
+  .catalogue,
+  .gwpanel {
+    background: #1e2233;
+    border-radius: 10px;
+    width: calc(100% - 28px);
+    height: 168px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+    transition: transform 0.25s ease;
   }
 
+  .item:hover .terminal,
+  .item:hover .catalogue,
+  .item:hover .gwpanel { transform: translateY(-4px); }
+
+  .term-chrome {
+    background: #2a2f42;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .tdot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .tdot--r { background: #ff5f57; }
+  .tdot--y { background: #febc2e; }
+  .tdot--g { background: #28c840; }
+
+  .win-label {
+    font-size: 10px;
+    color: #6b7280;
+    margin-left: 6px;
+    font-family: monospace;
+  }
+
+  /* ── Developer: terminal body ───────────────────────────────── */
+  .term-body {
+    padding: 10px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .tl {
+    margin: 0;
+    font-size: 11px;
+    font-family: 'Courier New', monospace;
+    line-height: 1.45;
+    color: #a8b4c8;
+    white-space: nowrap;
+  }
+
+  .tprompt { color: var(--color-primary-400); font-weight: 700; margin-right: 5px; }
+  .tcmd { color: #e2e8f0; }
+  .tcmd em { font-style: normal; color: #93c5fd; }
+  .tmuted { color: #4b5563; }
+  .tok { color: #6ee7b7; display: flex; align-items: center; gap: 5px; }
+  .tok-check { color: #34d399; }
+  .tcursor { color: var(--color-primary-400); animation: blink 1.2s step-end infinite; }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  /* ── Researcher: catalogue browser ──────────────────────────── */
+  .cat-search {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 10px;
+    background: #252a3a;
+    border-bottom: 1px solid #2d3347;
+    color: var(--color-primary-500);
+  }
+
+  .cat-query {
+    font-size: 10px;
+    font-family: monospace;
+    color: #a8b4c8;
+  }
+
+  .cat-cursor {
+    color: var(--color-primary-400);
+    animation: blink 1.2s step-end infinite;
+    font-size: 11px;
+    line-height: 1;
+  }
+
+  .cat-list { display: flex; flex-direction: column; }
+
+  .cat-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-bottom: 1px solid #252a3a;
+  }
+
+  .cat-row:last-child { border-bottom: none; }
+  .cat-row--dim { opacity: 0.45; }
+
+  .cat-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    flex-shrink: 0;
+  }
+
+  .cat-t1 { background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-800)); }
+  .cat-t2 { background: linear-gradient(135deg, var(--color-primary-400), var(--color-primary-700)); }
+  .cat-t3 { background: linear-gradient(135deg, var(--color-primary-300), var(--color-primary-600)); }
+
+  .cat-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .cat-name {
+    font-size: 10px;
+    font-weight: 600;
+    color: #e2e8f0;
+    font-family: monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .cat-domain {
+    font-size: 9px;
+    color: #4b5563;
+  }
+
+  .cat-acc {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--color-primary-400);
+    flex-shrink: 0;
+  }
+
+  /* ── Institution: gateway panel ─────────────────────────────── */
+  .gw-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 11px;
+    border-bottom: 1px solid #2d3347;
+  }
+
+  .gw-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: #e2e8f0;
+    font-family: monospace;
+  }
+
+  .gw-active {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 9px;
+    color: #34d399;
+    font-family: monospace;
+  }
+
+  .gw-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #34d399;
+    flex-shrink: 0;
+  }
+
+  .gw-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: #2d3347;
+    border-bottom: 1px solid #2d3347;
+  }
+
+  .gw-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    padding: 8px 6px;
+    background: #1e2233;
+  }
+
+  .gw-val {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--color-primary-300);
+    font-family: var(--font-headings);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .gw-key {
+    font-size: 8px;
+    color: #4b5563;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-family: monospace;
+  }
+
+  .gw-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+  }
+
+  .gw-bar-label {
+    font-size: 9px;
+    color: #6b7280;
+    font-family: monospace;
+    flex-shrink: 0;
+  }
+
+  .gw-bar {
+    flex: 1;
+    height: 4px;
+    background: #2d3347;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .gw-fill {
+    height: 100%;
+    background: var(--color-primary-500);
+    border-radius: 999px;
+  }
+
+  .gw-bar-val {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--color-primary-400);
+    font-family: monospace;
+    flex-shrink: 0;
+  }
+
+  /* ── Responsive ─────────────────────────────────────────────── */
   @media (max-width: 900px) {
     .grid {
       grid-template-columns: 1fr;
@@ -101,13 +492,10 @@ const items = [
     }
 
     .item {
-      padding: 24px 0;
       border-right: none;
       border-top: 1px solid var(--card-border);
     }
 
-    .item + .item {
-      padding-left: 0;
-    }
+    .body { padding: 24px 0 24px 0 !important; }
   }
 </style>

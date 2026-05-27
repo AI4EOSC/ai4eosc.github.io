@@ -1,5 +1,4 @@
 ---
-const icon = '⚡';
 const title = 'Fully open source';
 const description = 'All AI4EOSC software is open source and available on GitHub.';
 const button = { label: 'View on GitHub →', href: 'https://github.com/ai4eosc' };
@@ -10,7 +9,11 @@ const button = { label: 'View on GitHub →', href: 'https://github.com/ai4eosc'
     <div class="banner">
       <div class="banner-content">
         <div class="left">
-          <span class="icon" aria-hidden="true">{icon}</span>
+          <svg class="code-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <polyline points="10,6 2,16 10,26" stroke="#008792" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="20" y1="6" x2="12" y2="26" stroke="#008792" stroke-width="2" stroke-linecap="round"/>
+            <polyline points="22,6 30,16 22,26" stroke="#008792" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
           <div>
             <h4>{title}</h4>
             <p>{description}</p>
@@ -74,12 +77,16 @@ const button = { label: 'View on GitHub →', href: 'https://github.com/ai4eosc'
   .left {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 24px;
   }
 
-  .icon {
-    font-size: 32px;
+  .code-icon {
+    width: 40px;
+    height: 40px;
     flex-shrink: 0;
+    filter:
+      drop-shadow(0 0 4px rgba(0, 135, 146, 0.2))
+      drop-shadow(0 0 10px rgba(0, 135, 146, 0.08));
   }
 
   .gh-icon {

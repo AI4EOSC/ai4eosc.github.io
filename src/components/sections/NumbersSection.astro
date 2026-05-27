@@ -1,6 +1,22 @@
 ---
 import data from '../../data/numbers.yml';
 import SectionHeader from '../SectionHeader.astro';
+
+type Tone = 'eu-blue' | 'secondary' | 'primary' | 'neutral';
+
+const toneConfig: Record<Tone, { bg: string; color: string; suffix: string }> = {
+  'eu-blue':   { bg: '#dbeafe', color: '#2563eb', suffix: '#3b82f6' },
+  'secondary': { bg: 'var(--color-secondary-50)', color: 'var(--color-secondary-600)', suffix: 'var(--color-secondary-500)' },
+  'primary':   { bg: 'var(--color-primary-50)',   color: 'var(--color-primary-600)',   suffix: 'var(--color-primary-500)'   },
+  'neutral':   { bg: 'var(--color-neutral-100)',  color: 'var(--color-neutral-500)',   suffix: 'var(--color-neutral-400)'   },
+};
+
+const iconSvg: Record<string, string> = {
+  star:   `<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>`,
+  users:  `<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`,
+  server: `<rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>`,
+  box:    `<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>`,
+};
 ---
 
 <section>
@@ -11,14 +27,22 @@ import SectionHeader from '../SectionHeader.astro';
     <div class="section-card">
       <SectionHeader title="Impact at scale" subtitle="Powering open AI infrastructure across Europe — from model training to scientific communities." />
       <div class="grid">
-        {data.items.map((item, i) => (
-          <div class="stat reveal" style={`transition-delay: ${i * 80}ms`}>
-            <div class="value">
-              {item.value}<span class="suffix">{item.suffix}</span>
+        {data.items.map((item, i) => {
+          const tone = toneConfig[item.tone as Tone] ?? toneConfig.neutral;
+          const svg = iconSvg[item.icon] ?? iconSvg.box;
+          return (
+            <div class="stat reveal" style={`transition-delay: ${i * 80}ms`}>
+              <div class="icon-wrap" style={`background: ${tone.bg}; color: ${tone.color};`}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={svg} />
+              </div>
+              <div class="number">
+                <span class="value">{item.value}</span><span class="suffix" style={`color: ${tone.suffix};`}>{item.suffix}</span>
+              </div>
+              <p class="label">{item.label}</p>
+              {item.detail && <p class="detail">{item.detail}</p>}
             </div>
-            <p class="label">{item.label}</p>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   </div>
@@ -28,45 +52,74 @@ import SectionHeader from '../SectionHeader.astro';
   .grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    margin-top: 20px;
+    margin-top: 32px;
   }
 
   .stat {
-    padding: 4px 32px;
+    padding: 8px 36px;
     border-right: 1px solid var(--card-border);
   }
 
   .stat:first-child { padding-left: 0; }
   .stat:last-child { border-right: none; padding-right: 0; }
 
+  .icon-wrap {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-shrink: 0;
+  }
+
+  .number {
+    display: flex;
+    align-items: baseline;
+    gap: 1px;
+    margin-bottom: 10px;
+    line-height: 1;
+  }
+
   .value {
     font-family: var(--font-headings);
-    font-size: 64px;
-    font-weight: 600;
+    font-size: 68px;
+    font-weight: 650;
     line-height: 1;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.04em;
     color: var(--color-neutral-900);
-    margin-bottom: 10px;
   }
 
   .suffix {
-    font-size: 42px;
-    color: var(--color-primary-500);
+    font-family: var(--font-headings);
+    font-size: 46px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1;
   }
 
   .label {
-    margin: 0;
-    font-size: 15px;
+    margin: 0 0 5px;
+    font-size: 14px;
     font-weight: 500;
-    color: var(--color-neutral-500);
+    color: var(--color-neutral-700);
     line-height: 1.4;
-    max-width: 160px;
+    max-width: 170px;
+  }
+
+  .detail {
+    margin: 0;
+    font-size: 12px;
+    color: var(--color-neutral-400);
+    line-height: 1.4;
+    max-width: 170px;
   }
 
   @media (max-width: 900px) {
     .grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 32px 0;
+      gap: 36px 0;
     }
 
     .stat {
@@ -87,7 +140,7 @@ import SectionHeader from '../SectionHeader.astro';
   @media (max-width: 520px) {
     .grid {
       grid-template-columns: 1fr;
-      gap: 28px;
+      gap: 32px;
     }
 
     .stat {
