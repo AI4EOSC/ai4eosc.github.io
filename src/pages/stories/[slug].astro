@@ -19,15 +19,12 @@ const { Content } = await render(story);
 
 const allStories = await getCollection('stories');
 const related = allStories
-  .filter(s => s.id !== story.id && !s.data.externalUrl)
+  .filter(s => s.id !== story.id)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
 
-const tagCls: Record<string, string> = {
-  'Case study': 'tag-teal',
-  'News':       'tag-blue',
-  'Research':   'tag-amber',
-};
+const wordCount = story.body?.split(/\s+/).length ?? 0;
+const readingTime = Math.max(1, Math.round(wordCount / 200));
 
 function formatDate(d: Date, short = false) {
   return d.toLocaleDateString('en-GB', short
@@ -45,33 +42,78 @@ function formatDate(d: Date, short = false) {
     description={story.data.excerpt}
   >
     <div class="hero-meta">
-      <span class={`type-tag ${tagCls[story.data.type] ?? 'tag-teal'}`}>{story.data.type}</span>
+      <span class="hero-tag">{story.data.type}</span>
+      <span class="hero-sep" aria-hidden="true"></span>
       <span class="hero-date">{formatDate(story.data.date)}</span>
+      <span class="hero-sep" aria-hidden="true"></span>
+      <span class="hero-read">{readingTime} min read</span>
     </div>
   </PageHero>
 
   <!-- Article -->
-  <section class="p-section has-top">
+  <div class="container article-container">
+    <article class="article-card">
+
+      {story.data.image && (
+        <div class="article-image">
+          <img src={story.data.image} alt="" class="cover" loading="eager" />
+        </div>
+      )}
+
+      <div class="article-topbar">
+        <a class="back-btn" href="/stories">← All stories</a>
+        <div class="topbar-meta">
+          <span class="meta-tag">{story.data.type}</span>
+          <span class="meta-dot" aria-hidden="true"></span>
+          <span class="meta-date">{formatDate(story.data.date)}</span>
+          <span class="meta-dot" aria-hidden="true"></span>
+          <span class="meta-read">{readingTime} min read</span>
+        </div>
+      </div>
+
+      <div class="prose">
+        <Content />
+      </div>
+
+    </article>
+  </div>
+
+  <!-- Related stories -->
+  {related.length > 0 && (
+    <div class="section-label"><div class="container">More stories</div></div>
     <div class="container">
-      <article class="article-body">
-        {story.data.image && (
-          <div class={`article-image grad-${story.data.gradient ?? 'dark'}`}>
-            <span class="circle circle--lg" aria-hidden="true"></span>
-            <span class="circle circle--md" aria-hidden="true"></span>
-            <span class="circle circle--sm" aria-hidden="true"></span>
-            <img src={story.data.image} alt="" class="cover" loading="eager" />
-          </div>
-        )}
-        <div class="article-topbar">
-          <a class="back-link" href="/stories">← All stories</a>
-          <span class="topbar-date">{formatDate(story.data.date)}</span>
+      <div class="section-card related-section">
+        <div class="related-grid">
+          {related.map((s, i) => (
+            <a
+              href={s.data.externalUrl ?? `/stories/${s.id}`}
+              class={`rel-item${s.data.image ? ' has-image' : ''} reveal`}
+              style={`transition-delay: ${i * 80}ms`}
+              {...(s.data.externalUrl ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            >
+              {s.data.image && (
+                <div class="rel-image">
+                  <img src={s.data.image} alt="" loading="lazy" />
+                </div>
+              )}
+              <div class="rel-body">
+                <div class="rel-meta">
+                  <span class="rel-tag">{s.data.type}</span>
+                  <span class="rel-dot" aria-hidden="true"></span>
+                  <span class="rel-date">
+                    {s.data.date.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}
+                  </span>
+                </div>
+                <h4 class="rel-title">{s.data.title}</h4>
+                <p class="rel-excerpt">{s.data.excerpt}</p>
+                <span class="rel-link">{s.data.externalUrl ? 'View on external site ↗' : 'Read story →'}</span>
+              </div>
+            </a>
+          ))}
         </div>
-        <div class="prose">
-          <Content />
-        </div>
-      </article>
+      </div>
     </div>
-  </section>
+  )}
 
   <CtaFinal
     theme="teal"
@@ -82,65 +124,151 @@ function formatDate(d: Date, short = false) {
 </Layout>
 
 <style>
-  /* ── Hero extras ────────────────────────────────────── */
+  /* ── Hero meta ──────────────────────────────────────── */
   .hero-meta {
-    display: flex; align-items: center; gap: 10px; margin-top: 22px;
-  }
-  .hero-date { font-size: 13px; color: rgba(255,255,255,0.45); }
-  .hero-meta .type-tag {
-    color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.18);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 22px;
+    flex-wrap: wrap;
   }
 
-  /* ── Layout ─────────────────────────────────────────── */
-  .p-section { padding: 0 0 24px; }
-  .p-section.has-top { padding-top: 10px; }
+  .hero-tag {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.16);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 999px;
+    padding: 3px 10px;
+  }
 
-  /* ── Article ────────────────────────────────────────── */
-  .article-body {
+  .hero-sep {
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.35);
+    flex-shrink: 0;
+  }
+
+  .hero-date, .hero-read {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* ── Article card ───────────────────────────────────── */
+  .article-container {
+    padding-top: 24px;
+  }
+
+  .article-card {
     background: var(--card-bg);
-    border: 0.5px solid var(--card-border);
+    border: 1px solid var(--card-border);
     border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+
+  /* ── Image ──────────────────────────────────────────── */
+  .article-image {
+    height: 340px;
+    position: relative;
     overflow: hidden;
   }
 
-  .article-image {
-    height: 320px; position: relative; overflow: hidden;
+  .cover {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
   }
 
+  /* ── Topbar ─────────────────────────────────────────── */
   .article-topbar {
-    display: flex; align-items: center; justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 14px 48px;
-    border-bottom: 0.5px solid var(--card-border);
+    border-bottom: 1px solid var(--card-border);
+    gap: 16px;
+    flex-wrap: wrap;
   }
 
-  .back-link {
-    font-size: 12px; font-weight: 500;
-    color: var(--color-neutral-400); text-decoration: none;
-    transition: color 0.15s ease;
+  .back-btn {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-neutral-500);
+    text-decoration: none;
+    border: 1px solid var(--card-border);
+    border-radius: 999px;
+    padding: 5px 14px;
+    background: white;
+    transition:
+      color var(--transition-fast),
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast),
+      transform var(--transition-fast);
   }
-  .back-link:hover { color: var(--color-primary-600); }
 
-  .topbar-date {
-    font-size: 12px; color: var(--color-neutral-400);
+  .back-btn:hover {
+    color: var(--color-primary-700);
+    border-color: var(--color-primary-300);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05);
+    transform: translateY(-1px);
+  }
+
+  .topbar-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .meta-tag {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-primary-600);
+    background: color-mix(in oklch, var(--color-primary-100) 70%, white);
+    border-radius: 999px;
+    padding: 3px 10px;
+  }
+
+  .meta-dot {
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--color-neutral-300);
+    flex-shrink: 0;
+  }
+
+  .meta-date { font-size: 14px; color: var(--color-neutral-400); }
+
+  .meta-read {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-neutral-600);
   }
 
   /* ── Prose ──────────────────────────────────────────── */
   .prose {
-    max-width: 860px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 44px 48px 60px;
-    font-size: 16.5px; line-height: 1.85;
+    padding: 72px 56px 96px;
+    font-size: 17px;
+    line-height: 1.85;
     color: var(--color-neutral-600);
   }
 
   .prose :global(h2) {
     font-family: var(--font-headings);
-    font-size: 22px; font-weight: 600;
+    font-size: 24px;
+    font-weight: 650;
     color: var(--color-neutral-900);
-    letter-spacing: -0.02em; line-height: 1.25;
-    margin: 48px 0 16px;
-    padding-top: 48px;
-    border-top: 0.5px solid var(--card-border);
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    margin: 56px 0 18px;
+    padding-top: 56px;
+    border-top: 1px solid var(--card-border);
   }
 
   .prose :global(h2:first-child) {
@@ -149,100 +277,214 @@ function formatDate(d: Date, short = false) {
 
   .prose :global(h3) {
     font-family: var(--font-headings);
-    font-size: 17px; font-weight: 600;
+    font-size: 18px;
+    font-weight: 600;
     color: var(--color-neutral-800);
     letter-spacing: -0.01em;
-    margin: 30px 0 10px;
+    margin: 36px 0 12px;
   }
 
-  .prose :global(p) { margin: 0 0 20px; }
+  .prose :global(p) { margin: 0 0 22px; text-align: justify; }
   .prose :global(p:last-child) { margin-bottom: 0; }
 
   .prose :global(ul), .prose :global(ol) {
-    margin: 0 0 20px; padding-left: 24px;
+    margin: 0 0 22px;
+    padding-left: 24px;
   }
-  .prose :global(li) { margin-bottom: 8px; line-height: 1.7; }
+  .prose :global(li) { margin-bottom: 8px; line-height: 1.75; }
 
   .prose :global(a) {
     color: var(--color-primary-600);
-    text-decoration: underline; text-underline-offset: 3px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: color-mix(in oklch, var(--color-primary-400) 50%, transparent);
+    transition: text-decoration-color var(--transition-fast);
+  }
+  .prose :global(a:hover) {
+    text-decoration-color: var(--color-primary-500);
   }
 
-  .prose :global(strong) { color: var(--color-neutral-900); font-weight: 600; }
+  .prose :global(strong) {
+    color: var(--color-neutral-900);
+    font-weight: 600;
+  }
 
   .prose :global(blockquote) {
-    border-left: 3px solid var(--color-primary-400);
-    margin: 28px 0; padding: 16px 22px;
-    background: var(--page-bg);
+    border-left: 2px solid var(--color-primary-400);
+    margin: 36px 0;
+    padding: 20px 28px;
+    background: color-mix(in oklch, var(--color-primary-50) 60%, white);
     border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
     color: var(--color-neutral-600);
   }
 
-  .prose :global(blockquote p) { margin: 0; font-style: italic; }
+  .prose :global(blockquote p) {
+    margin: 0;
+    font-style: italic;
+    font-size: 17.5px;
+    line-height: 1.7;
+  }
 
   .prose :global(blockquote p + p) {
-    margin-top: 10px; font-style: normal;
-    font-size: 13px; color: var(--color-neutral-400); font-weight: 500;
+    margin-top: 14px;
+    font-style: normal;
+    font-size: 14px;
+    color: var(--color-neutral-400);
+    font-weight: 500;
   }
 
   .prose :global(code) {
-    font-size: 13px; background: var(--page-bg);
-    border: 0.5px solid var(--card-border);
-    border-radius: 4px; padding: 1px 6px;
+    font-size: 14px;
+    background: var(--page-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 4px;
+    padding: 2px 7px;
     color: var(--color-primary-700);
+    font-family: ui-monospace, 'Cascadia Code', monospace;
   }
 
-  /* Shared gradients + circles (article image & related thumbs) */
-  .cover {
+  .prose :global(strong > code) {
+    font-weight: 700;
+  }
+
+  /* ── Related stories ────────────────────────────────── */
+  .related-section {
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    margin-top: 24px;
+    border-top: 1px solid var(--card-border);
+  }
+
+  .rel-item {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    overflow: hidden;
+  }
+
+  .rel-item + .rel-item .rel-body {
+    padding-left: 31px;
+    border-left: 1px solid var(--card-border);
+  }
+
+  .rel-image {
+    width: 100%;
+    height: 130px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--card-border);
+    background: linear-gradient(135deg, #001a1c 0%, var(--color-primary-800) 60%, var(--color-primary-700) 100%);
+  }
+
+  .rel-image img {
     position: absolute; inset: 0;
-    width: 100%; height: 100%; object-fit: cover; z-index: 1;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    mix-blend-mode: luminosity;
+    opacity: 0.55;
+    transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .grad-dark {
-    background:
-      radial-gradient(ellipse 55% 60% at 15% 15%, rgba(255,255,255,0.07) 0%, transparent 55%),
-      linear-gradient(140deg, #111418 0%, #1a1f24 50%, #1e2228 100%);
-  }
-  .grad-secondary {
-    background:
-      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255,255,255,0.10) 0%, transparent 55%),
-      linear-gradient(140deg, #6b0828 0%, #a01848 38%, #ec5d80 100%);
-  }
-  .grad-primary {
-    background:
-      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255,255,255,0.12) 0%, transparent 55%),
-      linear-gradient(140deg, #002d30 0%, #005060 38%, #008792 100%);
+  .rel-item:hover .rel-image img { transform: scale(1.05); }
+
+  .rel-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 22px 28px 24px 0;
   }
 
-  .circle {
-    position: absolute; right: 0; bottom: 0;
-    transform: translate(50%, 50%);
-    aspect-ratio: 1; border-radius: 50%;
-    background: transparent; pointer-events: none;
-    animation: pulsing 5s ease-in-out infinite; z-index: 0;
-  }
-  .circle--lg { width: 70%; animation-delay: 2s; }
-  .circle--md { width: 50%; animation-delay: 1s; }
-  .circle--sm { width: 30%; animation-delay: 0s; }
+  .rel-item:not(.has-image) .rel-body { padding-top: 24px; }
 
-  .grad-dark .circle {
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.18), 0 0 30px rgba(46,104,212,0.45), 0 0 65px rgba(46,104,212,0.20);
+  .rel-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
   }
-  .grad-secondary .circle {
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.20), 0 0 30px rgba(236,93,128,0.50), 0 0 65px rgba(236,93,128,0.22);
+
+  .rel-tag {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-primary-600);
   }
-  .grad-primary .circle {
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.20), 0 0 30px rgba(0,200,215,0.48), 0 0 65px rgba(0,200,215,0.20);
+
+  .rel-dot {
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--color-neutral-300);
+    flex-shrink: 0;
   }
+
+  .rel-date { font-size: 14px; color: var(--color-neutral-400); }
+
+  .rel-title {
+    margin: 0 0 8px;
+    font-family: var(--font-headings);
+    font-size: 17px;
+    font-weight: 650;
+    color: var(--color-neutral-800);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    transition: color var(--transition-fast);
+  }
+
+  .rel-item:hover .rel-title { color: var(--color-primary-700); }
+
+  .rel-excerpt {
+    margin: 0 0 16px;
+    font-size: 14px;
+    color: var(--color-neutral-500);
+    line-height: 1.6;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .rel-link {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-primary-700);
+    margin-top: auto;
+    transition: color var(--transition-fast);
+  }
+
+  .rel-item:hover .rel-link { color: var(--color-primary-600); }
 
   /* ── Responsive ─────────────────────────────────────── */
   @media (max-width: 960px) {
-    .article-topbar { padding: 12px 24px; }
-    .prose { padding: 32px 24px 44px; }
+    .article-topbar { padding: 12px 28px; }
+    .prose { padding: 36px 28px 52px; }
   }
 
-  @media (max-width: 600px) {
-    .prose { padding: 24px 20px 36px; font-size: 15.5px; }
+  @media (max-width: 720px) {
     .article-image { height: 220px; }
+    .prose { padding: 28px 20px 40px; font-size: 16px; }
+    .article-topbar { padding: 12px 20px; }
+    .topbar-meta { display: none; }
+
+    .related-grid {
+      grid-template-columns: 1fr;
+      border-top: none;
+    }
+    .rel-item {
+      border-top: 1px solid var(--card-border);
+    }
+    .rel-item + .rel-item .rel-body {
+      padding-left: 0;
+      border-left: none;
+    }
+    .rel-body { padding-right: 0 !important; }
   }
 </style>

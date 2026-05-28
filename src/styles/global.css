@@ -106,7 +106,7 @@
 	--gradient-brand: linear-gradient(135deg, #008792, #ec5d80);
 	--gradient-green: linear-gradient(140deg, #002d30 0%, #004d53 45%, #008792 100%);
 	--gradient-pink: linear-gradient(140deg, #8b1040 0%, #c02060 45%, #ec5d80 100%);
-	--gradient-eu-blue: linear-gradient(140deg, #0d2d5e 0%, #15428b 45%, #2e68d4 100%);
+	--gradient-eu-blue: linear-gradient(140deg, #071a58 0%, #0f38a8 45%, #2a5ed8 100%);
 
 	/* Overlays radiales mesh — se apilan sobre el linear base */
 	--mesh-primary:
