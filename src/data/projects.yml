@@ -30,6 +30,11 @@ items:
           - WODR
       url: https://ai4eosc.eu
       cordisUrl: https://cordis.europa.eu/project/id/101058593
+      social:
+          linkedin: https://www.linkedin.com/company/ai4eosc/
+          x: https://x.com/ai4eosc
+          youtube: https://www.youtube.com/@ai4eosc
+          github: https://github.com/ai4eosc
 
     - id: fluid-ai
       type: extension
@@ -78,6 +83,8 @@ items:
           - IFREMER
       url: https://fluid.ai4eosc.eu
       cordisUrl: https://cordis.europa.eu/project/id/
+      social:
+          linkedin: https://www.linkedin.com/company/fluid-ai/
 
     - id: eosc-arena
       type: extension
@@ -115,6 +122,9 @@ items:
           - US
           - CSC
       url: https://arena.ai4eosc.eu
+      social:
+          linkedin: https://www.linkedin.com/company/eosc-arena/
+          x: https://x.com/EOSC_ARENA
 
     - id: imagine
       type: associated
@@ -154,6 +164,9 @@ items:
           - WALTON
       url: https://www.imagine-ai.eu/
       cordisUrl: https://cordis.europa.eu/project/id/101058625
+      social:
+          linkedin: https://www.linkedin.com/company/imagine-project/
+          x: https://x.com/iMagine_project
 
     - id: intertwin
       type: associated
@@ -200,6 +213,11 @@ items:
           - WWU
       url: https://intertwin.eu
       cordisUrl: https://cordis.europa.eu/project/id/101058386
+      social:
+          linkedin: https://www.linkedin.com/company/intertwin/
+          x: https://x.com/interTwin_eu
+          youtube: https://www.youtube.com/@interTwin
+          github: https://github.com/interTwin-eu
 
     - id: ai4life
       type: associated
@@ -232,3 +250,7 @@ items:
           - UC3M
       url: https://ai4life.eurobioimaging.eu
       cordisUrl: https://cordis.europa.eu/project/id/101057970
+      social:
+          linkedin: https://www.linkedin.com/company/ai4life-project/
+          x: https://x.com/AI4Life_project
+          github: https://github.com/bioimage-io

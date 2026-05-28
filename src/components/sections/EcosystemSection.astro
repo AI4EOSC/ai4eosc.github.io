@@ -61,7 +61,7 @@ const communityIcons: Record<string, string> = {
             </div>
             <p class="tagline">{item.tagline}</p>
             <div class="tile-links">
-              <a class="link-project" href="/ecosystem/projects">View project →</a>
+              <a class="link-project" href={`/ecosystem/projects#${item.id}`}>View project →</a>
               {item.url && (
                 <a class="link-ext" href={item.url} target="_blank" rel="noopener noreferrer">Visit website ↗</a>
               )}
@@ -162,7 +162,7 @@ const communityIcons: Record<string, string> = {
             </div>
             <p class="tagline">{item.tagline}</p>
             <div class="tile-links">
-              <a class="link-gateway" href="/ecosystem/gateways">View gateway →</a>
+              <a class="link-gateway" href={`/ecosystem/gateways#${item.slug}`}>View gateway →</a>
               {item.url && (
                 <a class="link-ext" href={item.url} target="_blank" rel="noopener noreferrer">Visit gateway ↗</a>
               )}

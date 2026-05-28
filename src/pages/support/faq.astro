@@ -93,9 +93,9 @@ import data from '../../data/faq.yml';
   }
 
   .cat-num {
-    font-size: 11px; font-weight: 600;
-    letter-spacing: 0.1em;
-    color: var(--color-neutral-300);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--color-secondary-400);
   }
 
   .cat-title {
@@ -107,7 +107,7 @@ import data from '../../data/faq.yml';
   }
 
   .cat-count {
-    font-size: 11px; color: var(--color-neutral-300);
+    font-size: 12px; color: var(--color-neutral-400);
     margin-top: 2px;
   }
 
@@ -125,14 +125,26 @@ import data from '../../data/faq.yml';
   .qa-item.is-last { border-bottom: none; }
 
   .q-text {
-    font-size: 16px; font-weight: 600;
+    font-size: 17px; font-weight: 600;
     color: var(--color-neutral-900);
     line-height: 1.4; letter-spacing: -0.01em;
-    margin: 0 0 12px;
+    margin: 0 0 14px;
+  }
+
+  .q-text::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--color-secondary-400);
+    margin-right: 10px;
+    vertical-align: middle;
+    margin-bottom: 2px;
+    flex-shrink: 0;
   }
 
   .qa-a {
-    font-size: 14px; line-height: 1.8;
+    font-size: 16px; line-height: 1.8;
     color: var(--color-neutral-500);
     margin: 0;
   }

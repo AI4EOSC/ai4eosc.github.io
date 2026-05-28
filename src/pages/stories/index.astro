@@ -83,49 +83,52 @@ const types = ['All', ...Array.from(new Set(sorted.map(s => s.data.type))).sort(
 
 <script>
 document.addEventListener('alpine:init', () => {
-  Alpine.data('storiesGrid', () => ({
-    filter: 'All',
-    busy: false,
+  Alpine.data('storiesGrid', () => {
+    // Closure var — not reactive, no Alpine re-renders on change
+    let gen = 0;
 
-    init() {
-      const items = Array.from(this.$refs.grid.querySelectorAll('.item'));
-      // Staggered entrance on page load
-      items.forEach((el, i) => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(14px)';
-        el.style.transition = 'none';
-        setTimeout(() => {
-          el.style.transition = 'opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s cubic-bezier(0.16,1,0.3,1)';
-          el.style.opacity = '';
-          el.style.transform = '';
-        }, 60 + i * 55);
-      });
-      this.syncBorders(items.filter(() => true));
-    },
+    return {
+      filter: 'All',
 
-    setFilter(newFilter) {
-      if (newFilter === this.filter || this.busy) return;
-      this.busy = true;
+      init() {
+        const items = Array.from(this.$refs.grid.querySelectorAll('.item'));
+        const myGen = ++gen;
 
-      const grid = this.$refs.grid;
-      const all = Array.from(grid.querySelectorAll('.item'));
-      const visible = all.filter(el => el.style.display !== 'none');
+        items.forEach((el, i) => {
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(14px)';
+          el.style.transition = 'none';
+          setTimeout(() => {
+            if (gen !== myGen) return; // a filter was clicked during entrance — bail
+            el.style.transition = 'opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s cubic-bezier(0.16,1,0.3,1)';
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+          }, 60 + i * 55);
+        });
 
-      // Step 1: fade-out visible items quickly
-      visible.forEach(el => {
-        el.style.transition = 'opacity 0.15s ease, transform 0.15s ease';
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(-6px) scale(0.97)';
-      });
+        this.syncBorders(items);
+      },
 
-      setTimeout(() => {
-        // Step 2: apply filter — hide/show items
+      setFilter(newFilter) {
+        if (newFilter === this.filter) return;
+
+        const myGen = ++gen; // invalidates any in-flight entrance or filter animations
+        const all = Array.from(this.$refs.grid.querySelectorAll('.item'));
+
+        // Snap everything to hidden with no transition
+        all.forEach(el => {
+          el.style.transition = 'none';
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(10px)';
+        });
+
+        // Update Alpine state immediately — buttons show active state right away
+        this.filter = newFilter;
+
+        // Show/hide items
         const nextVisible = [];
         all.forEach(el => {
           const match = newFilter === 'All' || el.dataset.type === newFilter;
-          el.style.transition = 'none';
-          el.style.opacity = '0';
-          el.style.transform = 'translateY(14px)';
           if (match) {
             el.style.display = 'flex';
             nextVisible.push(el);
@@ -134,31 +137,32 @@ document.addEventListener('alpine:init', () => {
           }
         });
 
-        this.filter = newFilter;
         this.syncBorders(nextVisible);
 
-        // Step 3: staggered slide-in for newly visible items
+        // Double-rAF: guarantees transition:none committed to rendering engine
+        // before we re-enable transitions. Stagger via CSS transition-delay.
         nextVisible.forEach((el, i) => {
-          setTimeout(() => {
-            el.style.transition = 'opacity 0.45s cubic-bezier(0.16,1,0.3,1), transform 0.45s cubic-bezier(0.16,1,0.3,1)';
-            el.style.opacity = '';
-            el.style.transform = '';
-          }, i * 50);
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              if (gen !== myGen) return; // another filter clicked — bail
+              el.style.transition = `opacity 0.4s cubic-bezier(0.16,1,0.3,1) ${i * 45}ms, transform 0.4s cubic-bezier(0.16,1,0.3,1) ${i * 45}ms`;
+              el.style.opacity = '1';
+              el.style.transform = 'none';
+            });
+          });
         });
+      },
 
-        setTimeout(() => { this.busy = false; }, nextVisible.length * 50 + 500);
-      }, 170);
-    },
-
-    syncBorders(visibleItems) {
-      const all = Array.from(this.$refs.grid.querySelectorAll('.item'));
-      all.forEach(el => el.classList.remove('is-row-start', 'is-new-row'));
-      visibleItems.forEach((el, i) => {
-        if (i % 3 === 0) el.classList.add('is-row-start');
-        if (i >= 3) el.classList.add('is-new-row');
-      });
-    }
-  }));
+      syncBorders(visibleItems) {
+        const all = Array.from(this.$refs.grid.querySelectorAll('.item'));
+        all.forEach(el => el.classList.remove('is-row-start', 'is-new-row'));
+        visibleItems.forEach((el, i) => {
+          if (i % 3 === 0) el.classList.add('is-row-start');
+          if (i >= 3) el.classList.add('is-new-row');
+        });
+      }
+    };
+  });
 });
 </script>
 
@@ -229,7 +233,7 @@ document.addEventListener('alpine:init', () => {
     position: relative;
     overflow: hidden;
     border-bottom: 1px solid var(--card-border);
-    background: linear-gradient(135deg, #001a1c 0%, var(--color-primary-800) 60%, var(--color-primary-700) 100%);
+    background: linear-gradient(135deg, #00454a 0%, var(--color-primary-600) 60%, var(--color-primary-500) 100%);
   }
 
   .image img {

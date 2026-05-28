@@ -24,6 +24,7 @@ const chromeUrl: Record<string, string> = {
 };
 
 const firstId: string = data.items[0]?.iconId ?? 'platform';
+const productIds = JSON.stringify(data.items.map((i: any) => i.iconId));
 ---
 
 <Layout title="Products — AI4EOSC Initiative">
@@ -46,7 +47,17 @@ const firstId: string = data.items[0]?.iconId ?? 'platform';
           Desktop:  sidebar (column, 200px) | detail panel (flex-1)
           Mobile:   sidebar becomes horizontal scroll row, panel full-width below
         -->
-        <div class="catalogue" x-data={`{ active: '${firstId}' }`}>
+        <div class="catalogue" x-data={`{
+          active: '${firstId}',
+          ids: ${productIds},
+          init() {
+            this.$watch('active', v => history.replaceState(null, '', '#' + v));
+            this.$nextTick(() => {
+              const hash = window.location.hash.slice(1);
+              if (hash && this.ids.includes(hash)) this.active = hash;
+            });
+          }
+        }`}>
 
           <!-- Sidebar / tab strip -->
           <div class="cat-sidebar">

@@ -33,6 +33,7 @@ const icons: Record<string, string> = {
 };
 
 const firstSlug: string = data.items[0]?.slug ?? '';
+const communityIds = JSON.stringify(data.items.map((i: any) => i.slug));
 ---
 
 <Layout title="Communities — AI4EOSC Ecosystem">
@@ -58,7 +59,17 @@ const firstSlug: string = data.items[0]?.slug ?? '';
         <h2 class="sc-title">Research domains</h2>
         <p class="sc-sub">Select a community to see the AI tools available, related gateways and how to get access.</p>
 
-        <div class="catalogue" x-data={`{ active: '${firstSlug}' }`}>
+        <div class="catalogue" x-data={`{
+          active: '${firstSlug}',
+          ids: ${communityIds},
+          init() {
+            this.$watch('active', v => history.replaceState(null, '', '#' + v));
+            this.$nextTick(() => {
+              const hash = window.location.hash.slice(1);
+              if (hash && this.ids.includes(hash)) this.active = hash;
+            });
+          }
+        }`}>
 
           <!-- Sidebar / tab strip -->
           <div class="cat-sidebar">
@@ -93,13 +104,18 @@ const firstSlug: string = data.items[0]?.slug ?? '';
                   <div class="pdl">
                     <div class="pdl-top">
                       {item.via && (
-                        <span class="badge b-via">
+                        <a class="badge b-via" href={`/ecosystem/gateways${item.gatewaySlug ? '#' + item.gatewaySlug : ''}`}>
                           <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                           via {item.via}
-                        </span>
+                        </a>
                       )}
                     </div>
-                    <h3>{item.title}</h3>
+                    <div class="title-row">
+                      <span class="title-icon" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" set:html={icons[item.iconId]} />
+                      </span>
+                      <h3>{item.title}</h3>
+                    </div>
                     <p class="pdl-tagline">{item.description}</p>
                     <p class="pdl-desc">{item.longDescription}</p>
 
@@ -138,9 +154,6 @@ const firstSlug: string = data.items[0]?.slug ?? '';
                           Visit gateway ↗
                         </a>
                       )}
-                      <a class="btn-outline" href="/products">
-                        Browse models ↗
-                      </a>
                     </div>
                   </div>
 
@@ -347,15 +360,31 @@ const firstSlug: string = data.items[0]?.slug ?? '';
     font-size: 10px; font-weight: 600; border-radius: 999px; padding: 3px 10px;
   }
   .b-via {
-    color: var(--color-secondary-700);
-    background: rgba(201,75,114,0.09);
-    border: 0.5px solid rgba(201,75,114,0.22);
+    color: #0f6e56;
+    background: rgba(26,110,96,0.08);
+    border: 0.5px solid rgba(26,110,96,0.22);
+    text-decoration: none;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .b-via:hover {
+    background: rgba(26,110,96,0.15);
+    border-color: rgba(26,110,96,0.4);
+  }
+
+  .title-row {
+    display: flex; align-items: center; gap: 10px; margin: 0 0 10px;
   }
 
   h3 {
     font-family: var(--font-headings);
     font-size: 28px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.15;
-    color: var(--color-neutral-900); margin: 0 0 10px;
+    color: var(--color-neutral-900); margin: 0;
+  }
+
+  .title-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    color: var(--color-secondary-600);
   }
 
   .pdl-tagline {

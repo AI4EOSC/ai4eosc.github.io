@@ -6,6 +6,7 @@ items:
       longDescription: AI models for underwater image classification, species identification and marine biodiversity monitoring. Deployed through the iMagine gateway, which provides researchers with a specialised instance of the AI4EOSC platform.
       via: iMagine
       viaUrl: https://imagine-ai.eu
+      gatewaySlug: imagine
       tools:
           - Species classifier
           - Image segmentation
@@ -18,6 +19,7 @@ items:
       description: Forecasting, Earth observation
       longDescription: Machine learning models for weather forecasting, climate downscaling and Earth observation data processing. Integrated with Copernicus datasets and EOSC storage for large-scale analysis.
       via: OSCAR Gateway
+      gatewaySlug: oscar-gateway
       tools:
           - Weather forecasting
           - Climate downscaling
@@ -31,6 +33,7 @@ items:
       longDescription: Deep learning tools for genomic sequence analysis, protein structure prediction and drug discovery pipelines. Built in collaboration with AI4Life and the BioImage.IO model zoo.
       via: AI4Life
       viaUrl: https://ai4life.eurobioimaging.eu
+      gatewaySlug: ai4life
       tools:
           - Sequence analysis
           - Protein prediction
@@ -66,6 +69,7 @@ items:
       longDescription: AI models for particle physics event classification, gravitational wave detection and astrophysical simulation. Built as part of the interTwin digital twin engine project for cross-domain scientific workflows.
       via: interTwin
       viaUrl: https://intertwin.eu
+      gatewaySlug: intertwin-physics
       tools:
           - Event classification
           - Digital twins

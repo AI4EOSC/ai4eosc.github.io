@@ -17,18 +17,23 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
   />
 
   <!-- Main contact section -->
-  <section class="p-section has-top">
+  <div class="section-label">
+    <div class="container">Contact</div>
+  </div>
+
+  <section class="contact-section">
     <div class="container">
-      <div class="contact-layout">
+      <div class="section-card">
+        <div class="contact-layout">
 
-        <!-- Form card -->
-        <div class="form-card">
-          <div class="form-card-header">
-            <h2>Send us a message</h2>
-            <p>We usually respond within 2 business days.</p>
-          </div>
+          <!-- Form side -->
+          <div class="form-side">
+            <div class="form-header reveal">
+              <h2>Send us a message</h2>
+              <p>We usually respond within 2 business days.</p>
+            </div>
 
-          <form class="contact-form" action="https://formspree.io/f/ai4eosc" method="POST">
+          <form class="contact-form reveal" action="https://formspree.io/f/ai4eosc" method="POST">
 
             <div class="field-row">
               <div class="field">
@@ -67,10 +72,10 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
             </div>
 
           </form>
-        </div>
+          </div>
 
-        <!-- Sidebar: contact channels -->
-        <aside class="contact-sidebar">
+          <!-- Sidebar: contact channels -->
+          <aside class="contact-sidebar">
 
           <div class="channel-card">
             <div class="channel-icon icon-blue">
@@ -114,23 +119,31 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
           <div class="channel-card">
             <div class="channel-icon icon-pink">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
               </svg>
             </div>
             <div class="channel-text">
-              <span class="channel-label">Slack community</span>
-              <a href="#" class="channel-value">AI4EOSC workspace</a>
-              <p class="channel-desc">Chat with the team and other users</p>
+              <span class="channel-label">Community forum</span>
+              <a href="https://community.cloud.ai4eosc.eu/" class="channel-value" target="_blank" rel="noopener">community.cloud.ai4eosc.eu</a>
+              <p class="channel-desc">Discuss with the team and other users</p>
             </div>
           </div>
 
           <div class="office-card">
-            <span class="office-label">Lead institution</span>
-            <p class="office-name">IFCA (CSIC-UC)</p>
-            <p class="office-address">Instituto de Física de Cantabria<br/>Advanced Computing and e-Science Group<br/>Santander, Spain</p>
+            <div class="channel-icon icon-dark">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
+              </svg>
+            </div>
+            <div class="channel-text">
+              <span class="office-label">Lead institution</span>
+              <p class="office-name">IFCA (CSIC-UC)</p>
+              <p class="office-address">Instituto de Física de Cantabria<br/>Advanced Computing and e-Science Group<br/>Santander, Spain</p>
+            </div>
           </div>
 
-        </aside>
+          </aside>
+        </div>
       </div>
     </div>
   </section>
@@ -144,46 +157,44 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
 </Layout>
 
 <style>
-  .p-section { padding: 0 0 24px; }
-  .p-section.has-top { padding-top: 10px; }
+  .contact-section { padding: 0 0 24px; }
 
   /* ── Layout ──────────────────────────────────────────── */
   .contact-layout {
     display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: 16px;
+    grid-template-columns: 1fr 360px;
+    gap: 0;
     align-items: flex-start;
   }
 
-  /* ── Form card ───────────────────────────────────────── */
-  .form-card {
-    background: var(--card-bg);
-    border: 0.5px solid var(--card-border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
+  /* ── Form side ───────────────────────────────────────── */
+  .form-side {
+    padding-right: 36px;
+    border-right: 1px solid var(--card-border);
   }
 
-  .form-card-header {
-    padding: 28px 36px 22px;
-    border-bottom: 0.5px solid var(--card-border);
+  .form-header {
+    padding-bottom: 24px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--card-border);
   }
 
-  .form-card-header h2 {
+  .form-header h2 {
     font-family: var(--font-headings);
-    font-size: 22px; font-weight: 600;
+    font-size: 26px; font-weight: 600;
     color: var(--color-neutral-900);
     letter-spacing: -0.02em;
-    margin: 0 0 6px;
+    margin: 0 0 8px;
   }
 
-  .form-card-header p {
-    font-size: 13px; color: var(--color-neutral-400); margin: 0;
+  .form-header p {
+    font-size: 16px; color: var(--color-neutral-500); margin: 0;
+    line-height: 1.6;
   }
 
   /* ── Form ────────────────────────────────────────────── */
   .contact-form {
-    padding: 28px 36px 32px;
-    display: flex; flex-direction: column; gap: 20px;
+    display: flex; flex-direction: column; gap: 22px;
   }
 
   .field-row {
@@ -193,23 +204,23 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
   }
 
   .field {
-    display: flex; flex-direction: column; gap: 7px;
+    display: flex; flex-direction: column; gap: 8px;
   }
 
   label {
-    font-size: 12px; font-weight: 600;
+    font-size: 14px; font-weight: 600;
     color: var(--color-neutral-600);
-    letter-spacing: 0.01em;
+    letter-spacing: 0.005em;
   }
 
   input, select, textarea {
     font: inherit;
-    font-size: 14px;
+    font-size: 15px;
     color: var(--color-neutral-800);
     background: var(--page-bg);
-    border: 0.5px solid var(--card-border);
+    border: 1px solid var(--card-border);
     border-radius: var(--radius-sm);
-    padding: 10px 14px;
+    padding: 11px 15px;
     outline: none;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
     width: 100%;
@@ -217,12 +228,12 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
   }
 
   input::placeholder, textarea::placeholder {
-    color: var(--color-neutral-300);
+    color: var(--color-neutral-400);
   }
 
   input:focus, select:focus, textarea:focus {
-    border-color: rgba(0, 135, 146, 0.55);
-    box-shadow: 0 0 0 3px rgba(0, 135, 146, 0.10);
+    border-color: rgba(21, 66, 139, 0.5);
+    box-shadow: 0 0 0 3px rgba(21, 66, 139, 0.09);
   }
 
   select {
@@ -231,7 +242,7 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 14px center;
-    padding-right: 36px;
+    padding-right: 38px;
   }
 
   textarea { resize: vertical; min-height: 140px; line-height: 1.65; }
@@ -245,65 +256,69 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
   }
 
   .privacy-note {
-    font-size: 11px; color: var(--color-neutral-300);
+    font-size: 14px; color: var(--color-neutral-400);
     line-height: 1.55; margin: 0; max-width: 340px;
   }
 
   .submit-btn {
     flex-shrink: 0;
     font: inherit;
-    font-size: 13px; font-weight: 600;
+    font-size: 15px; font-weight: 600;
     color: white;
-    background: linear-gradient(135deg, #002299 0%, #0033cc 100%);
+    background: var(--gradient-eu-blue);
     border: none;
     border-radius: 999px;
-    padding: 11px 26px;
+    padding: 12px 28px;
     cursor: pointer;
-    transition: opacity 0.15s ease, box-shadow 0.15s ease;
+    transition: opacity 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+    letter-spacing: -0.01em;
   }
 
   .submit-btn:hover {
     opacity: 0.88;
-    box-shadow: 0 4px 16px rgba(0, 50, 200, 0.25);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(0, 50, 200, 0.28);
   }
 
   /* ── Sidebar ─────────────────────────────────────────── */
   .contact-sidebar {
-    display: flex; flex-direction: column; gap: 10px;
+    display: flex; flex-direction: column;
+    padding-left: 32px;
   }
 
-  .channel-card {
-    display: flex; gap: 14px; align-items: flex-start;
-    background: var(--card-bg);
-    border: 0.5px solid var(--card-border);
-    border-radius: var(--radius-md);
-    padding: 18px 20px;
+  .channel-card,
+  .office-card {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--card-border);
   }
+
+  .contact-sidebar > *:first-child { border-top: none; }
+  .contact-sidebar > *:last-child  { border-bottom: none; }
 
   .channel-icon {
     width: 38px; height: 38px; flex-shrink: 0;
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-xs);
     display: flex; align-items: center; justify-content: center;
   }
 
-  .icon-blue    { background: #e6f1fb; color: #185fa5; }
-  .icon-teal    { background: var(--color-primary-50); color: var(--color-primary-700); }
-  .icon-dark    { background: var(--color-neutral-100); color: var(--color-neutral-700); }
-  .icon-pink    { background: #fde8ef; color: #a01848; }
+  .icon-blue { background: #e6f1fb; color: #185fa5; }
+  .icon-teal { background: var(--color-primary-100); color: var(--color-primary-700); }
+  .icon-dark { background: var(--color-neutral-200); color: var(--color-neutral-700); }
+  .icon-pink { background: #fde8ef; color: #a01848; }
 
   .channel-text { min-width: 0; }
 
   .channel-label {
     display: block;
-    font-size: 10px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.08em;
-    color: var(--color-neutral-400);
-    margin-bottom: 3px;
+    font-size: 14px; font-weight: 600;
+    color: var(--color-neutral-500);
+    margin-bottom: 2px;
   }
 
   .channel-value {
     display: block;
-    font-size: 13px; font-weight: 600;
+    font-size: 15px; font-weight: 600;
     color: var(--color-neutral-900);
     text-decoration: none;
     transition: color 0.15s ease;
@@ -312,34 +327,26 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
   .channel-value:hover { color: var(--color-primary-600); }
 
   .channel-desc {
-    font-size: 12px; color: var(--color-neutral-400);
+    font-size: 14px; color: var(--color-neutral-400);
     line-height: 1.5; margin: 4px 0 0;
-  }
-
-  .office-card {
-    background: var(--card-bg);
-    border: 0.5px solid var(--card-border);
-    border-radius: var(--radius-md);
-    padding: 18px 20px;
   }
 
   .office-label {
     display: block;
-    font-size: 10px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.08em;
-    color: var(--color-neutral-400);
-    margin-bottom: 8px;
+    font-size: 14px; font-weight: 600;
+    color: var(--color-neutral-500);
+    margin: 0;
   }
 
   .office-name {
-    font-size: 14px; font-weight: 600;
+    font-size: 16px; font-weight: 600;
     color: var(--color-neutral-900);
-    margin: 0 0 4px;
+    margin: 0 0 6px;
   }
 
   .office-address {
-    font-size: 12px; color: var(--color-neutral-400);
-    line-height: 1.6; margin: 0;
+    font-size: 14px; color: var(--color-neutral-400);
+    line-height: 1.65; margin: 0;
   }
 
   /* ── Responsive ──────────────────────────────────────── */
@@ -347,19 +354,22 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
     .contact-layout {
       grid-template-columns: 1fr;
     }
-    .contact-sidebar {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+
+    .form-side {
+      padding-right: 0;
+      border-right: none;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 32px;
+      margin-bottom: 32px;
     }
-    .office-card {
-      grid-column: 1 / -1;
+
+    .contact-sidebar {
+      padding-left: 0;
     }
   }
 
   @media (max-width: 640px) {
     .field-row { grid-template-columns: 1fr; }
-    .form-card-header { padding: 22px 24px 18px; }
-    .contact-form { padding: 22px 24px 28px; }
     .form-footer { flex-direction: column; align-items: flex-start; }
     .contact-sidebar { grid-template-columns: 1fr; }
   }
