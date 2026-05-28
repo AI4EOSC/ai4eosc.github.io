@@ -233,6 +233,18 @@
 	}
 }
 
+/* ── Decorative circles (used in Hero, PageHero, CtaFinal, OpenSourceBanner, EcosystemSection) ── */
+.circle {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	transform: translate(50%, 50%);
+	aspect-ratio: 1;
+	border-radius: 50%;
+	background: transparent;
+	animation: pulsing 5s ease-in-out infinite;
+}
+
 /* ── Scroll reveal ── */
 .reveal {
 	opacity: 0;

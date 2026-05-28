@@ -1,5 +1,6 @@
 ---
 import nav from '../../data/nav.yml';
+import logoSrc from '../../assets/logos/AI4-horizontal-light.svg?url';
 ---
 
 <header class="fixed top-5 left-1/2 -translate-x-1/2 w-[calc(100%-72px)] sm:w-[min(1200px,calc(100%-20px))] z-[200]">
@@ -12,7 +13,7 @@ import nav from '../../data/nav.yml';
 
       <!-- Logo -->
       <a href="/" class="flex items-center shrink-0 no-underline">
-        <img src="/logos/AI4-horizontal-light.svg" alt="AI4EOSC" class="h-20 w-auto" />
+        <img src={logoSrc} alt="AI4EOSC" class="h-20 w-auto" />
       </a>
 
       <!-- Links centrales (desktop) -->

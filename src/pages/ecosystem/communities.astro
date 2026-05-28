@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import PageHero from '../../components/sections/PageHero.astro';
-import CtaFinal from '../../components/sections/CtaFinal.astro';
+import PageHero from '../../components/ui/PageHero.astro';
+import CtaFinal from '../../components/ui/CtaFinal.astro';
 import data from '../../data/communities.yml';
 import gatewaysData from '../../data/gateways.yml';
 
@@ -22,15 +22,17 @@ const totalUsers = data.items.reduce((acc: number, item: any) => acc + (item.use
 const totalGateways = gatewaysData.items.length;
 
 const icons: Record<string, string> = {
-  marine: `<path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>`,
-  climate: `<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>`,
+  marine:         `<path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>`,
+  climate:        `<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>`,
   bioinformatics: `<path d="M2 3c4 2 6 5 6 9s-2 7-6 9"/><path d="M22 3c-4 2-6 5-6 9s2 7 6 9"/><path d="M6 7h12M6 17h12"/>`,
-  social: `<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`,
-  humanities: `<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>`,
-  physics: `<circle cx="12" cy="12" r="1"/><path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5z"/><path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5z"/>`,
-  earth: `<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>`,
-  astronomy: `<circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>`,
+  social:         `<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`,
+  humanities:     `<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>`,
+  physics:        `<circle cx="12" cy="12" r="1"/><path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5z"/><path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5z"/>`,
+  earth:          `<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>`,
+  astronomy:      `<circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>`,
 };
+
+const firstSlug: string = data.items[0]?.slug ?? '';
 ---
 
 <Layout title="Communities — AI4EOSC Ecosystem">
@@ -48,101 +50,103 @@ const icons: Record<string, string> = {
     </div>
   </PageHero>
 
-  <!-- Communities grid -->
+  <!-- ── Communities catalogue ────────────────────────── -->
   <section class="p-section">
     <div class="section-label"><div class="container">All communities</div></div>
     <div class="container">
-      <div class="box">
-        <div class="box-hdr">
-          <h2 class="box-title">Research domains</h2>
-        </div>
-        <p class="box-sub">Click any community to see the AI tools available, related gateways and how to get access.</p>
+      <div class="section-card">
+        <h2 class="sc-title">Research domains</h2>
+        <p class="sc-sub">Select a community to see the AI tools available, related gateways and how to get access.</p>
 
-        <div class="comm-grid" x-data="{ open: null }">
+        <div class="catalogue" x-data={`{ active: '${firstSlug}' }`}>
 
-          {data.items.map((item: any) => (
-            <article
-              class="comm-card"
-              x-bind:class={`{ 'is-open': open === '${item.slug}' }`}
-            >
+          <!-- Sidebar / tab strip -->
+          <div class="cat-sidebar">
+            {data.items.map((item: any) => (
               <button
-                class="comm-summary"
-                x-on:click={`open = open === '${item.slug}' ? null : '${item.slug}'`}
+                class="sidebar-item"
+                x-bind:class={`{ 'is-active': active === '${item.slug}' }`}
+                x-on:click={`active = '${item.slug}'`}
                 type="button"
               >
-                <div class="screen">
-                  <span class="circle circle--lg" aria-hidden="true"></span>
-                  <span class="circle circle--md" aria-hidden="true"></span>
-                  <span class="circle circle--sm" aria-hidden="true"></span>
-                  <div class="screen-inner">
-                    <svg
-                      width="22" height="22" viewBox="0 0 24 24"
-                      fill="none" stroke="currentColor"
-                      stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
-                      aria-hidden="true"
-                      set:html={icons[item.iconId]}
-                    />
-                    <div class="chevron-wrap" aria-hidden="true">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-body-top">
-                  <h3>{item.title}</h3>
-                  <p class="card-sub">{item.description}</p>
-                  {item.via && (
-                    <span class="via-tag">
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                      via {item.via}
-                    </span>
-                  )}
+                <span class="sc sc--lg" aria-hidden="true"></span>
+                <span class="sc sc--md" aria-hidden="true"></span>
+                <span class="sc sc--sm" aria-hidden="true"></span>
+                <div class="si-inner">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="white" stroke-width="1.75" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true"
+                    set:html={icons[item.iconId]} />
+                  <span class="si-name">{item.title}</span>
                 </div>
               </button>
+            ))}
+          </div>
 
-              <div class="comm-detail">
-                <div class="comm-detail-inner">
-                  <p class="detail-desc">{item.longDescription}</p>
-                  {item.tools && (
-                    <>
-                      <p class="feat-lbl">Available tools</p>
-                      <ul class="feats">
-                        {item.tools.map((t: string) => (
-                          <li class="feat-chip">{t}</li>
-                        ))}
-                      </ul>
-                    </>
-                  )}
-                  <div class="detail-links">
-                    {item.via && (
-                      <a
-                        class="detail-link"
-                        href={item.viaUrl ?? '/ecosystem/gateways'}
-                        target={item.viaUrl ? '_blank' : undefined}
-                        rel={item.viaUrl ? 'noopener' : undefined}
-                      >
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                        Go to {item.via} gateway
-                      </a>
+          <!-- Detail panels -->
+          <div class="cat-detail">
+            {data.items.map((item: any) => (
+              <div class="detail-panel" x-show={`active === '${item.slug}'`} x-cloak>
+                <div class="detail-inner">
+
+                  <!-- Left: content -->
+                  <div class="pdl">
+                    <div class="pdl-top">
+                      {item.via && (
+                        <span class="badge b-via">
+                          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                          via {item.via}
+                        </span>
+                      )}
+                    </div>
+                    <h3>{item.title}</h3>
+                    <p class="pdl-tagline">{item.description}</p>
+                    <p class="pdl-desc">{item.longDescription}</p>
+
+                    {item.tools && (
+                      <>
+                        <p class="feat-lbl">Available tools</p>
+                        <ul class="feats">
+                          {item.tools.map((t: string) => (
+                            <li class="feat-chip">{t}</li>
+                          ))}
+                        </ul>
+                      </>
                     )}
-                    <a class="detail-link" href="/products">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-                      Browse models
-                    </a>
                   </div>
+
+                  <!-- Right: stats + actions -->
+                  <div class="pdr">
+                    <div class="meta-block">
+                      {item.users && (
+                        <div class="meta-item">
+                          <span class="meta-lbl">Researchers</span>
+                          <span class="meta-val">{formatUsers(item.users)}+</span>
+                        </div>
+                      )}
+                      {item.via && (
+                        <div class="meta-item">
+                          <span class="meta-lbl">Gateway</span>
+                          <span class="meta-val">{item.via}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    <div class="pdr-actions">
+                      {item.viaUrl && (
+                        <a class="btn-gray" href={item.viaUrl} target="_blank" rel="noopener">
+                          Visit gateway ↗
+                        </a>
+                      )}
+                      <a class="btn-outline" href="/products">
+                        Browse models ↗
+                      </a>
+                    </div>
+                  </div>
+
                 </div>
               </div>
-            </article>
-          ))}
-
-          <!-- "Your community" placeholder -->
-          <div class="comm-placeholder">
-            <div class="plus-wrap">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </div>
-            <p class="placeholder-title">Your community</p>
-            <p class="placeholder-sub">Get in touch to join</p>
+            ))}
           </div>
 
         </div>
@@ -150,34 +154,32 @@ const icons: Record<string, string> = {
     </div>
   </section>
 
-  <!-- How to join -->
+  <!-- ── How to join ────────────────────────────────────── -->
   <section class="p-section">
     <div class="section-label"><div class="container">How to join</div></div>
     <div class="container">
-      <div class="box">
-        <div class="box-hdr">
-          <h2 class="box-title">Bring AI4EOSC to your domain</h2>
-        </div>
-        <p class="box-sub">Whether you're a researcher looking for tools or an institution wanting to deploy a community gateway, here's how to get started.</p>
+      <div class="section-card">
+        <h2 class="sc-title">Bring AI4EOSC to your domain</h2>
+        <p class="sc-sub">Whether you're a researcher looking for tools or an institution wanting to deploy a community gateway, here's how to get started.</p>
         <div class="how-grid">
           <div class="how-card">
             <div class="step-screen">
-              <span class="circle circle--lg" aria-hidden="true"></span>
-              <span class="circle circle--md" aria-hidden="true"></span>
-              <span class="circle circle--sm" aria-hidden="true"></span>
+              <span class="sc sc--lg" aria-hidden="true"></span>
+              <span class="sc sc--md" aria-hidden="true"></span>
+              <span class="sc sc--sm" aria-hidden="true"></span>
               <span class="step-num">01</span>
             </div>
             <div class="step-body">
               <h4>Find your domain</h4>
               <p>Browse the communities above to see if your scientific area is already covered and what AI tools are available.</p>
-              <a class="step-link" href="#comm-grid">Browse communities →</a>
+              <a class="step-link" href="#top">Browse communities →</a>
             </div>
           </div>
           <div class="how-card">
             <div class="step-screen">
-              <span class="circle circle--lg" aria-hidden="true"></span>
-              <span class="circle circle--md" aria-hidden="true"></span>
-              <span class="circle circle--sm" aria-hidden="true"></span>
+              <span class="sc sc--lg" aria-hidden="true"></span>
+              <span class="sc sc--md" aria-hidden="true"></span>
+              <span class="sc sc--sm" aria-hidden="true"></span>
               <span class="step-num">02</span>
             </div>
             <div class="step-body">
@@ -188,9 +190,9 @@ const icons: Record<string, string> = {
           </div>
           <div class="how-card">
             <div class="step-screen">
-              <span class="circle circle--lg" aria-hidden="true"></span>
-              <span class="circle circle--md" aria-hidden="true"></span>
-              <span class="circle circle--sm" aria-hidden="true"></span>
+              <span class="sc sc--lg" aria-hidden="true"></span>
+              <span class="sc sc--md" aria-hidden="true"></span>
+              <span class="sc sc--sm" aria-hidden="true"></span>
               <span class="step-num">03</span>
             </div>
             <div class="step-body">
@@ -199,22 +201,6 @@ const icons: Record<string, string> = {
               <a class="step-link" href="/support/contact">Contact the team →</a>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Gateway teaser -->
-  <section class="p-section">
-    <div class="section-label"><div class="container">Related</div></div>
-    <div class="container">
-      <div class="box box-slim">
-        <div class="gw-teaser">
-          <div class="gw-left">
-            <h4>Each community has a dedicated gateway</h4>
-            <p>Gateways are specialised deployments of the AI4EOSC platform tailored to a specific scientific domain. Each gives researchers direct access to the tools and models for their field.</p>
-          </div>
-          <a class="btn-pink" href="/ecosystem/gateways">Explore gateways →</a>
         </div>
       </div>
     </div>
@@ -239,302 +225,264 @@ const icons: Record<string, string> = {
   .hstat-val em { font-style: normal; color: rgba(255,255,255,0.45); font-size: 30px; }
   .hstat-lbl { font-size: 18px; color: rgba(255,255,255,0.45); font-weight: 500; }
 
-  /* ── Page layout ────────────────────────────────────── */
+  /* ── Section layout ─────────────────────────────────── */
   .p-section { padding: 0 0 24px; }
 
-  .box {
-    background: var(--card-bg);
-    border: 0.5px solid var(--card-border);
-    border-radius: var(--radius-lg);
-    padding: 28px 28px 24px;
+  .sc-title {
+    font-family: var(--font-headings);
+    font-size: 22px; font-weight: 600; letter-spacing: -0.02em;
+    color: var(--color-neutral-900); margin: 0 0 6px;
   }
-  .box-slim { padding: 20px 24px; }
-
-  .box-hdr { margin-bottom: 6px; }
-  .box-title {
-    font-size: 17px; font-weight: 600; color: var(--color-neutral-900);
-    font-family: var(--font-headings); letter-spacing: -0.01em;
-  }
-  .box-sub {
-    font-size: 13px; color: var(--color-neutral-500);
-    line-height: 1.6; max-width: 520px; margin-bottom: 22px;
+  .sc-sub {
+    font-size: 14px; color: var(--color-neutral-500);
+    line-height: 1.6; max-width: 560px; margin: 0;
   }
 
-  /* ── Communities grid ───────────────────────────────── */
-  .comm-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+  /* ── Catalogue layout ───────────────────────────────── */
+  .catalogue {
+    display: flex; gap: 28px; align-items: flex-start; margin-top: 24px;
   }
 
-  /* ── Community card ─────────────────────────────────── */
-  .comm-card {
-    background: var(--page-bg);
-    border: 0.5px solid rgba(201, 75, 114, 0.22);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    transition: border-color 0.2s ease;
+  .cat-sidebar {
+    flex: 0 0 200px;
+    display: flex; flex-direction: column; gap: 6px;
   }
 
-  .comm-card.is-open {
-    border-color: rgba(201, 75, 114, 0.55);
+  .cat-detail { flex: 1; min-width: 0; }
+
+  /* ── Sidebar buttons — dark + pink ──────────────────── */
+  .sidebar-item {
+    width: 100%; height: 52px;
+    display: flex; align-items: center; padding: 0 16px;
+    cursor: pointer; position: relative; overflow: hidden;
+    border-radius: var(--radius-sm); border: none;
+    background:
+      radial-gradient(ellipse 55% 80% at 5% 50%,  rgba(192, 32, 96, 0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 70% at 92% 50%, rgba(236, 93, 128, 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 50% 0%,  rgba(255, 255, 255, 0.04) 0%, transparent 50%),
+      linear-gradient(140deg, #111418 0%, #1a1f24 50%, #1e2228 100%);
+    font: inherit; color: inherit; text-align: left; outline: none;
+    transition: box-shadow 0.4s ease;
+    flex-shrink: 0;
   }
 
-  .comm-summary {
-    width: 100%; text-align: left;
-    background: transparent; border: none; padding: 0;
-    cursor: pointer; font: inherit; color: inherit;
-    display: block;
+  .sidebar-item:focus-visible { outline: 2px solid rgba(236,93,128,0.5); outline-offset: 2px; }
+
+  /* Active layer via pseudo-element for fade */
+  .sidebar-item::before {
+    content: '';
+    position: absolute; inset: 0; border-radius: inherit;
+    background:
+      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255,255,255,0.13) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 45% at 85% 88%, rgba(80,10,30,0.45) 0%, transparent 58%),
+      var(--gradient-pink);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 0;
   }
 
-  /* Screen: pink soft gradient + circles */
-  .screen {
-    height: 72px;
-    background: var(--gradient-pink-soft);
-    border-bottom: 1px solid rgba(201, 75, 114, 0.15);
-    position: relative; overflow: hidden;
-    display: flex; align-items: center;
-    padding: 0 16px;
-    color: var(--color-secondary-600);
-    transition: background 0.2s ease;
-  }
+  .sidebar-item.is-active::before { opacity: 1; }
+  .sidebar-item.is-active { box-shadow: 0 4px 24px rgba(192, 32, 96, 0.3); }
 
-  .comm-card.is-open .screen {
-    background: linear-gradient(135deg, rgba(192, 32, 96, 0.14), rgba(236, 93, 128, 0.09));
-  }
-
-  .circle {
+  /* Decorative circles */
+  .sc {
     position: absolute; right: 0; bottom: 0;
     transform: translate(50%, 50%);
     aspect-ratio: 1; border-radius: 50%;
     background: transparent; pointer-events: none;
-    animation: pulsing 5s ease-in-out infinite; z-index: 0;
+    animation: pulsing 5s ease-in-out infinite;
   }
-  .circle--lg { width: 90%; animation-delay: 2s; }
-  .circle--md { width: 62%; animation-delay: 1s; }
-  .circle--sm { width: 38%; animation-delay: 0s; }
+  .sc--lg { width: 90%; animation-delay: 2s; }
+  .sc--md { width: 62%; animation-delay: 1s; }
+  .sc--sm { width: 38%; animation-delay: 0s; }
 
-  .screen .circle {
-    box-shadow:
-      0 0 0 1px rgba(201, 75, 114, 0.20),
-      0 0 30px rgba(201, 75, 114, 0.11),
-      0 0 60px rgba(201, 75, 114, 0.05);
+  .sidebar-item .sc {
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 0 20px rgba(192,32,96,0.12);
+    transition: box-shadow 0.4s ease;
   }
-
-  .comm-card.is-open .screen .circle {
-    box-shadow:
-      0 0 0 1px rgba(201, 75, 114, 0.35),
-      0 0 30px rgba(201, 75, 114, 0.20),
-      0 0 60px rgba(201, 75, 114, 0.10);
+  .sidebar-item.is-active .sc {
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.45), 0 0 30px rgba(236,93,128,0.65), 0 0 70px rgba(192,32,96,0.35);
   }
 
-  .screen-inner {
+  .si-inner {
     position: relative; z-index: 2;
-    width: 100%; display: flex; align-items: center; justify-content: space-between;
+    display: flex; align-items: center; gap: 10px; width: 100%; min-width: 0;
   }
 
-  .chevron-wrap {
-    width: 24px; height: 24px; border-radius: 50%;
-    border: 0.5px solid rgba(201, 75, 114, 0.25);
-    background: white;
-    display: flex; align-items: center; justify-content: center;
-    color: rgba(201, 75, 114, 0.7);
-    flex-shrink: 0;
-    transition: transform 0.25s ease, background 0.15s ease;
+  .si-name {
+    font-size: 15px; font-weight: 500; color: white;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
 
-  .comm-card.is-open .chevron-wrap {
-    transform: rotate(180deg);
-    background: rgba(201, 75, 114, 0.08);
+  /* ── Detail panel ───────────────────────────────────── */
+  .detail-panel {
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md); overflow: hidden;
+    animation: panelFadeIn 0.22s ease;
   }
 
-  /* Card summary text */
-  .card-body-top {
-    padding: 14px 16px 16px;
-    display: flex; flex-direction: column; gap: 4px;
+  @keyframes panelFadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
-  .comm-card h3 {
-    font-size: 13px; font-weight: 600;
-    color: var(--color-neutral-900); margin: 0;
+  .detail-inner {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    min-height: 340px;
+    align-items: stretch;
   }
 
-  .card-sub {
-    font-size: 11px; color: var(--color-neutral-400); margin: 0;
+  /* ── Left: content ──────────────────────────────────── */
+  .pdl {
+    background: var(--page-bg);
+    padding: 28px;
+    display: flex; flex-direction: column;
   }
 
-  .via-tag {
-    display: inline-flex; align-items: center; gap: 4px;
-    font-size: 10px; font-weight: 500;
+  .pdl-top { margin-bottom: 14px; min-height: 22px; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 10px; font-weight: 600; border-radius: 999px; padding: 3px 10px;
+  }
+  .b-via {
     color: var(--color-secondary-700);
-    background: rgba(201, 75, 114, 0.08);
-    border-radius: 999px; padding: 2px 8px;
-    width: fit-content; margin-top: 4px;
+    background: rgba(201,75,114,0.09);
+    border: 0.5px solid rgba(201,75,114,0.22);
   }
 
-  /* ── Accordion detail ───────────────────────────────── */
-  .comm-detail {
-    max-height: 0; overflow: hidden;
-    transition: max-height 0.35s ease;
+  h3 {
+    font-family: var(--font-headings);
+    font-size: 28px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.15;
+    color: var(--color-neutral-900); margin: 0 0 10px;
   }
 
-  .comm-card.is-open .comm-detail {
-    max-height: 420px;
+  .pdl-tagline {
+    font-size: 16px; font-weight: 500; line-height: 1.5;
+    color: var(--color-neutral-700); margin: 0 0 14px;
   }
 
-  .comm-detail-inner {
-    border-top: 0.5px solid rgba(201, 75, 114, 0.18);
-    padding: 16px;
-    background: white;
-    display: flex; flex-direction: column; gap: 10px;
-  }
-
-  .detail-desc {
-    font-size: 12px; color: var(--color-neutral-500);
-    line-height: 1.65; margin: 0;
+  .pdl-desc {
+    font-size: 16px; line-height: 1.7;
+    color: var(--color-neutral-500); margin: 0 0 24px;
   }
 
   .feat-lbl {
     font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--color-neutral-400); margin: 0;
+    text-transform: uppercase; color: var(--color-neutral-400); margin: 0 0 8px;
   }
 
   .feats {
     list-style: none; padding: 0; margin: 0;
-    display: flex; flex-wrap: wrap; gap: 4px;
+    display: flex; flex-wrap: wrap; gap: 6px;
   }
 
   .feat-chip {
-    font-size: 10px; font-weight: 500;
-    color: var(--color-secondary-700);
-    background: rgba(201, 75, 114, 0.07);
-    border: 0.5px solid rgba(201, 75, 114, 0.2);
-    border-radius: 999px; padding: 2px 8px;
-  }
-
-  .detail-links { display: flex; flex-direction: column; gap: 6px; }
-
-  .detail-link {
-    display: inline-flex; align-items: center; gap: 5px;
     font-size: 11px; font-weight: 500;
-    color: var(--color-secondary-600); text-decoration: none;
-  }
-  .detail-link:hover { color: var(--color-secondary-700); }
-
-  /* ── Placeholder card ───────────────────────────────── */
-  .comm-placeholder {
-    background: transparent;
-    border: 0.5px dashed rgba(201, 75, 114, 0.3);
-    border-radius: var(--radius-md);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    min-height: 180px; gap: 6px; padding: 20px;
+    color: var(--color-secondary-700);
+    background: rgba(201,75,114,0.07);
+    border: 0.5px solid rgba(201,75,114,0.2);
+    border-radius: 999px; padding: 3px 10px;
   }
 
-  .plus-wrap {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: rgba(201, 75, 114, 0.08);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--color-secondary-600); margin-bottom: 4px;
+  /* ── Right: stats + actions ─────────────────────────── */
+  .pdr {
+    background:
+      radial-gradient(ellipse 55% 80% at 5% 50%, rgba(192, 32, 96, 0.14) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 70% at 92% 50%, rgba(236, 93, 128, 0.08) 0%, transparent 60%),
+      linear-gradient(140deg, #111418 0%, #1a1f24 50%, #1e2228 100%);
+    padding: 24px 20px;
+    display: flex; flex-direction: column; gap: 20px;
   }
 
-  .placeholder-title {
-    font-size: 12px; font-weight: 500; color: var(--color-secondary-600); margin: 0;
-  }
+  .meta-block { display: flex; flex-direction: column; gap: 16px; flex: 1; }
 
-  .placeholder-sub {
-    font-size: 11px; color: var(--color-neutral-400); margin: 0;
+  .meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .meta-lbl {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.07em;
+    text-transform: uppercase; color: rgba(255,255,255,0.35);
+  }
+  .meta-val { font-size: 13px; color: rgba(255,255,255,0.75); font-weight: 500; }
+
+  /* Buttons */
+  .pdr-actions { display: flex; flex-direction: column; gap: 6px; margin-top: auto; }
+
+  .btn-gray {
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 999px; padding: 8px 12px;
+    font-size: 13px; font-weight: 500; text-decoration: none;
+    background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85);
+    border: none;
+    transition: background 0.15s, color 0.15s, transform 0.15s;
+  }
+  .btn-gray:hover { background: white; color: var(--color-neutral-900); transform: translateY(-1px); }
+
+  .btn-outline {
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 999px; padding: 8px 12px;
+    font-size: 13px; font-weight: 500; text-decoration: none;
+    background: transparent; color: rgba(255,255,255,0.8);
+    border: 1px solid rgba(255,255,255,0.22);
+    transition: background 0.15s, border-color 0.15s, transform 0.15s;
+  }
+  .btn-outline:hover {
+    background: rgba(255,255,255,0.09);
+    border-color: rgba(255,255,255,0.45);
+    transform: translateY(-1px);
   }
 
   /* ── How to join ────────────────────────────────────── */
-  .how-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
-  }
+  .how-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 24px; }
 
   .how-card {
     border-radius: var(--radius-md); overflow: hidden;
-    border: 0.5px solid var(--card-border);
-    background: var(--card-bg);
+    border: 0.5px solid var(--card-border); background: var(--card-bg);
   }
 
   .step-screen {
     position: relative; overflow: hidden;
-    height: 72px; padding: 0 20px;
-    display: flex; align-items: center;
+    padding: 24px 24px 20px; display: flex; align-items: flex-end;
     background:
-      radial-gradient(ellipse 60% 80% at 0% 50%, rgba(201, 75, 114, 0.14) 0%, transparent 65%),
+      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255,255,255,0.13) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 45% at 85% 88%, rgba(80,10,30,0.45) 0%, transparent 58%),
       linear-gradient(140deg, #6b0828 0%, #a01848 38%, #ec5d80 100%);
   }
 
-  .step-screen .circle {
-    box-shadow:
-      0 0 0 1px rgba(255,255,255,0.22),
-      0 0 28px rgba(255, 120, 160, 0.25),
-      0 0 55px rgba(255, 120, 160, 0.10),
-      inset 0 0 10px rgba(255,255,255,0.04);
+  /* sc circles inside step-screen use pink glow */
+  .step-screen .sc {
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.18), 0 0 30px rgba(236,93,128,0.25), 0 0 60px rgba(236,93,128,0.10);
   }
 
   .step-num {
-    position: relative; z-index: 2;
-    font-family: var(--font-headings); font-size: 26px; font-weight: 600;
-    color: rgba(255,255,255,0.85); letter-spacing: -0.02em; line-height: 1;
+    font-family: var(--font-headings);
+    font-size: 52px; font-weight: 600; letter-spacing: -0.04em; line-height: 1;
+    color: rgba(255,255,255,0.9); position: relative; z-index: 2;
   }
 
-  .step-body { padding: 18px 20px 20px; }
-
-  .step-body h4 {
-    font-size: 13px; font-weight: 600;
-    color: var(--color-neutral-900); margin: 0 0 6px;
-  }
-
-  .step-body p {
-    font-size: 12px; color: var(--color-neutral-500);
-    line-height: 1.65; margin: 0 0 12px;
-  }
-
-  .step-link {
-    font-size: 12px; font-weight: 500;
-    color: var(--color-secondary-600); text-decoration: none;
-  }
+  .step-body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 8px; }
+  .how-card h4 { font-size: 14px; font-weight: 600; color: var(--color-neutral-900); margin: 0; }
+  .how-card p  { font-size: 12px; color: var(--color-neutral-500); line-height: 1.65; margin: 0; }
+  .step-link { font-size: 12px; font-weight: 500; color: var(--color-secondary-600); text-decoration: none; }
   .step-link:hover { color: var(--color-secondary-700); }
 
-  /* ── Gateway teaser ─────────────────────────────────── */
-  .gw-teaser {
-    background: var(--page-bg);
-    border-radius: var(--radius-sm);
-    padding: 20px 22px;
-    display: flex; align-items: center;
-    justify-content: space-between; gap: 20px;
-  }
-
-  .gw-left h4 {
-    font-size: 13px; font-weight: 600;
-    color: var(--color-neutral-900); margin: 0 0 5px;
-  }
-
-  .gw-left p {
-    font-size: 12px; color: var(--color-neutral-500);
-    line-height: 1.6; max-width: 420px; margin: 0;
-  }
-
-  .btn-pink {
-    display: inline-flex; align-items: center;
-    background: var(--color-secondary-600); color: white;
-    border-radius: 999px; padding: 8px 18px;
-    font-size: 12px; font-weight: 500;
-    text-decoration: none; white-space: nowrap; flex-shrink: 0;
-    transition: background 0.15s ease, transform 0.15s ease;
-  }
-  .btn-pink:hover { background: var(--color-secondary-700); transform: translateY(-1px); }
-
   /* ── Responsive ─────────────────────────────────────── */
-  @media (max-width: 900px) {
-    .comm-grid { grid-template-columns: 1fr 1fr; }
-    .how-grid  { grid-template-columns: 1fr; }
+  @media (max-width: 860px) {
+    .catalogue { flex-direction: column; }
+    .cat-sidebar {
+      flex: none; width: 100%;
+      flex-direction: row; overflow-x: auto;
+      scrollbar-width: none; padding-bottom: 2px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .cat-sidebar::-webkit-scrollbar { display: none; }
+    .sidebar-item { flex: 0 0 auto; min-width: 150px; width: auto; }
+    .cat-detail { width: 100%; }
+    .how-grid { grid-template-columns: 1fr; }
   }
 
-  @media (max-width: 600px) {
-    .comm-grid { grid-template-columns: 1fr; }
-    .gw-teaser { flex-direction: column; align-items: flex-start; }
+  @media (max-width: 640px) {
+    .detail-inner { grid-template-columns: 1fr; min-height: unset; }
+    .pdr { border-top: 0.5px solid var(--card-border); }
   }
 </style>

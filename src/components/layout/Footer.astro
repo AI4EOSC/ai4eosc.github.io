@@ -1,5 +1,6 @@
 ---
 import footer from '../../data/footer.yml';
+import logoSrc from '../../assets/logos/AI4-horizontal-light.svg?url';
 
 const currentYear = new Date().getFullYear();
 ---
@@ -9,7 +10,7 @@ const currentYear = new Date().getFullYear();
     <div class="brand">
       <div class="brand-mark">
         <a class="brand" href="/">
-            <img class="brand-logo" src="/logos/AI4-horizontal-light.svg" alt="AI4EOSC" />
+            <img class="brand-logo" src={logoSrc} alt="AI4EOSC" />
         </a>
       </div>
       <p>{footer.brand.description}</p>

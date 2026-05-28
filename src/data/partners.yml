@@ -2,8 +2,8 @@ items:
     - name: CSIC
       logo: CSIC.svg
       url: https://www.csic.es
-    - name: USTAV
-      logo: USTAV.png
+    - name: IISAS
+      logo: IISAS.png
       url: https://www.ustav.sk
     - name: KIT
       logo: KIT.svg
@@ -20,10 +20,10 @@ items:
     - name: INFN
       logo: INFN.svg
       url: https://www.infn.it
-    - name: PCSS
-      logo: PCSS.svg
+    - name: PSNC
+      logo: PSNC.svg
       url: https://www.pcss.pl
-    - name: MicroStep
+    - name: MicroStep MIS
       logo: microstep.png
       url: https://www.microstep.com
     - name: WODR
@@ -62,3 +62,15 @@ items:
     - name: INRIA
       logo: INRIA.png
       url: https://www.inria.fr
+    - name: EURO-BIOIMAGING
+      logo: EURO-BIOIMAGING.webp
+      url: https://www.eurobioimaging.eu
+    - name: Cyfronet
+      logo: CYFRONET.svg
+      url: https://www.cyfronet.pl
+    - name: CMCC
+      logo: CMCC.png
+      url: https://www.cmcc.it
+    - name: Sorbonne Université
+      logo: Sorbonne_Université.png
+      url: https://www.sorbonne-universite.fr

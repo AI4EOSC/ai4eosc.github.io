@@ -161,20 +161,13 @@ const cta = {
     overflow: visible;
   }
 
+  /* base .circle layout comes from global.css */
   .circle {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    transform: translate(50%, 50%);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: transparent;
     box-shadow:
       0 0 0 1px rgba(255, 255, 255, 0.26),
       0 0 40px rgba(0, 200, 215, 0.20),
       0 0 80px rgba(0, 200, 215, 0.08),
       inset 0 0 16px rgba(255, 255, 255, 0.06);
-    animation: pulsing 5s ease-in-out infinite;
     transition: scale 2s ease;
   }
 

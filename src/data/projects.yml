@@ -5,7 +5,7 @@ items:
       title: AI4EOSC
       tagline: Artificial Intelligence for the European Open Science Cloud
       description: The original Horizon Europe project that created the AI4EOSC platform. Developed the core infrastructure for training, serving and cataloguing AI models within the EOSC, establishing the foundation that all subsequent projects build upon.
-      logo: /logos/AI4-horizontal-dark.svg
+      logo: AI4-horizontal-light.svg
       outputsLabel: Key outputs
       outputs:
           - AI4EOSC Platform
@@ -117,12 +117,12 @@ items:
       url: https://arena.ai4eosc.eu
 
     - id: imagine
-
       type: associated
       status: finished
       title: iMagine
       tagline: Imaging data and services for aquatic science
       description: iMagine develops imaging data and services for aquatic science, leveraging the AI4EOSC platform.
+      logo: iMagine.png
       outputs:
           - Aquatic sciences
           - Image analysis
@@ -207,6 +207,7 @@ items:
       title: AI4Life
       tagline: AI models and methods for the life sciences
       description: AI4Life builds a suite of AI tools and resources specifically tailored for the life sciences community, deployed on a scpefici catalog in the AI4EOSC platform. It support life scientists in the adoption of machine learning solutions that improve the utility and interpretability of image data.
+      logo: AI4Life.png
       outputsLabel: Key areas
       outputs:
           - Bio-imaging

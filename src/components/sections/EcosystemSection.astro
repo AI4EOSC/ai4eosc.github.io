@@ -533,17 +533,8 @@ const communityIcons: Record<string, string> = {
     overflow: visible;
   }
 
-  .circle {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    transform: translate(50%, 50%);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: transparent;
-    animation: pulsing 5s ease-in-out infinite;
-    transition: scale 2s ease;
-  }
+  /* base .circle layout comes from global.css */
+  .circle { transition: scale 2s ease; }
 
   .circle--lg { width: 82%; animation-delay: 2s; }
   .circle--md { width: 58%; animation-delay: 1s; }

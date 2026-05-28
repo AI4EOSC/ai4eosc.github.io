@@ -1,9 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import PageHero from '../components/sections/PageHero.astro';
-import SectionHeader from '../components/SectionHeader.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
 import NumbersSection from '../components/sections/NumbersSection.astro';
-import CtaFinal from '../components/sections/CtaFinal.astro';
+import CtaFinal from '../components/ui/CtaFinal.astro';
 import about from '../data/about.yml';
 import partners from '../data/partners.yml';
 import projectsData from '../data/projects.yml';
@@ -45,7 +45,7 @@ const hero = {
 const story = {
   label: 'Our story',
   title: 'Where we come from',
-  subtitle: 'From a single Horizon Europe project to a living initiative connecting platforms, communities and institutions across European research.',
+  subtitle: 'From a single Horizon Europe grant to a living infrastructure — how AI4EOSC grew from a funded project into an open platform community spanning European science.',
 };
 
 const mission = {
@@ -53,11 +53,18 @@ const mission = {
   title: 'What we stand for',
   subtitle: 'AI4EOSC is built on the belief that research-grade AI should be open, interoperable and accessible to any scientific community in Europe.',
   items: [
-    { icon: '🔓', title: 'Open by default', description: 'All software is open source. Models are openly published. Infrastructure is built on open standards. No lock-in, no black boxes.' },
-    { icon: '🔗', title: 'Interoperable with EOSC', description: 'Native integration with EOSC authentication, storage and compute means researchers can start without rebuilding their stack.' },
-    { icon: '🌍', title: 'Built for European science', description: 'Designed around the needs of European research institutions, following EU values on data sovereignty, ethics and sustainability.' },
-    { icon: '🤝', title: 'Community-driven', description: 'Shaped by the scientific communities that use it — from marine biologists to climate scientists — and the developers who build on it.' },
+    { iconId: 'unlock',  title: 'Open by default',         description: 'All software is open source. Models are openly published. Infrastructure is built on open standards. No lock-in, no black boxes.' },
+    { iconId: 'link',    title: 'Interoperable with EOSC', description: 'Native integration with EOSC authentication, storage and compute means researchers can start without rebuilding their stack.' },
+    { iconId: 'globe',   title: 'Built for European science', description: 'Designed around the needs of European research institutions, following EU values on data sovereignty, ethics and sustainability.' },
+    { iconId: 'users',   title: 'Community-driven',        description: 'Shaped by the scientific communities that use it — from marine biologists to climate scientists — and the developers who build on it.' },
   ],
+};
+
+const missionIcons: Record<string, string> = {
+  unlock: `<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/>`,
+  link:   `<path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"/><line x1="8" y1="12" x2="16" y2="12"/>`,
+  globe:  `<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>`,
+  users:  `<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`,
 };
 
 const principles = {
@@ -65,9 +72,9 @@ const principles = {
   title: 'How we work',
   subtitle: 'The principles that guide every decision — from architecture to governance.',
   items: [
-    { tag: 'Transparency', title: 'Open development', description: 'All code, roadmaps and governance decisions are public. We build in the open.' },
-    { tag: 'Sustainability', title: 'Long-term thinking', description: 'Beyond individual project cycles, we build infrastructure that outlasts funding.' },
-    { tag: 'Inclusivity', title: 'Low barrier to entry', description: 'Any research community in Europe should be able to join, regardless of technical capacity.' },
+    { illus: 'commits',  tag: 'Transparency',  title: 'Open development',     description: 'All code, roadmaps and governance decisions are public. We build in the open.' },
+    { illus: 'timeline', tag: 'Sustainability', title: 'Long-term thinking',   description: 'Beyond individual project cycles, we build infrastructure that outlasts funding.' },
+    { illus: 'access',   tag: 'Inclusivity',   title: 'Low barrier to entry', description: 'Any research community in Europe should be able to join, regardless of technical capacity.' },
   ],
 };
 
@@ -92,7 +99,7 @@ const cta = {
 ---
 
 <Layout
-  title="About - AI4EOSC Initiative"
+  title="About — AI4EOSC Initiative"
   description={hero.description}
 >
   <main>
@@ -111,19 +118,30 @@ const cta = {
       <div class="section-card">
         <SectionHeader title={story.title} subtitle={story.subtitle} />
         <div class="timeline">
-          {about.timeline.map((item, i) => (
-            <div class={`tl-item reveal${i === about.timeline.length - 1 ? ' tl-last' : ''}`} style={`transition-delay:${i * 80}ms`}>
-              <div class="tl-year">{item.year}</div>
-              <div class="tl-connector" aria-hidden="true">
-                <span class="tl-dot"></span>
-                <span class="tl-line"></span>
+          {about.timeline.map((item, i) => {
+            const isLast = i === about.timeline.length - 1;
+            return (
+              <div class={`tl-item reveal${isLast ? ' tl-last' : ''}`} style={`transition-delay:${i * 80}ms`}>
+                <div class="tl-meta">
+                  <span class="tl-year">{item.year}</span>
+                  {item.phase && <span class="tl-phase">{item.phase}</span>}
+                </div>
+                <div class="tl-spine" aria-hidden="true">
+                  <span class="tl-dot"></span>
+                  <span class="tl-line"></span>
+                </div>
+                <div class="tl-body">
+                  <div class="tl-content">
+                    <div class="tl-head">
+                      <h4>{item.title}</h4>
+                      {isLast && <span class="tl-pill">Ongoing</span>}
+                    </div>
+                    <p>{item.description}</p>
+                  </div>
+                </div>
               </div>
-              <div class="tl-body">
-                <h4>{item.title}</h4>
-                <p>{item.description}</p>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
@@ -135,8 +153,21 @@ const cta = {
         <SectionHeader title={mission.title} subtitle={mission.subtitle} />
         <div class="mission-grid">
           {mission.items.map((item, i) => (
-            <div class="mission-card reveal" style={`transition-delay:${i * 70}ms`}>
-              <div class="mission-icon" aria-hidden="true">{item.icon}</div>
+            <div class="mission-item reveal" style={`transition-delay:${i * 70}ms`}>
+              <div class="mission-icon-wrap">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  set:html={missionIcons[item.iconId]}
+                />
+              </div>
               <h3>{item.title}</h3>
               <p>{item.description}</p>
             </div>
@@ -152,10 +183,126 @@ const cta = {
         <SectionHeader title={principles.title} subtitle={principles.subtitle} />
         <div class="principles-grid">
           {principles.items.map((item, i) => (
-            <div class="principle-card reveal" style={`transition-delay:${i * 80}ms`}>
-              <span class="principle-tag">{item.tag}</span>
-              <h4>{item.title}</h4>
-              <p>{item.description}</p>
+            <div class="principle-item reveal" style={`transition-delay:${i * 80}ms`}>
+
+              <div class="principle-render">
+
+                {/* ── Transparency: public commit log ── */}
+                {item.illus === 'commits' && (
+                  <div class="p-win">
+                    <div class="p-chrome">
+                      <span class="p-dot p-dot--r"></span>
+                      <span class="p-dot p-dot--y"></span>
+                      <span class="p-dot p-dot--g"></span>
+                      <span class="p-wlabel">ai4eosc/platform</span>
+                      <span class="p-pub">PUBLIC</span>
+                    </div>
+                    <div class="p-commits">
+                      <div class="p-commit">
+                        <span class="p-cnode"></span>
+                        <div class="p-cinfo">
+                          <span class="p-cmsg">Updated governance policy</span>
+                          <span class="p-cmeta">@jlaurent · 2h ago · #283</span>
+                        </div>
+                      </div>
+                      <div class="p-commit">
+                        <span class="p-cnode"></span>
+                        <div class="p-cinfo">
+                          <span class="p-cmsg">Published Q2 roadmap</span>
+                          <span class="p-cmeta">@ai4eosc · 1d ago · #282</span>
+                        </div>
+                      </div>
+                      <div class="p-commit p-commit--dim">
+                        <span class="p-cnode"></span>
+                        <div class="p-cinfo">
+                          <span class="p-cmsg">Enable public audit log</span>
+                          <span class="p-cmeta">@mrodriguez · 3d ago · #281</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="p-foot">
+                      <span class="p-foot-stat">247 contributors</span>
+                      <span class="p-sep">·</span>
+                      <span>All changes public</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* ── Sustainability: project lifecycle bars ── */}
+                {item.illus === 'timeline' && (
+                  <div class="p-win">
+                    <div class="p-chrome">
+                      <span class="p-dot p-dot--r"></span>
+                      <span class="p-dot p-dot--y"></span>
+                      <span class="p-dot p-dot--g"></span>
+                      <span class="p-wlabel">project lifecycle</span>
+                    </div>
+                    <div class="p-lifecycle">
+                      <div class="p-lrow">
+                        <span class="p-llabel">AI4EOSC</span>
+                        <div class="p-lbar"><div class="p-lfill" style="width:100%"></div></div>
+                        <span class="p-lstatus p-done">Done</span>
+                      </div>
+                      <div class="p-lrow">
+                        <span class="p-llabel">iMagine</span>
+                        <div class="p-lbar"><div class="p-lfill" style="width:100%"></div></div>
+                        <span class="p-lstatus p-done">Done</span>
+                      </div>
+                      <div class="p-lrow p-lrow--active">
+                        <span class="p-llabel">Initiative</span>
+                        <div class="p-lbar"><div class="p-lfill p-lfill--live" style="width:62%"></div></div>
+                        <span class="p-lstatus p-live">Live</span>
+                      </div>
+                    </div>
+                    <div class="p-foot p-axis-foot">
+                      <span class="p-timeline-axis">2022</span>
+                      <div class="p-axis-line"></div>
+                      <span class="p-timeline-axis">2026 →</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* ── Inclusivity: access checklist ── */}
+                {item.illus === 'access' && (
+                  <div class="p-win">
+                    <div class="p-chrome">
+                      <span class="p-dot p-dot--r"></span>
+                      <span class="p-dot p-dot--y"></span>
+                      <span class="p-dot p-dot--g"></span>
+                      <span class="p-wlabel">getting started</span>
+                    </div>
+                    <div class="p-checklist">
+                      <div class="p-check">
+                        <span class="p-checkmark">✓</span>
+                        <span class="p-checklabel">EOSC institutional account</span>
+                      </div>
+                      <div class="p-check">
+                        <span class="p-checkmark">✓</span>
+                        <span class="p-checklabel">Free for EU researchers</span>
+                      </div>
+                      <div class="p-check">
+                        <span class="p-checkmark">✓</span>
+                        <span class="p-checklabel">Any scientific domain</span>
+                      </div>
+                      <div class="p-check">
+                        <span class="p-checkmark">✓</span>
+                        <span class="p-checklabel">No compute setup needed</span>
+                      </div>
+                    </div>
+                    <div class="p-foot">
+                      <span class="p-access-btn">Get access →</span>
+                    </div>
+                  </div>
+                )}
+
+              </div>
+
+              <div class="principle-body">
+                <span class="principle-label">{item.tag}</span>
+                <h4>{item.title}</h4>
+                <p>{item.description}</p>
+              </div>
+
             </div>
           ))}
         </div>
@@ -227,171 +374,427 @@ const cta = {
   .timeline {
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
+    margin-top: 36px;
+    border-top: 1px solid var(--card-border);
   }
 
   .tl-item {
     display: grid;
-    grid-template-columns: 88px 32px 1fr;
-    gap: 0 20px;
-    padding-bottom: 56px;
+    grid-template-columns: 116px 52px 1fr;
+    align-items: stretch;
   }
 
-  .tl-last {
-    padding-bottom: 0;
+  /* ── Left: year + phase ── */
+  .tl-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    padding-top: 32px;
+    padding-right: 2px;
   }
 
   .tl-year {
     font-family: var(--font-headings);
-    font-size: 22px;
-    font-weight: 650;
+    font-size: 24px;
+    font-weight: 700;
     color: var(--color-primary-500);
-    text-align: right;
-    padding-top: 2px;
-    letter-spacing: -0.03em;
     line-height: 1;
+    letter-spacing: -0.02em;
   }
 
-  .tl-connector {
+  .tl-last .tl-year { color: var(--color-primary-600); }
+
+  .tl-phase {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--color-neutral-300);
+    text-align: right;
+    line-height: 1.2;
+  }
+
+  /* ── Center: spine ── */
+  .tl-spine {
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex-shrink: 0;
+    padding-top: 39px;
   }
 
   .tl-dot {
-    width: 13px;
-    height: 13px;
+    width: 10px; height: 10px;
     border-radius: 50%;
-    background: var(--color-primary-400);
+    background: white;
+    border: 2px solid var(--color-primary-400);
     flex-shrink: 0;
-    margin-top: 3px;
-    box-shadow: 0 0 0 4px color-mix(in oklch, var(--color-primary-400) 18%, transparent 82%);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-primary-300) 14%, transparent);
+    transition: border-color var(--transition-fast);
+    position: relative; z-index: 1;
+  }
+
+  .tl-item:hover .tl-dot { border-color: var(--color-primary-500); }
+
+  .tl-last .tl-dot {
+    background: var(--color-primary-500);
+    border-color: var(--color-primary-500);
+    box-shadow:
+      0 0 0 4px color-mix(in oklch, var(--color-primary-400) 20%, transparent),
+      0 0 10px color-mix(in oklch, var(--color-primary-500) 30%, transparent);
+    animation: pulsing 2.8s ease-in-out infinite;
   }
 
   .tl-line {
     flex: 1;
-    width: 1px;
-    background: linear-gradient(to bottom, var(--card-border) 0%, transparent 100%);
-    margin-top: 10px;
+    width: 1.5px;
+    background: linear-gradient(to bottom, var(--color-primary-200) 0%, transparent 100%);
+    margin-top: 8px;
   }
 
-  .tl-last .tl-line {
-    display: none;
+  .tl-last .tl-line { display: none; }
+
+  /* ── Right: body wrapper ── */
+  .tl-body { padding-left: 20px; min-width: 0; }
+
+  /* Row with separator */
+  .tl-content {
+    padding: 32px 0 36px;
+    border-bottom: 1px solid var(--card-border);
   }
 
-  .tl-body {
-    padding-bottom: 4px;
+  .tl-last .tl-content { border-bottom: none; padding-bottom: 12px; }
+
+  /* ── Head ── */
+  .tl-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
   }
 
-  .tl-body h4 {
+  .tl-head h4 {
+    font-family: var(--font-headings);
+    font-size: 19px;
+    font-weight: 650;
+    color: var(--color-neutral-900);
+    margin: 0;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  .tl-last .tl-head h4 { color: var(--color-primary-700); }
+
+  .tl-pill {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--color-primary-600);
+    background: color-mix(in oklch, var(--color-primary-100) 65%, white 35%);
+    border-radius: 999px;
+    padding: 3px 10px;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .tl-text p {
+    font-size: 16px;
+    color: var(--color-neutral-500);
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  .tl-last .tl-text p { color: var(--color-neutral-600); }
+
+
+  /* ── MISSION ──────────────────────────────────────── */
+  .mission-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    margin-top: 32px;
+    border-top: 1px solid var(--card-border);
+  }
+
+  .mission-item {
+    padding: 32px 40px 36px 0;
+    position: relative;
+  }
+
+  .mission-item:nth-child(odd) {
+    border-right: 1px solid var(--card-border);
+  }
+
+  .mission-item:nth-child(even) {
+    padding-right: 0;
+    padding-left: 40px;
+  }
+
+  .mission-item:nth-child(n+3) {
+    border-top: 1px solid var(--card-border);
+  }
+
+  .mission-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: var(--color-primary-50);
+    border: 1px solid var(--color-primary-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary-600);
+    margin-bottom: 20px;
+    flex-shrink: 0;
+  }
+
+  .mission-item h3 {
     font-family: var(--font-headings);
     font-size: 19px;
     font-weight: 650;
     color: var(--color-neutral-900);
     margin: 0 0 10px;
-    line-height: 1.25;
     letter-spacing: -0.01em;
+    line-height: 1.25;
   }
 
-  .tl-body p {
+  .mission-item p {
     font-size: 15px;
     color: var(--color-neutral-500);
     line-height: 1.75;
-    margin: 0;
-    max-width: 560px;
-  }
-
-  /* ── MISSION ──────────────────────────────────────── */
-  .mission-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 24px;
-  }
-
-  .mission-card {
-    background: color-mix(in oklch, var(--color-neutral-100) 55%, white 45%);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius-md);
-    padding: 28px 28px 30px;
-    transition: background var(--transition-fast), border-color var(--transition-fast);
-  }
-
-  .mission-card:hover {
-    background: white;
-    border-color: color-mix(in oklch, var(--card-border) 60%, var(--color-primary-200) 40%);
-  }
-
-  .mission-icon {
-    font-size: 26px;
-    margin-bottom: 16px;
-    line-height: 1;
-  }
-
-  .mission-card h3 {
-    font-family: var(--font-headings);
-    font-size: 17px;
-    font-weight: 650;
-    color: var(--color-neutral-900);
-    margin: 0 0 10px;
-    letter-spacing: -0.01em;
-  }
-
-  .mission-card p {
-    font-size: 15px;
-    color: var(--color-neutral-500);
-    line-height: 1.7;
     margin: 0;
   }
 
   /* ── PRINCIPLES ───────────────────────────────────── */
   .principles-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 12px;
-    margin-top: 24px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    margin-top: 32px;
+    border-top: 1px solid var(--card-border);
   }
 
-  .principle-card {
-    background: color-mix(in oklch, var(--color-neutral-100) 55%, white 45%);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius-md);
-    padding: 26px 26px 28px;
-    transition: background var(--transition-fast), border-color var(--transition-fast);
+  .principle-item {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
 
-  .principle-card:hover {
-    background: white;
-    border-color: color-mix(in oklch, var(--card-border) 60%, var(--color-primary-200) 40%);
+  .principle-item:not(:last-child) { border-right: 1px solid var(--card-border); }
+
+  /* ── Render area ── */
+  .principle-render {
+    height: 196px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--card-border);
+    flex-shrink: 0;
+    background: var(--color-primary-50);
+    overflow: hidden;
   }
 
-  .principle-tag {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-primary-600);
-    background: color-mix(in oklch, var(--color-primary-100) 60%, white 40%);
-    border-radius: 999px;
-    padding: 3px 10px;
-    margin-bottom: 14px;
+  /* ── Shared window shell ── */
+  .p-win {
+    background: #1e2233;
+    border-radius: 10px;
+    width: calc(100% - 32px);
+    height: 162px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease;
   }
 
-  .principle-card h4 {
+  .principle-item:hover .p-win { transform: translateY(-4px); }
+
+  .p-chrome {
+    background: #2a2f42;
+    padding: 7px 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+
+  .p-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%; flex-shrink: 0;
+  }
+  .p-dot--r { background: #ff5f57; }
+  .p-dot--y { background: #febc2e; }
+  .p-dot--g { background: #28c840; }
+
+  .p-wlabel {
+    font-size: 10px; color: #6b7280;
+    margin-left: 6px; font-family: monospace;
+  }
+
+  .p-pub {
+    margin-left: auto;
+    font-size: 9px; font-weight: 700;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--color-primary-400);
+    background: color-mix(in oklch, var(--color-primary-900) 60%, #1e2233);
+    border-radius: 4px; padding: 2px 6px;
+  }
+
+  .p-foot {
+    display: flex; align-items: center; gap: 6px;
+    padding: 7px 10px;
+    border-top: 1px solid #2d3347;
+    font-size: 10px; color: #4b5563;
+    font-family: monospace;
+    flex-shrink: 0; margin-top: auto;
+  }
+
+  .p-sep { color: #374151; }
+  .p-foot-stat { color: var(--color-primary-400); }
+
+  /* ── Commit log (Transparency) ── */
+  .p-commits {
+    display: flex; flex-direction: column;
+    padding: 8px 10px; gap: 0; flex: 1;
+  }
+
+  .p-commit {
+    display: flex; align-items: flex-start;
+    gap: 8px; padding: 5px 0;
+    border-bottom: 1px solid #252a3a;
+  }
+
+  .p-commit:last-child { border-bottom: none; }
+  .p-commit--dim { opacity: 0.4; }
+
+  .p-cnode {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--color-primary-500);
+    flex-shrink: 0; margin-top: 3px;
+    box-shadow: 0 0 0 2px color-mix(in oklch, var(--color-primary-500) 30%, transparent);
+  }
+
+  .p-cinfo { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+
+  .p-cmsg {
+    font-size: 10px; color: #e2e8f0;
+    font-family: monospace; white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis;
+  }
+
+  .p-cmeta { font-size: 9px; color: #4b5563; font-family: monospace; }
+
+  /* ── Lifecycle bars (Sustainability) ── */
+  .p-lifecycle {
+    display: flex; flex-direction: column;
+    padding: 10px 12px; gap: 8px; flex: 1;
+  }
+
+  .p-lrow {
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .p-llabel {
+    font-size: 10px; color: #6b7280;
+    font-family: monospace; width: 52px; flex-shrink: 0;
+  }
+
+  .p-lrow--active .p-llabel { color: var(--color-primary-400); }
+
+  .p-lbar {
+    flex: 1; height: 6px;
+    background: #2d3347; border-radius: 999px; overflow: hidden;
+  }
+
+  .p-lfill {
+    height: 100%; border-radius: 999px;
+    background: #3d4a66;
+  }
+
+  .p-lfill--live {
+    background: var(--color-primary-500);
+    position: relative;
+  }
+
+  .p-lfill--live::after {
+    content: '';
+    position: absolute; right: -1px; top: 50%;
+    transform: translateY(-50%);
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--color-primary-400);
+    box-shadow: 0 0 6px var(--color-primary-500);
+    animation: pulsing 2s ease-in-out infinite;
+  }
+
+  .p-lstatus {
+    font-size: 9px; font-weight: 600;
+    font-family: monospace; flex-shrink: 0;
+    border-radius: 4px; padding: 2px 6px;
+  }
+
+  .p-done { color: #6b7280; background: #252a3a; }
+  .p-live { color: var(--color-primary-400); background: color-mix(in oklch, var(--color-primary-900) 60%, #1e2233); }
+
+  .p-foot.p-axis-foot { justify-content: space-between; }
+  .p-timeline-axis { font-size: 9px; color: #374151; font-family: monospace; flex-shrink: 0; }
+  .p-axis-line { flex: 1; height: 1px; background: #2d3347; margin: 0 4px; }
+
+  /* ── Access checklist (Inclusivity) ── */
+  .p-checklist {
+    display: flex; flex-direction: column;
+    padding: 8px 10px; gap: 0; flex: 1;
+  }
+
+  .p-check {
+    display: flex; align-items: center; gap: 8px;
+    padding: 5px 0; border-bottom: 1px solid #252a3a;
+  }
+
+  .p-check:last-child { border-bottom: none; }
+
+  .p-checkmark {
+    font-size: 10px; color: #34d399;
+    font-family: monospace; flex-shrink: 0;
+    width: 14px; text-align: center;
+  }
+
+  .p-checklabel { font-size: 10px; color: #a8b4c8; font-family: monospace; }
+
+  .p-access-btn {
+    font-size: 10px; font-weight: 600;
+    color: var(--color-primary-400); font-family: monospace;
+    margin-left: auto;
+  }
+
+  /* ── Body ── */
+  .principle-body {
+    padding: 24px 32px 30px 0;
+    flex: 1;
+  }
+
+  .principle-item:not(:first-child) .principle-body { padding-left: 32px; }
+  .principle-item:last-child .principle-body { padding-right: 0; }
+
+  .principle-label {
+    display: block;
+    font-size: 12px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--color-neutral-400); margin-bottom: 10px;
+  }
+
+  .principle-item h4 {
     font-family: var(--font-headings);
-    font-size: 16px;
-    font-weight: 650;
+    font-size: 19px; font-weight: 650;
     color: var(--color-neutral-900);
-    margin: 0 0 9px;
-    letter-spacing: -0.01em;
+    margin: 0 0 10px; letter-spacing: -0.01em; line-height: 1.25;
   }
 
-  .principle-card p {
-    font-size: 14px;
-    color: var(--color-neutral-500);
-    line-height: 1.7;
-    margin: 0;
+  .principle-item p {
+    font-size: 15px; color: var(--color-neutral-500);
+    line-height: 1.75; margin: 0;
   }
 
   /* ── PARTNERS ─────────────────────────────────────── */
@@ -522,6 +925,11 @@ const cta = {
     letter-spacing: -0.02em;
     color: #ffffff;
     margin: 0 0 14px;
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.18s,
+      transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.18s;
   }
 
   .eu-left p {
@@ -530,6 +938,11 @@ const cta = {
     line-height: 1.7;
     max-width: 600px;
     margin: 0;
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.28s,
+      transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.28s;
   }
 
   .eu-left p strong {
@@ -546,11 +959,24 @@ const cta = {
     font-weight: 600;
     color: rgba(255, 255, 255, 0.65);
     text-decoration: none;
-    transition: color var(--transition-fast);
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      color var(--transition-fast),
+      opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.38s,
+      transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.38s;
   }
 
   .eu-link:hover {
     color: #ffffff;
+  }
+
+  /* staggered reveal when card enters viewport */
+  .eu-card.is-visible .eu-left h3,
+  .eu-card.is-visible .eu-left p,
+  .eu-card.is-visible .eu-link {
+    opacity: 1;
+    transform: none;
   }
 
   .eu-badge {
@@ -563,6 +989,16 @@ const cta = {
     text-align: center;
     flex-shrink: 0;
     backdrop-filter: blur(8px);
+    opacity: 0;
+    transform: translateX(28px) scale(0.96);
+    transition:
+      opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.46s,
+      transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.46s;
+  }
+
+  .eu-card.is-visible .eu-badge {
+    opacity: 1;
+    transform: none;
   }
 
   .eu-flag {
@@ -605,10 +1041,27 @@ const cta = {
   @media (max-width: 900px) {
     .mission-grid {
       grid-template-columns: 1fr;
+      border-top: none;
+    }
+
+    .mission-item {
+      border-top: 1px solid var(--card-border);
+      border-right: none !important;
+      padding: 28px 0 !important;
     }
 
     .principles-grid {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
+      border-top: none;
+    }
+
+    .principle-item {
+      border-top: 1px solid var(--card-border);
+      border-right: none !important;
+    }
+
+    .principle-body {
+      padding: 24px 0 28px !important;
     }
 
     .partners-grid {
@@ -624,27 +1077,15 @@ const cta = {
   }
 
   @media (max-width: 640px) {
-    .tl-item {
-      grid-template-columns: 60px 28px 1fr;
-      gap: 0 14px;
-      padding-bottom: 40px;
-    }
-
-    .tl-year {
-      font-size: 17px;
-    }
-
-    .tl-body h4 {
-      font-size: 16px;
-    }
-
-    .principles-grid {
-      grid-template-columns: 1fr;
-    }
+    .tl-item { grid-template-columns: 72px 22px 1fr; }
+    .tl-year  { font-size: 14px; }
+    .tl-phase { font-size: 9px; }
+    .tl-head h4 { font-size: 16px; }
+    .tl-body { padding-left: 12px; }
+    .tl-content { padding: 20px 0 24px; }
 
     .partners-grid {
       grid-template-columns: repeat(2, 1fr);
     }
-
   }
 </style>

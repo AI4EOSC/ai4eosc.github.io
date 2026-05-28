@@ -1,8 +1,13 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import PageHero from '../../components/sections/PageHero.astro';
-import CtaFinal from '../../components/sections/CtaFinal.astro';
+import PageHero from '../../components/ui/PageHero.astro';
+import CtaFinal from '../../components/ui/CtaFinal.astro';
 import data from '../../data/projects.yml';
+
+const logoUrls = import.meta.glob<string>(
+  '../../assets/logos/*',
+  { eager: true, query: '?url', import: 'default' }
+);
 
 function formatFunding(amount: number): string {
   if (amount >= 1_000_000_000) {
@@ -20,7 +25,6 @@ function formatFunding(amount: number): string {
   return `€${amount}`;
 }
 
-// Computed header stats
 const totalProjects = data.items.length;
 
 const allInstitutions = new Set<string>();
@@ -29,7 +33,6 @@ data.items.forEach((item: any) => {
   if (item.partners) item.partners.forEach((p: string) => allInstitutions.add(p.trim()));
 });
 const totalInstitutions = allInstitutions.size;
-
 const totalFunding = data.items.reduce((acc: number, item: any) => acc + (item.funding ?? 0), 0);
 
 const typeBadge: Record<string, { label: string; cls: string }> = {
@@ -39,8 +42,8 @@ const typeBadge: Record<string, { label: string; cls: string }> = {
 };
 
 const statusBadge: Record<string, { label: string; cls: string }> = {
-  active:    { label: 'Active',    cls: 'b-active' },
-  new:       { label: 'New',       cls: 'b-new'    },
+  active:   { label: 'Active',   cls: 'b-active' },
+  new:      { label: 'New',      cls: 'b-new'    },
   finished: { label: 'Finished', cls: 'b-comp'   },
 };
 ---
@@ -51,7 +54,7 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
     breadcrumb="Related Projects"
     breadcrumbParent={{ label: 'Ecosystem', href: '/ecosystem/projects' }}
     title="EU-funded projects building the future of open AI"
-    description="From the original AI4EOSC project to a growing network of associated initiatives - each extending the platform with new capabilities for the European Open Science Cloud."
+    description="From the original AI4EOSC project to a growing network of associated initiatives — each extending the platform with new capabilities for the European Open Science Cloud."
   >
     <div class="hero-stats">
       <div class="hstat"><span class="hstat-val">{totalProjects}<em>+</em></span><span class="hstat-lbl">Related projects</span></div>
@@ -63,15 +66,17 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
   <section class="p-section">
     <div class="section-label"><div class="container">All projects</div></div>
     <div class="container">
-      <div class="box">
-        <div class="box-hdr">
-          <h2 class="box-title">Project catalogue</h2>
-        </div>
-        <p class="box-sub">EU-funded projects that originated or extend the AI4EOSC platform. Select any project to see details, partners and outputs.</p>
+      <div class="section-card">
+        <h2 class="sc-title">Project catalogue</h2>
+        <p class="sc-sub">EU-funded projects that originated or extend the AI4EOSC platform. Select any project to see details, partners and links.</p>
 
+        <!--
+          Desktop:  sidebar (column, 200px) | detail panel
+          Mobile:   sidebar becomes horizontal scroll row, panel below
+        -->
         <div class="catalogue" x-data={`{ active: '${data.items[0].id}' }`}>
 
-          <!-- Sidebar -->
+          <!-- Sidebar / tab strip -->
           <div class="cat-sidebar">
             {data.items.map((item: any) => (
               <button
@@ -80,10 +85,10 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
                 x-on:click={`active = '${item.id}'`}
                 type="button"
               >
-                <span class="circle circle--lg" aria-hidden="true"></span>
-                <span class="circle circle--md" aria-hidden="true"></span>
-                <span class="circle circle--sm" aria-hidden="true"></span>
-                <span class="sidebar-name">{item.title}</span>
+                <span class="sc sc--lg" aria-hidden="true"></span>
+                <span class="sc sc--md" aria-hidden="true"></span>
+                <span class="sc sc--sm" aria-hidden="true"></span>
+                <span class="si-name">{item.title}</span>
               </button>
             ))}
           </div>
@@ -100,11 +105,11 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
                       <span class={`badge ${typeBadge[item.type].cls}`}>{typeBadge[item.type].label}</span>
                       <span class={`badge ${statusBadge[item.status].cls}`}>{statusBadge[item.status].label}</span>
                     </div>
-                    <h3 class="pdl-title">{item.title}</h3>
+                    <h3>{item.title}</h3>
                     <p class="pdl-tagline">{item.tagline}</p>
                     <p class="pdl-desc">{item.description}</p>
 
-                    <p class="feat-lbl">{item.outputsLabel}</p>
+                    <p class="feat-lbl">{item.outputsLabel ?? 'Key outputs'}</p>
                     <ul class="feats">
                       {item.outputs.map((o: string) => (
                         <li class="feat-chip">{o}</li>
@@ -112,44 +117,29 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
                     </ul>
 
                     {(item.lead || item.partners) && (
-                      <div class="partners-block">
-                        {item.lead && (
-                          <div class="partners-row">
-                            <span class="partners-lbl">Lead</span>
-                            <div class="pchips"><span class="pchip pchip-lead">{item.lead}</span></div>
-                          </div>
-                        )}
-                        {item.partners && (
-                          <div class="partners-row">
-                            <span class="partners-lbl">Partners</span>
-                            <div class="pchips">
-                              {item.partners.map((p: string) => <span class="pchip">{p}</span>)}
-                            </div>
-                          </div>
-                        )}
+                      <div class="partners-meta">
+                        <span class="pmeta-lbl">Partners</span>
+                        <div class="pchips">
+                          {item.lead && (
+                            <span class="pchip pchip-lead">{item.lead}</span>
+                          )}
+                          {item.partners?.map((p: string) => (
+                            <span class="pchip">{p}</span>
+                          ))}
+                        </div>
                       </div>
                     )}
-
-                    <div class="pdl-actions">
-                      {item.url && (
-                        <a class="btn-visit" href={item.url} target="_blank" rel="noopener">Visit project ↗</a>
-                      )}
-                      {item.cordisUrl && (
-                        <a class="btn-cordis" href={item.cordisUrl} target="_blank" rel="noopener">CORDIS ↗</a>
-                      )}
-                      {item.publishUrl && (
-                        <a class="btn-docs" href={item.publishUrl} target="_blank" rel="noopener">Publications ↗</a>
-                      )}
-                    </div>
                   </div>
 
-                  <!-- Right: meta -->
+                  <!-- Right: logo · meta · actions -->
                   <div class="pdr">
-                    {item.logo && (
-                      <div class="meta-logo-wrap">
-                        <img src={item.logo} alt={`${item.title} logo`} class="meta-logo" />
+
+                    {item.logo && logoUrls[`../../assets/logos/${item.logo}`] && (
+                      <div class="logo-top">
+                        <img src={logoUrls[`../../assets/logos/${item.logo}`]} alt={`${item.title} logo`} class="logo-img" />
                       </div>
                     )}
+
                     <div class="meta-block">
                       <div class="meta-item">
                         <span class="meta-lbl">Programme</span>
@@ -172,6 +162,16 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
                         </div>
                       )}
                     </div>
+
+                    <div class="pdr-actions">
+                      {item.url && (
+                        <a class="btn-gray" href={item.url} target="_blank" rel="noopener">Visit project ↗</a>
+                      )}
+                      {item.cordisUrl && (
+                        <a class="btn-outline" href={item.cordisUrl} target="_blank" rel="noopener">CORDIS ↗</a>
+                      )}
+                    </div>
+
                   </div>
 
                 </div>
@@ -203,102 +203,112 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
   .hstat-val em { font-style: normal; color: rgba(255,255,255,0.45); font-size: 30px; }
   .hstat-lbl { font-size: 18px; color: rgba(255,255,255,0.45); font-weight: 500; }
 
-  /* ── Page / box ────────────────────────────────────── */
+  /* ── Section layout ─────────────────────────────────── */
   .p-section { padding: 0 0 24px; }
 
-  .box {
-    background: var(--card-bg);
-    border: 0.5px solid var(--card-border);
-    border-radius: var(--radius-lg);
-    padding: 28px 28px 24px;
-  }
-  .box-hdr { margin-bottom: 6px; }
-  .box-title {
-    font-size: 17px; font-weight: 600; color: var(--color-neutral-900);
-    font-family: var(--font-headings); letter-spacing: -0.01em;
-  }
-  .box-sub {
-    font-size: 13px; color: var(--color-neutral-500);
-    line-height: 1.6; max-width: 520px; margin-bottom: 20px;
+  .sc-title {
+    font-family: var(--font-headings);
+    font-size: 22px; font-weight: 600; letter-spacing: -0.02em;
+    color: var(--color-neutral-900); margin: 0 0 6px;
   }
 
-  /* ── Catalogue layout ──────────────────────────────── */
+  .sc-sub {
+    font-size: 14px; color: var(--color-neutral-500);
+    line-height: 1.6; max-width: 560px; margin: 0;
+  }
+
+  /* ── Catalogue layout ───────────────────────────────── */
   .catalogue {
-    display: flex; gap: 10px; align-items: flex-start;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+    margin-top: 24px;
   }
 
   .cat-sidebar {
-    flex: 0 0 26%; width: 26%;
+    flex: 0 0 200px;
     display: flex; flex-direction: column; gap: 6px;
   }
 
-  .cat-detail { flex: 1 1 0; min-width: 0; }
+  .cat-detail { flex: 1; min-width: 0; }
 
-  /* ── Sidebar items (light screen — same as index cards) */
+  /* ── Sidebar buttons — dark + blue ──────────────────── */
   .sidebar-item {
-    width: 100%; height: 65px;
-    display: flex; align-items: center; padding: 0 20px;
-    cursor: pointer; position: relative; overflow: hidden;
+    width: 100%;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
     border-radius: var(--radius-sm);
-    border: 1px solid rgba(46, 104, 212, 0.15);
-    background: var(--gradient-eu-blue-soft);
+    border: none;
+    background:
+      radial-gradient(ellipse 55% 80% at 5% 50%,  rgba(21, 66, 139, 0.20) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 70% at 92% 50%, rgba(60, 100, 220, 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 50% 0%,  rgba(255, 255, 255, 0.04) 0%, transparent 50%),
+      linear-gradient(140deg, #111418 0%, #1a1f24 50%, #1e2228 100%);
     font: inherit; color: inherit; text-align: left; outline: none;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  }
-
-  .sidebar-item:hover:not(.is-active) {
-    border-color: rgba(46, 104, 212, 0.28);
-    box-shadow: 0 2px 8px rgba(46, 104, 212, 0.08);
+    transition: box-shadow 0.4s ease;
+    flex-shrink: 0;
   }
 
   .sidebar-item:focus-visible {
-    outline: 2px solid rgba(46,104,212,0.4); outline-offset: 2px;
+    outline: 2px solid rgba(46,104,212,0.5);
+    outline-offset: 2px;
   }
+
+  /* Capa activa como pseudo-elemento para poder hacer fade */
+  .sidebar-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background:
+      radial-gradient(ellipse 55% 48% at 14% 16%, rgba(255,255,255,0.13) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 42% at 82% 86%, rgba(0,5,50,0.5) 0%, transparent 55%),
+      var(--gradient-eu-blue);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 0;
+  }
+
+  .sidebar-item.is-active::before { opacity: 1; }
 
   .sidebar-item.is-active {
-    border-color: rgba(46, 104, 212, 0.45);
-    box-shadow: 0 2px 14px rgba(46, 104, 212, 0.14);
+    box-shadow: 0 4px 24px rgba(46, 104, 212, 0.28);
   }
 
-  .sidebar-item.is-active .sidebar-name { color: #2e68d4; font-weight: 600; }
-
-  /* Circles */
-  .circle {
+  /* Decorative circles */
+  .sc {
     position: absolute; right: 0; bottom: 0;
     transform: translate(50%, 50%);
     aspect-ratio: 1; border-radius: 50%;
     background: transparent; pointer-events: none;
-    animation: pulsing 5s ease-in-out infinite; z-index: 0;
+    animation: pulsing 5s ease-in-out infinite;
   }
-  .circle--lg { width: 90%; animation-delay: 2s; }
-  .circle--md { width: 62%; animation-delay: 1s; }
-  .circle--sm { width: 38%; animation-delay: 0s; }
+  .sc--lg { width: 90%; animation-delay: 2s; }
+  .sc--md { width: 62%; animation-delay: 1s; }
+  .sc--sm { width: 38%; animation-delay: 0s; }
 
-  .sidebar-item .circle {
-    box-shadow:
-      0 0 0 1px rgba(46, 104, 212, 0.18),
-      0 0 30px rgba(46, 104, 212, 0.10),
-      0 0 60px rgba(46, 104, 212, 0.05);
+  .sidebar-item .sc {
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 0 20px rgba(46,104,212,0.15);
+    transition: box-shadow 0.4s ease;
   }
+  .sidebar-item.is-active .sc { box-shadow: 0 0 0 1px rgba(255,255,255,0.45), 0 0 30px rgba(60,120,220,0.6), 0 0 70px rgba(46,104,212,0.35); }
 
-  .sidebar-item.is-active .circle {
-    box-shadow:
-      0 0 0 1px rgba(46, 104, 212, 0.32),
-      0 0 30px rgba(46, 104, 212, 0.18),
-      0 0 60px rgba(46, 104, 212, 0.09);
-  }
-
-  .sidebar-name {
+  .si-name {
     position: relative; z-index: 2;
-    font-size: 14px; font-weight: 500; color: var(--color-neutral-700);
+    font-size: 15px; font-weight: 500; color: white;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
 
-  /* ── Detail panel ──────────────────────────────────── */
+  /* ── Detail panel ───────────────────────────────────── */
   .detail-panel {
-    border-radius: var(--radius-sm);
-    overflow: hidden;
     border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
     animation: panelFadeIn 0.22s ease;
   }
 
@@ -307,44 +317,47 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  /* Two columns: content | meta */
   .detail-inner {
     display: grid;
-    grid-template-columns: 1fr 200px;
+    grid-template-columns: 1fr 280px;
     min-height: 380px;
+    align-items: stretch;
   }
 
-  /* Left */
+  /* ── Left: copy ─────────────────────────────────────── */
   .pdl {
-    padding: 26px 30px;
     background: var(--page-bg);
-    display: flex; flex-direction: column; align-items: flex-start;
+    padding: 28px;
+    display: flex; flex-direction: column;
   }
 
-  .pdl-top {
-    display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;
-  }
+  .pdl-top { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
 
   .badge {
-    font-size: 9px; font-weight: 600; border-radius: 999px; padding: 2px 9px;
+    font-size: 9px; font-weight: 600; border-radius: 999px; padding: 3px 9px;
   }
   .b-origin { color: #185fa5; background: #e6f1fb; }
   .b-assoc  { color: #3c3489; background: #eeedfe; }
   .b-ext    { color: #0f6e56; background: #e1f5ee; }
+  .b-active { color: #059669; background: #f0fdf4; }
+  .b-new    { color: #b45309; background: #fffbeb; }
+  .b-comp   { color: var(--color-neutral-500); background: var(--color-neutral-100); }
 
-  .pdl-title {
+  h3 {
     font-family: var(--font-headings);
-    font-size: 22px; font-weight: 600; letter-spacing: -0.02em;
-    color: var(--color-neutral-900); margin: 0 0 6px;
+    font-size: 28px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.15;
+    color: var(--color-neutral-900); margin: 0 0 10px;
   }
 
   .pdl-tagline {
-    font-size: 13px; font-weight: 500;
-    color: var(--color-neutral-700); margin: 0 0 10px;
+    font-size: 16px; font-weight: 500; line-height: 1.5;
+    color: var(--color-neutral-700); margin: 0 0 14px;
   }
 
   .pdl-desc {
-    font-size: 13px; line-height: 1.65;
-    color: var(--color-neutral-500); margin: 0 0 18px;
+    font-size: 16px; line-height: 1.7;
+    color: var(--color-neutral-500); margin: 0 0 22px;
   }
 
   .feat-lbl {
@@ -360,95 +373,140 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
   .feat-chip {
     font-size: 11px; font-weight: 500; color: var(--color-neutral-700);
     background: white; border: 0.5px solid var(--card-border);
-    border-radius: 999px; padding: 2px 9px;
+    border-radius: 999px; padding: 3px 10px;
   }
 
-  /* Partners */
-  .partners-block {
-    display: flex; flex-direction: column; gap: 8px;
-    width: 100%; margin-bottom: 20px;
-    padding: 12px 14px;
-    background: white; border: 0.5px solid var(--card-border);
-    border-radius: var(--radius-xs);
+  /* Partners — pills */
+  .partners-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 4px;
   }
 
-  .partners-row { display: flex; align-items: flex-start; gap: 10px; }
-
-  .partners-lbl {
-    font-size: 10px; font-weight: 600; letter-spacing: 0.07em;
+  .pmeta-lbl {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
     text-transform: uppercase; color: var(--color-neutral-400);
-    width: 50px; flex-shrink: 0; padding-top: 3px;
   }
 
-  .pchips { display: flex; flex-wrap: wrap; gap: 4px; }
+  .pchips { display: flex; flex-wrap: wrap; gap: 6px; }
 
   .pchip {
-    font-size: 10px; color: var(--color-neutral-600);
-    background: var(--page-bg); border: 0.5px solid var(--card-border);
-    border-radius: 6px; padding: 2px 8px;
+    font-size: 16px; font-weight: 400;
+    color: var(--color-neutral-600);
+    background: white; border: 0.5px solid var(--card-border);
+    border-radius: 999px; padding: 3px 12px;
   }
 
   .pchip-lead {
-    color: #2e68d4; background: rgba(46,104,212,0.07);
-    border-color: rgba(46,104,212,0.2); font-weight: 600;
+    color: #2e68d4;
+    background: rgba(46,104,212,0.07);
+    border-color: rgba(46,104,212,0.2);
+    font-weight: 600;
   }
 
-  .pdl-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; }
-
-  .btn-visit, .btn-docs {
-    display: inline-flex; align-items: center;
-    border-radius: 999px; padding: 7px 14px;
-    font-size: 12px; font-weight: 500; text-decoration: none;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-  }
-
-  .btn-visit {
-    background: var(--color-neutral-900); color: #fff; border: 1px solid transparent;
-  }
-  .btn-visit:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.18); }
-
-  .btn-cordis {
-    background: transparent; color: #1a4f8c; border: 1px solid rgba(26,79,140,0.25);
-  }
-  .btn-cordis:hover { background: rgba(26,79,140,0.06); border-color: rgba(26,79,140,0.4); transform: translateY(-1px); }
-
-  .btn-docs {
-    background: transparent; color: var(--color-neutral-700); border: 1px solid var(--card-border);
-  }
-  .btn-docs:hover { background: white; border-color: var(--color-neutral-300); transform: translateY(-1px); }
-
-  /* Right: meta */
+  /* ── Right: logo · meta · actions ───────────────────── */
   .pdr {
     background:
-      radial-gradient(ellipse 55% 80% at 5% 50%, rgba(21, 66, 139, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 55% 80% at 5% 50%, rgba(21, 66, 139, 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 70% at 92% 50%, rgba(60, 100, 220, 0.08) 0%, transparent 60%),
       linear-gradient(140deg, #111418 0%, #1a1f24 50%, #1e2228 100%);
-    border-left: 0.5px solid var(--card-border);
-    padding: 22px 18px;
-    display: flex; flex-direction: column; gap: 16px;
+    padding: 24px 20px;
+    display: flex; flex-direction: column; gap: 20px;
   }
 
-  .meta-logo-wrap {
-    padding: 10px 12px; background: white;
-    border: 0.5px solid rgba(255,255,255,0.1);
+  /* Logo at top */
+  .logo-top {
+    background: white;
     border-radius: 8px;
+    padding: 10px 14px;
     display: flex; align-items: center; justify-content: center;
   }
-  .meta-logo { max-width: 100%; max-height: 28px; object-fit: contain; }
 
-  .meta-block { display: flex; flex-direction: column; gap: 12px; }
+  .logo-img {
+    max-height: 70px;
+    max-width: 100%;
+    object-fit: contain;
+  }
+
+  .meta-block { display: flex; flex-direction: column; gap: 12px; flex: 1; }
+
   .meta-item { display: flex; flex-direction: column; gap: 3px; }
   .meta-lbl {
     font-size: 10px; font-weight: 600; letter-spacing: 0.07em;
     text-transform: uppercase; color: rgba(255,255,255,0.35);
   }
-  .meta-val { font-size: 12px; color: rgba(255,255,255,0.75); font-weight: 500; }
+  .meta-val { font-size: 13px; color: rgba(255,255,255,0.75); font-weight: 500; }
 
-  /* ── Responsive ────────────────────────────────────── */
-  @media (max-width: 900px) {
+  /* Buttons in a single row at the bottom */
+  .pdr-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+  }
+
+  /* Visit project — gray bg, turns white on hover */
+  .btn-gray {
+    flex: 1;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 999px; padding: 8px 12px;
+    font-size: 13px; font-weight: 500; text-decoration: none;
+    background: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.85);
+    border: 1px solid rgba(255,255,255,0.12);
+    transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.15s;
+  }
+  .btn-gray:hover {
+    background: white;
+    color: var(--color-neutral-900);
+    border-color: white;
+    transform: translateY(-1px);
+  }
+
+  /* CORDIS — outline */
+  .btn-outline {
+    flex: 1;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 999px; padding: 8px 12px;
+    font-size: 13px; font-weight: 500; text-decoration: none;
+    background: transparent;
+    color: rgba(255,255,255,0.8);
+    border: 1px solid rgba(255,255,255,0.22);
+    transition: background 0.15s, border-color 0.15s, transform 0.15s;
+  }
+  .btn-outline:hover {
+    background: rgba(255,255,255,0.09);
+    border-color: rgba(255,255,255,0.45);
+    transform: translateY(-1px);
+  }
+
+  /* ── Responsive ─────────────────────────────────────── */
+  @media (max-width: 860px) {
     .catalogue { flex-direction: column; }
-    .cat-sidebar { flex: none; width: 100%; }
+    .cat-sidebar {
+      flex: none; width: 100%;
+      flex-direction: row;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .cat-sidebar::-webkit-scrollbar { display: none; }
+    .sidebar-item {
+      flex: 0 0 auto;
+      min-width: 140px;
+      width: auto;
+      height: 52px;
+    }
     .cat-detail { width: 100%; }
-    .detail-inner { grid-template-columns: 1fr; }
-    .pdr { border-left: none; border-top: 0.5px solid var(--card-border); }
+  }
+
+  @media (max-width: 640px) {
+    .detail-inner {
+      grid-template-columns: 1fr;
+      min-height: unset;
+    }
+    .pdr { border-top: 0.5px solid var(--card-border); }
   }
 </style>
