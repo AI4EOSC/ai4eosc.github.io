@@ -104,48 +104,6 @@ const types = ['All', ...Array.from(new Set(sorted.map(s => s.data.type))).sort(
 
 
 <style>
-  /* ── Filters ────────────────────────────────────────── */
-  .filters {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-top: 20px;
-    margin-bottom: 8px;
-  }
-
-  .filter-btn {
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    border-radius: 999px;
-    padding: 6px 16px;
-    cursor: pointer;
-    border: 1px solid var(--card-border);
-    background: white;
-    color: var(--color-neutral-500);
-    transition:
-      background var(--transition-fast),
-      border-color var(--transition-fast),
-      color var(--transition-fast),
-      box-shadow var(--transition-fast),
-      transform var(--transition-fast);
-  }
-
-  .filter-btn:hover:not(.is-active) {
-    border-color: var(--color-neutral-300);
-    color: var(--color-neutral-700);
-    box-shadow: 0 1px 4px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05);
-    transform: translateY(-1px);
-  }
-
-  .filter-btn.is-active {
-    background: var(--color-primary-700);
-    color: white;
-    border-color: var(--color-primary-700);
-    box-shadow: 0 2px 10px color-mix(in oklch, var(--color-primary-600) 40%, transparent);
-  }
-
   /* ── Grid ───────────────────────────────────────────── */
   .grid {
     display: grid;
@@ -171,10 +129,9 @@ const types = ['All', ...Array.from(new Set(sorted.map(s => s.data.type))).sort(
     overflow: hidden;
     border-bottom: 1px solid var(--card-border);
     background:
-      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255, 255, 255, 0.10) 0%, transparent 55%),
-      radial-gradient(ellipse 55% 45% at 85% 88%, rgba(0, 20, 24, 0.55) 0%, transparent 58%),
-      radial-gradient(ellipse 40% 35% at 55% 48%, rgba(0, 135, 146, 0.18) 0%, transparent 55%),
-      linear-gradient(140deg, #001c1e 0%, #004a52 38%, #008792 100%);
+      radial-gradient(ellipse 50% 55% at 88% 88%, rgba(15, 45, 52, 0.38) 0%, transparent 60%),
+      radial-gradient(ellipse 55% 38% at 50% -5%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+      linear-gradient(148deg, #253d42 0%, #336e78 40%, #3a7d87 70%, #4a8d97 100%);
   }
 
   .image img {

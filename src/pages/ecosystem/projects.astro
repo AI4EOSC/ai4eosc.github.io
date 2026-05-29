@@ -247,17 +247,6 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
   /* ── Section layout ─────────────────────────────────── */
   .p-section { padding: 0 0 24px; }
 
-  .sc-title {
-    font-family: var(--font-headings);
-    font-size: 22px; font-weight: 600; letter-spacing: -0.02em;
-    color: var(--color-neutral-900); margin: 0 0 6px;
-  }
-
-  .sc-sub {
-    font-size: 16px; color: var(--color-neutral-500);
-    line-height: 1.6; max-width: 560px; margin: 0;
-  }
-
   /* ── Catalogue layout ───────────────────────────────── */
   .catalogue {
     display: flex;
@@ -385,14 +374,9 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
 
   .pdl-top { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
 
-  .badge {
-    font-size: 14px; font-weight: 600; border-radius: 999px; padding: 4px 12px;
-  }
   .b-origin { color: #185fa5; background: #e6f1fb; }
   .b-assoc  { color: #3c3489; background: #eeedfe; }
   .b-ext    { color: var(--color-primary-700); background: var(--color-primary-100); }
-  .b-active { color: #059669; background: #f0fdf4; }
-  .b-new    { color: #b45309; background: #fffbeb; }
   .b-comp   { color: var(--color-neutral-500); background: var(--color-neutral-100); }
 
   h3 {
@@ -409,11 +393,6 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
   .pdl-desc {
     font-size: 16px; line-height: 1.7;
     color: var(--color-neutral-500); margin: 0 0 22px;
-  }
-
-  .feat-lbl {
-    font-size: 14px; font-weight: 600; letter-spacing: 0.06em;
-    text-transform: uppercase; color: var(--color-neutral-400); margin: 0 0 8px;
   }
 
   .feats {
@@ -518,40 +497,7 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
     gap: 8px;
   }
 
-  /* Visit project — gray bg, turns white on hover */
-  .btn-gray {
-    flex: 1;
-    display: inline-flex; align-items: center; justify-content: center;
-    border-radius: 999px; padding: 8px 12px;
-    font-size: 16px; font-weight: 500; text-decoration: none;
-    background: rgba(255,255,255,0.12);
-    color: rgba(255,255,255,0.85);
-    border: 1px solid rgba(255,255,255,0.12);
-    transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.15s;
-  }
-  .btn-gray:hover {
-    background: white;
-    color: var(--color-neutral-900);
-    border-color: white;
-    transform: translateY(-1px);
-  }
-
-  /* CORDIS — outline */
-  .btn-outline {
-    flex: 1;
-    display: inline-flex; align-items: center; justify-content: center;
-    border-radius: 999px; padding: 8px 12px;
-    font-size: 16px; font-weight: 500; text-decoration: none;
-    background: transparent;
-    color: rgba(255,255,255,0.8);
-    border: 1px solid rgba(255,255,255,0.22);
-    transition: background 0.15s, border-color 0.15s, transform 0.15s;
-  }
-  .btn-outline:hover {
-    background: rgba(255,255,255,0.09);
-    border-color: rgba(255,255,255,0.45);
-    transform: translateY(-1px);
-  }
+  .btn-gray, .btn-outline { flex: 1; }
 
   /* ── Responsive ─────────────────────────────────────── */
   @media (max-width: 860px) {

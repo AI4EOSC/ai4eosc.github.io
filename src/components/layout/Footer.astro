@@ -51,7 +51,7 @@ const currentYear = new Date().getFullYear();
         </>
       ))}
     </div>
-    <p>{footer.bottom.right}</p>
+    <p>An initiative coordinated by the <a href="https://www.csic.es/en" target="_blank" rel="noopener noreferrer" class="silent-link">Spanish National Research Council (CSIC)</a></p>
   </div>
 </footer>
 
@@ -138,6 +138,11 @@ const currentYear = new Date().getFullYear();
 
   .policies .sep {
     color: var(--color-neutral-400);
+  }
+
+  .silent-link {
+    color: inherit;
+    text-decoration: none;
   }
 
   .policies a {
