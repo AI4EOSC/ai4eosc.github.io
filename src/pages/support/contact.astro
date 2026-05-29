@@ -33,45 +33,76 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
               <p>We usually respond within 2 business days.</p>
             </div>
 
-          <form class="contact-form reveal" action="https://formspree.io/f/ai4eosc" method="POST">
+          <div
+            x-data="{ sending: false, sent: false, error: false }"
+            class="reveal"
+          >
+            <!-- Success state -->
+            <div x-show="sent" x-cloak class="form-success">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+              <h3>Message sent</h3>
+              <p>Thanks for reaching out — we'll get back to you within 2 business days.</p>
+            </div>
 
-            <div class="field-row">
-              <div class="field">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" placeholder="Your full name" required />
+            <!-- Form -->
+            <form
+              x-show="!sent"
+              class="contact-form"
+              x-on:submit.prevent="
+                sending = true;
+                error = false;
+                fetch('/api/contact', {
+                  method: 'POST',
+                  body: new FormData($el)
+                })
+                .then(r => r.json())
+                .then(r => { if (r.ok) sent = true; else error = true; })
+                .catch(() => { error = true; })
+                .finally(() => { sending = false; })
+              "
+            >
+              <div class="field-row">
+                <div class="field">
+                  <label for="name">Name</label>
+                  <input type="text" id="name" name="name" placeholder="Your full name" required />
+                </div>
+                <div class="field">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" placeholder="you@institution.eu" required />
+                </div>
               </div>
+
               <div class="field">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="you@institution.eu" required />
+                <label for="topic">Topic</label>
+                <select id="topic" name="topic" required>
+                  <option value="" disabled selected>Select a topic…</option>
+                  <option value="platform">Platform access &amp; accounts</option>
+                  <option value="technical">Technical support</option>
+                  <option value="ecosystem">Joining the ecosystem</option>
+                  <option value="research">Research collaboration</option>
+                  <option value="press">Press &amp; communications</option>
+                  <option value="other">Other</option>
+                </select>
               </div>
-            </div>
 
-            <div class="field">
-              <label for="topic">Topic</label>
-              <select id="topic" name="topic" required>
-                <option value="" disabled selected>Select a topic…</option>
-                <option value="platform">Platform access &amp; accounts</option>
-                <option value="technical">Technical support</option>
-                <option value="ecosystem">Joining the ecosystem</option>
-                <option value="research">Research collaboration</option>
-                <option value="press">Press &amp; communications</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
+              <div class="field">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="6" placeholder="Describe your question or request…" required></textarea>
+              </div>
 
-            <div class="field">
-              <label for="message">Message</label>
-              <textarea id="message" name="message" rows="6" placeholder="Describe your question or request…" required></textarea>
-            </div>
-
-            <div class="form-footer">
-              <p class="privacy-note">
-                Your data is used only to respond to your enquiry and will not be shared with third parties.
-              </p>
-              <button type="submit" class="submit-btn">Send message</button>
-            </div>
-
-          </form>
+              <div class="form-footer">
+                <div>
+                  <p class="privacy-note">
+                    Your data is used only to respond to your enquiry and will not be shared with third parties.
+                  </p>
+                  <p x-show="error" x-cloak class="error-note">
+                    Something went wrong. Please try again or email us directly at <a href="mailto:ai4eosc@csic.es">ai4eosc@csic.es</a>.
+                  </p>
+                </div>
+                <button type="submit" class="submit-btn" x-bind:disabled="sending" x-text="sending ? 'Sending…' : 'Send message'"></button>
+              </div>
+            </form>
+          </div>
           </div>
 
           <!-- Sidebar: contact channels -->
@@ -192,6 +223,38 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
     line-height: 1.6;
   }
 
+  /* ── Success state ───────────────────────────────────── */
+  .form-success {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 40px 0;
+    color: var(--color-neutral-900);
+  }
+
+  .form-success svg { color: #059669; }
+
+  .form-success h3 {
+    font-family: var(--font-headings);
+    font-size: 24px; font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .form-success p {
+    font-size: 16px; color: var(--color-neutral-500);
+    line-height: 1.6; margin: 0;
+  }
+
+  /* ── Error note ───────────────────────────────────────── */
+  .error-note {
+    font-size: 14px; color: #b45309;
+    line-height: 1.55; margin: 6px 0 0;
+  }
+
+  .error-note a { color: inherit; text-decoration: underline; }
+
   /* ── Form ────────────────────────────────────────────── */
   .contact-form {
     display: flex; flex-direction: column; gap: 22px;
@@ -274,10 +337,15 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
     letter-spacing: -0.01em;
   }
 
-  .submit-btn:hover {
+  .submit-btn:hover:not(:disabled) {
     opacity: 0.88;
     transform: translateY(-1px);
     box-shadow: 0 4px 20px rgba(0, 50, 200, 0.28);
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 
   /* ── Sidebar ─────────────────────────────────────────── */

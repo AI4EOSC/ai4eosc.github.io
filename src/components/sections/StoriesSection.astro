@@ -76,7 +76,11 @@ const sortedStories = stories
     position: relative;
     overflow: hidden;
     border-bottom: 1px solid var(--card-border);
-    background: linear-gradient(135deg, #00454a 0%, var(--color-primary-600) 60%, var(--color-primary-500) 100%);
+    background:
+      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255, 255, 255, 0.10) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 45% at 85% 88%, rgba(0, 20, 24, 0.55) 0%, transparent 58%),
+      radial-gradient(ellipse 40% 35% at 55% 48%, rgba(0, 135, 146, 0.18) 0%, transparent 55%),
+      linear-gradient(140deg, #001c1e 0%, #004a52 38%, #008792 100%);
   }
 
   .image img {

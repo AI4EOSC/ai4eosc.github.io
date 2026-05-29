@@ -34,18 +34,18 @@
 	--brand-pink: #ec5d80;
 	--brand-black: #040204;
 
-	/* -- Paleta primaria desde #008691 — stops aclarados ~3-5pt en midtones */
-	--color-primary-50: oklch(98% 0.018 194);
-	--color-primary-100: oklch(94% 0.04 194);
-	--color-primary-200: oklch(89% 0.068 194);
-	--color-primary-300: oklch(81% 0.092 194);
-	--color-primary-400: oklch(71% 0.11 194);
-	--color-primary-500: oklch(59% 0.115 194); /* ligeramente más claro que #008691 */
-	--color-primary-600: oklch(50% 0.105 194);
-	--color-primary-700: oklch(41% 0.088 194);
-	--color-primary-800: oklch(31% 0.068 194);
-	--color-primary-900: oklch(22% 0.046 194);
-	--color-primary-950: oklch(14% 0.026 194);
+	/* -- Paleta primaria — 600 = #008792 (brand-green) */
+	--color-primary-50:  oklch(98% 0.014 194);
+	--color-primary-100: oklch(95% 0.038 194);
+	--color-primary-200: oklch(90% 0.065 194);
+	--color-primary-300: oklch(82% 0.094 194);
+	--color-primary-400: oklch(72% 0.112 194);
+	--color-primary-500: oklch(65% 0.118 194);
+	--color-primary-600: oklch(56% 0.115 194); /* ≈ #008792 */
+	--color-primary-700: oklch(47% 0.105 194);
+	--color-primary-800: oklch(37% 0.088 194);
+	--color-primary-900: oklch(26% 0.062 194);
+	--color-primary-950: oklch(16% 0.036 194);
 
 	/* -- Paleta secundaria desde #ec5d80 — stops ajustados ~3pt en midtones */
 	--color-secondary-50: oklch(98% 0.016 3);

@@ -9,11 +9,9 @@ const button = { label: 'View on GitHub →', href: 'https://github.com/ai4eosc'
     <div class="banner">
       <div class="banner-content">
         <div class="left">
-          <svg class="code-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <polyline points="10,6 2,16 10,26" stroke="#008792" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <line x1="20" y1="6" x2="12" y2="26" stroke="#008792" stroke-width="2" stroke-linecap="round"/>
-            <polyline points="22,6 30,16 22,26" stroke="#008792" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <div class="code-icon-wrap" aria-hidden="true">
+            <span class="code-icon-text">&lt;/&gt;</span>
+          </div>
           <div>
             <h4>{title}</h4>
             <p>{description}</p>
@@ -36,6 +34,7 @@ const button = { label: 'View on GitHub →', href: 'https://github.com/ai4eosc'
 </section>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@700&display=swap');
   .os-wrap {
     padding: 8px 0 20px;
   }
@@ -80,13 +79,27 @@ const button = { label: 'View on GitHub →', href: 'https://github.com/ai4eosc'
     gap: 24px;
   }
 
-  .code-icon {
-    width: 40px;
-    height: 40px;
+  .code-icon-wrap {
+    width: 52px;
+    height: 52px;
     flex-shrink: 0;
-    filter:
-      drop-shadow(0 0 4px rgba(0, 135, 146, 0.2))
-      drop-shadow(0 0 10px rgba(0, 135, 146, 0.08));
+    background: linear-gradient(135deg, rgba(0, 145, 160, 0.22) 0%, rgba(0, 100, 115, 0.14) 100%);
+    border: 1px solid rgba(0, 210, 230, 0.22);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .code-icon-text {
+    font-family: 'Fira Code', monospace;
+    font-size: 20px;
+    font-weight: 900;
+    color: white;
+    letter-spacing: -0.5px;
+    text-shadow:
+      0 0 8px rgba(0, 210, 230, 0.6),
+      0 0 20px rgba(0, 210, 230, 0.25);
   }
 
   .gh-icon {

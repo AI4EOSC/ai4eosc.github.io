@@ -21,54 +21,75 @@ const types = ['All', ...Array.from(new Set(sorted.map(s => s.data.type))).sort(
 
   <div class="section-label"><div class="container">All stories</div></div>
   <div class="container">
-    <div class="section-card" x-data="storiesGrid">
+    <div class="section-card">
       <SectionHeader
         title="From the initiative"
         subtitle="News, case studies and research highlights from across the AI4EOSC ecosystem."
       />
 
-      <!-- Filters -->
-      <div class="filters">
-        {types.map(t => (
-          <button
-            class="filter-btn"
-            x-bind:class={`{ 'is-active': filter === '${t}' }`}
-            x-on:click={`setFilter('${t}')`}
-            type="button"
-          >
-            {t}
-          </button>
-        ))}
-      </div>
+      <div x-data={`{
+        filter: 'All',
+        init() {
+          this.$watch('filter', () => this.$nextTick(() => this.syncBorders()));
+          this.$nextTick(() => this.syncBorders());
+        },
+        setFilter(f) { this.filter = f; },
+        syncBorders() {
+          const all = Array.from(this.$el.querySelectorAll('.item'));
+          const visible = all.filter(el => el.style.display !== 'none');
+          all.forEach(el => el.classList.remove('is-row-start', 'is-new-row'));
+          visible.forEach((el, i) => {
+            if (i % 3 === 0) el.classList.add('is-row-start');
+            if (i >= 3)      el.classList.add('is-new-row');
+          });
+        }
+      }`}>
 
-      <!-- Grid -->
-      <div class="grid" x-ref="grid">
-        {sorted.map((story, i) => (
-          <a
-            href={story.data.externalUrl ?? `/stories/${story.id}`}
-            class={`item${story.data.image ? ' has-image' : ''}`}
-            data-type={story.data.type}
-            {...(story.data.externalUrl ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-          >
-            {story.data.image && (
-              <div class="image">
-                <img src={story.data.image} alt="" loading="lazy" />
+        <!-- Filters -->
+        <div class="filters">
+          {types.map(t => (
+            <button
+              class="filter-btn"
+              x-bind:class={`{ 'is-active': filter === '${t}' }`}
+              x-on:click={`setFilter('${t}')`}
+              type="button"
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+
+        <!-- Grid -->
+        <div class="grid">
+          {sorted.map((story) => (
+            <a
+              href={story.data.externalUrl ?? `/stories/${story.id}`}
+              class={`item${story.data.image ? ' has-image' : ''}`}
+              x-show={`filter === 'All' || filter === '${story.data.type}'`}
+              x-cloak
+              {...(story.data.externalUrl ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            >
+              {story.data.image && (
+                <div class="image">
+                  <img src={story.data.image} alt="" loading="lazy" />
+                </div>
+              )}
+              <div class="body">
+                <div class="meta">
+                  <span class="tag">{story.data.type}</span>
+                  <span class="dot" aria-hidden="true"></span>
+                  <span class="date">
+                    {story.data.date.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}
+                  </span>
+                </div>
+                <h4>{story.data.title}</h4>
+                <p>{story.data.excerpt}</p>
+                <span class="read-link">{story.data.externalUrl ? 'View on external site ↗' : 'Read story →'}</span>
               </div>
-            )}
-            <div class="body">
-              <div class="meta">
-                <span class="tag">{story.data.type}</span>
-                <span class="dot" aria-hidden="true"></span>
-                <span class="date">
-                  {story.data.date.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}
-                </span>
-              </div>
-              <h4>{story.data.title}</h4>
-              <p>{story.data.excerpt}</p>
-              <span class="read-link">{story.data.externalUrl ? 'View on external site ↗' : 'Read story →'}</span>
-            </div>
-          </a>
-        ))}
+            </a>
+          ))}
+        </div>
+
       </div>
     </div>
   </div>
@@ -81,90 +102,6 @@ const types = ['All', ...Array.from(new Set(sorted.map(s => s.data.type))).sort(
   />
 </Layout>
 
-<script>
-document.addEventListener('alpine:init', () => {
-  Alpine.data('storiesGrid', () => {
-    // Closure var — not reactive, no Alpine re-renders on change
-    let gen = 0;
-
-    return {
-      filter: 'All',
-
-      init() {
-        const items = Array.from(this.$refs.grid.querySelectorAll('.item'));
-        const myGen = ++gen;
-
-        items.forEach((el, i) => {
-          el.style.opacity = '0';
-          el.style.transform = 'translateY(14px)';
-          el.style.transition = 'none';
-          setTimeout(() => {
-            if (gen !== myGen) return; // a filter was clicked during entrance — bail
-            el.style.transition = 'opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s cubic-bezier(0.16,1,0.3,1)';
-            el.style.opacity = '1';
-            el.style.transform = 'none';
-          }, 60 + i * 55);
-        });
-
-        this.syncBorders(items);
-      },
-
-      setFilter(newFilter) {
-        if (newFilter === this.filter) return;
-
-        const myGen = ++gen; // invalidates any in-flight entrance or filter animations
-        const all = Array.from(this.$refs.grid.querySelectorAll('.item'));
-
-        // Snap everything to hidden with no transition
-        all.forEach(el => {
-          el.style.transition = 'none';
-          el.style.opacity = '0';
-          el.style.transform = 'translateY(10px)';
-        });
-
-        // Update Alpine state immediately — buttons show active state right away
-        this.filter = newFilter;
-
-        // Show/hide items
-        const nextVisible = [];
-        all.forEach(el => {
-          const match = newFilter === 'All' || el.dataset.type === newFilter;
-          if (match) {
-            el.style.display = 'flex';
-            nextVisible.push(el);
-          } else {
-            el.style.display = 'none';
-          }
-        });
-
-        this.syncBorders(nextVisible);
-
-        // Double-rAF: guarantees transition:none committed to rendering engine
-        // before we re-enable transitions. Stagger via CSS transition-delay.
-        nextVisible.forEach((el, i) => {
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              if (gen !== myGen) return; // another filter clicked — bail
-              el.style.transition = `opacity 0.4s cubic-bezier(0.16,1,0.3,1) ${i * 45}ms, transform 0.4s cubic-bezier(0.16,1,0.3,1) ${i * 45}ms`;
-              el.style.opacity = '1';
-              el.style.transform = 'none';
-            });
-          });
-        });
-      },
-
-      syncBorders(visibleItems) {
-        const all = Array.from(this.$refs.grid.querySelectorAll('.item'));
-        all.forEach(el => el.classList.remove('is-row-start', 'is-new-row'));
-        visibleItems.forEach((el, i) => {
-          if (i % 3 === 0) el.classList.add('is-row-start');
-          if (i >= 3) el.classList.add('is-new-row');
-        });
-      }
-    };
-  });
-});
-</script>
 
 <style>
   /* ── Filters ────────────────────────────────────────── */
@@ -178,7 +115,7 @@ document.addEventListener('alpine:init', () => {
 
   .filter-btn {
     font-family: inherit;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.01em;
     border-radius: 999px;
@@ -233,7 +170,11 @@ document.addEventListener('alpine:init', () => {
     position: relative;
     overflow: hidden;
     border-bottom: 1px solid var(--card-border);
-    background: linear-gradient(135deg, #00454a 0%, var(--color-primary-600) 60%, var(--color-primary-500) 100%);
+    background:
+      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255, 255, 255, 0.10) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 45% at 85% 88%, rgba(0, 20, 24, 0.55) 0%, transparent 58%),
+      radial-gradient(ellipse 40% 35% at 55% 48%, rgba(0, 135, 146, 0.18) 0%, transparent 55%),
+      linear-gradient(140deg, #001c1e 0%, #004a52 38%, #008792 100%);
   }
 
   .image img {
@@ -291,7 +232,7 @@ document.addEventListener('alpine:init', () => {
   }
 
   .date {
-    font-size: 13px;
+    font-size: 14px;
     color: var(--color-neutral-400);
   }
 

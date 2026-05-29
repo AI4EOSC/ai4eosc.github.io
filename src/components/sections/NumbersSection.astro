@@ -67,7 +67,7 @@ const items = (numbersData.items as Array<Record<string, string>>).map((item, i)
           return (
             <div class="stat reveal" style={`transition-delay: ${i * 80}ms`}>
               <div class="icon-wrap" style={`background: ${tone.bg}; color: ${tone.color};`}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={svg} />
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" set:html={svg} />
               </div>
               <div class="number">
                 <span class="value">{item.value}</span><span class="suffix">{item.suffix}</span>
@@ -130,9 +130,9 @@ const items = (numbersData.items as Array<Record<string, string>>).map((item, i)
   .stat:last-child { border-right: none; padding-right: 0; }
 
   .icon-wrap {
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -177,7 +177,7 @@ const items = (numbersData.items as Array<Record<string, string>>).map((item, i)
 
   .detail {
     margin: 0;
-    font-size: 14px;
+    font-size: 16px;
     color: var(--color-neutral-400);
     line-height: 1.4;
     max-width: 190px;

@@ -19,7 +19,7 @@ const currentYear = new Date().getFullYear();
       <div class="column" key={column.title}>
         <h5>{column.title}</h5>
         {column.links.map((link) => (
-          <a href={link.href} key={link.label}>{link.label}</a>
+          <a href={link.href} key={link.label} {...(link.href?.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{link.label}</a>
         ))}
       </div>
     ))}
