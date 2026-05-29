@@ -126,19 +126,10 @@ const button = { label: 'View on GitHub →', href: 'https://github.com/ai4eosc'
     overflow: visible;
   }
 
-  /* base .circle layout comes from global.css */
-  .circle {
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.3),
-      0 0 30px rgba(0, 200, 215, 0.2),
-      0 0 60px rgba(0, 200, 215, 0.1),
-      inset 0 0 12px rgba(255, 255, 255, 0.03);
-    transition: scale 2s ease;
-  }
-
-  .circle--lg { width: 70%; animation-delay: 2s; }
-  .circle--md { width: 50%; animation-delay: 1s; }
-  .circle--sm { width: 32%; animation-delay: 0s; }
+  /* base .circle layout and style comes from global.css */
+  .circle--lg { width: 70%; }
+  .circle--md { width: 50%; }
+  .circle--sm { width: 32%; }
 
   .banner:hover .circle {
     scale: 1.10;

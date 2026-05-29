@@ -154,7 +154,12 @@ const communityIcons: Record<string, string> = {
         {gatewaysData.items.map((item, i) => (
           <div class="tile reveal" style={`transition-delay: ${i * 40}ms`}>
             <div class="tile-head">
-              <h4>{item.title}</h4>
+              <div class="gw-header">
+                <div class="gw-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={communityIcons[item.type] ?? communityIcons.earth} />
+                </div>
+                <h4>{item.title}</h4>
+              </div>
               <div class="tile-tags">
                 <span class="pill domain">{item.domain}</span>
                 <span class={`pill status ${item.status}`}>{statusLabel[item.status] ?? item.status}</span>
@@ -499,6 +504,29 @@ const communityIcons: Record<string, string> = {
     flex-shrink: 0;
   }
 
+  .gw-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .gw-icon {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary-50);
+    border-radius: var(--radius-xs);
+    color: var(--color-primary-600);
+    flex-shrink: 0;
+  }
+
+  .gw-header h4 {
+    margin: 0;
+  }
+
   .comm-title {
     font-size: 16px;
     font-weight: 650;
@@ -533,39 +561,27 @@ const communityIcons: Record<string, string> = {
     overflow: visible;
   }
 
-  /* base .circle layout comes from global.css */
-  .circle { transition: scale 2s ease; }
+  /* base .circle layout and style comes from global.css — only glow color overridden per theme */
+  .circle--lg { width: 82%; }
+  .circle--md { width: 58%; }
+  .circle--sm { width: 36%; }
 
-  .circle--lg { width: 82%; animation-delay: 2s; }
-  .circle--md { width: 58%; animation-delay: 1s; }
-  .circle--sm { width: 36%; animation-delay: 0s; }
+  .hero:hover .circle { scale: 1.10; }
 
   .hero.eu-blue .circle {
     box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.22),
-      0 0 40px rgba(80, 140, 255, 0.25),
-      0 0 80px rgba(80, 140, 255, 0.10),
-      inset 0 0 16px rgba(255, 255, 255, 0.06);
+      0 0 0 1px rgba(255, 255, 255, 0.38),
+      0 0 60px rgba(80, 140, 255, 0.38),
+      0 0 130px rgba(80, 140, 255, 0.18),
+      inset 0 0 28px rgba(255, 255, 255, 0.12);
   }
 
   .hero.secondary .circle {
     box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.22),
-      0 0 40px rgba(236, 93, 128, 0.30),
-      0 0 80px rgba(236, 93, 128, 0.12),
-      inset 0 0 16px rgba(255, 255, 255, 0.06);
-  }
-
-  .hero.primary .circle {
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.22),
-      0 0 40px rgba(0, 200, 215, 0.25),
-      0 0 80px rgba(0, 200, 215, 0.10),
-      inset 0 0 16px rgba(255, 255, 255, 0.06);
-  }
-
-  .hero:hover .circle {
-    scale: 1.10;
+      0 0 0 1px rgba(255, 255, 255, 0.38),
+      0 0 60px rgba(236, 93, 128, 0.38),
+      0 0 130px rgba(236, 93, 128, 0.18),
+      inset 0 0 28px rgba(255, 255, 255, 0.12);
   }
 
   /* ── Hero banner: staggered child entrance ── */

@@ -116,48 +116,27 @@ const { title, description, button, theme } = Astro.props;
     overflow: visible;
   }
 
-  /* base .circle layout comes from global.css */
-  .circle { transition: scale 2s ease; }
+  /* base .circle layout and style comes from global.css — only glow color overridden per theme */
+  .circle--lg { width: 80%; }
+  .circle--md { width: 56%; }
+  .circle--sm { width: 34%; }
 
-  .circle--lg { width: 80%; animation-delay: 2s; }
-  .circle--md { width: 56%; animation-delay: 1s; }
-  .circle--sm { width: 34%; animation-delay: 0s; }
-
-  .cta:hover .circle {
-    scale: 1.10;
-  }
-
-  /* Theme circle glows */
-  .theme-teal .circle {
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.26),
-      0 0 40px rgba(0, 200, 215, 0.20),
-      0 0 80px rgba(0, 200, 215, 0.08),
-      inset 0 0 16px rgba(255, 255, 255, 0.06);
-  }
-
-  .theme-black .circle {
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.3),
-      0 0 40px rgba(0, 200, 215, 0.20),
-      0 0 80px rgba(0, 200, 215, 0.10),
-      inset 0 0 16px rgba(255, 255, 255, 0.03);
-  }
+  .cta:hover .circle { scale: 1.10; }
 
   .theme-blue .circle {
     box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.22),
-      0 0 40px rgba(60, 100, 255, 0.20),
-      0 0 80px rgba(60, 100, 255, 0.08),
-      inset 0 0 16px rgba(255, 255, 255, 0.06);
+      0 0 0 1px rgba(255, 255, 255, 0.38),
+      0 0 60px rgba(80, 140, 255, 0.38),
+      0 0 130px rgba(80, 140, 255, 0.18),
+      inset 0 0 28px rgba(255, 255, 255, 0.12);
   }
 
   .theme-pink .circle {
     box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.24),
-      0 0 40px rgba(255, 120, 160, 0.24),
-      0 0 80px rgba(255, 120, 160, 0.10),
-      inset 0 0 16px rgba(255, 255, 255, 0.06);
+      0 0 0 1px rgba(255, 255, 255, 0.38),
+      0 0 60px rgba(236, 93, 128, 0.38),
+      0 0 130px rgba(236, 93, 128, 0.18),
+      inset 0 0 28px rgba(255, 255, 255, 0.12);
   }
 
   /* ── CTA button ────────────────────────────────────── */

@@ -403,11 +403,10 @@ const gatewayIds = JSON.stringify(data.items.map((i: any) => i.slug));
     transform: translate(50%, 50%);
     aspect-ratio: 1; border-radius: 50%;
     background: transparent; pointer-events: none;
-    animation: pulsing 5s ease-in-out infinite;
   }
-  .sc--lg { width: 90%; animation-delay: 2s; }
-  .sc--md { width: 62%; animation-delay: 1s; }
-  .sc--sm { width: 38%; animation-delay: 0s; }
+  .sc--sm { width: 38%; animation: circlePulseSm 7s ease-in-out infinite 0s; }
+  .sc--md { width: 62%; animation: circlePulseMd 7s ease-in-out infinite 0.9s; }
+  .sc--lg { width: 90%; animation: circlePulseLg 7s ease-in-out infinite 1.8s; }
 
   .sidebar-item .sc {
     box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 0 20px rgba(0,135,146,0.15);

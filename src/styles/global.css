@@ -215,14 +215,19 @@
 /* ─────────────────────────────────────────────────────────────────
    ANIMATIONS
 ───────────────────────────────────────────────────────────────── */
-@keyframes pulsing {
-	0%,
-	100% {
-		scale: 1;
-	}
-	50% {
-		scale: 1.05;
-	}
+@keyframes circlePulseSm {
+	0%, 100% { transform: translate(50%, 50%) scale(1); }
+	50%       { transform: translate(50%, 50%) scale(1.10); }
+}
+
+@keyframes circlePulseMd {
+	0%, 100% { transform: translate(50%, 50%) scale(1); }
+	50%       { transform: translate(50%, 50%) scale(1.08); }
+}
+
+@keyframes circlePulseLg {
+	0%, 100% { transform: translate(50%, 50%) scale(1); }
+	50%       { transform: translate(50%, 50%) scale(1.06); }
 }
 
 /* ── Decorative circles (used in Hero, PageHero, CtaFinal, OpenSourceBanner, EcosystemSection) ── */
@@ -234,8 +239,17 @@
 	aspect-ratio: 1;
 	border-radius: 50%;
 	background: transparent;
-	animation: pulsing 5s ease-in-out infinite;
+	box-shadow:
+		0 0 0 1px rgba(255, 255, 255, 0.38),
+		0 0 60px rgba(0, 200, 215, 0.38),
+		0 0 130px rgba(0, 200, 215, 0.18),
+		inset 0 0 28px rgba(255, 255, 255, 0.12);
+	transition: scale 2s ease;
 }
+
+.circle--sm { animation: circlePulseSm 7s ease-in-out infinite 0s; }
+.circle--md { animation: circlePulseMd 7s ease-in-out infinite 0.9s; }
+.circle--lg { animation: circlePulseLg 7s ease-in-out infinite 1.8s; }
 
 /* ── Scroll reveal ── */
 .reveal {

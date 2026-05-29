@@ -146,6 +146,27 @@ const cta = {
       </div>
     </div>
 
+    <!-- EU FUNDING -->
+    <div class="container eu-wrap">
+      <div class="eu-card reveal">
+        <div class="eu-circles" aria-hidden="true">
+          <span class="circle circle--lg"></span>
+          <span class="circle circle--md"></span>
+          <span class="circle circle--sm"></span>
+        </div>
+        <div class="eu-left">
+          <h3>{funding.title}</h3>
+          <p set:html={funding.description} />
+          <a href={funding.link.href} class="eu-link">{funding.link.label}</a>
+        </div>
+        <div class="eu-badge">
+          <img class="eu-flag" src={euLogo.src} alt="Co-funded by the European Union" />
+          <strong>{funding.badge.title}</strong>
+          <p>Grant agreement<br/>{funding.badge.grant}</p>
+        </div>
+      </div>
+    </div>
+
     <!-- MISSION -->
     <div class="section-label"><div class="container">{mission.label}</div></div>
     <div class="container">
@@ -334,27 +355,6 @@ const cta = {
               and more to join
             </div>
           )}
-        </div>
-      </div>
-    </div>
-
-    <!-- EU FUNDING -->
-    <div class="container eu-wrap">
-      <div class="eu-card reveal">
-        <div class="eu-circles" aria-hidden="true">
-          <span class="eu-circle eu-circle--lg"></span>
-          <span class="eu-circle eu-circle--md"></span>
-          <span class="eu-circle eu-circle--sm"></span>
-        </div>
-        <div class="eu-left">
-          <h3>{funding.title}</h3>
-          <p set:html={funding.description} />
-          <a href={funding.link.href} class="eu-link">{funding.link.label}</a>
-        </div>
-        <div class="eu-badge">
-          <img class="eu-flag" src={euLogo.src} alt="Co-funded by the European Union" />
-          <strong>{funding.badge.title}</strong>
-          <p>Grant agreement<br/>{funding.badge.grant}</p>
         </div>
       </div>
     </div>
@@ -893,24 +893,19 @@ const cta = {
     overflow: visible;
   }
 
-  .eu-circle {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    transform: translate(50%, 50%);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: transparent;
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.12),
-      0 0 40px rgba(60, 100, 255, 0.18),
-      inset 0 0 16px rgba(255, 255, 255, 0.04);
-    animation: pulsing 6s ease-in-out infinite;
-  }
+  /* circle sizes — animation and base style from global.css */
+  .circle--lg { width: 70%; }
+  .circle--md { width: 48%; }
+  .circle--sm { width: 28%; }
 
-  .eu-circle--lg { width: 70%; animation-delay: 2s; }
-  .eu-circle--md { width: 48%; animation-delay: 1s; }
-  .eu-circle--sm { width: 28%; animation-delay: 0s; }
+  /* EU blue glow */
+  .circle {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.38),
+      0 0 60px rgba(80, 140, 255, 0.38),
+      0 0 130px rgba(80, 140, 255, 0.18),
+      inset 0 0 28px rgba(255, 255, 255, 0.12);
+  }
 
   .eu-left {
     position: relative;
@@ -990,15 +985,18 @@ const cta = {
     flex-shrink: 0;
     backdrop-filter: blur(8px);
     opacity: 0;
-    transform: translateX(28px) scale(0.96);
+    transform: translateX(40px) scale(0.93);
+    filter: blur(6px);
     transition:
-      opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.46s,
-      transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.46s;
+      opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.55s,
+      transform 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.55s,
+      filter 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.55s;
   }
 
   .eu-card.is-visible .eu-badge {
     opacity: 1;
     transform: none;
+    filter: blur(0);
   }
 
   .eu-flag {

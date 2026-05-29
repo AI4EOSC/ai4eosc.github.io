@@ -1,0 +1,237 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import CtaFinal from '../components/ui/CtaFinal.astro';
+---
+
+<Layout
+  title="Acceptable Use Policy — AI4EOSC Initiative"
+  description="The Acceptable Use Policy governing access to and use of the AI4EOSC platform and associated services."
+>
+  <main>
+
+    <PageHero
+      theme="black"
+      breadcrumb="Acceptable Use Policy"
+      title="Acceptable Use Policy"
+      description="Conditions governing access to and use of the AI4EOSC platform and associated services."
+    />
+
+    <div class="container">
+      <div class="prose-card reveal">
+        <div class="prose-wrap">
+
+        <section class="prose-section">
+          <h2>Glossary of terms</h2>
+          <p>For the purpose of this document, the following terms and definitions apply:</p>
+          <p>The key words <strong>«MUST»</strong>, <strong>«MUST NOT»</strong>, <strong>«REQUIRED»</strong>, <strong>«SHALL»</strong>, <strong>«SHALL NOT»</strong>, <strong>«SHOULD»</strong>, <strong>«SHOULD NOT»</strong>, <strong>«RECOMMENDED»</strong>, <strong>«MAY»</strong>, and <strong>«OPTIONAL»</strong> in this document are to be interpreted as described in <a href="https://datatracker.ietf.org/doc/html/rfc2119" target="_blank" rel="noopener noreferrer">RFC 2119</a>.</p>
+        </section>
+
+        <section class="prose-section">
+          <h2>Acceptable Use Policy and Conditions of Use</h2>
+          <ol>
+            <li>You shall only use the Services in a manner consistent with the purposes and limitations described above; you shall show consideration towards other users including by not causing harm to the Services; you have an obligation to collaborate in the resolution of issues arising from your use of the Services.</li>
+            <li>You shall only use the Services for lawful purposes and not breach, attempt to breach, nor circumvent administrative or security controls.</li>
+            <li>You shall respect intellectual property and confidentiality agreements.</li>
+            <li>You shall protect your access credentials (e.g. passwords, private keys or multi-factor tokens); no intentional sharing is permitted.</li>
+            <li>You shall keep your registered information correct and up to date.</li>
+            <li>You shall promptly report known or suspected security breaches, credential compromise, or misuse to the security contact stated below; and report any compromised credentials to the relevant issuing authorities.</li>
+            <li>Reliance on the Services shall only be to the extent specified by any applicable service level agreements listed below. Use without such agreements is at your own risk.</li>
+            <li>Your personal data will be processed in accordance with the privacy statements referenced below.</li>
+            <li>Your use of the Services may be restricted or suspended, for administrative, operational, or security reasons, without prior notice and without compensation.</li>
+            <li>If you violate these rules, you may be liable for the consequences, which may include your account being suspended and a report being made to your home organisation or to law enforcement.</li>
+            <li>You shall provide appropriate acknowledgement of support for your use of the resources and services provided. The following acknowledgement text can be used for this purpose (e.g. in scientific publications):</li>
+          </ol>
+          <blockquote>«We acknowledge the support from the AI4EOSC Initiative.»</blockquote>
+        </section>
+
+        <section class="prose-section contacts">
+          <h2>Contacts and references</h2>
+          <dl>
+            <div class="dl-row">
+              <dt>Administrative contact</dt>
+              <dd><a href="mailto:ai4eosc-po@listas.csic.es">ai4eosc-po@listas.csic.es</a></dd>
+            </div>
+            <div class="dl-row">
+              <dt>Security contact</dt>
+              <dd><a href="mailto:ai4eosc-security@listas.csic.es">ai4eosc-security@listas.csic.es</a></dd>
+            </div>
+            <div class="dl-row">
+              <dt>Privacy statements</dt>
+              <dd><a href="/privacy-policy">Privacy Policy</a></dd>
+            </div>
+            <div class="dl-row">
+              <dt>Service level agreements</dt>
+              <dd><a href="https://confluence.ifca.es/display/AI4/AI4EOSC+Generic+SLA" target="_blank" rel="noopener noreferrer">AI4EOSC Generic SLA</a></dd>
+            </div>
+          </dl>
+        </section>
+
+        </div>
+      </div>
+    </div>
+
+    <CtaFinal
+      theme="teal"
+      title="Questions about this policy?"
+      description="Contact the AI4EOSC team for any clarification regarding these conditions of use."
+      button={{ label: "Contact us", href: "/support/contact" }}
+    />
+
+  </main>
+</Layout>
+
+<style>
+  .container {
+    padding-top: 50px;
+    padding-bottom: 40px;
+  }
+
+  .prose-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .prose-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 102px 56px 96px;
+  }
+
+  @media (max-width: 720px) {
+    .prose-wrap {
+      padding: 40px 28px 56px;
+    }
+  }
+
+  .prose-section {
+    margin-bottom: 52px;
+  }
+
+  .prose-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .prose-section h2 {
+    font-family: var(--font-headings);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--color-neutral-900);
+    letter-spacing: -0.02em;
+    margin: 0 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .prose-section p {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--color-neutral-700);
+    margin: 0 0 16px;
+    text-align: justify;
+  }
+
+  .prose-section ol {
+    padding-left: 0;
+    list-style: none;
+    counter-reset: aup;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+  }
+
+  .prose-section ol li {
+    counter-increment: aup;
+    display: flex;
+    gap: 12px;
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--color-neutral-700);
+  }
+
+  .prose-section ol li::before {
+    content: counter(aup) ".";
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-primary-600);
+    flex-shrink: 0;
+    width: 20px;
+    padding-top: 1px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .prose-section a {
+    color: var(--color-primary-600);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .prose-section a:hover {
+    text-decoration: underline;
+  }
+
+  .prose-section em {
+    font-style: italic;
+    color: var(--color-neutral-600);
+  }
+
+  blockquote {
+    text-align: center;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--color-neutral-600);
+    background: var(--color-primary-50);
+    border-radius: var(--radius-sm);
+    padding: 16px 24px;
+    margin: 20px 0 0;
+  }
+
+  /* Contacts table */
+  .contacts dl {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .dl-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--color-border);
+    padding: 14px 20px;
+  }
+
+  .dl-row:last-child {
+    border-bottom: none;
+  }
+
+  dt {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-neutral-600);
+    display: flex;
+    align-items: center;
+  }
+
+  dd {
+    font-size: 16px;
+    color: var(--color-neutral-800);
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  @media (max-width: 600px) {
+    .dl-row {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+  }
+</style>
