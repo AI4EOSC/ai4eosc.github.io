@@ -154,7 +154,7 @@ const communityIds = JSON.stringify(data.items.map((i: any) => i.slug));
                     <div class="pdr-actions">
                       {item.viaUrl && (
                         <a class="btn-gray" href={item.viaUrl} target="_blank" rel="noopener">
-                          Visit gateway ↗
+                          Visit gateway
                         </a>
                       )}
                     </div>
@@ -187,7 +187,7 @@ const communityIds = JSON.stringify(data.items.map((i: any) => i.slug));
             </div>
             <h4>Find your domain</h4>
             <p>Browse the communities above to see if your scientific area is already covered and what AI tools are available for your research.</p>
-            <a class="step-link" href="#top">Browse communities →</a>
+            <a class="step-link" href="#top">Browse communities</a>
           </div>
           <div class="step-item">
             <div class="step-top">
@@ -198,7 +198,7 @@ const communityIds = JSON.stringify(data.items.map((i: any) => i.slug));
             </div>
             <h4>Access via a gateway</h4>
             <p>Each community has a dedicated gateway — a tailored instance of the platform with domain-specific models and workflows.</p>
-            <a class="step-link" href="/ecosystem/gateways">Explore gateways →</a>
+            <a class="step-link" href="/ecosystem/gateways">Explore gateways</a>
           </div>
           <div class="step-item">
             <div class="step-top">
@@ -209,7 +209,7 @@ const communityIds = JSON.stringify(data.items.map((i: any) => i.slug));
             </div>
             <h4>Deploy your own</h4>
             <p>If your domain isn't covered yet, get in touch. We can help you deploy a new community gateway on AI4EOSC infrastructure.</p>
-            <a class="step-link" href="/support/contact">Contact the team →</a>
+            <a class="step-link" href="/support/contact">Contact the team</a>
           </div>
         </div>
       </div>
@@ -234,6 +234,13 @@ const communityIds = JSON.stringify(data.items.map((i: any) => i.slug));
   }
   .hstat-val em { font-style: normal; color: rgba(255,255,255,0.45); font-size: 30px; }
   .hstat-lbl { font-size: 18px; color: rgba(255,255,255,0.45); font-weight: 500; }
+
+  @media (max-width: 640px) {
+    .hero-stats { gap: 20px; margin-top: 20px; }
+    .hstat-val  { font-size: 32px; }
+    .hstat-val em { font-size: 22px; }
+    .hstat-lbl  { font-size: 14px; }
+  }
 
   /* ── Section layout ─────────────────────────────────── */
   .p-section { padding: 0 0 24px; }
@@ -383,11 +390,13 @@ const communityIds = JSON.stringify(data.items.map((i: any) => i.slug));
   .pdl-tagline {
     font-size: 16px; font-weight: 500; line-height: 1.5;
     color: var(--color-neutral-700); margin: 0 0 14px;
+    text-align: justify;
   }
 
   .pdl-desc {
     font-size: 16px; line-height: 1.7;
     color: var(--color-neutral-500); margin: 0 0 24px;
+    text-align: justify;
   }
 
   .feats {
@@ -452,7 +461,7 @@ const communityIds = JSON.stringify(data.items.map((i: any) => i.slug));
   .step-item + .step-item { padding-left: 36px; }
 
   .step-item:not(:last-child)::after {
-    content: '→';
+    content: '\2192\FE0E';
     position: absolute;
     right: -13px; top: 46px;
     width: 26px; height: 26px;
@@ -493,6 +502,7 @@ const communityIds = JSON.stringify(data.items.map((i: any) => i.slug));
   .step-item p  { font-size: 16px; color: var(--color-neutral-500); line-height: 1.65; margin: 0 0 16px; }
   .step-link { font-size: 16px; font-weight: 500; color: var(--color-secondary-600); text-decoration: none; display: inline-block; transition: opacity 0.15s; }
   .step-link:hover { opacity: 0.7; }
+  .step-link::after { content: " \2192\FE0E"; }
 
   /* ── Responsive ─────────────────────────────────────── */
   @media (max-width: 860px) {

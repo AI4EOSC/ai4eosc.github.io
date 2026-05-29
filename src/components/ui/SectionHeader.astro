@@ -43,7 +43,9 @@ const { title, subtitle, actionLabel, actionHref } = Astro.props;
     max-width: 460px;
   }
 
-  @media (max-width: 720px) {
+  .button-pill.dark::after { content: "\2192\FE0E"; margin-left: 4px; }
+
+  @media (max-width: 860px) {
     .section-header {
       flex-direction: column;
       align-items: flex-start;

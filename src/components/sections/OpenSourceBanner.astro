@@ -1,7 +1,7 @@
 ---
 const title = 'Fully open source';
 const description = 'All AI4EOSC software is open source and available on GitHub.';
-const button = { label: 'View on GitHub →', href: 'https://github.com/ai4eosc' };
+const button = { label: 'View on GitHub', href: 'https://github.com/ai4eosc' };
 ---
 
 <section class="os-wrap">
@@ -102,6 +102,8 @@ const button = { label: 'View on GitHub →', href: 'https://github.com/ai4eosc'
       0 0 20px rgba(0, 210, 230, 0.25);
   }
 
+  .button-pill.primary::after { content: "\2197\FE0E"; margin-left: 4px; }
+
   .gh-icon {
     width: 20px;
     height: 20px;
@@ -135,7 +137,7 @@ const button = { label: 'View on GitHub →', href: 'https://github.com/ai4eosc'
     scale: 1.10;
   }
 
-  @media (max-width: 720px) {
+  @media (max-width: 860px) {
     .banner-content {
       flex-direction: column;
       align-items: flex-start;

@@ -153,6 +153,7 @@ const { title, description, button, theme } = Astro.props;
     background: #ffffff;
     box-shadow: 0 1px 4px rgba(0,0,0,0.10);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
+    font-variant-emoji: text;
   }
 
   .cta-btn:hover {
@@ -165,7 +166,7 @@ const { title, description, button, theme } = Astro.props;
   .theme-blue  .cta-btn { color: #15428b; }
   .theme-pink  .cta-btn { color: #a01848; }
 
-  @media (max-width: 720px) {
+  @media (max-width: 860px) {
     .cta {
       padding: 36px 26px;
     }

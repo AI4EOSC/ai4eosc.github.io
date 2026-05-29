@@ -91,7 +91,7 @@ items:
       status: new
       title: EOSC-ARENA
       tagline: AI Research Enhancement through Networked Agents
-      description: EOSC-ARENA extends the AI4EOSC platform with AI agent capabilities focused on scientific research.
+      description: "A sovereign, generative and agentic AI environment integrated with the EOSC, designed to act as a scientific assistant across the full research lifecycle, from literature review and hypothesis generation to analysis, reporting, and provenance capture.\n\nCoordinated by PSNC, EOSC-ARENA focuses on model and data sovereignty, human-centred AI, and research integrity, extending the AI4OS software stack towards GenAI as part of the AI4EOSC ecosystem."
       outputsLabel: Adding to AI4EOSC
       outputs:
           - AI agent framework
@@ -101,6 +101,7 @@ items:
           - Agent observability
       funding: 8391245
       programme: Horizon Europe
+      grant: "No. 101292597"
       period: "2026 – 2029"
       lead: PSNC
       partners:
@@ -122,9 +123,13 @@ items:
           - US
           - CSC
       url: https://arena.ai4eosc.eu
+      logo: EOSC-ARENA.png
+      grantUrl: https://cordis.europa.eu/project/id/101292597
       social:
-          linkedin: https://www.linkedin.com/company/eosc-arena/
-          x: https://x.com/EOSC_ARENA
+          linkedin: https://www.linkedin.com/company/eosc-arena
+          x: https://x.com/EOSCArena
+          bluesky: https://bsky.app/profile/eosc-arena.bsky.social
+          email: eoscarena@gmail.com
 
     - id: imagine
       type: associated

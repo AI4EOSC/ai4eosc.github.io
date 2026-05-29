@@ -88,7 +88,7 @@ const icons: Record<string, string> = {
 
   /* Arrow badge on each divider */
   .item:not(:last-child)::after {
-    content: '→';
+    content: '\2192\FE0E';
     position: absolute;
     right: -13px;
     top: 46px;
@@ -154,7 +154,7 @@ const icons: Record<string, string> = {
   }
 
   /* ── Responsive ──────────────────────────────────────────────── */
-  @media (max-width: 900px) {
+  @media (max-width: 860px) {
     .grid {
       grid-template-columns: 1fr;
       border-top: none;

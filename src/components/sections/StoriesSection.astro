@@ -17,7 +17,7 @@ const sortedStories = stories
       <SectionHeader
         title="From the initiative"
         subtitle="News, case studies and research highlights from across the AI4EOSC ecosystem."
-        actionLabel="All stories →"
+        actionLabel="All stories"
         actionHref="/stories"
       />
       <div class="grid">
@@ -43,7 +43,7 @@ const sortedStories = stories
               </div>
               <h4>{story.data.title}</h4>
               <p>{story.data.excerpt}</p>
-              <span class="read-link">{story.data.externalUrl ? 'View on external site ↗' : 'Read story →'}</span>
+              <span class="read-link">{story.data.externalUrl ? 'View on external site' : 'Read story'}</span>
             </div>
           </a>
         ))}
@@ -165,7 +165,10 @@ const sortedStories = stories
 
   .item:hover .read-link { color: var(--color-primary-600); }
 
-  @media (max-width: 900px) {
+  .read-link::after                          { content: " \2192\FE0E"; }
+  .item[target="_blank"] .read-link::after   { content: " \2197\FE0E"; }
+
+  @media (max-width: 860px) {
     .grid {
       grid-template-columns: 1fr;
       border-top: none;

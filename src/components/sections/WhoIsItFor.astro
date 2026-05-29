@@ -37,7 +37,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
             <span class="role">Developer</span>
             <h3>Deploy your models on EOSC</h3>
             <p>Use our open-source platform to train, serve and publish AI models with EOSC-native authentication.</p>
-            <span class="link">Explore products →</span>
+            <span class="link">Explore products</span>
           </div>
         </a>
 
@@ -87,7 +87,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
             <span class="role">Researcher</span>
             <h3>Find AI tools for your domain</h3>
             <p>Access ready-to-use AI models and computing resources tailored to your scientific field.</p>
-            <span class="link">Explore communities →</span>
+            <span class="link">Explore communities</span>
           </div>
         </a>
 
@@ -134,7 +134,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
             <span class="role">Institution</span>
             <h3>Build your own gateway</h3>
             <p>Deploy a customised instance of the platform for your project and join the ecosystem.</p>
-            <span class="link">Join the ecosystem →</span>
+            <span class="link">Join the ecosystem</span>
           </div>
         </a>
 
@@ -485,7 +485,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
   }
 
   /* ── Responsive ─────────────────────────────────────────────── */
-  @media (max-width: 900px) {
+  @media (max-width: 860px) {
     .grid {
       grid-template-columns: 1fr;
       border-top: none;
@@ -497,5 +497,9 @@ import SectionHeader from '../ui/SectionHeader.astro';
     }
 
     .body { padding: 24px 0 24px 0 !important; }
+  }
+
+  @media (max-width: 640px) {
+    .illus { display: none; }
   }
 </style>

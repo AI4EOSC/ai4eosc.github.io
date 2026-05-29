@@ -106,7 +106,7 @@ function formatDate(d: Date, short = false) {
                 </div>
                 <h4 class="rel-title">{s.data.title}</h4>
                 <p class="rel-excerpt">{s.data.excerpt}</p>
-                <span class="rel-link">{s.data.externalUrl ? 'View on external site ↗' : 'Read story →'}</span>
+                <span class="rel-link">{s.data.externalUrl ? 'View on external site' : 'Read story'}</span>
               </div>
             </a>
           ))}
@@ -461,14 +461,16 @@ function formatDate(d: Date, short = false) {
   }
 
   .rel-item:hover .rel-link { color: var(--color-primary-600); }
+  .rel-link::after                              { content: " \2192\FE0E"; }
+  .rel-item[target="_blank"] .rel-link::after   { content: " \2197\FE0E"; }
 
   /* ── Responsive ─────────────────────────────────────── */
-  @media (max-width: 960px) {
+  @media (max-width: 860px) {
     .article-topbar { padding: 12px 28px; }
     .prose { padding: 36px 28px 52px; }
   }
 
-  @media (max-width: 720px) {
+  @media (max-width: 640px) {
     .article-image { height: 220px; }
     .prose { padding: 28px 20px 40px; font-size: 16px; }
     .article-topbar { padding: 12px 20px; }

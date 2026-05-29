@@ -121,6 +121,11 @@ const currentYear = new Date().getFullYear();
     color: var(--color-neutral-500);
     margin-bottom: 7px;
     text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .column a:hover {
+    color: var(--color-neutral-900);
   }
 
   .footer-bottom {
@@ -165,7 +170,7 @@ const currentYear = new Date().getFullYear();
     color: var(--color-neutral-900);
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 860px) {
     .footer {
       grid-template-columns: 1fr 1fr;
       padding: 32px 24px 0;

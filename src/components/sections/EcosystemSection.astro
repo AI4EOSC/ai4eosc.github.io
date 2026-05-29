@@ -61,9 +61,9 @@ const communityIcons: Record<string, string> = {
             </div>
             <p class="tagline">{item.tagline}</p>
             <div class="tile-links">
-              <a class="link-project" href={`/ecosystem/projects#${item.id}`}>View project →</a>
+              <a class="link-project" href={`/ecosystem/projects#${item.id}`}>View project</a>
               {item.url && (
-                <a class="link-ext" href={item.url} target="_blank" rel="noopener noreferrer">Visit website ↗</a>
+                <a class="link-ext" href={item.url} target="_blank" rel="noopener noreferrer">Visit website</a>
               )}
             </div>
           </div>
@@ -118,7 +118,7 @@ const communityIcons: Record<string, string> = {
               <span class="comm-title">{item.title}</span>
             </div>
             <p class="tagline comm-desc">{item.description}</p>
-            <a class="link-community" href={`/ecosystem/communities#${item.slug}`}>View community →</a>
+            <a class="link-community" href={`/ecosystem/communities#${item.slug}`}>View community</a>
           </div>
         ))}
         <a class="tile tile-viewall tile-viewall--communities reveal" style="transition-delay:200ms" href="/ecosystem/communities">
@@ -167,9 +167,9 @@ const communityIcons: Record<string, string> = {
             </div>
             <p class="tagline">{item.tagline}</p>
             <div class="tile-links">
-              <a class="link-gateway" href={`/ecosystem/gateways#${item.slug}`}>View gateway →</a>
+              <a class="link-gateway" href={`/ecosystem/gateways#${item.slug}`}>View gateway</a>
               {item.url && (
-                <a class="link-ext" href={item.url} target="_blank" rel="noopener noreferrer">Visit gateway ↗</a>
+                <a class="link-ext" href={item.url} target="_blank" rel="noopener noreferrer">Visit gateway</a>
               )}
             </div>
           </div>
@@ -620,12 +620,18 @@ const communityIcons: Record<string, string> = {
     box-shadow: inset 3px 0 0 var(--color-primary-500);
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 860px) {
     .hero-circles { display: none; }
     .tile-grid { grid-template-columns: 1fr 1fr; }
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 640px) {
+    .hero { padding: 28px 24px; }
+    h2 { font-size: 26px; }
+    .hero p { font-size: 15px; }
+  }
+
+  @media (max-width: 640px) {
     .tile-grid { grid-template-columns: 1fr; }
   }
 </style>

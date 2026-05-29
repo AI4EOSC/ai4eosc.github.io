@@ -585,4 +585,16 @@ svg {
 
 .btn-outline:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.45); transform: translateY(-1px); }
 
+/* ── Arrows: CSS-injected to prevent emoji rendering on mobile ─────────── */
+/* flex buttons: margin-left because leading space is ignored in inline-flex */
+.btn-teal::after                   { content: "\2192\FE0E"; margin-left: 4px; }
+.btn-teal[target="_blank"]::after  { content: "\2197\FE0E"; margin-left: 4px; }
+.btn-gray::after                   { content: "\2197\FE0E"; margin-left: 4px; }
+/* text links: leading space works fine in block/inline contexts */
+.link::after                       { content: " \2192\FE0E"; }
+.link-project::after               { content: " \2192\FE0E"; }
+.link-community::after             { content: " \2192\FE0E"; }
+.link-gateway::after               { content: " \2192\FE0E"; }
+.link-ext::after                   { content: " \2197\FE0E"; }
+
 [x-cloak] { display: none !important; }

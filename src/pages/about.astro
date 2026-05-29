@@ -87,7 +87,7 @@ const partnersSection = {
 const funding = {
   title: 'Funded by Horizon Europe',
   description: 'The original <strong>AI4EOSC project</strong> was funded by the European Union under the Horizon Europe research and innovation programme. Associated projects within the initiative are independently funded through their own EU grants.',
-  link: { label: 'Explore all projects in the ecosystem →', href: '/ecosystem/projects' },
+  link: { label: 'Explore all projects in the ecosystem', href: '/ecosystem/projects' },
   badge: { title: 'Horizon Europe', grant: 'No. 101058593' },
 };
 
@@ -966,6 +966,8 @@ const cta = {
     color: #ffffff;
   }
 
+  .eu-link::after { content: "\2192\FE0E"; margin-left: 4px; }
+
   /* staggered reveal when card enters viewport */
   .eu-card.is-visible .eu-left h3,
   .eu-card.is-visible .eu-left p,
@@ -1031,12 +1033,6 @@ const cta = {
   }
 
   @media (max-width: 860px) {
-    .partners-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  @media (max-width: 900px) {
     .mission-grid {
       grid-template-columns: 1fr;
       border-top: none;
@@ -1063,8 +1059,7 @@ const cta = {
     }
 
     .partners-grid {
-      grid-template-columns: repeat(3, 1fr);
-      background: var(--card-border);
+      grid-template-columns: repeat(4, 1fr);
     }
 
     .eu-card {
@@ -1083,7 +1078,7 @@ const cta = {
     .tl-content { padding: 20px 0 24px; }
 
     .partners-grid {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 </style>

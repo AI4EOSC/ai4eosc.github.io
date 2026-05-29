@@ -464,8 +464,18 @@ import logoSrc from '../../assets/logos/AI4-horizontal-light.svg?url';
       trigger.addEventListener('click', () => {
         const groupEl = trigger.closest('.mob-group') as HTMLElement | null;
         if (!groupEl) return;
-        const isOpen = groupEl.classList.toggle('mob-group-open');
-        trigger.setAttribute('aria-expanded', String(isOpen));
+        const willOpen = !groupEl.classList.contains('mob-group-open');
+        // Close all groups first
+        document.querySelectorAll<HTMLElement>('.mob-group').forEach(g => {
+          g.classList.remove('mob-group-open');
+          const t = g.querySelector<HTMLElement>('[data-mob-trigger]');
+          t?.setAttribute('aria-expanded', 'false');
+        });
+        // Open the clicked one if it was closed
+        if (willOpen) {
+          groupEl.classList.add('mob-group-open');
+          trigger.setAttribute('aria-expanded', 'true');
+        }
       });
     });
   }

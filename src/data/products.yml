@@ -18,7 +18,7 @@ items:
           - MLflow tracking
       linkLabel: Explore platform ↗
       linkHref: /products#platform
-      visitLabel: Visit project ↗
+      visitLabel: Visit project
       visitHref: https://ai4eosc.eu
       docsHref: https://docs.ai4eosc.eu
     - category: Language models
@@ -38,7 +38,7 @@ items:
           - OpenAI-compatible API
       linkLabel: Explore LLM ↗
       linkHref: /products#llm
-      visitLabel: Visit project ↗
+      visitLabel: Visit project
       visitHref: https://llm.ai4eosc.eu
       docsHref: https://docs.ai4eosc.eu/llm
     - category: AI agents
@@ -57,5 +57,5 @@ items:
           - EOSC-ARENA
       linkLabel: Learn more ↗
       linkHref: /products#agents
-      visitLabel: Learn more ↗
+      visitLabel: Learn more
       visitHref: https://arena.ai4eosc.eu
