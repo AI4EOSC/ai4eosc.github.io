@@ -1,6 +1,8 @@
 ---
-import projectsData from '../../data/projects.yml';
+import { getCollection } from 'astro:content';
 import partnersData from '../../data/partners.yml';
+
+const projectEntries = await getCollection('projects');
 
 // partners.yml is a lookup: name → { logo, url }
 const partnerMeta = new Map(
@@ -10,9 +12,9 @@ const partnerMeta = new Map(
 
 // Collect every unique partner name from all projects (lead + partners lists)
 const allNames = new Set<string>();
-for (const project of projectsData.items as Array<{ lead?: string; partners?: string[] }>) {
-  if (project.lead) allNames.add(project.lead);
-  for (const p of project.partners ?? []) allNames.add(p);
+for (const project of projectEntries) {
+  if (project.data.lead) allNames.add(project.data.lead);
+  for (const p of project.data.partners ?? []) allNames.add(p);
 }
 
 const logoUrls = import.meta.glob<string>(

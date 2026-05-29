@@ -1,0 +1,11 @@
+title: Digital Humanities
+iconId: humanities
+users: 100
+description: Text mining, cultural analytics
+longDescription: AI tools for cultural heritage data analysis, historical text mining and digital preservation, connecting humanities researchers with state-of-the-art machine learning capabilities on EOSC infrastructure.
+tools:
+    - Historical OCR
+    - Text mining
+    - Cultural analytics
+slug: digital-humanities
+order: 5

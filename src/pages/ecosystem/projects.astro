@@ -2,7 +2,12 @@
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/ui/PageHero.astro';
 import CtaFinal from '../../components/ui/CtaFinal.astro';
-import data from '../../data/projects.yml';
+import { getCollection } from 'astro:content';
+
+const entries = await getCollection('projects');
+const items = entries
+  .sort((a, b) => a.data.order - b.data.order)
+  .map(e => ({ id: e.id, ...e.data }));
 
 const logoUrls = import.meta.glob<string>(
   '../../assets/logos/*',
@@ -25,16 +30,16 @@ function formatFunding(amount: number): string {
   return `€${amount}`;
 }
 
-const totalProjects = data.items.length;
+const totalProjects = items.length;
 
 const allInstitutions = new Set<string>();
-data.items.forEach((item: any) => {
+items.forEach((item: any) => {
   if (item.lead) allInstitutions.add(item.lead.trim());
   if (item.partners) item.partners.forEach((p: string) => allInstitutions.add(p.trim()));
 });
 const totalInstitutions = allInstitutions.size;
-const totalFunding = data.items.reduce((acc: number, item: any) => acc + (item.funding ?? 0), 0);
-const projectIds = JSON.stringify(data.items.map((i: any) => i.id));
+const totalFunding = items.reduce((acc: number, item: any) => acc + (item.funding ?? 0), 0);
+const projectIds = JSON.stringify(items.map((i: any) => i.id));
 
 const typeBadge: Record<string, { label: string; cls: string }> = {
   origin:     { label: 'Origin project',    cls: 'b-origin' },
@@ -76,7 +81,7 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
           Mobile:   sidebar becomes horizontal scroll row, panel below
         -->
         <div class="catalogue" x-data={`{
-          active: '${data.items[0].id}',
+          active: '${items[0].id}',
           ids: ${projectIds},
           init() {
             this.$watch('active', v => history.replaceState(null, '', '#' + v));
@@ -89,7 +94,7 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
 
           <!-- Sidebar / tab strip -->
           <div class="cat-sidebar">
-            {data.items.map((item: any) => (
+            {items.map((item: any) => (
               <button
                 class="sidebar-item"
                 x-bind:class={`{ 'is-active': active === '${item.id}' }`}
@@ -106,7 +111,7 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
 
           <!-- Detail panels -->
           <div class="cat-detail">
-            {data.items.map((item: any) => (
+            {items.map((item: any) => (
               <div class="detail-panel" x-show={`active === '${item.id}'`} x-cloak>
                 <div class="detail-inner">
 

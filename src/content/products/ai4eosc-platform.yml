@@ -1,0 +1,21 @@
+category: Core platform
+title: AI4EOSC Platform
+tagline: Open-source infrastructure for training, serving and cataloguing AI models on EOSC
+status: Available
+description: The base infrastructure for deploying and managing AI models in EOSC.
+detailDescription: The base infrastructure for developing, training, serving and cataloguing AI models within the European Open Science Cloud. Built on open standards with native EOSC authentication and storage — no infrastructure setup required for researchers. Supports federated learning across multiple EOSC sites. Developed in the original AI4EOSC project, and continuously improved with new features and capabilities.
+iconId: platform
+theme: eu-blue
+features:
+    - Model training
+    - Model serving
+    - Federated learning
+    - DEEPaaS API
+    - OSCAR integration
+    - EOSC AAI
+    - oneData storage
+    - MLflow tracking
+visitLabel: Visit project
+visitHref: https://ai4eosc.eu
+docsHref: https://docs.ai4eosc.eu
+order: 1

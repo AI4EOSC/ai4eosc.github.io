@@ -1,7 +1,14 @@
 ---
-import projectsData from '../../data/projects.yml';
-import communitiesData from '../../data/communities.yml';
-import gatewaysData from '../../data/gateways.yml';
+import { getCollection } from 'astro:content';
+
+const projectEntries = await getCollection('projects');
+const projectsData = { items: projectEntries.sort((a, b) => a.data.order - b.data.order).map(e => ({ id: e.id, ...e.data })) };
+
+const communityEntries = await getCollection('communities');
+const communitiesData = { items: communityEntries.sort((a, b) => a.data.order - b.data.order).map(e => ({ id: e.id, ...e.data })) };
+
+const gatewayEntries = await getCollection('gateways');
+const gatewaysData = { items: gatewayEntries.sort((a, b) => a.data.order - b.data.order).map(e => ({ id: e.id, ...e.data })) };
 
 const typeLabel: Record<string, string> = {
   origin:     'Origin',

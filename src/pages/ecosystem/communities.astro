@@ -2,8 +2,15 @@
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/ui/PageHero.astro';
 import CtaFinal from '../../components/ui/CtaFinal.astro';
-import data from '../../data/communities.yml';
-import gatewaysData from '../../data/gateways.yml';
+import { getCollection } from 'astro:content';
+
+const entries = await getCollection('communities');
+const items = entries
+  .sort((a, b) => a.data.order - b.data.order)
+  .map(e => ({ id: e.id, ...e.data }));
+
+const gatewayEntries = await getCollection('gateways');
+const gatewaysItems = gatewayEntries.map(e => ({ id: e.id, ...e.data }));
 
 function formatUsers(count: number): string {
   if (count >= 1_000_000) {
@@ -17,9 +24,9 @@ function formatUsers(count: number): string {
   return `${count}`;
 }
 
-const totalCommunities = data.items.length;
-const totalUsers = data.items.reduce((acc: number, item: any) => acc + (item.users ?? 0), 0);
-const totalGateways = gatewaysData.items.length;
+const totalCommunities = items.length;
+const totalUsers = items.reduce((acc: number, item: any) => acc + (item.users ?? 0), 0);
+const totalGateways = gatewaysItems.length;
 
 const icons: Record<string, string> = {
   marine:         `<path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>`,
@@ -32,8 +39,8 @@ const icons: Record<string, string> = {
   astronomy:      `<circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>`,
 };
 
-const firstSlug: string = data.items[0]?.slug ?? '';
-const communityIds = JSON.stringify(data.items.map((i: any) => i.slug));
+const firstSlug: string = items[0]?.slug ?? '';
+const communityIds = JSON.stringify(items.map((i: any) => i.slug));
 ---
 
 <Layout title="Communities — AI4EOSC Ecosystem">
@@ -73,7 +80,7 @@ const communityIds = JSON.stringify(data.items.map((i: any) => i.slug));
 
           <!-- Sidebar / tab strip -->
           <div class="cat-sidebar">
-            {data.items.map((item: any) => (
+            {items.map((item: any) => (
               <button
                 class="sidebar-item"
                 x-bind:class={`{ 'is-active': active === '${item.slug}' }`}
@@ -96,7 +103,7 @@ const communityIds = JSON.stringify(data.items.map((i: any) => i.slug));
 
           <!-- Detail panels -->
           <div class="cat-detail">
-            {data.items.map((item: any) => (
+            {items.map((item: any) => (
               <div class="detail-panel" x-show={`active === '${item.slug}'`} x-cloak>
                 <div class="detail-inner">
 

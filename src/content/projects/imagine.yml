@@ -1,0 +1,41 @@
+type: associated
+status: finished
+title: iMagine
+tagline: Imaging data and services for aquatic science
+description: iMagine develops imaging data and services for aquatic science, leveraging the AI4EOSC platform.
+logo: iMagine.png
+outputs:
+    - Aquatic sciences
+    - Image analysis
+funding: 4500000
+programme: Horizon Europe
+period: "2022 – 2025"
+lead: EGI
+partners:
+    - CSIC
+    - CMCC
+    - DFKI
+    - EMSO-ERIC
+    - GRNET
+    - IFREMER
+    - KIT
+    - LIEC
+    - LIP
+    - Marine Institute
+    - MARIS
+    - OGS
+    - ORBITAL
+    - SOCIB
+    - Sorbonne Université
+    - TÜBITAK
+    - UNITN
+    - UPC
+    - UPV
+    - VLIZ
+    - WALTON
+url: https://www.imagine-ai.eu/
+grantUrl: https://cordis.europa.eu/project/id/101058625
+social:
+    linkedin: https://www.linkedin.com/company/imagine-project/
+    x: https://x.com/iMagine_project
+order: 4

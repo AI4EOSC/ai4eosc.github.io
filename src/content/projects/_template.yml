@@ -1,0 +1,34 @@
+# ── TEMPLATE: copy and rename to <project-id>.yml ────────────────────────────
+# The filename (without .yml) becomes the project ID used in URL anchors.
+#
+# Required fields
+title:        "Project Name"
+type:         origin          # origin | extension | associated
+status:       new             # finished | new | active
+tagline:      "One-line tagline shown in cards"
+description:  "Full description. Separate paragraphs with \n\n."
+outputs:
+    - "Output or key area 1"
+    - "Output or key area 2"
+order:        99              # controls display order (lower = first)
+
+# Optional fields
+logo:         filename.png    # image file in src/assets/logos/
+outputsLabel: "Key outputs"   # label above outputs list (default: "Key outputs")
+funding:      1234567.89      # total EU funding in EUR (numeric)
+grant:        "No. 101XXXXXX"
+programme:    "Horizon Europe"
+period:       "2022 – 2025"
+lead:         "LEAD_INSTITUTION"
+partners:
+    - "PARTNER1"
+    - "PARTNER2"
+url:          https://project.example.eu
+grantUrl:     https://cordis.europa.eu/project/id/101XXXXXX
+social:
+    linkedin: https://www.linkedin.com/company/...
+    x:        https://x.com/...
+    bluesky:  https://bsky.app/profile/...
+    youtube:  https://www.youtube.com/@...
+    github:   https://github.com/...
+    email:    contact@example.eu

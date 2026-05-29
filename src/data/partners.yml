@@ -74,3 +74,18 @@ items:
     - name: Sorbonne Université
       logo: Sorbonne_Université.png
       url: https://www.sorbonne-universite.fr
+    - name: UC3M
+      logo: UC3M.png
+      url: https://www.uc3m.es
+    - name: UNIPD
+      logo: UNIPD.png
+      url: https://www.unipd.it
+    - name: UGent
+      logo: UGent.png
+      url: https://www.ugent.be
+    - name: TÜBITAK
+      logo: TÜBITAK.png
+      url: https://www.tubitak.gov.tr
+    - name: Premotec
+      logo: Premotec.png
+      url: https://www.premotec.fr

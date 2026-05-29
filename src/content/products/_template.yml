@@ -1,0 +1,21 @@
+# ── TEMPLATE: copy and rename to <product-id>.yml ────────────────────────────
+# The filename (without .yml) is used as the URL anchor: /products#<id>
+#
+# Required fields
+category:          "Category label"
+title:             "Product Name"
+tagline:           "One-line tagline shown in cards"
+status:            Available    # Available | Preview | Coming soon
+description:       "Short description (1 line, shown in card)"
+detailDescription: "Full description shown in detail panel."
+iconId:            platform     # platform | llm | agents
+theme:             eu-blue      # eu-blue | secondary | primary
+features:
+    - "Feature 1"
+    - "Feature 2"
+visitLabel:        "Visit project"
+visitHref:         https://example.ai4eosc.eu
+order:             99           # controls display order
+
+# Optional
+docsHref:          https://docs.ai4eosc.eu/...

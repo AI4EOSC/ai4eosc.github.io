@@ -1,0 +1,35 @@
+type: associated
+status: finished
+title: AI4Life
+tagline: AI models and methods for the life sciences
+description: AI4Life builds a suite of AI tools and resources specifically tailored for the life sciences community, deployed on a specific catalog in the AI4EOSC platform. It supports life scientists in the adoption of machine learning solutions that improve the utility and interpretability of image data.
+logo: AI4Life.png
+outputsLabel: Key areas
+outputs:
+    - Bio-imaging
+    - Life sciences
+    - Model deployment
+    - FAIR access
+    - BioImage.IO
+funding: 4141166
+programme: Horizon Europe
+period: "2022 – 2025"
+lead: EURO-BIOIMAGING
+partners:
+    - EMBL
+    - EMBL_EBI
+    - EMBRC
+    - EMPHASIS
+    - EU OPENSCREEN
+    - HUMAN TECHNOPOLE
+    - IGC
+    - Intruct-ERIC
+    - KTH
+    - UC3M
+url: https://ai4life.eurobioimaging.eu
+grantUrl: https://cordis.europa.eu/project/id/101057970
+social:
+    linkedin: https://www.linkedin.com/company/ai4life-project/
+    x: https://x.com/AI4Life_project
+    github: https://github.com/bioimage-io
+order: 6

@@ -1,0 +1,49 @@
+type: extension
+status: new
+title: FLUID-AI
+tagline: FAIR Liquidity Unifying Interoperable Data and AI
+description: FLUID-AI aims to transform the EOSC into a dynamic, AI-ready ecosystem. The overarching goal is to significantly enhance the interoperability, machine-actionability, and AI readiness of data and models across European RIs and EOSC.
+outputs:
+    - Model and data interoperability
+    - Data liquidity
+    - AI-ready data and models
+    - Federated infrastructure
+    - Easy to use platform
+    - ML/AI model deployment
+funding: 7489443.75
+programme: Horizon Europe
+period: "2026 – 2029"
+lead: CSIC
+partners:
+    - PSNC
+    - KIT
+    - IISAS
+    - LIP
+    - INFN
+    - UvA
+    - UPV
+    - EGI
+    - INRAE
+    - CNRS
+    - IRD
+    - EMBL
+    - MARIS
+    - EURO-BIOIMAGING
+    - Predictia
+    - UCA
+    - RDAF
+    - INRIA
+    - KTH
+    - UC3M
+    - ARIADNE
+    - INGV
+    - ULIEGE
+    - OGS
+    - UFZ
+    - STUBA
+    - IFREMER
+url: https://fluid.ai4eosc.eu
+grantUrl: https://cordis.europa.eu/project/id/
+social:
+    linkedin: https://www.linkedin.com/company/fluid-ai/
+order: 2

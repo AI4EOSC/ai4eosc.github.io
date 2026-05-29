@@ -1,0 +1,19 @@
+category: Language models
+title: AI4EOSC LLM
+tagline: Large language model services for research, integrated with EOSC infrastructure
+status: Preview
+description: Large language model services tailored for research use cases on EOSC infrastructure.
+detailDescription: Large language model services tailored for research use cases, with data sovereignty guarantees. API access to open-source LLMs optimised for scientific domains — no data leaves European infrastructure. Integrated with EOSC authentication and storage. Supports federated learning across multiple EOSC sites. Currently in preview, with a public API available for testing and feedback.
+iconId: llm
+theme: secondary
+features:
+    - LLM API
+    - Research-optimised
+    - Data sovereignty
+    - European infra
+    - EOSC-native
+    - OpenAI-compatible API
+visitLabel: Visit project
+visitHref: https://llm.ai4eosc.eu
+docsHref: https://docs.ai4eosc.eu/llm
+order: 2

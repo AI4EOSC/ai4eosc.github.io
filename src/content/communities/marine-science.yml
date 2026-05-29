@@ -1,0 +1,14 @@
+title: Marine Science
+iconId: marine
+users: 150
+description: Underwater imaging, biodiversity
+longDescription: AI models for underwater image classification, species identification and marine biodiversity monitoring. Deployed through the iMagine gateway, which provides researchers with a specialised instance of the AI4EOSC platform.
+via: iMagine
+viaUrl: https://imagine-ai.eu
+gatewaySlug: imagine
+tools:
+    - Species classifier
+    - Image segmentation
+    - Biodiversity monitor
+slug: marine-science
+order: 1

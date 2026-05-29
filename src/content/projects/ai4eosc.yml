@@ -1,0 +1,36 @@
+type: origin
+status: finished
+title: AI4EOSC
+tagline: Artificial Intelligence for the European Open Science Cloud
+description: The original Horizon Europe project that created the AI4EOSC platform. Developed the core infrastructure for training, serving and cataloguing AI models within the EOSC, establishing the foundation that all subsequent projects build upon.
+logo: AI4-horizontal-light.svg
+outputsLabel: Key outputs
+outputs:
+    - AI4EOSC Platform
+    - DEEPaaS API
+    - Model catalogue
+    - OSCAR integration
+    - Federated learning
+funding: 4997125
+grant: "No. 101058593"
+programme: Horizon Europe
+period: "2022 – 2024"
+lead: CSIC
+partners:
+    - KIT
+    - IISAS
+    - INFN
+    - UPV
+    - PSNC
+    - LIP
+    - Predictia
+    - MicroStep MIS
+    - WODR
+url: https://ai4eosc.eu
+grantUrl: https://cordis.europa.eu/project/id/101058593
+social:
+    linkedin: https://www.linkedin.com/company/ai4eosc/
+    x: https://x.com/ai4eosc
+    youtube: https://www.youtube.com/@ai4eosc
+    github: https://github.com/ai4eosc
+order: 1

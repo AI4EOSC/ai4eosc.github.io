@@ -1,0 +1,21 @@
+title: Health-RI
+type: health
+domain: Health
+status: new
+users: 150
+tagline: Federated AI for European health research infrastructure
+description: Federated AI for European health research.
+longDescription: Health-RI deploys AI4EOSC's federated learning capabilities for health research, enabling institutions to train models on distributed patient data without centralising sensitive information. Fully GDPR-compliant and built for European health data spaces.
+community: Health Research
+operatedBy:
+    - Health-RI
+    - CNRS
+accessType: By request
+accessDesc: Access requires institutional approval due to the sensitive nature of health data.
+tools:
+    - Federated learning
+    - Medical imaging AI
+    - GDPR-compliant
+    - Privacy-preserving
+slug: health-ri
+order: 3

@@ -3,7 +3,9 @@ import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/ui/PageHero.astro';
 import CtaFinal from '../components/ui/CtaFinal.astro';
 import OpenSourceBanner from '../components/sections/OpenSourceBanner.astro';
-import data from '../data/products.yml';
+import { getCollection } from 'astro:content';
+const productEntries = await getCollection('products');
+const data = { items: productEntries.sort((a, b) => a.data.order - b.data.order).map(e => ({ id: e.id, ...e.data })) };
 
 const statusSlug: Record<string, string> = {
   'Available':   'available',

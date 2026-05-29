@@ -2,7 +2,12 @@
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/ui/PageHero.astro';
 import CtaFinal from '../../components/ui/CtaFinal.astro';
-import data from '../../data/gateways.yml';
+import { getCollection } from 'astro:content';
+
+const entries = await getCollection('gateways');
+const items = entries
+  .sort((a, b) => a.data.order - b.data.order)
+  .map(e => ({ id: e.id, ...e.data }));
 
 const logoUrls = import.meta.glob<string>(
   '../../assets/logos/*',
@@ -36,9 +41,9 @@ function formatUsers(count: number): string {
   return `${count}`;
 }
 
-const totalGateways = data.items.length;
-const distinctDomains = new Set(data.items.map((i: any) => i.domain as string)).size;
-const totalUsers = data.items.reduce((acc: number, item: any) => acc + (item.users ?? 0), 0);
+const totalGateways = items.length;
+const distinctDomains = new Set(items.map((i: any) => i.domain as string)).size;
+const totalUsers = items.reduce((acc: number, item: any) => acc + (item.users ?? 0), 0);
 
 const domains = ['all', 'marine', 'climate', 'health', 'life', 'physics'];
 const domainLabels: Record<string, string> = {
@@ -53,11 +58,11 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
 };
 
 const alpineItems = JSON.stringify(
-  data.items.map((i: any) => ({ slug: i.slug, type: i.type }))
+  items.map((i: any) => ({ slug: i.slug, type: i.type }))
 );
 
-const firstSlug: string = data.items[0]?.slug ?? '';
-const gatewayIds = JSON.stringify(data.items.map((i: any) => i.slug));
+const firstSlug: string = items[0]?.slug ?? '';
+const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
 ---
 
 <Layout title="Gateways — AI4EOSC Ecosystem">
@@ -152,7 +157,7 @@ const gatewayIds = JSON.stringify(data.items.map((i: any) => i.slug));
 
             <!-- Sidebar -->
             <div class="cat-sidebar">
-              {data.items.map((item: any) => (
+              {items.map((item: any) => (
                 <button
                   class="sidebar-item"
                   x-show={`filter === 'all' || filter === '${item.type}'`}
@@ -173,7 +178,7 @@ const gatewayIds = JSON.stringify(data.items.map((i: any) => i.slug));
 
             <!-- Detail panels -->
             <div class="cat-detail">
-              {data.items.map((item: any) => (
+              {items.map((item: any) => (
                 <div class="detail-panel" x-show={`active === '${item.slug}'`} x-cloak>
                   <div class="detail-inner">
 

@@ -1,0 +1,22 @@
+title: OSCAR Gateway
+type: climate
+domain: Climate
+status: active
+users: 340
+tagline: Serverless AI processing for Earth observation and climate data
+description: Serverless AI for Earth observation data.
+longDescription: The OSCAR Gateway provides event-driven, serverless AI inference for Earth observation and climate data processing. Integrated with Copernicus datasets and EOSC storage, it enables large-scale climate model execution without managing infrastructure.
+community: Climate & Weather
+communitySlug: climate-weather
+operatedBy:
+    - IFCA-CSIC
+    - EGI
+accessType: Open to researchers
+accessDesc: EOSC authentication required. Free for European academic institutions.
+tools:
+    - Weather forecasting
+    - Climate downscaling
+    - EO processing
+    - Serverless inference
+slug: oscar-gateway
+order: 2

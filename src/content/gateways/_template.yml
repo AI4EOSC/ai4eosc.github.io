@@ -1,0 +1,29 @@
+# ── TEMPLATE: copy and rename to <slug>.yml ──────────────────────────────────
+# The filename (without .yml) should match the slug field for consistency.
+#
+# Required fields
+title:           "Gateway Name"
+type:            marine        # marine | climate | health | life | physics
+domain:          "Domain label"
+status:          active        # active | new | coming-soon
+tagline:         "One-line tagline shown in cards"
+description:     "Short description (1 line, shown in catalogue list)"
+slug:            gateway-slug
+order:           99            # controls display order
+
+# Optional fields
+users:           0             # approximate number of researchers with access
+longDescription: "Full description shown in detail panel."
+euProject:       "Project Name"       # associated EU project title
+projectId:       project-id           # links to /ecosystem/projects#<id>
+community:       "Community Name"
+communitySlug:   community-slug       # links to /ecosystem/communities#<slug>
+operatedBy:
+    - "INSTITUTION1"
+accessType:      "Open to researchers"
+accessDesc:      "How to get access."
+tools:
+    - "Tool 1"
+    - "Tool 2"
+logo:            filename.png         # image file in src/assets/logos/
+url:             https://gateway.example.eu

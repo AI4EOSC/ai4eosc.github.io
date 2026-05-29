@@ -1,0 +1,50 @@
+type: associated
+status: finished
+title: interTwin
+tagline: Co-designing and prototyping an interdisciplinary Digital Twin Engine
+description: interTwin develops a blueprint for a cross-domain digital twin engine, leveraging AI4EOSC as its AI model deployment layer. It aims to extend the technical capabilities of the European Open Science Cloud with modelling and simulation tools and to simplify DT application development.
+outputs:
+    - Digital twin engine
+    - Model and simulation tools
+    - Data fusion
+    - EOSC integration
+funding: 11731666.75
+programme: Horizon Europe
+period: "2022 – 2025"
+lead: EGI
+partners:
+    - CERN
+    - CESNET
+    - CMCC
+    - CNRS
+    - CSIC
+    - Cyfronet
+    - Deltares
+    - DESY
+    - ECMWF
+    - EODC
+    - ETHZ
+    - EURAC
+    - FZJ
+    - GRNET
+    - INFN
+    - JSI/IZUM
+    - KIT
+    - KBFI
+    - LIP
+    - MPG
+    - PSNC
+    - TU Wien
+    - UHEI
+    - UNITN
+    - UPV
+    - VU
+    - WWU
+url: https://intertwin.eu
+grantUrl: https://cordis.europa.eu/project/id/101058386
+social:
+    linkedin: https://www.linkedin.com/company/intertwin/
+    x: https://x.com/interTwin_eu
+    youtube: https://www.youtube.com/@interTwin
+    github: https://github.com/interTwin-eu
+order: 5

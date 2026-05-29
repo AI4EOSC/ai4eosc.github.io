@@ -1,0 +1,13 @@
+title: Climate & Weather
+iconId: climate
+users: 200
+description: Forecasting, Earth observation
+longDescription: Machine learning models for weather forecasting, climate downscaling and Earth observation data processing. Integrated with Copernicus datasets and EOSC storage for large-scale analysis.
+via: OSCAR Gateway
+gatewaySlug: oscar-gateway
+tools:
+    - Weather forecasting
+    - Climate downscaling
+    - EO processing
+slug: climate-weather
+order: 2

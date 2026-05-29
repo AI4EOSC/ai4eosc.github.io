@@ -1,0 +1,11 @@
+title: Astronomy
+iconId: astronomy
+users: 120
+description: Astrophysics, cosmology, space science
+longDescription: Deep learning for astronomical image classification, galaxy morphology analysis and cosmological parameter estimation using large-scale survey data from next-generation observatories.
+tools:
+    - Galaxy classification
+    - Morphology analysis
+    - Cosmological ML
+slug: astronomy
+order: 8

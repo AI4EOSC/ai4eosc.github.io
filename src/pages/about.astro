@@ -6,7 +6,9 @@ import NumbersSection from '../components/sections/NumbersSection.astro';
 import CtaFinal from '../components/ui/CtaFinal.astro';
 import about from '../data/about.yml';
 import partners from '../data/partners.yml';
-import projectsData from '../data/projects.yml';
+import { getCollection } from 'astro:content';
+const projectEntries = await getCollection('projects');
+const projectsData = { items: projectEntries.map(e => ({ id: e.id, ...e.data })) };
 import euLogo from '../assets/en-v-funded-by-the-eu_black-outline.png';
 
 const logoUrls = import.meta.glob<string>(
@@ -818,7 +820,8 @@ const cta = {
 
   .partner-logo {
     max-height: 36px;
-    max-width: 100%;
+    max-width: calc(100% - 24px); /* 12px margin each side */
+    width: 100%;
     object-fit: contain;
     filter: grayscale(1) opacity(0.55);
     transition: filter var(--transition-base);
