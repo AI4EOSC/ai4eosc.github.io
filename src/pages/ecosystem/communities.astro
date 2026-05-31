@@ -43,11 +43,11 @@ const firstSlug: string = items[0]?.slug ?? '';
 const communityIds = JSON.stringify(items.map((i: any) => i.slug));
 ---
 
-<Layout title="Communities — AI4EOSC Ecosystem">
+<Layout title="Communities — AI4EOSC Ecosystem" ogImage="/og/communities.png">
   <PageHero
     theme="pink"
     breadcrumb="Communities"
-    breadcrumbParent={{ label: 'Ecosystem', href: '/ecosystem/projects' }}
+    breadcrumbParent={{ label: 'Ecosystem' }}
     title="AI tools for every scientific domain"
     description="AI4EOSC brings research-grade AI to a growing number of scientific communities across Europe — from marine biology to climate science and beyond."
   >

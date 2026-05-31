@@ -58,18 +58,18 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
 };
 
 const alpineItems = JSON.stringify(
-  items.map((i: any) => ({ slug: i.slug, type: i.type }))
+  items.map((i: any) => ({ slug: i.slug, type: i.type, status: i.status }))
 );
 
 const firstSlug: string = items[0]?.slug ?? '';
 const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
 ---
 
-<Layout title="Gateways — AI4EOSC Ecosystem">
+<Layout title="Gateways — AI4EOSC Ecosystem" ogImage="/og/gateways.png">
   <PageHero
     theme="teal"
     breadcrumb="Gateways"
-    breadcrumbParent={{ label: 'Ecosystem', href: '/ecosystem/projects' }}
+    breadcrumbParent={{ label: 'Ecosystem' }}
     title="Specialised AI platforms built on AI4EOSC"
     description="Gateways are domain-specific deployments of the AI4EOSC platform — each one tailored to a scientific community and providing direct access to AI tools and models in their field."
   >
@@ -119,6 +119,7 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
 
         <div x-data={`{
           filter: 'all',
+          statusFilter: 'all',
           active: '${firstSlug}',
           items: ${alpineItems},
           ids: ${gatewayIds},
@@ -131,25 +132,49 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
           },
           setFilter(f) {
             this.filter = f;
-            const visible = this.items.filter(i => f === 'all' || i.type === f);
-            if (visible.length > 0 && !visible.some(i => i.slug === this.active)) {
-              this.active = visible[0].slug;
-            }
+            const vis = this.items.filter(i => (f === 'all' || i.type === f) && (this.statusFilter === 'all' || i.status === this.statusFilter));
+            if (vis.length && !vis.some(i => i.slug === this.active)) this.active = vis[0].slug;
+          },
+          setStatusFilter(f) {
+            this.statusFilter = f;
+            const vis = this.items.filter(i => (this.filter === 'all' || i.type === this.filter) && (f === 'all' || i.status === f));
+            if (vis.length && !vis.some(i => i.slug === this.active)) this.active = vis[0].slug;
           }
         }`}>
 
-          <!-- Filter pills -->
-          <div class="filters">
-            {domains.map(d => (
-              <button
-                class="filter-btn"
-                x-bind:class={`{ 'is-active': filter === '${d}' }`}
-                x-on:click={`setFilter('${d}')`}
-                type="button"
-              >
-                {domainLabels[d]}
-              </button>
-            ))}
+          <!-- Filters: 2-column layout -->
+          <div class="filter-columns">
+            <div class="filter-col">
+              <span class="filter-col-label">Community</span>
+              <div class="filters">
+                {domains.map(d => (
+                  <button
+                    class="filter-btn filter-btn--pink"
+                    x-bind:class={`{ 'is-active': filter === '${d}' }`}
+                    x-on:click={`setFilter('${d}')`}
+                    type="button"
+                  >
+                    {domainLabels[d]}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div class="filter-col">
+              <span class="filter-col-label">Status</span>
+              <div class="filters">
+                {(['all', 'active', 'new', 'coming-soon'] as const).map(s => (
+                  <button
+                    class="filter-btn"
+                    x-bind:class={`{ 'is-active': statusFilter === '${s}' }`}
+                    x-on:click={`setStatusFilter('${s}')`}
+                    type="button"
+                  >
+                    {s === 'all' ? 'All' : statusBadge[s]?.label ?? s}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
 
           <!-- Sidebar + panel -->
@@ -160,7 +185,7 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
               {items.map((item: any) => (
                 <button
                   class="sidebar-item"
-                  x-show={`filter === 'all' || filter === '${item.type}'`}
+                  x-show={`(filter === 'all' || filter === '${item.type}') && (statusFilter === 'all' || statusFilter === '${item.status}')`}
                   x-bind:class={`{ 'is-active': active === '${item.slug}' }`}
                   x-on:click={`active = '${item.slug}'`}
                   type="button"
@@ -373,7 +398,7 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
 
 
   /* ── Catalogue layout ───────────────────────────────── */
-  .catalogue { display: flex; gap: 28px; align-items: flex-start; }
+  .catalogue { display: flex; gap: 28px; align-items: flex-start; margin-top: 20px; }
 
   .cat-sidebar { flex: 0 0 240px; display: flex; flex-direction: column; gap: 6px; }
   .cat-detail  { flex: 1; min-width: 0; }
@@ -478,7 +503,6 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
 
   .pdl-top { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
 
-  .filters { margin-bottom: 20px; }
 
   .b-community {
     color: var(--color-secondary-700);

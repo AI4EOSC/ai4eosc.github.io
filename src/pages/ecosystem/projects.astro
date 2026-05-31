@@ -30,6 +30,8 @@ function formatFunding(amount: number): string {
   return `€${amount}`;
 }
 
+const alpineProjectItems = JSON.stringify(items.map((i: any) => ({ id: i.id, type: i.type })));
+
 const totalProjects = items.length;
 
 const allInstitutions = new Set<string>();
@@ -54,11 +56,11 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
 };
 ---
 
-<Layout title="Projects — AI4EOSC Ecosystem">
+<Layout title="Projects — AI4EOSC Ecosystem" ogImage="/og/projects.png">
   <PageHero
     theme="blue"
     breadcrumb="Related Projects"
-    breadcrumbParent={{ label: 'Ecosystem', href: '/ecosystem/projects' }}
+    breadcrumbParent={{ label: 'Ecosystem' }}
     title="EU-funded projects building the future of open AI"
     description="From the original AI4EOSC project to a growing network of associated initiatives — each extending the platform with new capabilities for the European Open Science Cloud."
   >
@@ -80,23 +82,46 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
           Desktop:  sidebar (column, 200px) | detail panel
           Mobile:   sidebar becomes horizontal scroll row, panel below
         -->
-        <div class="catalogue" x-data={`{
+        <div x-data={`{
           active: '${items[0].id}',
+          filter: 'all',
           ids: ${projectIds},
+          items: ${alpineProjectItems},
           init() {
             this.$watch('active', v => history.replaceState(null, '', '#' + v));
             this.$nextTick(() => {
               const hash = window.location.hash.slice(1);
               if (hash && this.ids.includes(hash)) this.active = hash;
             });
+          },
+          setFilter(f) {
+            this.filter = f;
+            const vis = this.items.filter(i => f === 'all' || i.type === f);
+            if (vis.length && !vis.some(i => i.id === this.active)) this.active = vis[0].id;
           }
         }`}>
+
+          <!-- Filter pills -->
+          <div class="filter-columns">
+            <div class="filter-col">
+              <span class="filter-col-label">Type</span>
+              <div class="filters">
+                <button class="filter-btn filter-btn--blue" x-bind:class="{ 'is-active': filter === 'all' }" x-on:click="setFilter('all')" type="button">All</button>
+                <button class="filter-btn filter-btn--blue" x-bind:class="{ 'is-active': filter === 'origin' }" x-on:click="setFilter('origin')" type="button">Origin project</button>
+                <button class="filter-btn filter-btn--blue" x-bind:class="{ 'is-active': filter === 'associated' }" x-on:click="setFilter('associated')" type="button">Associated</button>
+                <button class="filter-btn filter-btn--blue" x-bind:class="{ 'is-active': filter === 'extension' }" x-on:click="setFilter('extension')" type="button">Extension</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="catalogue">
 
           <!-- Sidebar / tab strip -->
           <div class="cat-sidebar">
             {items.map((item: any) => (
               <button
                 class="sidebar-item"
+                x-show={`filter === 'all' || filter === '${item.type}'`}
                 x-bind:class={`{ 'is-active': active === '${item.id}' }`}
                 x-on:click={`active = '${item.id}'`}
                 type="button"
@@ -232,6 +257,7 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
             ))}
           </div>
 
+          </div>
         </div>
       </div>
     </div>
@@ -271,7 +297,7 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
     display: flex;
     gap: 28px;
     align-items: flex-start;
-    margin-top: 24px;
+    margin-top: 20px;
   }
 
   .cat-sidebar {

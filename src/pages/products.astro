@@ -27,9 +27,11 @@ const chromeUrl: Record<string, string> = {
 
 const firstId: string = data.items[0]?.iconId ?? 'platform';
 const productIds = JSON.stringify(data.items.map((i: any) => i.iconId));
+const alpineProductItems = JSON.stringify(data.items.map((i: any) => ({ id: i.iconId, status: i.status })));
+const productStatuses = ['All', ...Array.from(new Set(data.items.map((i: any) => i.status as string)))];
 ---
 
-<Layout title="Products — AI4EOSC Initiative">
+<Layout title="Products — AI4EOSC Initiative" ogImage="/og/products.png">
   <PageHero
     title="AI4EOSC Software Products"
     description="Open infrastructure and services for AI in European Open Science. Built for researchers, by researchers."
@@ -49,23 +51,50 @@ const productIds = JSON.stringify(data.items.map((i: any) => i.iconId));
           Desktop:  sidebar (column, 200px) | detail panel (flex-1)
           Mobile:   sidebar becomes horizontal scroll row, panel full-width below
         -->
-        <div class="catalogue" x-data={`{
+        <div x-data={`{
           active: '${firstId}',
+          filter: 'All',
           ids: ${productIds},
+          items: ${alpineProductItems},
           init() {
             this.$watch('active', v => history.replaceState(null, '', '#' + v));
             this.$nextTick(() => {
               const hash = window.location.hash.slice(1);
               if (hash && this.ids.includes(hash)) this.active = hash;
             });
+          },
+          setFilter(f) {
+            this.filter = f;
+            const vis = this.items.filter(i => f === 'All' || i.status === f);
+            if (vis.length && !vis.some(i => i.id === this.active)) this.active = vis[0].id;
           }
         }`}>
+
+          <!-- Status filter -->
+          <div class="filter-columns">
+            <div class="filter-col">
+              <span class="filter-col-label">Status</span>
+              <div class="filters">
+                {productStatuses.map(s => (
+                  <button
+                    class="filter-btn"
+                    x-bind:class={`{ 'is-active': filter === '${s}' }`}
+                    x-on:click={`setFilter('${s}')`}
+                    type="button"
+                  >{s}</button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div class="catalogue">
 
           <!-- Sidebar / tab strip -->
           <div class="cat-sidebar">
             {data.items.map((item: any) => (
               <button
                 class={`sidebar-item screen-${item.theme}`}
+                x-show={`filter === 'All' || filter === '${item.status}'`}
                 x-bind:class={`{ 'is-active': active === '${item.iconId}' }`}
                 x-on:click={`active = '${item.iconId}'`}
                 type="button"
@@ -90,7 +119,25 @@ const productIds = JSON.stringify(data.items.map((i: any) => i.iconId));
               <div class="detail-panel" x-show={`active === '${item.iconId}'`} x-cloak>
                 <div class="detail-inner">
 
-                  <!-- Illustration (left on desktop, top on mobile) -->
+                  <!-- Body (left on desktop) -->
+                  <div class="detail-body">
+                    <div class="prod-top">
+                      <span class="category">{item.category}</span>
+                      <span class={`status status-${statusSlug[item.status] ?? 'soon'}`}>{item.status}</span>
+                    </div>
+                    <h3>{item.title}</h3>
+                    <p class="tagline">{item.tagline}</p>
+                    <p class="desc">{item.detailDescription}</p>
+                    <p class="feat-lbl">Features</p>
+                    <ul class="feats">
+                      {item.features.map((f: string) => (
+                        <li class="feat-chip">{f}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <!-- Right column: preview + actions -->
+                  <div class="detail-right">
                   <div class="detail-render">
                     <div class="chrome">
                       <span class="dot"></span>
@@ -223,29 +270,12 @@ const productIds = JSON.stringify(data.items.map((i: any) => i.iconId));
 
                     </div>
                   </div>
-
-                  <!-- Body (right on desktop, bottom on mobile) -->
-                  <div class="detail-body">
-                    <div class="prod-top">
-                      <span class="category">{item.category}</span>
-                      <span class={`status status-${statusSlug[item.status] ?? 'soon'}`}>{item.status}</span>
-                    </div>
-                    <h3>{item.title}</h3>
-                    <p class="tagline">{item.tagline}</p>
-                    <p class="desc">{item.detailDescription}</p>
-                    <p class="feat-lbl">Features</p>
-                    <ul class="feats">
-                      {item.features.map((f: string) => (
-                        <li class="feat-chip">{f}</li>
-                      ))}
-                    </ul>
-                  </div>
-
                   <div class="prod-actions">
                     <a href={item.visitHref} target="_blank" rel="noopener" class="btn-visit">{item.visitLabel}</a>
                     {item.docsHref && (
                       <a href={item.docsHref} target="_blank" rel="noopener" class="btn-docs">Documentation</a>
                     )}
+                  </div>
                   </div>
 
                 </div>
@@ -253,6 +283,7 @@ const productIds = JSON.stringify(data.items.map((i: any) => i.iconId));
             ))}
           </div>
 
+          </div>
         </div>
       </div>
     </div>
@@ -397,7 +428,7 @@ const productIds = JSON.stringify(data.items.map((i: any) => i.iconId));
     display: flex;
     gap: 28px;
     align-items: flex-start;
-    margin-top: 24px;
+    margin-top: 20px;
   }
 
   /* Sidebar: vertical column on desktop */
@@ -512,20 +543,23 @@ const productIds = JSON.stringify(data.items.map((i: any) => i.iconId));
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Texto izquierda (col 1, 2 filas) · render + actions derecha (col 2) */
+  /* Texto izquierda (col 1) · preview + actions derecha (col 2) */
   .detail-inner {
     display: grid;
-    grid-template-columns: 1fr 280px;
-    grid-template-rows: auto auto;
+    grid-template-columns: 1fr 340px;
     gap: 16px 28px;
-    align-items: start;
+    align-items: stretch;
   }
 
-  /* ── Ilustración (col 2, fila 1) ──────────────────── */
+  /* ── Columna derecha: preview + acciones ──────────── */
+  .detail-right {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* ── Ilustración ──────────────────────────────────── */
   .detail-render {
-    order: 2;
-    grid-column: 2;
-    grid-row: 1;
     background: white;
     border: 0.5px solid var(--card-border);
     border-radius: var(--radius-sm);
@@ -632,11 +666,8 @@ const productIds = JSON.stringify(data.items.map((i: any) => i.iconId));
   .sdot-active  { background: var(--color-primary-600); }
   .sdot-pending { background: var(--color-primary-100); border: 1px solid var(--color-primary-200); }
 
-  /* ── Detail body (col 1, abarca ambas filas) ─────── */
+  /* ── Detail body (col 1) ─────────────────────────── */
   .detail-body {
-    order: 1;
-    grid-column: 1;
-    grid-row: 1 / span 2;
     padding: 0 24px 4px 0;
     border-right: 1px solid var(--color-neutral-300);
     display: flex;
@@ -699,12 +730,11 @@ const productIds = JSON.stringify(data.items.map((i: any) => i.iconId));
   }
 
   .prod-actions {
-    order: 3;
-    grid-column: 2;
-    grid-row: 2;
     display: flex;
+    flex-direction: row;
     gap: 8px;
     flex-wrap: wrap;
+    margin-top: auto;
   }
 
   .btn-visit, .btn-docs {
@@ -880,19 +910,14 @@ const productIds = JSON.stringify(data.items.map((i: any) => i.iconId));
   @media (max-width: 640px) {
     .detail-inner {
       grid-template-columns: 1fr;
-      grid-template-rows: auto;
       gap: 20px;
     }
     .detail-body {
-      grid-column: auto;
-      grid-row: auto;
-      padding: 0 0 4px;
+      padding: 0 0 20px;
       border-right: none;
       border-bottom: 1px solid var(--color-neutral-300);
-      padding-bottom: 20px;
     }
-    .detail-render { grid-column: auto; grid-row: auto; min-height: 220px; }
-    .prod-actions  { grid-column: auto; grid-row: auto; }
+    .detail-render { min-height: 220px; }
 
     .tech-desc { padding-left: 38px; }
   }

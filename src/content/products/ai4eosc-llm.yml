@@ -13,7 +13,7 @@ features:
     - European infra
     - EOSC-native
     - OpenAI-compatible API
-visitLabel: Visit project
+visitLabel: Explore product
 visitHref: https://llm.ai4eosc.eu
 docsHref: https://docs.ai4eosc.eu/llm
 order: 2

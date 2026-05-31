@@ -11,7 +11,7 @@ const sorted = stories.sort((a, b) => b.data.date.valueOf() - a.data.date.valueO
 const types = ['All', ...Array.from(new Set(sorted.map(s => s.data.type))).sort()];
 ---
 
-<Layout title="Stories — AI4EOSC Initiative">
+<Layout title="Stories — AI4EOSC Initiative" ogImage="/og/stories.png">
   <PageHero
     theme="teal"
     breadcrumb="Stories"
@@ -46,17 +46,22 @@ const types = ['All', ...Array.from(new Set(sorted.map(s => s.data.type))).sort(
       }`}>
 
         <!-- Filters -->
-        <div class="filters">
-          {types.map(t => (
-            <button
-              class="filter-btn"
-              x-bind:class={`{ 'is-active': filter === '${t}' }`}
-              x-on:click={`setFilter('${t}')`}
-              type="button"
-            >
-              {t}
-            </button>
-          ))}
+        <div class="filter-columns">
+          <div class="filter-col">
+            <span class="filter-col-label">Content type</span>
+            <div class="filters">
+              {types.map(t => (
+                <button
+                  class="filter-btn"
+                  x-bind:class={`{ 'is-active': filter === '${t}' }`}
+                  x-on:click={`setFilter('${t}')`}
+                  type="button"
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         <!-- Grid -->
@@ -109,8 +114,7 @@ const types = ['All', ...Array.from(new Set(sorted.map(s => s.data.type))).sort(
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0;
-    margin-top: 24px;
-    border-top: 1px solid var(--card-border);
+    margin-top: 20px;
   }
 
   .item {

@@ -31,9 +31,33 @@ function formatDate(d: Date, short = false) {
     ? { month: 'short', year: 'numeric' }
     : { day: 'numeric', month: 'long', year: 'numeric' });
 }
+
+const ogImagePath = `/og/stories/${story.id}.png`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": story.data.title,
+  "description": story.data.excerpt,
+  "datePublished": story.data.date.toISOString(),
+  "image": new URL(ogImagePath, Astro.url).href,
+  "url": Astro.url.href,
+  "author": { "@type": "Organization", "name": "AI4EOSC" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI4EOSC",
+    "logo": { "@type": "ImageObject", "url": new URL('/og/ai4eosc-og.png', Astro.url).href },
+  },
+};
 ---
 
-<Layout title={`${story.data.title} — AI4EOSC Stories`} description={story.data.excerpt}>
+<Layout
+  title={`${story.data.title} — AI4EOSC Stories`}
+  description={story.data.excerpt}
+  ogImage={ogImagePath}
+  ogType="article"
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
   <PageHero
     theme="teal"
     breadcrumb={story.data.type}

@@ -15,7 +15,7 @@ features:
     - EOSC AAI
     - oneData storage
     - MLflow tracking
-visitLabel: Visit project
+visitLabel: Explore product
 visitHref: https://ai4eosc.eu
 docsHref: https://docs.ai4eosc.eu
 order: 1

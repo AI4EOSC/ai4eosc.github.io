@@ -3,7 +3,7 @@ interface Props {
   title: string;
   description: string;
   breadcrumb: string;
-  breadcrumbParent?: { label: string; href: string };
+  breadcrumbParent?: { label: string; href?: string };
   theme: 'teal' | 'black' | 'blue' | 'pink';
 }
 
@@ -17,7 +17,10 @@ const { title, description, breadcrumb, breadcrumbParent, theme } = Astro.props;
       <span aria-hidden="true">›</span>
       {breadcrumbParent && (
         <>
-          <a href={breadcrumbParent.href}>{breadcrumbParent.label}</a>
+          {breadcrumbParent.href
+            ? <a href={breadcrumbParent.href}>{breadcrumbParent.label}</a>
+            : <span class="bc-section">{breadcrumbParent.label}</span>
+          }
           <span aria-hidden="true">›</span>
         </>
       )}
@@ -117,6 +120,10 @@ const { title, description, breadcrumb, breadcrumbParent, theme } = Astro.props;
 
   .breadcrumb [aria-current="page"] {
     color: rgba(255, 255, 255, 0.65);
+  }
+
+  .breadcrumb .bc-section {
+    color: rgba(255, 255, 255, 0.38);
   }
 
   h1 {
