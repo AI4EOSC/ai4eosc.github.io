@@ -95,12 +95,12 @@ import logoSrc from '../../assets/logos/AI4-horizontal-light.svg?url';
               </button>
               <div class="mob-sub" data-mob-sub={link.label}>
                 {link.dropdown?.map((item) => (
-                  <a class="mob-sub-link" href={item.href} {...(item.href?.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
-                    <span class={`mob-sub-dot dot-${item.hoverGradient ?? 'none'}`} aria-hidden="true"></span>
-                    <span class="mob-sub-text">
-                      <span class="mob-sub-label">{item.label}</span>
-                      <span class="mob-sub-desc">{item.description}</span>
-                    </span>
+                  <a class={`mob-card mob-gradient-${item.hoverGradient ?? 'none'}`} href={item.href} {...(item.href?.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+                    <span class="circle circle--lg" aria-hidden="true"></span>
+                    <span class="circle circle--md" aria-hidden="true"></span>
+                    <span class="circle circle--sm" aria-hidden="true"></span>
+                    <span class="mob-card-label">{item.label}</span>
+                    <span class="mob-card-desc">{item.description}</span>
                   </a>
                 ))}
               </div>
@@ -306,7 +306,7 @@ import logoSrc from '../../assets/logos/AI4-horizontal-light.svg?url';
   }
 
   .nav.mob-open .mobile-menu {
-    max-height: 700px;
+    max-height: 900px;
     opacity: 1;
   }
 
@@ -354,33 +354,77 @@ import logoSrc from '../../assets/logos/AI4-horizontal-light.svg?url';
   .mob-sub {
     overflow: hidden;
     max-height: 0;
-    transition: max-height 0.3s ease;
-    padding-left: 14px;
+    transition: max-height 0.35s ease;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
-  .mob-group.mob-group-open .mob-sub { max-height: 300px; }
+  .mob-group.mob-group-open .mob-sub {
+    max-height: 500px;
+    padding: 6px 0 4px;
+  }
 
-  /* Sub-link */
-  .mob-sub-link {
-    display: flex; align-items: flex-start; gap: 12px;
-    padding: 10px 12px;
-    border-radius: 10px;
+  /* Cards */
+  .mob-card {
+    display: block;
+    padding: 12px 16px 14px 18px;
+    border-radius: 14px;
     text-decoration: none;
-    transition: background 0.15s ease;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s ease, opacity 0.15s ease;
   }
-  .mob-sub-link:hover { background: rgba(0,0,0,0.04); }
+  .mob-card:active { transform: scale(0.98); opacity: 0.9; }
 
-  .mob-sub-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    flex-shrink: 0; margin-top: 5px;
+  .mob-card .circle {
+    pointer-events: none; z-index: 0;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.38),
+      0 0 60px rgba(255, 255, 255, 0.28),
+      0 0 130px rgba(255, 255, 255, 0.12),
+      inset 0 0 28px rgba(255, 255, 255, 0.12);
+    opacity: 0.5;
   }
-  .dot-eu-blue  { background: #2e68d4; }
-  .dot-pink     { background: #ec5d80; }
-  .dot-green    { background: var(--color-primary-600); }
-  .dot-none     { background: var(--color-neutral-300); }
+  .mob-card .circle--lg { width: 180px; }
+  .mob-card .circle--md { width: 120px; }
+  .mob-card .circle--sm { width: 60px; }
 
-  .mob-sub-text { display: flex; flex-direction: column; gap: 1px; }
-  .mob-sub-label { font-size: 15px; font-weight: 500; color: var(--color-neutral-800); }
-  .mob-sub-desc  { font-size: 12px; color: var(--color-neutral-400); }
+  .mob-card-label {
+    display: block;
+    font-size: 15px; font-weight: 600; letter-spacing: -0.01em;
+    color: #ffffff;
+    position: relative; z-index: 1;
+    margin-bottom: 2px;
+  }
+  .mob-card-desc {
+    display: block;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.62);
+    position: relative; z-index: 1;
+  }
+
+  .mob-gradient-eu-blue {
+    background: var(--gradient-eu-blue);
+    border: 0.5px solid rgba(46, 104, 212, 0.4);
+    box-shadow: 0 3px 12px rgba(21, 66, 139, 0.22);
+  }
+  .mob-gradient-pink {
+    background: var(--gradient-pink);
+    border: 0.5px solid rgba(236, 93, 128, 0.4);
+    box-shadow: 0 3px 12px rgba(192, 32, 96, 0.22);
+  }
+  .mob-gradient-green {
+    background: var(--gradient-primary);
+    border: 0.5px solid rgba(0, 135, 146, 0.4);
+    box-shadow: 0 3px 12px rgba(0, 135, 146, 0.22);
+  }
+  .mob-gradient-none {
+    background: rgba(0, 0, 0, 0.05);
+    border: 0.5px solid transparent;
+  }
+  .mob-gradient-none .mob-card-label { color: var(--color-neutral-800); }
+  .mob-gradient-none .mob-card-desc  { color: var(--color-neutral-500); }
 
   /* CTA */
   .mob-cta-wrap { padding: 10px 14px 2px; }

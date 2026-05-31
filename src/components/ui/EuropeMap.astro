@@ -1,0 +1,591 @@
+---
+import { feature } from 'topojson-client';
+
+interface Props {
+  partners: Array<{ name: string; url?: string; country?: string; type?: string; lat?: number; lon?: number }>;
+}
+const { partners } = Astro.props;
+
+// ── Web Mercator projection ────────────────────────────
+// Viewport: lon[-20, 45] × lat[33, 65] → viewBox 0 0 900 692
+const W = 900, H = 692;
+const LON0 = -20, LON1 = 45, LAT0 = 33, LAT1 = 65;
+
+const merc = (lat: number) => Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360));
+const MERC0 = merc(LAT0);
+const MERC1 = merc(LAT1);
+
+function project(lon: number, lat: number): [number, number] {
+  const x = (lon - LON0) / (LON1 - LON0) * W;
+  const y = (MERC1 - merc(lat)) / (MERC1 - MERC0) * H;
+  return [x, y];
+}
+
+// ── GeoJSON → SVG path ────────────────────────────────
+// Each ring is clipped by centroid: fixes France (Guyane etc. are far out of viewport)
+type Ring = [number, number][];
+
+function ringCentroidInViewport(ring: Ring): boolean {
+  if (!ring.length) return false;
+  const mLon = ring.reduce((s, c) => s + c[0], 0) / ring.length;
+  const mLat = ring.reduce((s, c) => s + c[1], 0) / ring.length;
+  return mLon > LON0 - 8 && mLon < LON1 + 8 && mLat > LAT0 - 8 && mLat < LAT1 + 8;
+}
+
+function ringToD(ring: Ring): string {
+  return ring.map(([lon, lat], i) => {
+    const [x, y] = project(lon, lat);
+    return `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join('') + 'Z';
+}
+
+function geomToD(geom: any): string {
+  if (!geom) return '';
+  if (geom.type === 'Polygon') {
+    return (geom.coordinates as Ring[])
+      .filter(ringCentroidInViewport)
+      .map(ringToD).join('');
+  }
+  if (geom.type === 'MultiPolygon') {
+    return (geom.coordinates as Ring[][])
+      .flatMap(poly => poly.filter(ringCentroidInViewport).map(ringToD))
+      .join('');
+  }
+  return '';
+}
+
+// ── Load Natural Earth 110m (public domain) ───────────
+const topo = await import('world-atlas/countries-110m.json');
+const world = feature(topo as any, (topo as any).objects.countries) as any;
+
+const EXCLUDE = new Set([
+  'Algeria','Morocco','Tunisia','Libya','Egypt','Western Sahara',
+  'Mauritania','Mali','Iran','Iraq','Syria','Lebanon','Jordan',
+  'Saudi Arabia','Kuwait','Israel','Palestine','Greenland',
+  'Kazakhstan','Uzbekistan','Turkmenistan','Afghanistan','Pakistan',
+  'Azerbaijan','Armenia','Georgia','Russia',
+]);
+
+function ringCentroidOk(ring: Ring): boolean {
+  if (!ring.length) return false;
+  const n = ring.length;
+  const mLon = ring.reduce((s, c) => s + c[0], 0) / n;
+  const mLat = ring.reduce((s, c) => s + c[1], 0) / n;
+  return mLon > LON0 - 1 && mLon < LON1 + 1 && mLat > LAT0 - 1 && mLat < LAT1 + 1;
+}
+
+function inViewport(f: any): boolean {
+  if (EXCLUDE.has(f.properties?.name)) return false;
+  const geom = f.geometry;
+  if (!geom) return false;
+  // For MultiPolygon check if ANY sub-polygon is in Europe (France has Guyane as poly[0])
+  const outerRings: Ring[] =
+    geom.type === 'Polygon'
+      ? [geom.coordinates[0]]
+      : geom.type === 'MultiPolygon'
+        ? geom.coordinates.map((p: Ring[][]) => p[0])
+        : [];
+  return outerRings.some(ringCentroidOk);
+}
+
+const countries = world.features
+  .filter(inViewport)
+  .map((f: any) => ({ d: geomToD(f.geometry) }))
+  .filter((c: any) => c.d.length > 0);
+
+// ── Partner dots (grouped by proximity) ───────────────
+const GRID = 10;
+const snap = (v: number) => Math.round(v / GRID) * GRID;
+
+type PartnerRef = { name: string; url?: string };
+type Loc = { key: string; cx: number; cy: number; pctX: number; pctY: number; partners: PartnerRef[] };
+const locMap = new Map<string, Loc>();
+
+for (const p of partners) {
+  if (p.lat == null || p.lon == null) continue;
+  const [rawX, rawY] = project(p.lon, p.lat);
+  const cx = Math.round(rawX);
+  const cy = Math.round(rawY);
+  const key = `${snap(cx)}-${snap(cy)}`;
+  if (!locMap.has(key)) {
+    locMap.set(key, { key, cx, cy,
+      pctX: parseFloat((cx / W * 100).toFixed(2)),
+      pctY: parseFloat((cy / H * 100).toFixed(2)),
+      partners: [],
+    });
+  }
+  locMap.get(key)!.partners.push({ name: p.name, url: p.url });
+}
+const locations = Array.from(locMap.values());
+
+// ── Graph edges (MST — Prim's algorithm) ──────────────
+type Edge = { x1: number; y1: number; x2: number; y2: number; keyA: string; keyB: string };
+
+function buildMST(locs: Loc[]): Edge[] {
+  if (locs.length < 2) return [];
+  const d = (a: Loc, b: Loc) => Math.hypot(a.cx - b.cx, a.cy - b.cy);
+  const inTree = new Set<number>([0]);
+  const edges: Edge[] = [];
+  while (inTree.size < locs.length) {
+    let best = { dist: Infinity, i: -1, j: -1 };
+    for (const i of inTree) {
+      for (let j = 0; j < locs.length; j++) {
+        if (inTree.has(j)) continue;
+        const dist = d(locs[i], locs[j]);
+        if (dist < best.dist) best = { dist, i, j };
+      }
+    }
+    inTree.add(best.j);
+    edges.push({ x1: locs[best.i].cx, y1: locs[best.i].cy,
+                 x2: locs[best.j].cx, y2: locs[best.j].cy,
+                 keyA: locs[best.i].key, keyB: locs[best.j].key });
+  }
+  return edges;
+}
+
+const mstEdges = buildMST(locations);
+
+// ── Extra edges (2 nearest neighbours per node not in MST) ─
+function buildExtraEdges(locs: Loc[], mst: Edge[]): Edge[] {
+  const connected = new Set<string>();
+  for (const e of mst) {
+    connected.add(`${e.x1},${e.y1}|${e.x2},${e.y2}`);
+    connected.add(`${e.x2},${e.y2}|${e.x1},${e.y1}`);
+  }
+  const seen = new Set<string>();
+  const extras: Edge[] = [];
+  for (let i = 0; i < locs.length; i++) {
+    let added = 0;
+    const sorted = locs
+      .map((l, j) => ({ j, d: j === i ? Infinity : Math.hypot(l.cx - locs[i].cx, l.cy - locs[i].cy) }))
+      .sort((a, b) => a.d - b.d);
+    for (const { j } of sorted) {
+      if (added >= 2) break;
+      const a = locs[i], b = locs[j];
+      const k1 = `${a.cx},${a.cy}|${b.cx},${b.cy}`;
+      const k2 = `${b.cx},${b.cy}|${a.cx},${a.cy}`;
+      if (connected.has(k1) || seen.has(k1)) continue;
+      seen.add(k1); seen.add(k2); connected.add(k1); connected.add(k2);
+      extras.push({ x1: a.cx, y1: a.cy, x2: b.cx, y2: b.cy, keyA: a.key, keyB: b.key });
+      added++;
+    }
+  }
+  return extras;
+}
+
+// Merge and annotate with animation params
+const SPEED = 60; // SVG px / s
+type AnimEdge = Edge & { id: string; dur: number; offset: number };
+const allEdges: AnimEdge[] = [
+  ...mstEdges,
+  ...buildExtraEdges(locations, mstEdges),
+].map((e, i) => {
+  const len = Math.hypot(e.x2 - e.x1, e.y2 - e.y1);
+  const dur  = parseFloat((len / SPEED).toFixed(2));
+  const offset = parseFloat(((i * 1.37 * dur) % dur).toFixed(2));
+  return { ...e, id: `ep${i}`, dur, offset };
+});
+
+// ── Stats ─────────────────────────────────────────────
+const uniqueCountries = new Set(partners.filter(p => p.country).map(p => p.country)).size;
+const typed = partners.filter(p => p.type);
+const totalPartners = typed.length;
+const byType = {
+  research:       typed.filter(p => p.type === 'research').length,
+  infrastructure: typed.filter(p => p.type === 'infrastructure').length,
+  industry:       typed.filter(p => p.type === 'industry').length,
+};
+---
+
+<div class="map-layout" x-data="{
+  active: null,
+  _t: null,
+  show(k) { clearTimeout(this._t); this.active = k; },
+  hide()  { this._t = setTimeout(() => { this.active = null; }, 180); }
+}">
+
+  <!-- ── Map (75%) ──────────────────────────────────── -->
+  <div class="map-side">
+    <svg viewBox={`0 0 ${W} ${H}`} class="map-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+
+      <defs>
+        <filter id="map-pkt-glow" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="2.5" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+
+      <!-- Country fills -->
+      <g class="countries">
+        {countries.map((c: any) => <path d={c.d} />)}
+      </g>
+
+      <!-- Network edges -->
+      <g class="edges" aria-hidden="true">
+        {allEdges.map(e => (
+          <line x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2} />
+        ))}
+      </g>
+
+      <!-- Animated data packets -->
+      <g class="packets" aria-hidden="true">
+        {allEdges.map(e => (
+          <>
+            <path id={e.id} d={`M${e.x1},${e.y1}L${e.x2},${e.y2}`} fill="none" stroke="none"/>
+            <circle
+              r="2.5"
+              class="packet"
+              filter="url(#map-pkt-glow)"
+            >
+              <animateMotion dur={`${e.dur}s`} begin={`-${e.offset}s`} repeatCount="indefinite">
+                <mpath href={`#${e.id}`}/>
+              </animateMotion>
+            </circle>
+          </>
+        ))}
+      </g>
+
+      <!-- Dot groups with node-flash ring -->
+      {locations.map((loc, idx) => (
+        <g
+          class="dot-group"
+          x-on:mouseenter={`show('${loc.key}')`}
+          x-on:mouseleave="hide()"
+          x-on:focus={`show('${loc.key}')`}
+          x-on:blur="hide()"
+          role="button"
+          tabindex="0"
+          aria-label={loc.partners.map(p => p.name).join(', ')}
+        >
+          <circle cx={loc.cx} cy={loc.cy} r="18" fill="transparent"/>
+          <circle cx={loc.cx} cy={loc.cy} r="10"
+            class="dot-ring"
+            x-bind:class={`{ 'is-active': active === '${loc.key}' }`}
+          />
+          <circle cx={loc.cx} cy={loc.cy}
+            r={Math.min(5 + Math.floor(loc.partners.length / 2), 9)}
+            class="dot"
+            x-bind:style={`active === '${loc.key}' ? 'fill: var(--color-secondary-600)' : ''`}
+          />
+          <circle cx={loc.cx} cy={loc.cy} r="10"
+            class="node-flash"
+            style={`animation-delay: -${((idx * 1.9) % 8).toFixed(1)}s`}
+          />
+        </g>
+      ))}
+    </svg>
+
+    <!-- Tooltips — pointer-events:auto so links are clickable -->
+    {locations.map(loc => (
+      <div
+        class={`map-tooltip${loc.pctX > 72 ? ' tt-left' : ''}`}
+        x-show={`active === '${loc.key}'`}
+        x-transition:enter="tt-enter"
+        x-transition:enter-start="tt-enter-start"
+        x-transition:enter-end="tt-enter-end"
+        x-transition:leave="tt-enter"
+        x-transition:leave-start="tt-enter-end"
+        x-transition:leave-end="tt-enter-start"
+        x-on:mouseenter={`clearTimeout(_t)`}
+        x-on:mouseleave="hide()"
+        x-cloak
+        style={`left:${loc.pctX}%;top:${loc.pctY}%`}
+      >
+        {loc.partners.map(p => p.url
+          ? <a class="tt-name" href={p.url} target="_blank" rel="noopener">{p.name}</a>
+          : <span class="tt-name">{p.name}</span>
+        )}
+      </div>
+    ))}
+  </div>
+
+  <!-- ── Stats (25%) ────────────────────────────────── -->
+  <div class="stats-side">
+
+    <p class="stats-intro">The AI4EOSC ecosystem spans <strong>{uniqueCountries} countries</strong> and <strong>{totalPartners} partner organizations</strong> across Europe.</p>
+
+    <div class="stat-item">
+      <span class="stat-val">{uniqueCountries}</span>
+      <span class="stat-lbl">Countries</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <span class="stat-val">{totalPartners}</span>
+      <span class="stat-lbl">Partners</span>
+      <div class="stat-breakdown">
+        <div class="bd-row">
+          <span class="bd-val">{byType.research}</span>
+          <span class="bd-lbl">Research</span>
+        </div>
+        <div class="bd-row">
+          <span class="bd-val">{byType.infrastructure}</span>
+          <span class="bd-lbl">Infrastructure</span>
+        </div>
+        <div class="bd-row">
+          <span class="bd-val">{byType.industry}</span>
+          <span class="bd-lbl">Industry</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<style>
+  /* ── Layout ─────────────────────────────────────────── */
+  .map-layout {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 0;
+    align-items: stretch;
+    margin: 24px 0 20px;
+    border-top: 1px solid var(--card-border);
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  /* ── Map side ───────────────────────────────────────── */
+  .map-side {
+    position: relative;
+    aspect-ratio: 900 / 692;
+    min-width: 0;
+    border-right: 1px solid var(--card-border);
+  }
+
+  .map-svg { width: 100%; height: 100%; display: block; }
+
+  /* ── Country fills ──────────────────────────────────── */
+  .countries path {
+    fill: #eceae7;
+    stroke: #d4d1cb;
+    stroke-width: 0.6;
+    stroke-linejoin: round;
+  }
+
+  /* ── Dots ───────────────────────────────────────────── */
+  .dot {
+    fill: var(--color-primary-600);
+    transition: fill 0.15s;
+  }
+
+  .dot-group:hover .dot,
+  .dot-group:focus .dot { fill: var(--color-secondary-600); }
+
+  .dot-ring {
+    fill: var(--color-secondary-500);
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .dot-ring.is-active { animation: dotPulse 1.2s ease-out infinite; }
+
+  @keyframes dotPulse {
+    0%   { transform: scale(1);   opacity: 0.45; }
+    100% { transform: scale(3);   opacity: 0;    }
+  }
+
+  .dot-group { cursor: pointer; outline: none; }
+
+  /* ── Network edges ──────────────────────────────────── */
+  .edges line {
+    stroke: var(--color-primary-300);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    opacity: 0.6;
+  }
+
+  /* active state handled via x-bind:style on SVG elements */
+
+  /* ── Animated packets ───────────────────────────────── */
+  .packet {
+    fill: var(--color-primary-400);
+  }
+
+  /* ── Node flash ring ────────────────────────────────── */
+  .node-flash {
+    fill: none;
+    stroke: var(--color-primary-400);
+    stroke-width: 1.5;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: nodeFlash 8s ease-out infinite;
+  }
+
+  @keyframes nodeFlash {
+    0%   { transform: scale(1);   opacity: 0.35; }
+    55%  { transform: scale(2.2); opacity: 0; }
+    100% { transform: scale(1);   opacity: 0; }
+  }
+
+  /* ── Tooltip ────────────────────────────────────────── */
+  .map-tooltip {
+    position: absolute;
+    transform: translateX(-50%) translateY(calc(-100% - 10px));
+    background: white;
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    padding: 6px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    pointer-events: auto;
+    z-index: 20;
+    white-space: nowrap;
+  }
+
+  .map-tooltip.tt-left {
+    transform: translateX(-100%) translateY(calc(-100% - 10px));
+  }
+
+  .tt-enter        { transition: opacity 0.15s ease, scale 0.15s ease; }
+  .tt-enter-start  { opacity: 0; scale: 0.95; }
+  .tt-enter-end    { opacity: 1; scale: 1; }
+
+  .tt-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-neutral-700);
+    line-height: 1.4;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  a.tt-name::after {
+    content: "\2197\FE0E";
+    font-size: 11px;
+    color: var(--color-neutral-400);
+    flex-shrink: 0;
+  }
+
+  a.tt-name:hover {
+    color: var(--color-secondary-600);
+  }
+
+  a.tt-name:hover::after {
+    color: var(--color-secondary-500);
+  }
+
+  /* ── Stats side ─────────────────────────────────────── */
+  .stats-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+    padding: 28px 28px 28px 32px;
+  }
+
+  .stats-intro {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--color-neutral-500);
+    margin: 0 0 20px;
+  }
+
+  .stats-intro strong {
+    color: var(--color-neutral-700);
+    font-weight: 600;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 20px 0;
+  }
+
+  .stat-divider {
+    height: 1px;
+    background: var(--card-border);
+    margin-left: -32px;
+  }
+
+  .stat-val {
+    font-family: var(--font-headings);
+    font-size: 52px;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--color-primary-700);
+  }
+
+  .stat-lbl {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-neutral-500);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── Breakdown ──────────────────────────────────────── */
+  .stat-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--card-border);
+  }
+
+  .bd-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .bd-val {
+    font-family: var(--font-headings);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-primary-600);
+    min-width: 24px;
+    text-align: right;
+  }
+
+  .bd-lbl {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-neutral-400);
+  }
+
+  /* ── Responsive ─────────────────────────────────────── */
+  @media (max-width: 860px) {
+    .map-layout { grid-template-columns: 1fr; }
+    .map-side   { border-right: none; border-bottom: 1px solid var(--card-border); }
+    .stats-side {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+      padding: 20px 24px;
+      gap: 0;
+    }
+    .stats-intro { display: none; }
+    .stat-item {
+      flex: 1;
+      padding: 0;
+      align-items: center;
+      text-align: center;
+    }
+    .stat-val { font-size: 40px; }
+    .stat-lbl { font-size: 12px; }
+    .stat-divider {
+      width: 1px;
+      height: 52px;
+      margin: 0;
+      flex-shrink: 0;
+    }
+    .stat-breakdown { display: none; }
+  }
+
+  @media (max-width: 640px) {
+    .map-tooltip { display: none; }
+    .stat-val { font-size: 32px; }
+    .stats-side { padding: 16px; }
+  }
+</style>

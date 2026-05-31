@@ -4,6 +4,7 @@ import PageHero from '../components/ui/PageHero.astro';
 import SectionHeader from '../components/ui/SectionHeader.astro';
 import NumbersSection from '../components/sections/NumbersSection.astro';
 import CtaFinal from '../components/ui/CtaFinal.astro';
+import EuropeMap from '../components/ui/EuropeMap.astro';
 import about from '../data/about.yml';
 import partners from '../data/partners.yml';
 import { getCollection } from 'astro:content';
@@ -17,7 +18,7 @@ const logoUrls = import.meta.glob<string>(
 );
 
 const partnerMeta = new Map(
-  (partners.items as Array<{ name: string; logo?: string; url?: string }>)
+  (partners.items as Array<{ name: string; logo?: string; url?: string; lat?: number; lon?: number; country?: string; type?: string }>)
     .map(p => [p.name, p])
 );
 
@@ -32,7 +33,7 @@ const partnerItems = Array.from(allNames)
   .map(name => {
     const meta = partnerMeta.get(name);
     const src = meta?.logo ? (logoUrls[`../assets/logos/${meta.logo}`] ?? '') : '';
-    return { name, src: src || undefined, url: meta?.url };
+    return { name, src: src || undefined, url: meta?.url, lat: meta?.lat, lon: meta?.lon, country: meta?.country, type: meta?.type };
   });
 
 const GRID_COLS = 6;
@@ -341,6 +342,7 @@ const cta = {
     <div class="container">
       <div class="section-card">
         <SectionHeader title={partnersSection.title} subtitle={partnersSection.subtitle} />
+        <EuropeMap partners={partnerItems} />
         <div class="partners-grid">
           {partnerItems.map((partner) => (
             partner.src ? (
@@ -1083,6 +1085,16 @@ const cta = {
 
     .partners-grid {
       grid-template-columns: repeat(3, 1fr);
+    }
+
+    .partner-card {
+      padding: 14px 8px;
+      min-height: 64px;
+    }
+
+    .partner-logo {
+      max-height: 26px;
+      max-width: calc(100% - 16px);
     }
   }
 </style>

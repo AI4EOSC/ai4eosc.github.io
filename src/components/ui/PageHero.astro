@@ -189,11 +189,22 @@ const { title, description, breadcrumb, breadcrumbParent, theme } = Astro.props;
 
   @media (max-width: 640px) {
     .page-hero {
-      padding: calc(var(--nav-offset) + 20px) 24px 40px;
+      padding: calc(var(--nav-offset) + 20px) 24px 36px;
+    }
+
+    .breadcrumb {
+      font-size: 14px;
+      margin-bottom: 20px;
     }
 
     h1 {
-      font-size: 30px;
+      font-size: 28px;
+      margin-bottom: 14px;
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 1.65;
     }
   }
 </style>
