@@ -21,6 +21,41 @@ const siteName = "ai4eosc.eu";
 const ogImageUrl = ogImage
   ? new URL(ogImage, Astro.url).href
   : new URL('/og/ai4eosc-og.png', Astro.url).href;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://ai4eosc.eu/#organization",
+      "name": "AI4EOSC Initiative",
+      "url": "https://ai4eosc.eu",
+      "logo": "https://ai4eosc.eu/og/ai4eosc-og.png",
+      "description": "A collaborative initiative to integrate AI into the European Open Science Cloud (EOSC), fostering open science and accelerating research across disciplines.",
+      "foundingDate": "2026",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "url": "https://ai4eosc.eu/support/contact",
+        "contactType": "technical support"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/ai4eosc",
+        "https://x.com/AI4EOSC",
+        "https://www.youtube.com/@ai4eosc",
+        "https://github.com/ai4eosc"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://ai4eosc.eu/#website",
+      "url": "https://ai4eosc.eu",
+      "name": "AI4EOSC Initiative",
+      "description": "A shared foundation for deploying, extending, and accessing research-grade AI services in the EOSC.",
+      "publisher": { "@id": "https://ai4eosc.eu/#organization" },
+      "inLanguage": "en-US"
+    }
+  ]
+};
 ---
 <!doctype html>
 <html lang="en">
@@ -50,6 +85,7 @@ const ogImageUrl = ogImage
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <slot name="head" />
     <link rel="preload" href="/fonts/clashdisplay/ClashDisplay-Variable.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/clashgrotesk/ClashGrotesk-Variable.woff2" as="font" type="font/woff2" crossorigin>

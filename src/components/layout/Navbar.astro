@@ -3,7 +3,7 @@ import nav from '../../data/nav.yml';
 import logoSrc from '../../assets/logos/AI4-horizontal-light.svg?url';
 ---
 
-<header class="fixed top-5 left-1/2 -translate-x-1/2 w-[calc(100%-72px)] sm:w-[min(1200px,calc(100%-20px))] z-[200]">
+<header class="fixed top-5 left-1/2 -translate-x-1/2 w-[calc(100%-72px)] sm:w-[calc(100%-80px)] xl:w-[min(1260px,calc(100%-40px))] z-[200]">
   <div
     data-nav
     class="nav glass relative flex flex-col rounded-[40px] transition-shadow duration-300"
@@ -457,15 +457,19 @@ import logoSrc from '../../assets/logos/AI4-horizontal-light.svg?url';
       buttons.forEach(b => b.classList.remove('active'));
     };
 
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
     buttons.forEach(btn => {
-      btn.addEventListener('mouseenter', () => {
-        const menu = btn.getAttribute('data-menu');
-        if (!menu || !nav) return;
-        nav.classList.add('open');
-        nav.setAttribute('data-active', menu);
-        buttons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      });
+      if (!isTouch) {
+        btn.addEventListener('mouseenter', () => {
+          const menu = btn.getAttribute('data-menu');
+          if (!menu || !nav) return;
+          nav.classList.add('open');
+          nav.setAttribute('data-active', menu);
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
+      }
       btn.addEventListener('click', () => {
         const menu = btn.getAttribute('data-menu');
         if (!menu || !nav) return;
@@ -477,8 +481,10 @@ import logoSrc from '../../assets/logos/AI4-horizontal-light.svg?url';
       });
     });
 
-    nav?.addEventListener('mouseleave', closeDesktop);
-    noMenus.forEach(link => link.addEventListener('mouseenter', closeDesktop));
+    if (!isTouch) {
+      nav?.addEventListener('mouseleave', closeDesktop);
+      noMenus.forEach(link => link.addEventListener('mouseenter', closeDesktop));
+    }
     document.addEventListener('click', e => {
       if (!(e.target instanceof Element)) return;
       if (!e.target.closest('[data-nav]')) closeDesktop();

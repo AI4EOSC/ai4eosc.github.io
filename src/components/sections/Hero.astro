@@ -199,6 +199,17 @@ const cta = {
   .circle--md { width: 58%; }
   .circle--sm { width: 36%; }
 
+  @media (min-width: 861px) and (max-width: 1200px) {
+    .hero {
+      height: auto;
+      min-height: 0;
+      padding: calc(var(--nav-offset) + 32px) 56px 56px;
+    }
+    .hero-badge { margin-bottom: 22px; }
+    h1 { font-size: 44px; margin-bottom: 24px; }
+    p  { margin-bottom: 26px; }
+  }
+
   @media (max-width: 860px) {
     .hero {
       padding: calc(var(--nav-offset) + 20px) 42px 56px;
@@ -207,6 +218,8 @@ const cta = {
     h1 {
       font-size: 38px;
     }
+
+    .scroll-down { display: none; }
   }
 
   @media (max-width: 640px) {

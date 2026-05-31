@@ -414,7 +414,7 @@ const productStatuses = ['All', ...Array.from(new Set(data.items.map((i: any) =>
   <CtaFinal
     title="Ready to build on EOSC?"
     description="Join hundreds of researchers already using AI4EOSC to accelerate their AI workflows on European infrastructure."
-    button={{ label: "Get started ↗", href: "https://ai4eosc.eu" }}
+    button={{ label: "Get started ↗︎", href: "https://ai4eosc.eu" }}
     theme="black"
   />
 </Layout>
@@ -686,6 +686,7 @@ const productStatuses = ['All', ...Array.from(new Set(data.items.map((i: any) =>
     letter-spacing: 0.05em; color: var(--color-neutral-500);
     background: white; border: 1px solid var(--card-border);
     border-radius: 999px; padding: 4px 12px;
+    white-space: nowrap;
   }
 
   .status {
@@ -727,6 +728,7 @@ const productStatuses = ['All', ...Array.from(new Set(data.items.map((i: any) =>
     color: var(--color-neutral-700);
     background: white; border: 0.5px solid var(--card-border);
     border-radius: 999px; padding: 4px 14px;
+    white-space: nowrap;
   }
 
   .prod-actions {
@@ -905,6 +907,16 @@ const productStatuses = ['All', ...Array.from(new Set(data.items.map((i: any) =>
     .step-item { border-right: none; border-top: 1px solid var(--card-border); padding: 24px 0 28px; }
     .step-item + .step-item { padding-left: 0; }
     .step-item:not(:last-child)::after { display: none; }
+
+    .prod-actions { flex-wrap: nowrap; }
+    .btn-visit, .btn-docs { font-size: 14px; padding: 7px 12px; }
+  }
+
+  @media (min-width: 861px) and (max-width: 1100px) {
+    .cat-sidebar    { flex: 0 0 200px; }
+    .detail-inner   { grid-template-columns: 1fr 260px; }
+    .prod-actions   { flex-wrap: nowrap; }
+    .btn-visit, .btn-docs { font-size: 14px; padding: 7px 12px; }
   }
 
   @media (max-width: 640px) {

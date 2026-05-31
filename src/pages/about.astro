@@ -36,9 +36,12 @@ const partnerItems = Array.from(allNames)
     return { name, src: src || undefined, url: meta?.url, lat: meta?.lat, lon: meta?.lon, country: meta?.country, type: meta?.type };
   });
 
-const GRID_COLS = 6;
-const remainder = partnerItems.length % GRID_COLS;
-const moreSpan = remainder === 0 ? 0 : GRID_COLS - remainder;
+const span = (cols: number) => partnerItems.length % cols === 0 ? 0 : cols - (partnerItems.length % cols);
+const span6 = span(6);
+const span5 = span(5);
+const span4 = span(4);
+const span3 = span(3);
+const showMore = span6 > 0 || span5 > 0 || span4 > 0 || span3 > 0;
 
 const hero = {
   title: 'Building open AI infrastructure for European science',
@@ -355,8 +358,8 @@ const cta = {
               </div>
             )
           ))}
-          {moreSpan > 0 && (
-            <div class="partner-more" style={`grid-column: span ${moreSpan}`}>
+          {showMore && (
+            <div class="partner-more" style={`--s6:${span6};--s5:${span5};--s4:${span4};--s3:${span3}`}>
               and more to join
             </div>
           )}
@@ -855,6 +858,7 @@ const cta = {
     color: var(--color-neutral-300);
     letter-spacing: 0.04em;
     font-style: italic;
+    grid-column: span var(--s6);
   }
 
   /* ── EU FUNDING ───────────────────────────────────── */
@@ -1033,9 +1037,8 @@ const cta = {
 
   /* ── RESPONSIVE ───────────────────────────────────── */
   @media (max-width: 1100px) {
-    .partners-grid {
-      grid-template-columns: repeat(5, 1fr);
-    }
+    .partners-grid { grid-template-columns: repeat(5, 1fr); }
+    .partner-more  { grid-column: span var(--s5); }
   }
 
   @media (max-width: 860px) {
@@ -1064,9 +1067,8 @@ const cta = {
       padding: 24px 0 28px !important;
     }
 
-    .partners-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
+    .partners-grid { grid-template-columns: repeat(4, 1fr); }
+    .partner-more  { grid-column: span var(--s4); }
 
     .eu-card {
       flex-direction: column;
@@ -1083,9 +1085,8 @@ const cta = {
     .tl-body { padding-left: 12px; }
     .tl-content { padding: 20px 0 24px; }
 
-    .partners-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
+    .partners-grid { grid-template-columns: repeat(3, 1fr); }
+    .partner-more  { grid-column: span var(--s3); }
 
     .partner-card {
       padding: 14px 8px;
