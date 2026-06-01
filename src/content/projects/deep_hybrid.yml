@@ -1,0 +1,28 @@
+type: origin
+status: finished
+title: DEEP-HybridDataCloud
+tagline: Designing and Enabling E-infrastructures for intensive Processing in a Hybrid DataCloud
+description: Supporting artificial intelligence (machine learning and deep learning), parallel post-processing of very large data, and analysis of massive online data streams over distributed e-Infrastructures in the EOSC.
+logo: AI4-horizontal-light.svg
+outputsLabel: Key outputs
+outputs:
+    - DEEPaaS API
+    - Model marketplace
+    - Image 
+funding:  2988750
+grant: "No. 777435"
+programme: Horizon 2020
+period: "2017 – 2020"
+lead: CSIC
+partners:
+    - LIP
+    - INFN
+    - PSNC
+    - KIT
+    - UPV
+    - CESNET
+    - IISAS
+    - ATOSs
+    - Helmholtz Zentrum München
+url: https://deep-hybrid-datacloud.eu/
+grantUrl: https://cordis.europa.eu/project/id/777435
