@@ -1,4 +1,8 @@
 timeline:
+    - year: "2017"
+      phase: "EU Project"
+      title: DEEP-Hybrid-DataCloud project kicks off
+      description: This Horizon 2020 will deliver the DEEP platform, allowing researchers to build deep learning models over pan-EU e-Infrastructures.
     - year: "2022"
       phase: "EU Project"
       title: AI4EOSC project kicks off
