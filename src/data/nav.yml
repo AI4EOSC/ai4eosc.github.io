@@ -25,14 +25,14 @@ links:
       href: /stories
     - label: Support
       dropdown:
-          - label: Contact
-            description: Get in touch with the team
-            href: /support/contact
-            hoverGradient: eu-blue
           - label: FAQ
             description: Frequently asked questions
             href: /support/faq
             hoverGradient: pink
+          - label: Helpdesk
+            description: Get support from our team
+            href: https://helpdesk.cloud.ai4eosc.eu/
+            hoverGradient: green
           - label: Documentation
             description: Technical guides and resources
             href: https://docs.ai4eosc.eu
