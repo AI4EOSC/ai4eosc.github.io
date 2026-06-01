@@ -1,10 +1,10 @@
 <div align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)"
-            srcset="https://raw.githubusercontent.com/AI4EOSC/ai4eosc-initiative-web/main/src/assets/logos/AI4-horizontal-dark.svg" />
+            srcset="./src/assets/logos/AI4-horizontal-dark.svg" />
     <source media="(prefers-color-scheme: light)"
-            srcset="https://raw.githubusercontent.com/AI4EOSC/ai4eosc-initiative-web/main/src/assets/logos/AI4-horizontal-light.svg" />
-    <img src="https://raw.githubusercontent.com/AI4EOSC/ai4eosc-initiative-web/main/src/assets/logos/AI4-horizontal-light.svg"
+            srcset="./src/assets/logos/AI4-horizontal-light.svg" />
+    <img src="./src/assets/logos/AI4-horizontal-light.svg"
          alt="AI4EOSC Logo"
          width="320" />
   </picture>
