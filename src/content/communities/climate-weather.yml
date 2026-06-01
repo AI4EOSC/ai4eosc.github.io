@@ -1,8 +1,8 @@
 title: Climate & Weather
 iconId: climate
 description: Climate forecasting,
-longDescription: Machine, deep and federated learning models for short-term precipitation forecasting (vertical integrated liquid) based on radar images.
-via: AI4EOSC Gateway
+longDescription: Machine, deep and federated learning models for weather forecasting. Use cases include short-term precipitation nowcasting (vertical integrated liquid) based on radar images.
+via: AI4EOSC
 gatewaySlug: ai4eosc
 tools:
     - Weather forecasting

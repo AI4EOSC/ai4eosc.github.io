@@ -9,29 +9,6 @@ euProject: iMagine
 projectId: imagine
 community: Marine Science
 communitySlug: marine-science
-operatedBy:
-    - CSIC
-    - EGI
-    - CMCC
-    - DFKI
-    - EMSO-ERIC
-    - GRNET
-    - IFREMER
-    - KIT
-    - LIEC
-    - LIP
-    - Marine Institute
-    - MARIS
-    - OGS
-    - ORBITAL
-    - SOCIB
-    - Sorbonne Université
-    - TÜBITAK
-    - UNITN
-    - UPC
-    - UPV
-    - VLIZ
-    - WALTON
 accessType: Open to researchers
 accessDesc: Register with your institutional EOSC account to access the full model catalogue.
 tools:
