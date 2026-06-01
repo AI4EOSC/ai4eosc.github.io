@@ -3,8 +3,7 @@ type: marine
 domain: Marine
 status: active
 tagline: AI for aquatic imaging and marine biodiversity research
-description: AI for underwater imaging and marine biodiversity.
-longDescription: iMagine provides researchers with AI tools for underwater image classification, species identification and marine biodiversity monitoring. Built as part of the iMagine EU project, it uses the AI4EOSC platform to offer a tailored experience for marine scientists across Europe.
+description: iMagine provides researchers with AI tools for underwater image classification, species identification and marine biodiversity monitoring. Built as part of the iMagine EU project, it uses the AI4EOSC platform to offer a tailored experience for marine scientists across Europe.
 euProject: iMagine
 projectId: imagine
 community: Marine Science
@@ -15,11 +14,11 @@ tools:
     - Species classifier
     - Image segmentation
     - Species detection
-    - Automated water quality assessment 
+    - Automated water quality assessment
     - Experiment tracking
     - Model deployment
     - Inferece via OSCAR
     - Integrated storage
 logo: iMagine.png
-url: https://imagine-ai.eu
+url: https://dashboard.cloud.imagine-ai.eu
 slug: imagine

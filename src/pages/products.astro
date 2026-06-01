@@ -20,15 +20,15 @@ const productIcons: Record<string, string> = {
 };
 
 const chromeUrl: Record<string, string> = {
-  platform: 'dashboard.ai4eosc.eu',
-  llm:      'llm.ai4eosc.eu',
-  agents:   'agents.ai4eosc.eu',
+  platform: 'dashboard.cloud.ai4eosc.eu',
+  llm:      'chat.cloud.ai4eosc.eu',
+  agents:   'agents.cloud.ai4eosc.eu',
 };
 
 const firstId: string = data.items[0]?.iconId ?? 'platform';
 const productIds = JSON.stringify(data.items.map((i: any) => i.iconId));
 const alpineProductItems = JSON.stringify(data.items.map((i: any) => ({ id: i.iconId, status: i.status })));
-const productStatuses = ['All', ...Array.from(new Set(data.items.map((i: any) => i.status as string)))];
+const productStatuses = ['All', ...Array.from(new Set(data.items.map((i: any) => i.status as string))).sort()];
 ---
 
 <Layout title="Products — AI4EOSC Initiative" ogImage="/og/products.png">
@@ -127,7 +127,7 @@ const productStatuses = ['All', ...Array.from(new Set(data.items.map((i: any) =>
                     </div>
                     <h3>{item.title}</h3>
                     <p class="tagline">{item.tagline}</p>
-                    <p class="desc">{item.detailDescription}</p>
+                    <p class="desc">{item.description}</p>
                     <p class="feat-lbl">Features</p>
                     <ul class="feats">
                       {item.features.map((f: string) => (

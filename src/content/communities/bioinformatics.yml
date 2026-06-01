@@ -1,7 +1,7 @@
 title: Bioinformatics
 iconId: bioinformatics
-description: Genomics, proteomics, drug discovery
-longDescription: Deep learning tools for cells segmentation, object detection and image analysis. Built in collaboration with AI4Life by integrating the models from the BioImage.IO model zoo.
+tagline: Genomics, proteomics, drug discovery
+description: Deep learning tools for cells segmentation, object detection and image analysis. Built in collaboration with AI4Life by integrating the models from the BioImage.IO model zoo.
 via: AI4Life
 viaUrl: https://ai4life.eurobioimaging.eu
 gatewaySlug: ai4life

@@ -3,24 +3,38 @@ import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/ui/PageHero.astro';
 import CtaFinal from '../../components/ui/CtaFinal.astro';
 import { getCollection } from 'astro:content';
+import numbersData from '../../data/numbers.yml';
 
 const entries = await getCollection('gateways');
 const items = entries
   .sort((a, b) => a.data.title.localeCompare(b.data.title))
   .map(e => ({ id: e.id, ...e.data }));
 
+const communityEntries = await getCollection('communities');
+const communityIconMap: Record<string, string> = Object.fromEntries(
+  communityEntries.map(e => [e.data.slug, e.data.iconId])
+);
+
 const logoUrls = import.meta.glob<string>(
   '../../assets/logos/*',
   { eager: true, query: '?url', import: 'default' }
 );
 
-const icons: Record<string, string> = {
-  marine:  `<path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>`,
-  climate: `<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>`,
-  health:  `<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>`,
-  life:    `<path d="M2 3c4 2 6 5 6 9s-2 7-6 9"/><path d="M22 3c-4 2-6 5-6 9s2 7 6 9"/><path d="M6 7h12M6 17h12"/>`,
-  physics: `<circle cx="12" cy="12" r="1"/><path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5z"/><path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5z"/>`,
+const communityIcons: Record<string, string> = {
+  marine:         `<path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>`,
+  climate:        `<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>`,
+  bioinformatics: `<path d="M2 3c4 2 6 5 6 9s-2 7-6 9"/><path d="M22 3c-4 2-6 5-6 9s2 7 6 9"/><path d="M6 7h12M6 17h12"/>`,
+  social:         `<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>`,
+  humanities:     `<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>`,
+  physics:        `<circle cx="12" cy="12" r="1"/><path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5z"/><path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5z"/>`,
+  earth:          `<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/>`,
+  astronomy:      `<circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>`,
 };
+
+function gatewayIcon(item: any): string {
+  if (item.communitySlug) return communityIcons[communityIconMap[item.communitySlug]] ?? communityIcons.earth;
+  return communityIcons.earth;
+}
 
 const explainerIcons: Record<string, string> = {
   copy:     `<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>`,
@@ -43,13 +57,15 @@ function formatUsers(count: number): string {
 
 const totalGateways = items.length;
 const distinctDomains = new Set(items.map((i: any) => i.domain as string)).size;
-const totalUsers = items.reduce((acc: number, item: any) => acc + (item.users ?? 0), 0);
+const researchersItem = (numbersData.items as Array<Record<string, string>>).find(i => i.source === 'communities');
+const researchersValue = researchersItem?.value ?? '0';
 
-const domains = ['all', 'marine', 'climate', 'health', 'life', 'physics'];
 const domainLabels: Record<string, string> = {
   all: 'All', marine: 'Marine', climate: 'Climate',
-  health: 'Health', life: 'Life sciences', physics: 'Physics',
+  health: 'Health', interdisciplinary: 'Interdisciplinary', life: 'Life sciences', physics: 'Physics',
 };
+const domains = ['all', ...Array.from(new Set(items.map((i: any) => i.type as string))).sort()];
+const statuses = ['all', ...Array.from(new Set(items.map((i: any) => i.status as string))).sort()];
 
 const statusBadge: Record<string, { label: string; cls: string }> = {
   active:       { label: 'Active',       cls: 'b-active' },
@@ -76,7 +92,7 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
     <div class="hero-stats">
       <div class="hstat"><span class="hstat-val">{totalGateways}<em>+</em></span><span class="hstat-lbl">Active gateways</span></div>
       <div class="hstat"><span class="hstat-val">{distinctDomains}<em>+</em></span><span class="hstat-lbl">Scientific domains</span></div>
-      <div class="hstat"><span class="hstat-val">{formatUsers(totalUsers)}<em>+</em></span><span class="hstat-lbl">Researchers with access</span></div>
+      <div class="hstat"><span class="hstat-val">{researchersValue}<em>+</em></span><span class="hstat-lbl">Researchers with access</span></div>
     </div>
   </PageHero>
 
@@ -161,14 +177,14 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
             <div class="filter-col">
               <span class="filter-col-label">Status</span>
               <div class="filters">
-                {(['all', 'active', 'new', 'coming-soon'] as const).map(s => (
+                {statuses.map((s: string) => (
                   <button
                     class="filter-btn"
                     x-bind:class={`{ 'is-active': statusFilter === '${s}' }`}
                     x-on:click={`setStatusFilter('${s}')`}
                     type="button"
                   >
-                    {s === 'all' ? 'All' : statusBadge[s]?.label ?? s}
+                    {s === 'all' ? 'All' : (statusBadge[s]?.label ?? s)}
                   </button>
                 ))}
               </div>
@@ -192,7 +208,7 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
                   <span class="sc sc--md" aria-hidden="true"></span>
                   <span class="sc sc--sm" aria-hidden="true"></span>
                   <div class="si-inner">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[item.type]} />
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={gatewayIcon(item)} />
                     <span class="si-name">{item.title}</span>
                   </div>
                 </button>
@@ -208,19 +224,21 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
                     <!-- Left: content -->
                     <div class="pdl">
                       <div class="pdl-top">
-                        <a class="badge b-community" href={`/ecosystem/communities${item.communitySlug ? '#' + item.communitySlug : ''}`}>{item.community}</a>
+                        {item.community && (
+                          <a class="badge b-community" href={`/ecosystem/communities${item.communitySlug ? '#' + item.communitySlug : ''}`}>{item.community}</a>
+                        )}
                         <span class={`badge ${statusBadge[item.status]?.cls ?? 'b-active'}`}>
                           {statusBadge[item.status]?.label ?? item.status}
                         </span>
                       </div>
                       <div class="title-row">
                         <span class="title-icon" aria-hidden="true">
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" set:html={icons[item.type]} />
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" set:html={gatewayIcon(item)} />
                         </span>
                         <h3>{item.title}</h3>
                       </div>
                       <p class="pdl-tagline">{item.tagline}</p>
-                      <p class="pdl-desc">{item.longDescription}</p>
+                      {item.description && <p class="pdl-desc">{item.description}</p>}
 
                       <p class="feat-lbl">Available tools</p>
                       <ul class="feats">
@@ -572,7 +590,7 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
   .logo-top {
     background: white;
     border-radius: 8px;
-    padding: 10px 14px;
+    padding: 10px 28px;
     display: flex; align-items: center; justify-content: center;
     min-height: 90px;
   }

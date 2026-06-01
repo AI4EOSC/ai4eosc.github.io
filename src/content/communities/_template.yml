@@ -4,12 +4,12 @@
 # Required fields
 title: "Community Name"
 iconId: marine # marine | climate | bioinformatics | social | humanities | physics | earth | astronomy
-description: "Short description shown in cards (1 line)"
+tagline: "Short description shown in cards (1 line)"
 slug: community-slug
 
 # Optional fields
 users: 0 # approximate number of researchers
-longDescription: "Full description shown in detail panel."
+description: "Full description shown in detail panel."
 via: "Gateway Name" # gateway this community uses
 viaUrl: https://gateway.example.eu
 gatewaySlug: gateway-slug # links to the gateway detail

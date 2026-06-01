@@ -138,7 +138,7 @@
 	--glass-border-primary: rgba(120, 220, 228, 0.22);
 	--glass-bg-secondary: rgba(236, 93, 128, 0.26);
 	--glass-border-secondary: rgba(255, 155, 175, 0.22);
-	--glass-bg-neutral: rgba(255, 255, 255, 0.7);
+	--glass-bg-neutral: rgba(255, 255, 255, 0.82);
 	--glass-blur: 25px;
 	--glass-shadow-primary:
 		0 2px 4px rgba(0, 0, 0, 0.06), 0 12px 36px rgba(0, 134, 145, 0.28),
@@ -165,7 +165,6 @@
 ───────────────────────────────────────────────────────────────── */
 .glass {
 	backdrop-filter: blur(var(--glass-blur));
-	-webkit-backdrop-filter: blur(var(--glass-blur));
 	background: var(--glass-bg-neutral);
 	box-shadow: var(--glass-shadow-neutral);
 	transition:

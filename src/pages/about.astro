@@ -8,8 +8,6 @@ import EuropeMap from '../components/ui/EuropeMap.astro';
 import about from '../data/about.yml';
 import partners from '../data/partners.yml';
 import { getCollection } from 'astro:content';
-const projectEntries = await getCollection('projects');
-const projectsData = { items: projectEntries.map(e => ({ id: e.id, ...e.data })) };
 import euLogo from '../assets/en-v-funded-by-the-eu_black-outline.png';
 
 const logoUrls = import.meta.glob<string>(
@@ -17,31 +15,27 @@ const logoUrls = import.meta.glob<string>(
   { eager: true, query: '?url', import: 'default' }
 );
 
-const partnerMeta = new Map(
-  (partners.items as Array<{ name: string; logo?: string; url?: string; lat?: number; lon?: number; country?: string; type?: string }>)
-    .map(p => [p.name, p])
-);
+type PartnerMeta = { name: string; role?: string; logo?: string; url?: string; lat?: number; lon?: number; country?: string; type?: string };
+const partnerMeta = new Map((partners.items as PartnerMeta[]).map(p => [p.name, p]));
 
+const projectEntries = await getCollection('projects');
 const allNames = new Set<string>();
-for (const project of projectsData.items as Array<{ lead?: string; partners?: string[] }>) {
-  if (project.lead) allNames.add(project.lead);
-  for (const p of project.partners ?? []) allNames.add(p);
+for (const e of projectEntries) {
+  if (e.data.lead) allNames.add(e.data.lead);
+  for (const p of e.data.partners ?? []) allNames.add(p);
 }
 
-const partnerItems = Array.from(allNames)
+const allPartners = Array.from(allNames)
   .sort((a, b) => a.localeCompare(b))
   .map(name => {
-    const meta = partnerMeta.get(name);
-    const src = meta?.logo ? (logoUrls[`../assets/logos/${meta.logo}`] ?? '') : '';
-    return { name, src: src || undefined, url: meta?.url, lat: meta?.lat, lon: meta?.lon, country: meta?.country, type: meta?.type };
+    const m = partnerMeta.get(name);
+    const raw = m?.logo ? (logoUrls[`../assets/logos/${m.logo}`] ?? '') : '';
+    return { name, role: m?.role ?? 'contributor', src: raw || undefined, url: m?.url, lat: m?.lat, lon: m?.lon, country: m?.country, type: m?.type };
   });
 
-const span = (cols: number) => partnerItems.length % cols === 0 ? 0 : cols - (partnerItems.length % cols);
-const span6 = span(6);
-const span5 = span(5);
-const span4 = span(4);
-const span3 = span(3);
-const showMore = span6 > 0 || span5 > 0 || span4 > 0 || span3 > 0;
+const leaderPartner       = allPartners.find(p => p.role === 'leader');
+const corePartners        = allPartners.filter(p => p.role === 'core');
+const contributorPartners = allPartners.filter(p => p.role === 'contributor');
 
 const hero = {
   title: 'Building open AI infrastructure for European science',
@@ -88,6 +82,8 @@ const partnersSection = {
   label: 'Partners & institutions',
   title: 'Who\'s behind the initiative',
   subtitle: 'A network of European research institutions, infrastructure providers and cloud partners building together.',
+  leaderDesc: 'Spanish National Research Council (CSIC), Spain\'s main public research organisation, coordinates the AI4EOSC initiative through the Advanced Computing and e-Science Group at the Instituto de Física de Cantabria (IFCA-CSIC-UC), driving platform development and governance across the European Open Science Cloud.',
+  contributorDesc: 'Research institutions, infrastructure providers and industry partners from across Europe contributing to the AI4EOSC ecosystem through the associated projects.',
 };
 
 const funding = {
@@ -345,25 +341,66 @@ const cta = {
     <div class="container">
       <div class="section-card">
         <SectionHeader title={partnersSection.title} subtitle={partnersSection.subtitle} />
-        <EuropeMap partners={partnerItems} />
-        <div class="partners-grid">
-          {partnerItems.map((partner) => (
-            partner.src ? (
-              <a href={partner.url || undefined} target={partner.url ? '_blank' : undefined} rel={partner.url ? 'noopener noreferrer' : undefined} class="partner-card" aria-label={partner.name}>
-                <img src={partner.src} alt={partner.name} class="partner-logo" loading="lazy" />
+        <EuropeMap partners={allPartners} />
+
+        <!-- Leader -->
+        <div class="tier-leader">
+          <div class="tier-leader-text">
+            <span class="tier-heading">AI4EOSC Initiative is led by</span>
+            <p class="tier-desc">{partnersSection.leaderDesc}</p>
+          </div>
+          {leaderPartner?.src && (
+            <div class="leader-right">
+              <a class="leader-logo-link" href={leaderPartner.url} target="_blank" rel="noopener noreferrer" aria-label={leaderPartner.name}>
+                <img src={leaderPartner.src} alt={leaderPartner.name} class="leader-logo-img" loading="lazy" />
               </a>
-            ) : (
-              <div class="partner-card partner-text" title={partner.name}>
-                <span class="partner-name">{partner.name}</span>
+              <div class="leader-attr">
+                <span>Instituto de Física de Cantabria</span>
+                <span>Advanced Computing and e-Science Group</span>
+                <span>Santander, Spain</span>
               </div>
-            )
-          ))}
-          {showMore && (
-            <div class="partner-more" style={`--s6:${span6};--s5:${span5};--s4:${span4};--s3:${span3}`}>
-              and more to join
             </div>
           )}
         </div>
+
+        <!-- Core Partners -->
+        <div class="tier-block">
+          <span class="tier-heading">Core Partners</span>
+          <p class="tier-desc">The founding research institutions, infrastructure providers and technology companies that built and operate the AI4EOSC platform.</p>
+          <div class="partners-grid">
+            {corePartners.map((partner) => (
+              partner.src ? (
+                <a href={partner.url || undefined} target={partner.url ? '_blank' : undefined} rel={partner.url ? 'noopener noreferrer' : undefined} class="partner-card" aria-label={partner.name}>
+                  <img src={partner.src} alt={partner.name} class="partner-logo" loading="lazy" />
+                </a>
+              ) : (
+                <div class="partner-card partner-text" title={partner.name}>
+                  <span class="partner-name">{partner.name}</span>
+                </div>
+              )
+            ))}
+          </div>
+        </div>
+
+        <!-- Contributors -->
+        <div class="tier-block">
+          <span class="tier-heading">Contributors</span>
+          <p class="tier-desc">{partnersSection.contributorDesc}</p>
+          <div class="partners-grid">
+            {contributorPartners.map((partner) => (
+              partner.src ? (
+                <a href={partner.url || undefined} target={partner.url ? '_blank' : undefined} rel={partner.url ? 'noopener noreferrer' : undefined} class="partner-card" aria-label={partner.name}>
+                  <img src={partner.src} alt={partner.name} class="partner-logo" loading="lazy" />
+                </a>
+              ) : (
+                <div class="partner-card partner-text" title={partner.name}>
+                  <span class="partner-name">{partner.name}</span>
+                </div>
+              )
+            ))}
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -805,13 +842,86 @@ const cta = {
     line-height: 1.75; margin: 0;
   }
 
+  /* ── TIER SECTIONS ───────────────────────────────── */
+  .tier-leader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    margin-top: 28px;
+  }
+
+  .tier-leader-text { flex: 1; min-width: 0; }
+  .tier-leader-text .tier-desc { max-width: 800px; }
+
+  .leader-right {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    padding-right: 20px;
+  }
+
+  .leader-logo-link { display: flex; align-items: center; }
+
+  .leader-logo-img {
+    max-height: 60px;
+    max-width: 180px;
+    object-fit: contain;
+    filter: grayscale(1) opacity(0.55);
+    transition: filter var(--transition-base);
+  }
+
+  .leader-logo-link:hover .leader-logo-img { filter: grayscale(0) opacity(1); }
+
+  .leader-attr {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1px;
+  }
+
+  .leader-attr span {
+    font-size: 14px;
+    color: var(--color-neutral-400);
+    text-align: right;
+    line-height: 1.4;
+  }
+
+  .leader-attr span:first-child {
+    font-weight: 600;
+    color: var(--color-neutral-500);
+  }
+
+  .tier-block {
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--card-border);
+  }
+
+  .tier-heading {
+    display: block;
+    font-family: var(--font-headings);
+    font-size: 20px; font-weight: 650;
+    letter-spacing: 0.02em;
+    color: var(--color-neutral-800);
+    margin-bottom: 8px;
+  }
+
+  .tier-desc {
+    font-size: 16px; color: var(--color-neutral-500);
+    line-height: 1.6; margin: 0;
+    max-width: 600px;
+  }
+
   /* ── PARTNERS ─────────────────────────────────────── */
   .partners-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    gap: 1px;
-    background: var(--card-border);
-    margin-top: 24px;
+    gap: 0;
+    margin-top: 16px;
+    clip-path: inset(0 0 1px 0);
   }
 
   .partner-card {
@@ -822,7 +932,10 @@ const cta = {
     justify-content: center;
     min-height: 84px;
     text-decoration: none;
+    border-right: 1px solid var(--card-border);
+    border-bottom: 1px solid var(--card-border);
   }
+
 
   .partner-logo {
     max-height: 36px;
@@ -845,20 +958,6 @@ const cta = {
     color: var(--color-neutral-400);
     text-align: center;
     line-height: 1.3;
-  }
-
-  .partner-more {
-    background: #ffffff;
-    min-height: 84px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--color-neutral-300);
-    letter-spacing: 0.04em;
-    font-style: italic;
-    grid-column: span var(--s6);
   }
 
   /* ── EU FUNDING ───────────────────────────────────── */
@@ -1038,7 +1137,6 @@ const cta = {
   /* ── RESPONSIVE ───────────────────────────────────── */
   @media (max-width: 1100px) {
     .partners-grid { grid-template-columns: repeat(5, 1fr); }
-    .partner-more  { grid-column: span var(--s5); }
   }
 
   @media (max-width: 860px) {
@@ -1068,7 +1166,6 @@ const cta = {
     }
 
     .partners-grid { grid-template-columns: repeat(4, 1fr); }
-    .partner-more  { grid-column: span var(--s4); }
 
     .eu-card {
       flex-direction: column;
@@ -1086,7 +1183,6 @@ const cta = {
     .tl-content { padding: 20px 0 24px; }
 
     .partners-grid { grid-template-columns: repeat(3, 1fr); }
-    .partner-more  { grid-column: span var(--s3); }
 
     .partner-card {
       padding: 14px 8px;
@@ -1098,4 +1194,10 @@ const cta = {
       max-width: calc(100% - 16px);
     }
   }
+
+  /* ── Partners: last-column border — non-overlapping ranges ── */
+  @media (min-width: 1101px)                        { .partner-card:nth-child(6n) { border-right: none; } }
+  @media (min-width: 861px) and (max-width: 1100px) { .partner-card:nth-child(5n) { border-right: none; } }
+  @media (min-width: 641px) and (max-width: 860px)  { .partner-card:nth-child(4n) { border-right: none; } }
+  @media (max-width: 640px)                         { .partner-card:nth-child(3n) { border-right: none; } }
 </style>

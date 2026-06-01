@@ -31,7 +31,7 @@ function formatFunding(amount: number): string {
   return `€${amount}`;
 }
 
-const alpineProjectItems = JSON.stringify(items.map((i: any) => ({ id: i.id, type: i.type })));
+const alpineProjectItems = JSON.stringify(items.map((i: any) => ({ id: i.id, type: i.type, status: i.status })));
 
 const totalProjects = items.length;
 
@@ -49,6 +49,8 @@ const yearsOfResearch = startYears.length > 0
   ? new Date().getFullYear() - Math.min(...startYears)
   : 0;
 const projectIds = JSON.stringify(items.map((i: any) => i.id));
+const projectTypes    = Array.from(new Set(items.map((i: any) => i.type   as string))).sort();
+const projectStatuses = Array.from(new Set(items.map((i: any) => i.status as string))).sort();
 
 const typeBadge: Record<string, { label: string; cls: string }> = {
   origin:     { label: 'Origin project',    cls: 'b-origin' },
@@ -92,6 +94,7 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
         <div x-data={`{
           active: '${items[0].id}',
           filter: 'all',
+          statusFilter: 'all',
           ids: ${projectIds},
           items: ${alpineProjectItems},
           init() {
@@ -103,7 +106,12 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
           },
           setFilter(f) {
             this.filter = f;
-            const vis = this.items.filter(i => f === 'all' || i.type === f);
+            const vis = this.items.filter(i => (f === 'all' || i.type === f) && (this.statusFilter === 'all' || i.status === this.statusFilter));
+            if (vis.length && !vis.some(i => i.id === this.active)) this.active = vis[0].id;
+          },
+          setStatusFilter(f) {
+            this.statusFilter = f;
+            const vis = this.items.filter(i => (this.filter === 'all' || i.type === this.filter) && (f === 'all' || i.status === f));
             if (vis.length && !vis.some(i => i.id === this.active)) this.active = vis[0].id;
           }
         }`}>
@@ -114,9 +122,32 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
               <span class="filter-col-label">Type</span>
               <div class="filters">
                 <button class="filter-btn filter-btn--blue" x-bind:class="{ 'is-active': filter === 'all' }" x-on:click="setFilter('all')" type="button">All</button>
-                <button class="filter-btn filter-btn--blue" x-bind:class="{ 'is-active': filter === 'origin' }" x-on:click="setFilter('origin')" type="button">Origin project</button>
-                <button class="filter-btn filter-btn--blue" x-bind:class="{ 'is-active': filter === 'associated' }" x-on:click="setFilter('associated')" type="button">Associated</button>
-                <button class="filter-btn filter-btn--blue" x-bind:class="{ 'is-active': filter === 'extension' }" x-on:click="setFilter('extension')" type="button">Extension</button>
+                {projectTypes.map((t: string) => (
+                  <button
+                    class="filter-btn filter-btn--blue"
+                    x-bind:class={`{ 'is-active': filter === '${t}' }`}
+                    x-on:click={`setFilter('${t}')`}
+                    type="button"
+                  >
+                    {typeBadge[t]?.label ?? t}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div class="filter-col">
+              <span class="filter-col-label">Status</span>
+              <div class="filters">
+                <button class="filter-btn filter-btn--blue" x-bind:class="{ 'is-active': statusFilter === 'all' }" x-on:click="setStatusFilter('all')" type="button">All</button>
+                {projectStatuses.map((s: string) => (
+                  <button
+                    class="filter-btn filter-btn--blue"
+                    x-bind:class={`{ 'is-active': statusFilter === '${s}' }`}
+                    x-on:click={`setStatusFilter('${s}')`}
+                    type="button"
+                  >
+                    {statusBadge[s]?.label ?? s}
+                  </button>
+                ))}
               </div>
             </div>
           </div>
@@ -128,7 +159,7 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
             {items.map((item: any) => (
               <button
                 class="sidebar-item"
-                x-show={`filter === 'all' || filter === '${item.type}'`}
+                x-show={`(filter === 'all' || filter === '${item.type}') && (statusFilter === 'all' || statusFilter === '${item.status}')`}
                 x-bind:class={`{ 'is-active': active === '${item.id}' }`}
                 x-on:click={`active = '${item.id}'`}
                 type="button"
@@ -171,7 +202,10 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
                         <span class="pmeta-lbl">Partners</span>
                         <div class="pchips">
                           {item.lead && (
-                            <span class="pchip pchip-lead">{item.lead}</span>
+                            <span class="pchip pchip-lead">
+                              <svg width="10" height="10" viewBox="-5 -5 10 10" fill="currentColor" aria-hidden="true" class="pchip-star"><path d="M0,-5 L1.18,-1.62 L4.76,-1.55 L1.90,0.62 L2.94,4.05 L0,2 L-2.94,4.05 L-1.90,0.62 L-4.76,-1.55 L-1.18,-1.62Z"/></svg>
+                              {item.lead}
+                            </span>
                           )}
                           {item.partners?.map((p: string) => (
                             <span class="pchip">{p}</span>
@@ -486,6 +520,7 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
   }
 
   .pchip-lead {
+    display: inline-flex; align-items: center; gap: 5px;
     color: #2e68d4;
     background: rgba(46,104,212,0.07);
     border-color: rgba(46,104,212,0.2);
@@ -506,7 +541,7 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
   .logo-top {
     background: white;
     border-radius: 8px;
-    padding: 10px 14px;
+    padding: 10px 28px;
     display: flex; align-items: center; justify-content: center;
     min-height: 90px;
   }

@@ -1,9 +1,8 @@
 category: Language models
 title: AI4EOSC LLM
-tagline: Large language model chatbots
 status: Preview
-description: Large language model chatbot tailored for research using AI4EOSC.
-detailDescription: LLM chatbot that allows users to ask questions about the AI4EOSC documentation, generate code, and perform other tasks. The chat history is deleted once the chat is removed in order to protect user data. The chatbot is based on OpenWebUI and supports RAG (retrieval-augmented generation) to provide accurate and up-to-date information from the AI4EOSC documentation. In addition to text-based interactions, the chatbot also supports vision models, allowing users to ask questions about images and receive relevant information. The chatbot can be accessed via the AI4EOSC platform and is designed to assist researchers in navigating the documentation and related AI4EOSC resources.
+tagline: Large language model chatbot tailored for research using AI4EOSC.
+description: LLM chatbot that allows users to ask questions about the AI4EOSC documentation, generate code, and perform other tasks. The chat history is deleted once the chat is removed in order to protect user data. The chatbot is based on OpenWebUI and supports RAG (retrieval-augmented generation) to provide accurate and up-to-date information from the AI4EOSC documentation. In addition to text-based interactions, the chatbot also supports vision models, allowing users to ask questions about images and receive relevant information. The chatbot can be accessed via the AI4EOSC platform and is designed to assist researchers in navigating the documentation and related AI4EOSC resources.
 iconId: llm
 theme: secondary
 features:

@@ -1,19 +1,29 @@
 items:
-    # Projects: value computed automatically from projects.yml (items length)
-    - suffix: +
+    # Projects: value computed automatically from projects collection (items length)
+    - source: projects
+      suffix: +
       label: EU-funded projects in the ecosystem
       detail: Origin + associated projects across Europe
       tone: eu-blue
       icon: star
-    # MANUAL - Researchers & developers: value computed automatically — sum of users across communities.yml
+    # Researchers: MANUAL — update when community count changes
     - value: "200"
+      source: communities
       suffix: +
       label: Registered researchers & developers
       detail: Active members of the community
       tone: secondary
       icon: users
-    # AI models: MANUAL — update this value when the catalogue count changes
+    # Gateways: value computed automatically from gateways collection (items length)
+    - source: gateways
+      suffix: +
+      label: Specialised gateways
+      detail: Domain-specific AI platforms and catalogs on the ecosystem
+      tone: primary
+      icon: server
+    # AI models: MANUAL — update when catalogue count changes
     - value: "100"
+      source: models
       suffix: +
       label: AI models in the catalogue
       detail: Ready to train, deploy and serve

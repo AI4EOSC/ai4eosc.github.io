@@ -2,7 +2,7 @@
 import { feature } from 'topojson-client';
 
 interface Props {
-  partners: Array<{ name: string; url?: string; country?: string; type?: string; lat?: number; lon?: number }>;
+  partners: Array<{ name: string; url?: string; country?: string; type?: string; lat?: number; lon?: number; role?: string }>;
 }
 const { partners } = Astro.props;
 
@@ -97,8 +97,8 @@ const countries = world.features
 const GRID = 10;
 const snap = (v: number) => Math.round(v / GRID) * GRID;
 
-type PartnerRef = { name: string; url?: string };
-type Loc = { key: string; cx: number; cy: number; pctX: number; pctY: number; partners: PartnerRef[] };
+type PartnerRef = { name: string; url?: string; role?: string };
+type Loc = { key: string; cx: number; cy: number; pctX: number; pctY: number; partners: PartnerRef[]; hasLeader: boolean };
 const locMap = new Map<string, Loc>();
 
 for (const p of partners) {
@@ -112,9 +112,11 @@ for (const p of partners) {
       pctX: parseFloat((cx / W * 100).toFixed(2)),
       pctY: parseFloat((cy / H * 100).toFixed(2)),
       partners: [],
+      hasLeader: false,
     });
   }
-  locMap.get(key)!.partners.push({ name: p.name, url: p.url });
+  locMap.get(key)!.partners.push({ name: p.name, url: p.url, role: p.role });
+  if (p.role === 'leader') locMap.get(key)!.hasLeader = true;
 }
 const locations = Array.from(locMap.values());
 
@@ -211,6 +213,7 @@ const byType = {
     <svg viewBox={`0 0 ${W} ${H}`} class="map-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 
       <defs>
+        <path id="leader-star" d="M0,-5 L1.18,-1.62 L4.76,-1.55 L1.90,0.62 L2.94,4.05 L0,2 L-2.94,4.05 L-1.90,0.62 L-4.76,-1.55 L-1.18,-1.62Z"/>
         <filter id="map-pkt-glow" x="-80%" y="-80%" width="260%" height="260%">
           <feGaussianBlur stdDeviation="2.5" result="blur"/>
           <feMerge>
@@ -269,10 +272,13 @@ const byType = {
             x-bind:class={`{ 'is-active': active === '${loc.key}' }`}
           />
           <circle cx={loc.cx} cy={loc.cy}
-            r={Math.min(5 + Math.floor(loc.partners.length / 2), 9)}
+            r={loc.hasLeader ? 10 : Math.min(5 + Math.floor(loc.partners.length / 2), 9)}
             class="dot"
             x-bind:style={`active === '${loc.key}' ? 'fill: var(--color-secondary-600)' : ''`}
           />
+          {loc.hasLeader && (
+            <use href="#leader-star" transform={`translate(${loc.cx},${loc.cy}) scale(1.2)`} class="leader-star"/>
+          )}
           <circle cx={loc.cx} cy={loc.cy} r="10"
             class="node-flash"
             style={`animation-delay: -${((idx * 1.9) % 8).toFixed(1)}s`}
@@ -297,10 +303,20 @@ const byType = {
         x-cloak
         style={`left:${loc.pctX}%;top:${loc.pctY}%`}
       >
-        {loc.partners.map(p => p.url
-          ? <a class="tt-name" href={p.url} target="_blank" rel="noopener">{p.name}</a>
-          : <span class="tt-name">{p.name}</span>
-        )}
+        {loc.partners.map(p => (
+          <div class="tt-row">
+            {p.url
+              ? <a class="tt-name" href={p.url} target="_blank" rel="noopener">{p.name}</a>
+              : <span class="tt-name">{p.name}</span>
+            }
+            {p.role === 'leader' && (
+              <span class="tt-badge">
+                <svg width="8" height="8" viewBox="-5 -5 10 10" fill="currentColor" aria-hidden="true"><path d="M0,-5 L1.18,-1.62 L4.76,-1.55 L1.90,0.62 L2.94,4.05 L0,2 L-2.94,4.05 L-1.90,0.62 L-4.76,-1.55 L-1.18,-1.62Z"/></svg>
+                Lead
+              </span>
+            )}
+          </div>
+        ))}
       </div>
     ))}
   </div>
@@ -402,6 +418,11 @@ const byType = {
     opacity: 0.6;
   }
 
+  .leader-star {
+    fill: white;
+    pointer-events: none;
+  }
+
   /* active state handled via x-bind:style on SVG elements */
 
   /* ── Animated packets ───────────────────────────────── */
@@ -451,6 +472,12 @@ const byType = {
   .tt-enter-start  { opacity: 0; scale: 0.95; }
   .tt-enter-end    { opacity: 1; scale: 1; }
 
+  .tt-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
   .tt-name {
     font-size: 15px;
     font-weight: 600;
@@ -475,6 +502,22 @@ const byType = {
 
   a.tt-name:hover::after {
     color: var(--color-secondary-500);
+  }
+
+  .tt-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--color-secondary-600);
+    background: var(--color-secondary-50);
+    border: 1px solid var(--color-secondary-200);
+    border-radius: 4px;
+    padding: 1px 5px;
+    margin-left: 5px;
+    vertical-align: middle;
+    flex-shrink: 0;
   }
 
   /* ── Stats side ─────────────────────────────────────── */

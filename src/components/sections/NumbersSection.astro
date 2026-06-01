@@ -39,17 +39,15 @@ function formatCount(n: number): { value: string; suffix: string } {
   return { value: String(n), suffix: '+' };
 }
 
-const computedFormatted = [
-  formatCount(projectCount),
-  formatCount(userCount),
-  formatCount(gatewayCount),
-];
+const autoSources: Record<string, { value: string; suffix: string }> = {
+  projects:    formatCount(projectCount),
+  communities: formatCount(userCount),
+  gateways:    formatCount(gatewayCount),
+};
 
-const items = (numbersData.items as Array<Record<string, string>>).map((item, i) => {
-  if (i < computedFormatted.length) {
-    const fmt = computedFormatted[i];
-    return { ...item, value: fmt.value, suffix: fmt.suffix };
-  }
+const items = (numbersData.items as Array<Record<string, string>>).map((item) => {
+  if (item.value) return item;
+  if (item.source && autoSources[item.source]) return { ...item, ...autoSources[item.source] };
   return item;
 });
 ---
