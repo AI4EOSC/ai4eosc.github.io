@@ -56,15 +56,11 @@ function formatUsers(count: number): string {
 }
 
 const totalGateways = items.length;
-const distinctDomains = new Set(items.map((i: any) => i.domain as string)).size;
+const distinctDomains = new Set(items.filter((i: any) => i.community).map((i: any) => i.community as string)).size;
 const researchersItem = (numbersData.items as Array<Record<string, string>>).find(i => i.source === 'communities');
 const researchersValue = researchersItem?.value ?? '0';
 
-const domainLabels: Record<string, string> = {
-  all: 'All', marine: 'Marine', climate: 'Climate',
-  health: 'Health', interdisciplinary: 'Interdisciplinary', life: 'Life sciences', physics: 'Physics',
-};
-const domains = ['all', ...Array.from(new Set(items.map((i: any) => i.type as string))).sort()];
+const communities = ['all', ...Array.from(new Set(items.filter((i: any) => i.community).map((i: any) => i.community as string))).sort()];
 const statuses = ['all', ...Array.from(new Set(items.map((i: any) => i.status as string))).sort()];
 
 const statusBadge: Record<string, { label: string; cls: string }> = {
@@ -74,7 +70,7 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
 };
 
 const alpineItems = JSON.stringify(
-  items.map((i: any) => ({ slug: i.slug, type: i.type, status: i.status }))
+  items.map((i: any) => ({ slug: i.slug, community: i.community ?? null, status: i.status }))
 );
 
 const firstSlug: string = items[0]?.slug ?? '';
@@ -146,12 +142,12 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
           },
           setFilter(f) {
             this.filter = f;
-            const vis = this.items.filter(i => (f === 'all' || i.type === f) && (this.statusFilter === 'all' || i.status === this.statusFilter));
+            const vis = this.items.filter(i => (f === 'all' || i.community === f) && (this.statusFilter === 'all' || i.status === this.statusFilter));
             if (vis.length && !vis.some(i => i.slug === this.active)) this.active = vis[0].slug;
           },
           setStatusFilter(f) {
             this.statusFilter = f;
-            const vis = this.items.filter(i => (this.filter === 'all' || i.type === this.filter) && (f === 'all' || i.status === f));
+            const vis = this.items.filter(i => (this.filter === 'all' || i.community === this.filter) && (f === 'all' || i.status === f));
             if (vis.length && !vis.some(i => i.slug === this.active)) this.active = vis[0].slug;
           }
         }`}>
@@ -161,14 +157,14 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
             <div class="filter-col">
               <span class="filter-col-label">Community</span>
               <div class="filters">
-                {domains.map(d => (
+                {communities.map(c => (
                   <button
                     class="filter-btn filter-btn--pink"
-                    x-bind:class={`{ 'is-active': filter === '${d}' }`}
-                    x-on:click={`setFilter('${d}')`}
+                    x-bind:class={`{ 'is-active': filter === '${c}' }`}
+                    x-on:click={`setFilter('${c}')`}
                     type="button"
                   >
-                    {domainLabels[d]}
+                    {c === 'all' ? 'All' : c}
                   </button>
                 ))}
               </div>
@@ -199,7 +195,7 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
               {items.map((item: any) => (
                 <button
                   class="sidebar-item"
-                  x-show={`(filter === 'all' || filter === '${item.type}') && (statusFilter === 'all' || statusFilter === '${item.status}')`}
+                  x-show={`(filter === 'all' || filter === '${item.community ?? ''}') && (statusFilter === 'all' || statusFilter === '${item.status}')`}
                   x-bind:class={`{ 'is-active': active === '${item.slug}' }`}
                   x-on:click={`active = '${item.slug}'`}
                   type="button"

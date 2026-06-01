@@ -1,6 +1,4 @@
 title: AI4Life
-type: life
-domain: Life sciences
 status: active
 tagline: AI tools for bioimaging, genomics and drug discovery
 description: AI4Life provides life scientists with access to state-of-the-art AI models for bioimaging, genomic analysis and drug discovery. Hosts the BioImage.IO model zoo and integrates with major European life science data repositories. This model marketplace has been integrated as an external catalog within the AI4EOSC platform.

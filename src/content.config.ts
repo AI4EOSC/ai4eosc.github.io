@@ -67,8 +67,6 @@ const gateways = defineCollection({
 	loader: glob({ pattern: "[!_]*.yml", base: "./src/content/gateways" }),
 	schema: z.object({
 		title: z.string(),
-		type: z.string(),
-		domain: z.string(),
 		status: z.enum(["active", "new", "coming-soon"]),
 		users: z.number().optional(),
 		tagline: z.string(),
