@@ -91,10 +91,8 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
         <p class="sc-sub">A gateway is an organization or project that enables the support of specific scientific communities and use cases.</p>
         <div class="explainer-grid">
           {[
-            { icon: 'copy',     title: 'Based on AI4EOSC',       desc: 'Every gateway uses the same open-source AI4EOSC platform as its foundation — same API, same authentication, same model catalogue format.' },
-            { icon: 'adjust',   title: 'Domain-specific',         desc: 'Each gateway is customised with the models, datasets and workflows relevant to its scientific community — researchers find exactly what they need.' },
-            { icon: 'building', title: 'Independently operated',  desc: 'Gateways are run by the institutions or projects that deploy them — they own their data, their users and their infrastructure choices.' },
-            { icon: 'network',  title: 'Part of the network',     desc: 'All gateways are connected to the AI4EOSC initiative — models and tools developed in one gateway can be shared across the whole network.' },
+            { icon: 'copy',     title: 'Based on AI4EOSC and part of the network',       desc: 'All gateways are connected to the AI4EOSC initiative and use the same open-source AI4EOSC platform as its foundation: same API, same authentication.' },
+            { icon: 'adjust',   title: 'Domain-specific catalogs',         desc: 'Each gateway is customised with specific model catalogs relevant to its scientific community. In these catalogs researchers find exactly what they need.' },
           ].map(card => (
             <div class="expl-item">
               <div class="expl-icon-wrap" aria-hidden="true">
