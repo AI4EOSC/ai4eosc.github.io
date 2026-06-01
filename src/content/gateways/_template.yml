@@ -9,7 +9,6 @@ status: active # active | new | coming-soon
 tagline: "One-line tagline shown in cards"
 description: "Short description (1 line, shown in catalogue list)"
 slug: gateway-slug
-order: 99 # controls display order
 
 # Optional fields
 users: 0 # approximate number of researchers with access

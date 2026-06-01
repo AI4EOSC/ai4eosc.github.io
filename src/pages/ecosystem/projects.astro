@@ -5,8 +5,9 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
 import { getCollection } from 'astro:content';
 
 const entries = await getCollection('projects');
+const endYear = (period?: string) => parseInt(period?.split('–').at(-1) ?? '9999');
 const items = entries
-  .sort((a, b) => a.data.order - b.data.order)
+  .sort((a, b) => endYear(a.data.period) - endYear(b.data.period))
   .map(e => ({ id: e.id, ...e.data }));
 
 const logoUrls = import.meta.glob<string>(
@@ -40,7 +41,13 @@ items.forEach((item: any) => {
   if (item.partners) item.partners.forEach((p: string) => allInstitutions.add(p.trim()));
 });
 const totalInstitutions = allInstitutions.size;
-const totalFunding = items.reduce((acc: number, item: any) => acc + (item.funding ?? 0), 0);
+const startYears = items
+  .map((item: any) => item.period?.match(/\d{4}/)?.[0])
+  .filter(Boolean)
+  .map(Number);
+const yearsOfResearch = startYears.length > 0
+  ? new Date().getFullYear() - Math.min(...startYears)
+  : 0;
 const projectIds = JSON.stringify(items.map((i: any) => i.id));
 
 const typeBadge: Record<string, { label: string; cls: string }> = {
@@ -67,7 +74,7 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
     <div class="hero-stats">
       <div class="hstat"><span class="hstat-val">{totalProjects}<em>+</em></span><span class="hstat-lbl">Related projects</span></div>
       <div class="hstat"><span class="hstat-val">{totalInstitutions}<em>+</em></span><span class="hstat-lbl">Involved institutions</span></div>
-      <div class="hstat"><span class="hstat-val">{formatFunding(totalFunding)}<em>+</em></span><span class="hstat-lbl">Total EU funding</span></div>
+      <div class="hstat"><span class="hstat-val">{yearsOfResearch}<em>+</em></span><span class="hstat-lbl">Years of research</span></div>
     </div>
   </PageHero>
 

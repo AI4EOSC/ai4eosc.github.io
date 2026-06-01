@@ -15,7 +15,6 @@ features:
     - "Feature 2"
 visitLabel: "Visit project"
 visitHref: https://example.ai4eosc.eu
-order: 99 # controls display order
 
 # Optional
 docsHref: https://docs.ai4eosc.eu/...

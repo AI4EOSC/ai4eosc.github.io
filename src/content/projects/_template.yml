@@ -10,7 +10,6 @@ description: "Full description. Separate paragraphs with \n\n."
 outputs:
     - "Output or key area 1"
     - "Output or key area 2"
-order: 99 # controls display order (lower = first)
 
 # Optional fields
 logo: filename.png # image file in src/assets/logos/

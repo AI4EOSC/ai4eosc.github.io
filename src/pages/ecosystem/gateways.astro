@@ -6,7 +6,7 @@ import { getCollection } from 'astro:content';
 
 const entries = await getCollection('gateways');
 const items = entries
-  .sort((a, b) => a.data.order - b.data.order)
+  .sort((a, b) => a.data.title.localeCompare(b.data.title))
   .map(e => ({ id: e.id, ...e.data }));
 
 const logoUrls = import.meta.glob<string>(

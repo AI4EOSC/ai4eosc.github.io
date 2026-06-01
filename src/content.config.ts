@@ -44,7 +44,6 @@ const projects = defineCollection({
 				email: z.email().optional(),
 			})
 			.optional(),
-		order: z.number(),
 	}),
 });
 
@@ -61,7 +60,6 @@ const communities = defineCollection({
 		gatewaySlug: z.string().optional(),
 		tools: z.array(z.string()).optional(),
 		slug: z.string(),
-		order: z.number(),
 	}),
 });
 
@@ -87,7 +85,6 @@ const gateways = defineCollection({
 		logo: z.string().optional(),
 		url: z.url().optional(),
 		slug: z.string(),
-		order: z.number(),
 	}),
 });
 
