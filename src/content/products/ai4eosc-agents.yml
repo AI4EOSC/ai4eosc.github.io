@@ -1,16 +1,15 @@
 category: AI agents
 title: AI4EOSC Agents
-tagline: Autonomous AI agent framework for EOSC, developed with EOSC-ARENA
+tagline: AI agents catalog, developed by EOSC-ARENA
 status: Coming soon
-description: Autonomous AI agents for research automation, built on top of the EOSC infrastructure.
-detailDescription: Autonomous AI agent framework for EOSC, developed with EOSC-ARENA. Enables researchers to build multi-step AI workflows without manual intervention — from data retrieval to model execution and result delivery. Currently in development. Expected release in late 2027, with early access for testing and feedback.
+description: AI agents for research automation, built on top of the EOSC infrastructure.
+detailDescription: AI agent catalog for scientific research, developed by EOSC-ARENA. This AI environment will serve as a scientific assistant supporting the full research lifecycle, from literature review and hypothesis generation to analysis, reporting, and provenance capture. 
 iconId: agents
 theme: primary
 features:
-    - Agent orchestration
-    - Multi-step workflows
-    - Tool use
-    - EOSC-native
+    - Agents marketplace
+    - GenAI
+    - Scientific assistant
     - EOSC-ARENA
 visitLabel: Explore product
 visitHref: https://arena.ai4eosc.eu

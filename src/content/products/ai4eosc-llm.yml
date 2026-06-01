@@ -7,14 +7,14 @@ detailDescription: Large language model services tailored for research use cases
 iconId: llm
 theme: secondary
 features:
-    - LLM API
-    - Research-optimised
+    - LLM chatbot
+    - RAG support
+    - OpenWebUI
+    - Vision models
+    - Code assistant
     - Data sovereignty
-    - European infra
-    - EOSC-native
-    - OpenAI-compatible API
 visitLabel: Explore product
-visitHref: https://llm.ai4eosc.eu
-docsHref: https://docs.ai4eosc.eu/llm
+visitHref: https://chat.cloud.ai4eosc.eu/
+docsHref: https://docs.ai4eosc.eu/en/latest/reference/llm.html
 
 order: 2
