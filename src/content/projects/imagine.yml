@@ -7,6 +7,8 @@ logo: iMagine.png
 outputs:
     - Aquatic sciences
     - Image analysis
+    - Image segmentation
+    - Vision models
 funding: 4500000
 programme: Horizon Europe
 period: "2022 – 2025"
