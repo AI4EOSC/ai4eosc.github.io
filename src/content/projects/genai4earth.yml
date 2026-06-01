@@ -1,0 +1,36 @@
+type: extension
+status: new
+title: GenAI4Earth
+tagline: Generative Artificial Intelligence for Earth System
+description: "GenAI4Earth will go beyond the state of the art by designing, deploying, and operating trustworthy, reusable GenAI services within the EOSC ecosystem, advancing discovery on Earth–climate–environment–life interactions in co-design with user communities and research infrastructures at national and European levels."
+logo: GenAI4Earth.png
+outputsLabel: Adding to AI4EOSC
+outputs:
+    - GenAI for EarthSciences
+funding: 101292566
+grant: "No. 101292566"
+programme: Horizon Europe
+period: "2026 – 2029"
+lead: CNRS
+partners:
+    - UNISTRA
+    - INRAE
+    - INRIA
+    - Neovia
+    - GFZ
+    - UFZ
+    - KIT
+    - TUM
+    - CSIC
+    - UOA
+    - PSNC
+    - DevSeed
+    - IISAS
+    - MetaPlanet
+    - UEDIN
+url: https://doi.org/10.3030/101293266
+grantUrl: https://cordis.europa.eu/project/id/101293266
+social:
+    linkedin: "#"
+    x: "#"
+    bluesky: "#"
