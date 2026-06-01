@@ -10,6 +10,7 @@ const communitiesData = { items: communityEntries.sort((a, b) => a.data.title.lo
 
 const gatewayEntries = await getCollection('gateways');
 const gatewaysData = { items: gatewayEntries.sort((a, b) => a.data.title.localeCompare(b.data.title)).map(e => ({ id: e.id, ...e.data })) };
+const gatewaysToShow = gatewaysData.items.length >= 5 ? gatewaysData.items.slice(0, 5) : gatewaysData.items.slice(0, 2);
 
 const typeLabel: Record<string, string> = {
   origin:     'Origin',
@@ -159,7 +160,7 @@ const communityIcons: Record<string, string> = {
         </div>
       </div>
       <div class="tile-grid tile-grid--gateways">
-        {gatewaysData.items.map((item, i) => (
+        {gatewaysToShow.map((item, i) => (
           <div class="tile reveal" style={`transition-delay: ${i * 40}ms`}>
             <div class="tile-head">
               <div class="gw-header">

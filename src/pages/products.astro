@@ -28,7 +28,7 @@ const chromeUrl: Record<string, string> = {
 const firstId: string = data.items[0]?.iconId ?? 'platform';
 const productIds = JSON.stringify(data.items.map((i: any) => i.iconId));
 const alpineProductItems = JSON.stringify(data.items.map((i: any) => ({ id: i.iconId, status: i.status })));
-const productStatuses = ['All', ...Array.from(new Set(data.items.map((i: any) => i.status as string)))];
+const productStatuses = ['All', ...Array.from(new Set(data.items.map((i: any) => i.status as string))).sort()];
 ---
 
 <Layout title="Products — AI4EOSC Initiative" ogImage="/og/products.png">

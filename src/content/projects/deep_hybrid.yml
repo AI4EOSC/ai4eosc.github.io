@@ -9,7 +9,7 @@ outputs:
     - DEEPaaS API
     - Model marketplace
     - Image classification
-funding:  2988750
+funding: 2988750
 grant: "No. 777435"
 programme: Horizon 2020
 period: "2017 – 2020"
@@ -22,7 +22,7 @@ partners:
     - UPV
     - CESNET
     - IISAS
-    - ATOS
-    - Helmholtz Zentrum München
+    - Atos
+    - Helmholtz Munich
 url: https://deep-hybrid-datacloud.eu/
 grantUrl: https://cordis.europa.eu/project/id/777435

@@ -45,11 +45,12 @@ const totalGateways = items.length;
 const distinctDomains = new Set(items.map((i: any) => i.domain as string)).size;
 const totalUsers = items.reduce((acc: number, item: any) => acc + (item.users ?? 0), 0);
 
-const domains = ['all', 'marine', 'climate', 'health', 'life', 'physics'];
 const domainLabels: Record<string, string> = {
   all: 'All', marine: 'Marine', climate: 'Climate',
   health: 'Health', life: 'Life sciences', physics: 'Physics',
 };
+const domains = ['all', ...Array.from(new Set(items.map((i: any) => i.type as string))).sort()];
+const statuses = ['all', ...Array.from(new Set(items.map((i: any) => i.status as string))).sort()];
 
 const statusBadge: Record<string, { label: string; cls: string }> = {
   active:       { label: 'Active',       cls: 'b-active' },
@@ -163,14 +164,14 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
             <div class="filter-col">
               <span class="filter-col-label">Status</span>
               <div class="filters">
-                {(['all', 'active', 'new', 'coming-soon'] as const).map(s => (
+                {statuses.map((s: string) => (
                   <button
                     class="filter-btn"
                     x-bind:class={`{ 'is-active': statusFilter === '${s}' }`}
                     x-on:click={`setStatusFilter('${s}')`}
                     type="button"
                   >
-                    {s === 'all' ? 'All' : statusBadge[s]?.label ?? s}
+                    {s === 'all' ? 'All' : (statusBadge[s]?.label ?? s)}
                   </button>
                 ))}
               </div>
@@ -578,7 +579,7 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
   .logo-top {
     background: white;
     border-radius: 8px;
-    padding: 10px 14px;
+    padding: 10px 28px;
     display: flex; align-items: center; justify-content: center;
     min-height: 90px;
   }
