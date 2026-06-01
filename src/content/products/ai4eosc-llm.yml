@@ -2,7 +2,7 @@ category: Language models
 title: AI4EOSC LLM
 tagline: Large language model services for research, integrated with EOSC infrastructure
 status: Preview
-description: Large language model services tailored for research use cases on EOSC infrastructure.
+description: Large language model services tailored for research.
 detailDescription: Large language model services tailored for research use cases, with data sovereignty guarantees. API access to open-source LLMs optimised for scientific domains — no data leaves European infrastructure. Integrated with EOSC authentication and storage. Supports federated learning across multiple EOSC sites. Currently in preview, with a public API available for testing and feedback.
 iconId: llm
 theme: secondary
@@ -12,7 +12,7 @@ features:
     - OpenWebUI
     - Vision models
     - Code assistant
-    - Data sovereignty
+    - Data protection
 visitLabel: Explore product
 visitHref: https://chat.cloud.ai4eosc.eu/
 docsHref: https://docs.ai4eosc.eu/en/latest/reference/llm.html

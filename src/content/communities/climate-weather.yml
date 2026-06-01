@@ -1,12 +1,11 @@
 title: Climate & Weather
 iconId: climate
-users: 200
-description: Forecasting, Earth observation
-longDescription: Machine learning models for weather forecasting, climate downscaling and Earth observation data processing. Integrated with Copernicus datasets and EOSC storage for large-scale analysis.
-via: OSCAR Gateway
-gatewaySlug: oscar-gateway
+description: Climate forecasting,
+longDescription: Machine, deep and federated learning models for short-term precipitation forecasting (vertical integrated liquid) based on radar images.
+via: AI4EOSC Gateway
+gatewaySlug: ai4eosc
 tools:
     - Weather forecasting
-    - Climate downscaling
-    - EO processing
+    - Radar images
+    - Vertical integrated liquid
 slug: climate-weather

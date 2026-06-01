@@ -2,7 +2,7 @@ timeline:
     - year: "2017"
       phase: "EU Project"
       title: DEEP-Hybrid-DataCloud project kicks off
-      description: This Horizon 2020 will deliver the DEEP platform, allowing researchers to build deep learning models over pan-EU e-Infrastructures.
+      description: This Horizon 2020 project delivers the DEEP platform, allowing researchers to build deep learning models over pan-EU e-Infrastructures.
     - year: "2022"
       phase: "EU Project"
       title: AI4EOSC project kicks off
@@ -10,11 +10,11 @@ timeline:
     - year: "2023"
       phase: "First gateways"
       title: Early adopters go live
-      description: Projects like iMagine deploy domain-specific instances of the platform, validating the gateway model for scientific communities and proving the architecture at scale.
+      description: Projects like iMagine deploy domain-specific instances of the platform, the AI4EOSC users start exploting the platform and providing feedback for the next development cycle.
     - year: "2025"
       phase: "Transition"
       title: Project completes, initiative continues
-      description: The original Horizon Europe project concludes on schedule. The platform, the community and the infrastructure continue independently under the AI4EOSC Initiative.
+      description: The original AI4EOSC project concludes on schedule. The platform, the community and the infrastructure continue independently under the AI4EOSC Initiative.
     - year: "2026"
       phase: "Expanding"
       title: New projects extend the ecosystem
