@@ -6,7 +6,7 @@
             srcset="./src/assets/logos/AI4-horizontal-light.svg" />
     <img src="./src/assets/logos/AI4-horizontal-light.svg"
          alt="AI4EOSC Logo"
-         width="320" />
+         width="520" />
   </picture>
 </div>
 
