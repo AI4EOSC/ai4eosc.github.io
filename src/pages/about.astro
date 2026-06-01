@@ -1140,6 +1140,23 @@ const cta = {
   }
 
   @media (max-width: 860px) {
+    .tier-leader {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .leader-right {
+      align-items: flex-start;
+      padding-right: 0;
+      flex-direction: row;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .leader-attr { align-items: flex-start; }
+    .leader-attr span { text-align: left; }
+
     .mission-grid {
       grid-template-columns: 1fr;
       border-top: none;
@@ -1175,6 +1192,14 @@ const cta = {
   }
 
   @media (max-width: 640px) {
+    .leader-right {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .leader-logo-img { max-height: 44px; }
+
     .tl-item { grid-template-columns: 72px 22px 1fr; }
     .tl-year  { font-size: 14px; }
     .tl-phase { font-size: 9px; }

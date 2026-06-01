@@ -3,7 +3,7 @@ status: finished
 title: DEEP-HybridDataCloud
 tagline: Designing and Enabling E-infrastructures for intensive Processing in a Hybrid DataCloud
 description: Supporting artificial intelligence (machine learning and deep learning), parallel post-processing of very large data, and analysis of massive online data streams over distributed e-Infrastructures in the EOSC.
-logo: AI4-horizontal-light.svg
+logo: deep.png
 outputsLabel: Key outputs
 outputs:
     - DEEPaaS API

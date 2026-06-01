@@ -7,9 +7,9 @@ interface Props {
 const { partners } = Astro.props;
 
 // ── Web Mercator projection ────────────────────────────
-// Viewport: lon[-20, 45] × lat[33, 65] → viewBox 0 0 900 692
-const W = 900, H = 692;
-const LON0 = -20, LON1 = 45, LAT0 = 33, LAT1 = 65;
+// Viewport: [33°N, 65°N] x [15°W, 50°E] with some margin (for tooltips)
+const W = 900, H = 700;
+const LON0 = -15, LON1 = 50, LAT0 = 33, LAT1 = 65;
 
 const merc = (lat: number) => Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360));
 const MERC0 = merc(LAT0);
@@ -188,6 +188,15 @@ const allEdges: AnimEdge[] = [
   return { ...e, id: `ep${i}`, dur, offset };
 });
 
+// ── Dot radius by cluster size ────────────────────────
+function dotRadius(count: number, isLeader: boolean): number {
+  const r = count === 1 ? 5
+          : count <= 3  ? 9
+          : count <= 5  ? 13
+          : 17;
+  return isLeader ? Math.max(r, 10) : r;
+}
+
 // ── Stats ─────────────────────────────────────────────
 const uniqueCountries = new Set(partners.filter(p => p.country).map(p => p.country)).size;
 const typed = partners.filter(p => p.type);
@@ -272,12 +281,17 @@ const byType = {
             x-bind:class={`{ 'is-active': active === '${loc.key}' }`}
           />
           <circle cx={loc.cx} cy={loc.cy}
-            r={loc.hasLeader ? 10 : Math.min(5 + Math.floor(loc.partners.length / 2), 9)}
+            r={dotRadius(loc.partners.length, loc.hasLeader)}
             class="dot"
             x-bind:style={`active === '${loc.key}' ? 'fill: var(--color-secondary-600)' : ''`}
           />
           {loc.hasLeader && (
             <use href="#leader-star" transform={`translate(${loc.cx},${loc.cy}) scale(1.2)`} class="leader-star"/>
+          )}
+          {loc.partners.length > 1 && !loc.hasLeader && (
+            <text x={loc.cx} y={loc.cy} text-anchor="middle" class="cluster-count">
+              {loc.partners.length}
+            </text>
           )}
           <circle cx={loc.cx} cy={loc.cy} r="10"
             class="node-flash"
@@ -423,6 +437,15 @@ const byType = {
     pointer-events: none;
   }
 
+  .cluster-count {
+    fill: white;
+    font-size: 10px;
+    font-weight: 600;
+    pointer-events: none;
+    dominant-baseline: central;
+    font-family: var(--font-headings);
+  }
+
   /* active state handled via x-bind:style on SVG elements */
 
   /* ── Animated packets ───────────────────────────────── */
@@ -527,6 +550,7 @@ const byType = {
     justify-content: center;
     gap: 0;
     padding: 28px 28px 28px 32px;
+    min-width: 0;
   }
 
   .stats-side h1 {
@@ -609,36 +633,73 @@ const byType = {
 
   /* ── Responsive ─────────────────────────────────────── */
   @media (max-width: 860px) {
-    .map-layout { grid-template-columns: 1fr; width: 100%; }
-    .map-side   { border-right: none; border-bottom: 1px solid var(--card-border); width: 100%; }
+    .map-layout { grid-template-columns: 1fr; width: 100%; max-width: 100%; }
+    .map-side   { border-right: none; border-bottom: 1px solid var(--card-border); width: 100%; max-width: 100%; }
+    .map-hint   { display: none; }
+
     .stats-side {
       flex-direction: row;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-around;
-      padding: 20px 24px;
+      padding: 18px 24px;
       gap: 0;
     }
 
     .stat-item {
       flex: 1;
-      padding: 0;
+      padding: 12px 0;
       align-items: center;
       text-align: center;
     }
+
     .stat-val { font-size: 40px; }
     .stat-lbl { font-size: 12px; }
+
     .stat-divider {
       width: 1px;
-      height: 52px;
-      margin: 0;
+      height: auto;
+      align-self: stretch;
+      margin: 12px 0;
       flex-shrink: 0;
     }
-    .stat-breakdown { display: none; }
+
+    .stat-breakdown {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px 10px;
+      margin-top: 8px;
+      padding-top: 8px;
+    }
+
+    .bd-row { gap: 3px; }
+    .bd-val { font-size: 14px; min-width: auto; }
+    .bd-lbl { font-size: 11px; }
   }
 
   @media (max-width: 640px) {
-    .map-tooltip { display: none; }
-    .stat-val { font-size: 32px; }
-    .stats-side { padding: 16px; }
+    .map-tooltip {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      top: auto;
+      transform: translateX(-50%);
+      max-width: calc(100vw - 32px);
+      white-space: normal;
+      z-index: 100;
+    }
+
+    .map-tooltip.tt-left {
+      transform: translateX(-50%);
+    }
+
+    .stats-side { padding: 14px 16px; }
+    .stat-val   { font-size: 30px; }
+    .stat-lbl   { font-size: 11px; }
+
+    .stat-breakdown { gap: 6px; }
+    .bd-val { font-size: 13px; }
+    .bd-lbl { font-size: 10px; }
   }
 </style>

@@ -344,6 +344,7 @@ svg {
 	border: 1px solid var(--card-border);
 	border-radius: var(--radius-lg);
 	padding: 34px 34px;
+	overflow: hidden;
 }
 
 /* ─────────────────────────────────────────────────────────────────
@@ -431,6 +432,12 @@ svg {
 @media (max-width: 720px) {
 	.section-label {
 		margin-top: 20px;
+	}
+}
+
+@media (max-width: 640px) {
+	:root {
+		--marquee-height: 160px;
 	}
 }
 

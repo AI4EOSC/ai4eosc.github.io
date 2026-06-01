@@ -41,8 +41,8 @@ items:
       url: https://www.cmcc.it
       country: Italy
       type: research
-      lat: 44.5
-      lon: 11.3
+      lat: 40.35
+      lon: 18.17
 
     - name: CNRS
       role: contributor
@@ -87,7 +87,7 @@ items:
       country: Germany
       type: research
       lat: 49.24
-      lon: 6.99
+      lon: 6.7
 
     - name: EGI
       role: contributor
@@ -120,19 +120,19 @@ items:
       role: contributor
       logo: EMBRC.png
       url: https://www.embrc.eu
-      country: Portugal
+      country: France
       type: infrastructure
-      lat: 38.7
-      lon: -9.3
+      lat: 48.86
+      lon: 2.35
 
     - name: EMPHASIS
       role: contributor
       logo: EMPHASIS.svg
-      url: https://www.emphasis.plant-phenotyping.eu
-      country: Germany
+      url: https://emphasis.plant-phenotyping.eu
+      country: Belgium
       type: infrastructure
-      lat: 50.9
-      lon: 6.4
+      lat: 51.03
+      lon: 3.56
 
     - name: EMSO-ERIC
       role: contributor
@@ -167,8 +167,8 @@ items:
       url: https://www.gfz-potsdam.de
       country: Germany
       type: research
-      lat: 52.4
-      lon: 13.1
+      lat: 52.50
+      lon: 13.33
 
     - name: GreenMatterAI
       role: contributor
@@ -203,8 +203,8 @@ items:
       url: https://humantechnopole.it
       country: Italy
       type: research
-      lat: 45.5
-      lon: 9.2
+      lat: 45.52
+      lon: 9.10
 
     - name: IFREMER
       role: contributor
@@ -212,8 +212,8 @@ items:
       url: https://wwz.ifremer.fr
       country: France
       type: research
-      lat: 48.4
-      lon: -4.5
+      lat: 48.36
+      lon: -4.57
 
     - name: IGC
       role: contributor
@@ -222,7 +222,7 @@ items:
       country: Portugal
       type: research
       lat: 38.7
-      lon: -9.3
+      lon: -9.1
 
     - name: IISAS
       role: core
@@ -266,8 +266,8 @@ items:
       url: https://www.inrae.fr
       country: France
       type: research
-      lat: 44.83
-      lon: -0.57
+      lat: 48.86
+      lon: 2.35
 
     - name: INRIA
       role: contributor
@@ -293,8 +293,8 @@ items:
       url: https://www.ird.fr
       country: France
       type: research
-      lat: 43.6
-      lon: 3.9
+      lat: 43.30
+      lon: 5.37
 
     - name: KIT
       role: core
@@ -303,7 +303,7 @@ items:
       country: Germany
       type: research
       lat: 49.0
-      lon: 8.4
+      lon: 9.0
 
     - name: KNAW
       role: contributor
@@ -329,8 +329,8 @@ items:
       url: https://liec.univ-lorraine.fr
       country: France
       type: research
-      lat: 49.1
-      lon: 6.2
+      lat: 49.24
+      lon: 6.7
 
     - name: LIP
       role: core
@@ -383,8 +383,8 @@ items:
       url: https://www.max-reger-institut.de/
       country: Germany
       type: research
-      lat: 49.01
-      lon: 8.37
+      lat: 49.0
+      lon: 9.0
 
     - name: Neovia
       role: contributor
@@ -401,17 +401,17 @@ items:
       url: https://www.ogs.it
       country: Italy
       type: research
-      lat: 45.6
-      lon: 13.8
+      lat: 45.72
+      lon: 13.72
 
     - name: ORBITAL
       role: contributor
       logo: ORBITAL.webp
       url: https://www.orbitaleos.com/
-      country: Portugal
+      country: Spain
       type: industry
-      lat: 38.7
-      lon: -9.1
+      lat: 39.47
+      lon: -0.38
 
     - name: Predictia
       role: contributor
@@ -446,8 +446,8 @@ items:
       url: https://www.rd-alliance.org
       country: Belgium
       type: infrastructure
-      lat: 50.50
-      lon: 4.50
+      lat: 51.1
+      lon: 3.7
 
     - name: SOCIB
       role: contributor
@@ -572,8 +572,8 @@ items:
       url: https://www.unistra.fr
       country: France
       type: research
-      lat: 48.6
-      lon: 7.8
+      lat: 49.0
+      lon: 9.0
 
     - name: UOA
       role: contributor
@@ -626,8 +626,8 @@ items:
       url: https://www.vliz.be
       country: Belgium
       type: research
-      lat: 51.25
-      lon: 2.55
+      lat: 51.1
+      lon: 3.7
 
     - name: Walton
       role: contributor
