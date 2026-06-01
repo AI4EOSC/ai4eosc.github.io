@@ -10,7 +10,11 @@ const communitiesData = { items: communityEntries.sort((a, b) => a.data.title.lo
 
 const gatewayEntries = await getCollection('gateways');
 const gatewaysData = { items: gatewayEntries.sort((a, b) => a.data.title.localeCompare(b.data.title)).map(e => ({ id: e.id, ...e.data })) };
-const gatewaysToShow = gatewaysData.items.length >= 5 ? gatewaysData.items.slice(0, 5) : gatewaysData.items.slice(0, 2);
+const communityIconMap: Record<string, string> = Object.fromEntries(
+  communityEntries.map(e => [e.data.slug, e.data.iconId])
+);
+const gatewaysToShow    = gatewaysData.items.length    >= 5 ? gatewaysData.items.slice(0, 5)    : gatewaysData.items.slice(0, 2);
+const communitiesToShow = communitiesData.items.length >= 5 ? communitiesData.items.slice(0, 5) : communitiesData.items.slice(0, 2);
 
 const typeLabel: Record<string, string> = {
   origin:     'Origin',
@@ -107,7 +111,7 @@ const communityIcons: Record<string, string> = {
         </div>
       </div>
       <div class="tile-grid tile-grid--communities">
-        {communitiesData.items.slice(0, 5).map((item, i) => (
+        {communitiesToShow.map((item, i) => (
           <div class="tile community-tile reveal" style={`transition-delay: ${i * 40}ms`}>
             <div class="comm-header">
               <div class="comm-icon">
@@ -126,7 +130,7 @@ const communityIcons: Record<string, string> = {
               </div>
               <span class="comm-title">{item.title}</span>
             </div>
-            <p class="tagline comm-desc">{item.description}</p>
+            <p class="tagline comm-desc">{item.tagline}</p>
             <a class="link-community" href={`/ecosystem/communities#${item.slug}`}>View community</a>
           </div>
         ))}
@@ -165,7 +169,7 @@ const communityIcons: Record<string, string> = {
             <div class="tile-head">
               <div class="gw-header">
                 <div class="gw-icon">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={communityIcons[item.type] ?? communityIcons.earth} />
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={item.communitySlug ? (communityIcons[communityIconMap[item.communitySlug]] ?? communityIcons.earth) : communityIcons.earth} />
                 </div>
                 <h4>{item.title}</h4>
               </div>

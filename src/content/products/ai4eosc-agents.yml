@@ -1,9 +1,8 @@
 category: AI agents
 title: AI4EOSC Agents
-tagline: AI agents catalog, developed by EOSC-ARENA
 status: Coming soon
-description: AI agents for research automation, built on top of the EOSC infrastructure.
-detailDescription: AI agent catalog for scientific research, developed by EOSC-ARENA. This AI environment will serve as a scientific assistant supporting the full research lifecycle, from literature review and hypothesis generation to analysis, reporting, and provenance capture. 
+tagline: AI agents for research automation, built on top of the EOSC infrastructure.
+description: AI agent catalog for scientific research, developed by EOSC-ARENA. This AI environment will serve as a scientific assistant supporting the full research lifecycle, from literature review and hypothesis generation to analysis, reporting, and provenance capture.
 iconId: agents
 theme: primary
 features:

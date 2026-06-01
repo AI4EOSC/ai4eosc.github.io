@@ -7,12 +7,11 @@ type: marine # marine | climate | health | life | physics
 domain: "Domain label"
 status: active # active | new | coming-soon
 tagline: "One-line tagline shown in cards"
-description: "Short description (1 line, shown in catalogue list)"
 slug: gateway-slug
 
 # Optional fields
 users: 0 # approximate number of researchers with access
-longDescription: "Full description shown in detail panel."
+description: "Full description shown in detail panel."
 euProject: "Project Name" # associated EU project title
 projectId: project-id # links to /ecosystem/projects#<id>
 community: "Community Name"

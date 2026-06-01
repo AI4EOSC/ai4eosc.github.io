@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/ui/PageHero.astro';
 import CtaFinal from '../../components/ui/CtaFinal.astro';
 import { getCollection } from 'astro:content';
+import numbersData from '../../data/numbers.yml';
 
 const entries = await getCollection('communities');
 const items = entries
@@ -25,8 +26,9 @@ function formatUsers(count: number): string {
 }
 
 const totalCommunities = items.length;
-const totalUsers = items.reduce((acc: number, item: any) => acc + (item.users ?? 0), 0);
 const totalGateways = gatewaysItems.length;
+const researchersItem = (numbersData.items as Array<Record<string, string>>).find(i => i.source === 'communities');
+const researchersValue = researchersItem?.value ?? '0';
 
 const icons: Record<string, string> = {
   marine:         `<path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>`,
@@ -53,7 +55,7 @@ const communityIds = JSON.stringify(items.map((i: any) => i.slug));
   >
     <div class="hero-stats">
       <div class="hstat"><span class="hstat-val">{totalCommunities}<em>+</em></span><span class="hstat-lbl">Active communities</span></div>
-      <div class="hstat"><span class="hstat-val">{formatUsers(totalUsers)}<em>+</em></span><span class="hstat-lbl">Researchers served</span></div>
+      <div class="hstat"><span class="hstat-val">{researchersValue}<em>+</em></span><span class="hstat-lbl">Researchers served</span></div>
       <div class="hstat"><span class="hstat-val">{totalGateways}<em>+</em></span><span class="hstat-lbl">Gateways deployed</span></div>
     </div>
   </PageHero>
@@ -123,8 +125,8 @@ const communityIds = JSON.stringify(items.map((i: any) => i.slug));
                       </span>
                       <h3>{item.title}</h3>
                     </div>
-                    <p class="pdl-tagline">{item.description}</p>
-                    <p class="pdl-desc">{item.longDescription}</p>
+                    <p class="pdl-tagline">{item.tagline}</p>
+                    {item.description && <p class="pdl-desc">{item.description}</p>}
 
                     {item.tools && (
                       <>

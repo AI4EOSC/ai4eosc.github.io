@@ -1,9 +1,9 @@
 title: Marine Science
 iconId: marine
-description: Aquatic imaging, biodiversity
-longDescription: AI models for aquatic image classification, species identification and marine biodiversity monitoring. Deployed through the iMagine gateway, which provides researchers with a specialised instance of the AI4EOSC platform.
+tagline: Aquatic imaging, biodiversity
+description: AI models for aquatic image classification, species identification and marine biodiversity monitoring. Deployed through the iMagine gateway, which provides researchers with a specialised instance of the AI4EOSC platform.
 via: iMagine
-viaUrl: https://imagine-ai.eu
+viaUrl: https://dashboard.cloud.imagine-ai.eu
 gatewaySlug: imagine
 tools:
     - Species classifier

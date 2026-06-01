@@ -1,9 +1,8 @@
 category: Core platform
 title: AI4EOSC Platform
-tagline: Open-source platform for training, serving and cataloguing AI models on EOSC
 status: Available
-description: Platform for deploying and managing AI models in EOSC.
-detailDescription: Platform for developing, training, serving and sharing AI models within the European Open Science Cloud. Built on open standards and including authentication and storage support. It includes advanced AI features such as federated learning across multiple clients, MLOps, metadata provenance. Developed in the original AI4EOSC project, and continuously improved with new features and capabilities.
+tagline: Platform for deploying and managing AI models in EOSC.
+description: Platform for developing, training, serving and sharing AI models within the European Open Science Cloud. Built on open standards and including authentication and storage support. It includes advanced AI features such as federated learning across multiple clients, MLOps, metadata provenance. Developed in the original AI4EOSC project, and continuously improved with new features and capabilities.
 iconId: platform
 theme: eu-blue
 features:

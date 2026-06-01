@@ -4,10 +4,9 @@
 # Required fields
 category: "Category label"
 title: "Product Name"
-tagline: "One-line tagline shown in cards"
 status: Available # Available | Preview | Coming soon
-description: "Short description (1 line, shown in card)"
-detailDescription: "Full description shown in detail panel."
+tagline: "Short description shown in cards"
+description: "Full description shown in detail panel."
 iconId: platform # platform | llm | agents
 theme: eu-blue # eu-blue | secondary | primary
 features:
