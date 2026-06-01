@@ -6,17 +6,7 @@ tagline: AI for underwater imaging and marine biodiversity research
 description: AI for underwater imaging and marine biodiversity.
 longDescription: The use cases of the original AI4EOSC project aim to demonstrate the potential of deep learning, federated learning and composite Artificial Intelligence. These three use cases cover fields such as automated thermography, agrometeorology and integrated plant protection. 
 community: Interdisciplinary sciences
-communitySlug: interdisciplinary
-operatedBy:
-    - KIT
-    - IISAS
-    - INFN
-    - UPV
-    - PSNC
-    - LIP
-    - Predictia
-    - MicroStep MIS
-    - WODR
+communitySlug: interdisciplinary-sciences
 accessType: Open to researchers
 accessDesc: Register with your institutional EOSC account to access the full model catalogue.
 tools:

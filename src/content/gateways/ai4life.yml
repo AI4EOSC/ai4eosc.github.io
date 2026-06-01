@@ -9,18 +9,6 @@ euProject: AI4Life
 projectId: ai4life
 community: Bioinformatics
 communitySlug: bioinformatics
-operatedBy:
-    - CSIC
-    - EMBL
-    - EMBL_EBI
-    - EMBRC
-    - EMPHASIS
-    - EU OPENSCREEN
-    - HUMAN TECHNOPOLE
-    - IGC
-    - Intruct-ERIC
-    - KTH
-    - UC3M
 accessType: Open to researchers
 accessDesc: Free access with institutional credentials.
 tools:
