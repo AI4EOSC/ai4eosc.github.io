@@ -5,22 +5,17 @@ items:
       detail: Origin + associated projects across Europe
       tone: eu-blue
       icon: star
-    # Researchers & developers: value computed automatically — sum of users across communities.yml
-    - suffix: +
+    # MANUAL - Researchers & developers: value computed automatically — sum of users across communities.yml
+    - value: "200"
+      suffix: +
       label: Registered researchers & developers
       detail: Active members of the community
       tone: secondary
       icon: users
-    # Gateways: value computed automatically from gateways.yml (items length)
-    - suffix: +
-      label: Active gateways across Europe
-      detail: Domain-specific science deployments
-      tone: primary
-      icon: server
     # AI models: MANUAL — update this value when the catalogue count changes
-    - value: "200"
+    - value: "100"
       suffix: +
       label: AI models in the catalogue
-      detail: Ready to train, fine-tune and deploy
+      detail: Ready to train, deploy and serve
       tone: neutral
       icon: box

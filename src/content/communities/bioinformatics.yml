@@ -1,13 +1,13 @@
 title: Bioinformatics
 iconId: bioinformatics
-users: 180
 description: Genomics, proteomics, drug discovery
-longDescription: Deep learning tools for genomic sequence analysis, protein structure prediction and drug discovery pipelines. Built in collaboration with AI4Life and the BioImage.IO model zoo.
+longDescription: Deep learning tools for cells segmentation, object detection and image analysis. Built in collaboration with AI4Life by integrating the models from the BioImage.IO model zoo.
 via: AI4Life
 viaUrl: https://ai4life.eurobioimaging.eu
 gatewaySlug: ai4life
 tools:
-    - Sequence analysis
-    - Protein prediction
+    - Feature extraction
+    - Image segmentation (cells, nuclei)
+    - Image denoising
     - BioImage.IO
 slug: bioinformatics

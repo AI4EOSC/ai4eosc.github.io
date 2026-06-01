@@ -2,24 +2,24 @@ title: AI4Life
 type: life
 domain: Life sciences
 status: active
-users: 10
 tagline: AI tools for bioimaging, genomics and drug discovery
 description: AI tools for bioimaging and genomics via BioImage.IO.
-longDescription: AI4Life provides life scientists with access to state-of-the-art AI models for bioimaging, genomic analysis and drug discovery. Hosts the BioImage.IO model zoo and integrates with major European life science data repositories.
+longDescription: AI4Life provides life scientists with access to state-of-the-art AI models for bioimaging, genomic analysis and drug discovery. Hosts the BioImage.IO model zoo and integrates with major European life science data repositories. This model marketplace has been integrated as an external catalog within the AI4EOSC platform.
 euProject: AI4Life
 projectId: ai4life
 community: Bioinformatics
 communitySlug: bioinformatics
-operatedBy:
-    - EMBL
-    - CNRS
 accessType: Open to researchers
-accessDesc: Free access with EOSC institutional credentials.
+accessDesc: Free access with institutional credentials.
 tools:
     - BioImage.IO
-    - Sequence analysis
-    - Protein prediction
-    - Drug screening
+    - Feature extraction
+    - Image segmentation (cells, nuclei)
+    - Image denoising
+    - Experiment tracking
+    - Model deployment
+    - Inferece via OSCAR
+    - Integrated storage
 logo: AI4Life.png
 url: https://ai4life.eurobioimaging.eu
 slug: ai4life

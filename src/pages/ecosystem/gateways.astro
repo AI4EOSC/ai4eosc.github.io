@@ -71,8 +71,8 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
     theme="teal"
     breadcrumb="Gateways"
     breadcrumbParent={{ label: 'Ecosystem' }}
-    title="Specialised AI platforms built on AI4EOSC"
-    description="Gateways are domain-specific deployments of the AI4EOSC platform — each one tailored to a scientific community and providing direct access to AI tools and models in their field."
+    title="Specialised AI platforms or catalogs built on AI4EOSC"
+    description="Gateways are specific initiatives, projects or organziation that allows to support dedicated scientific communities and to provide direct access to AI tools and models in their field."
   >
     <div class="hero-stats">
       <div class="hstat"><span class="hstat-val">{totalGateways}<em>+</em></span><span class="hstat-lbl">Active gateways</span></div>
@@ -89,7 +89,7 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
         <div class="box-hdr">
           <h2 class="sc-title">Gateways explained</h2>
         </div>
-        <p class="sc-sub">A gateway is a customised, independently-operated instance of the AI4EOSC platform deployed for a specific project or scientific community.</p>
+        <p class="sc-sub">A gateway is an organization or project that enables the support of specific scientific communities and use cases.</p>
         <div class="explainer-grid">
           {[
             { icon: 'copy',     title: 'Based on AI4EOSC',       desc: 'Every gateway uses the same open-source AI4EOSC platform as its foundation — same API, same authentication, same model catalogue format.' },
@@ -253,10 +253,6 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
                           </div>
                         )}
                         <div class="meta-item">
-                          <span class="meta-lbl">Operated by</span>
-                          <span class="meta-val">{item.operatedBy.join(', ')}</span>
-                        </div>
-                        <div class="meta-item">
                           <span class="meta-lbl">Access</span>
                           <span class="meta-val">{item.accessType}</span>
                           <span class="meta-sub">{item.accessDesc}</span>
@@ -281,14 +277,14 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
     </div>
   </section>
 
-  <!-- Deploy your own -->
+  <!-- Become a gateway -->
   <section class="p-section">
-    <div class="section-label"><div class="container">Deploy your own</div></div>
+    <div class="section-label"><div class="container">Become a gateway</div></div>
     <div class="container">
       <div class="section-card">
         <div class="deploy-hdr">
-          <h2 class="sc-title">Build a gateway for your community</h2>
-          <p class="sc-sub">Any EU-funded project or research institution can deploy their own gateway on the AI4EOSC platform.</p>
+          <h2 class="sc-title">Become a gateway for your community</h2>
+          <p class="sc-sub">Any EU-funded project or research institution can becoma a gateway by providing tailored AI-solutions for a specific community within the AI4EOSC platform.</p>
         </div>
         <div class="deploy-grid">
           <div class="deploy-item">
