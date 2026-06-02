@@ -25,6 +25,10 @@ links:
       href: /stories
     - label: Support
       dropdown:
+          - label: Contact
+            description: Get in touch with the team
+            href: /support/contact
+            hoverGradient: eu-blue
           - label: FAQ
             description: Frequently asked questions
             href: /support/faq
