@@ -1,7 +1,7 @@
 type: origin
 status: finished
 title: AI4EOSC
-tagline: Artificial Intelligence for the European Open Science Cloud
+tagline: Artificial Intelligence for the European Open Science Cloud.
 description: The original Horizon Europe project that created the AI4EOSC platform. Developed the core infrastructure for training, serving and cataloguing AI models within the EOSC, establishing the foundation that all subsequent projects build upon.
 logo: AI4-horizontal-light.svg
 outputsLabel: Key outputs

@@ -1,7 +1,7 @@
 type: associated
 status: finished
 title: AI4Life
-tagline: AI models and methods for the life sciences
+tagline: AI models and methods for the life sciences.
 description: AI4Life builds a suite of AI tools and resources specifically tailored for the life sciences community, deployed on a specific catalog in the AI4EOSC platform. It supports life scientists in the adoption of machine learning solutions that improve the utility and interpretability of image data.
 logo: AI4Life.png
 outputsLabel: Key areas

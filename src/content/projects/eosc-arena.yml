@@ -1,7 +1,7 @@
 type: extension
 status: new
 title: EOSC-ARENA
-tagline: AI Research Enhancement through Networked Agents
+tagline: AI Research Enhancement through Networked Agents.
 description: "A sovereign, generative and agentic AI environment integrated with the EOSC, designed to act as a scientific assistant across the full research lifecycle, from literature review and hypothesis generation to analysis, reporting, and provenance capture.\n\nCoordinated by PSNC, EOSC-ARENA focuses on model and data sovereignty, human-centred AI, and research integrity, extending the AI4OS software stack towards GenAI as part of the AI4EOSC ecosystem."
 logo: EOSC-ARENA.png
 outputsLabel: Adding to AI4EOSC

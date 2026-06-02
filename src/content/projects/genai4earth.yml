@@ -1,8 +1,8 @@
 type: extension
 status: new
 title: GenAI4Earth
-tagline: Generative Artificial Intelligence for Earth System
-description: "GenAI4Earth will go beyond the state of the art by designing, deploying, and operating trustworthy, reusable GenAI services within the EOSC ecosystem, advancing discovery on Earth–climate–environment–life interactions in co-design with user communities and research infrastructures at national and European levels."
+tagline: Generative Artificial Intelligence for Earth System.
+description: GenAI4Earth will go beyond the state of the art by designing, deploying, and operating trustworthy, reusable GenAI services within the EOSC ecosystem, advancing discovery on Earth–climate–environment–life interactions in co-design with user communities and research infrastructures at national and European levels.
 logo: GenAI4Earth.png
 outputsLabel: Adding to AI4EOSC
 outputs:

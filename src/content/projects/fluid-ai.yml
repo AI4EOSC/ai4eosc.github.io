@@ -1,7 +1,7 @@
 type: extension
 status: new
 title: FLUID-AI
-tagline: FAIR Liquidity Unifying Interoperable Data and AI
+tagline: FAIR Liquidity Unifying Interoperable Data and AI.
 description: FLUID-AI aims to transform the EOSC into a dynamic, AI-ready ecosystem. The overarching goal is to significantly enhance the interoperability, machine-actionability, and AI readiness of data and models across European RIs and EOSC.
 logo: FLUIDAI_ColourPos.png
 outputs:
