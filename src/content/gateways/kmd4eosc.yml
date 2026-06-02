@@ -1,0 +1,20 @@
+title: KMD4EOSC
+status: active
+tagline: Polish National Data Storage Project
+description: Polish national project for data storage and sharing, and efficient processing of large volumes of data in HPC, BigData, and AI Models. The project is co-funded by European Funds for a Modern Economy Program and the European Union. The project is one of the flagship projects of the Polish Research Roadmap.
+accessType: Open to researchers
+accessDesc: Free access with institutional credentials from participating Polish institutions.
+operatedBy:
+    - "PSNC"
+users: 200
+tools:
+    - Image segmentation
+    - Image classification
+    - Experiment tracking
+    - Model deployment
+    - Inferece via OSCAR
+    - Integrated storage
+logo: kmd4eosc.png
+url: https://kmd4eosc.cloud.ai4eosc.eu/
+slug: kmd4eosc
+

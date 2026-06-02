@@ -5,7 +5,8 @@ description: The use cases of the original AI4EOSC project aim to demonstrate th
 euProject: AI4EOSC
 projectId: ai4eosc
 accessType: Open to researchers
-accessDesc: Register with your institutional EOSC account to access the full model catalogue.
+accessDesc: Free access with institutional credentials.
+users: 200
 tools:
     - Image segmentation
     - Image classification

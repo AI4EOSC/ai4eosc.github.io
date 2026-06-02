@@ -7,7 +7,8 @@ projectId: imagine
 community: Marine Science
 communitySlug: marine-science
 accessType: Open to researchers
-accessDesc: Register with your institutional EOSC account to access the full model catalogue.
+accessDesc: Free access with institutional credentials.
+users: 100
 tools:
     - Species classifier
     - Image segmentation

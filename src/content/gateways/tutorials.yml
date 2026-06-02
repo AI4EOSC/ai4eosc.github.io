@@ -1,0 +1,18 @@
+title: Tutorials
+status: active
+tagline: Demonstration and tutorials platform
+description: A platform with controlled resources allowed to perform tutorials, demonstrations and trainings.
+euProject: AI4EOSC
+projectId: ai4eosc
+accessType: Open to researchers
+accessDesc: Free access with institutional credentials.
+tools:
+    - Image segmentation
+    - Image classification
+    - Experiment tracking
+    - Model deployment
+    - Inferece via OSCAR
+    - Integrated storage
+logo: AI4-horizontal-light.svg
+url: https://tutorials.cloud.ai4eosc.eu/
+slug: tutorials
