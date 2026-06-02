@@ -5,10 +5,11 @@ tagline: Imaging data and services for aquatic science.
 description: iMagine develops imaging data and services for aquatic science, leveraging the AI4EOSC platform.
 logo: iMagine.png
 outputs:
-    - Aquatic sciences
+    - Aquatic sciences tools
     - Image analysis
     - Image segmentation
     - Vision models
+    - Image annotation tools
 funding: 4500000
 programme: Horizon Europe
 period: "2022 – 2025"

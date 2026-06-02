@@ -6,9 +6,9 @@ description: Supporting artificial intelligence (machine learning and deep learn
 logo: deep.png
 outputsLabel: Key outputs
 outputs:
+    - DEEP platform
     - DEEPaaS API
     - Model marketplace
-    - Image classification
 funding: 2988750
 grant: "No. 777435"
 programme: Horizon 2020

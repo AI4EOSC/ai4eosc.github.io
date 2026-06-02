@@ -9,8 +9,14 @@ outputs:
     - AI4EOSC Platform
     - DEEPaaS API
     - Model catalogue
+    - LLM services
     - OSCAR integration
-    - Federated learning
+    - Try-me endpoints
+    - Federated learning support
+    - EOSC AAI integration
+    - FAIR access
+    - Provenance and experiment tracking
+    - Drift monitoring
 funding: 4997125
 grant: "No. 101058593"
 programme: Horizon Europe
