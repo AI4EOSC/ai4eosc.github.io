@@ -1,229 +1,4 @@
 items:
-    - name: ARIADNE
-      role: contributor
-      type: infrastructure
-      logo: ARIADNE.png
-      url: https://ariadne-infrastructure.eu
-      country: Italy
-      lat: 43.71
-      lon: 10.39
-
-    - name: Atos
-      role: contributor
-      logo: Atos.png
-      url: https://atos.net
-      country: France
-      type: industry
-      lat: 48.9
-      lon: 2.2
-
-    - name: CERTH
-      role: contributor
-      logo: CERTH.png
-      url: https://www.certh.gr
-      country: Greece
-      type: research
-      lat: 40.6
-      lon: 22.9
-
-    - name: CESNET
-      role: contributor
-      logo: CESNET.png
-      url: https://www.cesnet.cz
-      country: Czechia
-      type: infrastructure
-      lat: 50.1
-      lon: 14.4
-
-    - name: CMCC
-      role: contributor
-      logo: CMCC.png
-      url: https://www.cmcc.it
-      country: Italy
-      type: research
-      lat: 40.35
-      lon: 18.17
-
-    - name: CNRS
-      role: contributor
-      logo: CNRS.png
-      url: https://www.cnrs.fr
-      country: France
-      type: research
-      lat: 48.9
-      lon: 2.3
-
-    - name: CSC
-      role: contributor
-      logo: CSC.png
-      url: https://www.csc.fi
-      country: Finland
-      type: infrastructure
-      lat: 60.2
-      lon: 24.9
-
-    - name: CSIC
-      role: leader
-      logo: CSIC.svg
-      url: https://www.csic.es
-      country: Spain
-      type: research
-      lat: 40.4
-      lon: -3.7
-
-    - name: Development Seed
-      role: contributor
-      logo: Development-Seed.svg
-      url: https://developmentseed.org
-      country: Portugal
-      type: industry
-      lat: 38.72
-      lon: -9.14
-
-    - name: DFKI
-      role: contributor
-      logo: DFKI.png
-      url: https://www.dfki.de
-      country: Germany
-      type: research
-      lat: 49.24
-      lon: 6.7
-
-    - name: EGI
-      role: contributor
-      logo: EGI.png
-      url: https://www.egi.eu
-      country: Netherlands
-      type: infrastructure
-      lat: 52.4
-      lon: 4.9
-
-    - name: EMBL
-      role: contributor
-      logo: EMBL.png
-      url: https://www.embl.org
-      country: Germany
-      type: research
-      lat: 53.58
-      lon: 10.00
-
-    - name: EMBL_EBI
-      role: contributor
-      logo: EMBL_EBI.png
-      url: https://www.ebi.ac.uk
-      country: United Kingdom
-      type: research
-      lat: 52.2
-      lon: 0.1
-
-    - name: EMBRC
-      role: contributor
-      logo: EMBRC.png
-      url: https://www.embrc.eu
-      country: France
-      type: infrastructure
-      lat: 48.86
-      lon: 2.35
-
-    - name: EMPHASIS
-      role: contributor
-      logo: EMPHASIS.svg
-      url: https://emphasis.plant-phenotyping.eu
-      country: Belgium
-      type: infrastructure
-      lat: 51.03
-      lon: 3.56
-
-    - name: EMSO-ERIC
-      role: contributor
-      logo: EMSO-ERIC.png
-      url: https://emso.eu
-      country: Italy
-      type: infrastructure
-      lat: 41.9
-      lon: 12.5
-
-    - name: EU OPENSCREEN
-      role: contributor
-      logo: EU-OPENSCREEN.png
-      url: https://www.eu-openscreen.eu
-      country: Germany
-      type: infrastructure
-      lat: 52.5
-      lon: 13.4
-
-    - name: EURO-BIOIMAGING
-      role: contributor
-      logo: EURO-BIOIMAGING.webp
-      url: https://www.eurobioimaging.eu
-      country: Finland
-      type: infrastructure
-      lat: 60.2
-      lon: 25.0
-
-    - name: GFZ
-      role: contributor
-      logo: GFZ.png
-      url: https://www.gfz-potsdam.de
-      country: Germany
-      type: research
-      lat: 52.50
-      lon: 13.33
-
-    - name: GreenMatterAI
-      role: contributor
-      logo: GreenMatterAI.jpeg
-      url: https://www.greenmatter.ai/
-      country: Germany
-      type: industry
-      lat: 52.50
-      lon: 13.33
-
-    - name: GRNET
-      role: contributor
-      logo: GRNET.png
-      url: https://grnet.gr
-      country: Greece
-      type: infrastructure
-      lat: 37.9
-      lon: 23.7
-
-    - name: Helmholtz Munich
-      role: contributor
-      logo: Helmholtz_Munich.png
-      url: https://www.helmholtz-munich.de
-      country: Germany
-      type: research
-      lat: 48.1
-      lon: 11.7
-
-    - name: HUMAN TECHNOPOLE
-      role: contributor
-      logo: HUMAN_TECHNOPOLE.png
-      url: https://humantechnopole.it
-      country: Italy
-      type: research
-      lat: 45.52
-      lon: 9.10
-
-    - name: IFREMER
-      role: contributor
-      logo: ifremer.png
-      url: https://wwz.ifremer.fr
-      country: France
-      type: research
-      lat: 48.36
-      lon: -4.57
-
-    - name: IGC
-      role: contributor
-      logo: IGC.png
-      url: https://www.igc.gulbenkian.pt
-      country: Portugal
-      type: research
-      lat: 38.7
-      lon: -9.1
-
     - name: IISAS
       role: core
       logo: IISAS.png
@@ -233,15 +8,6 @@ items:
       lat: 48.1
       lon: 17.1
 
-    - name: IISLaFe
-      role: contributor
-      logo: IISLaFe.png
-      url: https://iislafe.es
-      country: Spain
-      type: research
-      lat: 39.5
-      lon: -0.4
-
     - name: INFN
       role: core
       logo: INFN.svg
@@ -250,42 +16,6 @@ items:
       type: research
       lat: 41.9
       lon: 12.5
-
-    - name: INGV
-      role: contributor
-      logo: INGV.png
-      url: https://www.ingv.it
-      country: Italy
-      type: research
-      lat: 41.9
-      lon: 12.5
-
-    - name: INRAE
-      role: contributor
-      logo: INRAE.webp
-      url: https://www.inrae.fr
-      country: France
-      type: research
-      lat: 48.86
-      lon: 2.35
-
-    - name: INRIA
-      role: contributor
-      logo: INRIA.png
-      url: https://www.inria.fr
-      country: France
-      type: research
-      lat: 48.83
-      lon: 2.07
-
-    - name: Instruct-ERIC
-      role: contributor
-      logo: Instruct-ERIC.png
-      url: https://instruct-eric.org
-      country: United Kingdom
-      type: infrastructure
-      lat: 51.6
-      lon: -1.3
 
     - name: IRD
       role: contributor
@@ -305,33 +35,6 @@ items:
       lat: 49.0
       lon: 9.0
 
-    - name: KNAW
-      role: contributor
-      logo: KNAW.png
-      url: https://www.knaw.nl
-      country: Netherlands
-      type: research
-      lat: 52.4
-      lon: 4.9
-
-    - name: KTH
-      role: contributor
-      logo: KTH.png
-      url: https://www.kth.se
-      country: Sweden
-      type: research
-      lat: 59.3
-      lon: 18.1
-
-    - name: LIEC
-      role: contributor
-      logo: LIEC.png
-      url: https://liec.univ-lorraine.fr
-      country: France
-      type: research
-      lat: 49.24
-      lon: 6.7
-
     - name: LIP
       role: core
       logo: LIP.svg
@@ -340,78 +43,6 @@ items:
       type: research
       lat: 38.7
       lon: -9.1
-
-    - name: Marine Institute
-      role: contributor
-      logo: Marine Institute.png
-      url: https://www.marine.ie
-      country: Ireland
-      type: research
-      lat: 53.3
-      lon: -9.0
-
-    - name: MARIS
-      role: contributor
-      logo: MARIS.webp
-      url: https://www.maris.nl
-      country: Netherlands
-      type: research
-      lat: 53.22
-      lon: 6.57
-
-    - name: MetaPlanet
-      role: contributor
-      logo: MetaPlanet.png
-      url: https://www.metaplanet.fr/
-      country: France
-      type: industry
-      lat: 48.85
-      lon: 2.34
-
-    - name: MicroStep MIS
-      role: contributor
-      logo: microstep.png
-      url: https://www.microstep.com
-      country: Slovakia
-      type: industry
-      lat: 48.1
-      lon: 17.1
-
-    - name: MRI
-      role: contributor
-      logo: MRI.png
-      url: https://www.max-reger-institut.de/
-      country: Germany
-      type: research
-      lat: 49.0
-      lon: 9.0
-
-    - name: Neovia
-      role: contributor
-      logo: Neovia.png
-      url: https://neovia-innovation.eu
-      country: France
-      type: industry
-      lat: 48.90
-      lon: 2.30
-
-    - name: OGS
-      role: contributor
-      logo: OGS.png
-      url: https://www.ogs.it
-      country: Italy
-      type: research
-      lat: 45.72
-      lon: 13.72
-
-    - name: ORBITAL
-      role: contributor
-      logo: ORBITAL.webp
-      url: https://www.orbitaleos.com/
-      country: Spain
-      type: industry
-      lat: 39.47
-      lon: -0.38
 
     - name: Predictia
       role: contributor
@@ -422,15 +53,6 @@ items:
       lat: 43.5
       lon: -3.8
 
-    - name: Premotec
-      role: contributor
-      logo: Premotec.png
-      url: https://www.premotec.fr
-      country: France
-      type: industry
-      lat: 48.9
-      lon: 2.3
-
     - name: PSNC
       role: core
       logo: PSNC.svg
@@ -439,33 +61,6 @@ items:
       type: infrastructure
       lat: 52.4
       lon: 16.9
-
-    - name: RDA
-      role: contributor
-      logo: RDA.png
-      url: https://www.rd-alliance.org
-      country: Belgium
-      type: infrastructure
-      lat: 51.1
-      lon: 3.7
-
-    - name: SOCIB
-      role: contributor
-      logo: SOCIB.png
-      url: https://www.socib.eu
-      country: Spain
-      type: research
-      lat: 39.6
-      lon: 2.6
-
-    - name: Sorbonne Université
-      role: contributor
-      logo: Sorbonne_Université.png
-      url: https://www.sorbonne-universite.fr
-      country: France
-      type: research
-      lat: 48.9
-      lon: 2.3
 
     - name: STUBA
       role: contributor
@@ -476,122 +71,14 @@ items:
       lat: 48.1
       lon: 17.1
 
-    - name: TÜBITAK
-      role: contributor
-      logo: TÜBITAK.png
-      url: https://www.tubitak.gov.tr
-      country: Turkey
-      type: research
-      lat: 39.9
-      lon: 32.9
-
-    - name: TUM
-      role: contributor
-      logo: TUM.svg
-      url: https://www.tum.de
-      country: Germany
-      type: research
-      lat: 48.1
-      lon: 11.6
-
-    - name: UC3M
-      role: contributor
-      logo: UC3M.png
-      url: https://www.uc3m.es
+    - name: CSIC
+      role: leader
+      logo: CSIC.svg
+      url: https://www.csic.es
       country: Spain
       type: research
       lat: 40.4
       lon: -3.7
-
-    - name: UCA
-      role: contributor
-      logo: UCA.png
-      url: https://www.uca.fr
-      country: France
-      type: research
-      lat: 45.8
-      lon: 3.1
-
-    - name: UEDIN
-      role: contributor
-      logo: UEDIN.png
-      url: https://www.ed.ac.uk
-      country: United Kingdom
-      type: research
-      lat: 55.9
-      lon: -3.2
-
-    - name: UFZ
-      role: contributor
-      logo: UFZ.png
-      url: https://www.ufz.de
-      country: Germany
-      type: research
-      lat: 51.3
-      lon: 12.4
-
-    - name: UGent
-      role: contributor
-      logo: UGent.png
-      url: https://www.ugent.be
-      country: Belgium
-      type: research
-      lat: 51.1
-      lon: 3.7
-
-    - name: ULIEGE
-      role: contributor
-      logo: ULIEGE.png
-      url: https://www.uliege.be
-      country: Belgium
-      type: research
-      lat: 50.6
-      lon: 5.6
-
-    - name: UNIPD
-      role: contributor
-      logo: UNIPD.png
-      url: https://www.unipd.it
-      country: Italy
-      type: research
-      lat: 45.4
-      lon: 11.9
-
-    - name: UNITN
-      role: contributor
-      logo: UNITN.png
-      url: https://www.unitn.it
-      country: Italy
-      type: research
-      lat: 46.1
-      lon: 11.1
-
-    - name: UNISTRA
-      role: contributor
-      logo: UNISTRA.png
-      url: https://www.unistra.fr
-      country: France
-      type: research
-      lat: 49.0
-      lon: 9.0
-
-    - name: UOA
-      role: contributor
-      logo: UOA.png
-      url: https://en.uoa.gr
-      country: Greece
-      type: research
-      lat: 37.9
-      lon: 23.7
-
-    - name: UPC
-      role: contributor
-      logo: UPC.png
-      url: https://www.upc.edu
-      country: Spain
-      type: research
-      lat: 41.4
-      lon: 2.1
 
     - name: UPV
       role: core
@@ -602,47 +89,560 @@ items:
       lat: 39.5
       lon: -0.4
 
-    - name: US
-      role: contributor
-      logo: US.png
-      url: https://www.us.es
-      country: Spain
-      type: research
-      lat: 37.4
-      lon: -6.0
+    # - name: ARIADNE
+    #   role: contributor
+    #   type: infrastructure
+    #   logo: ARIADNE.png
+    #   url: https://ariadne-infrastructure.eu
+    #   country: Italy
+    #   lat: 43.71
+    #   lon: 10.39
 
-    - name: UvA
-      role: contributor
-      logo: UvA.png
-      url: https://www.uva.nl
-      country: Netherlands
-      type: research
-      lat: 52.4
-      lon: 4.9
+    # - name: Atos
+    #   role: contributor
+    #   logo: Atos.png
+    #   url: https://atos.net
+    #   country: France
+    #   type: industry
+    #   lat: 48.9
+    #   lon: 2.2
 
-    - name: VLIZ
-      role: contributor
-      logo: VLIZ.png
-      url: https://www.vliz.be
-      country: Belgium
-      type: research
-      lat: 51.1
-      lon: 3.7
+    # - name: CERTH
+    #   role: contributor
+    #   logo: CERTH.png
+    #   url: https://www.certh.gr
+    #   country: Greece
+    #   type: research
+    #   lat: 40.6
+    #   lon: 22.9
 
-    - name: Walton
-      role: contributor
-      logo: Walton.png
-      url: https://www.waltoninstitute.ie
-      country: Ireland
-      type: research
-      lat: 52.3
-      lon: -7.1
+    # - name: CESNET
+    #   role: contributor
+    #   logo: CESNET.png
+    #   url: https://www.cesnet.cz
+    #   country: Czechia
+    #   type: infrastructure
+    #   lat: 50.1
+    #   lon: 14.4
 
-    - name: WODR
-      role: contributor
-      logo: WODR.png
-      url: https://www.wodr.pl
-      country: Poland
-      type: research
-      lat: 52.4
-      lon: 16.9
+    # - name: CMCC
+    #   role: contributor
+    #   logo: CMCC.png
+    #   url: https://www.cmcc.it
+    #   country: Italy
+    #   type: research
+    #   lat: 40.35
+    #   lon: 18.17
+
+    # - name: CNRS
+    #   role: contributor
+    #   logo: CNRS.png
+    #   url: https://www.cnrs.fr
+    #   country: France
+    #   type: research
+    #   lat: 48.9
+    #   lon: 2.3
+
+    # - name: CSC
+    #   role: contributor
+    #   logo: CSC.png
+    #   url: https://www.csc.fi
+    #   country: Finland
+    #   type: infrastructure
+    #   lat: 60.2
+    #   lon: 24.9
+
+    # - name: Development Seed
+    #   role: contributor
+    #   logo: Development-Seed.svg
+    #   url: https://developmentseed.org
+    #   country: Portugal
+    #   type: industry
+    #   lat: 38.72
+    #   lon: -9.14
+
+    # - name: DFKI
+    #   role: contributor
+    #   logo: DFKI.png
+    #   url: https://www.dfki.de
+    #   country: Germany
+    #   type: research
+    #   lat: 49.24
+    #   lon: 6.7
+
+    # - name: EGI
+    #   role: contributor
+    #   logo: EGI.png
+    #   url: https://www.egi.eu
+    #   country: Netherlands
+    #   type: infrastructure
+    #   lat: 52.4
+    #   lon: 4.9
+
+    # - name: EMBL
+    #   role: contributor
+    #   logo: EMBL.png
+    #   url: https://www.embl.org
+    #   country: Germany
+    #   type: research
+    #   lat: 53.58
+    #   lon: 10.00
+
+    # - name: EMBL_EBI
+    #   role: contributor
+    #   logo: EMBL_EBI.png
+    #   url: https://www.ebi.ac.uk
+    #   country: United Kingdom
+    #   type: research
+    #   lat: 52.2
+    #   lon: 0.1
+
+    # - name: EMBRC
+    #   role: contributor
+    #   logo: EMBRC.png
+    #   url: https://www.embrc.eu
+    #   country: France
+    #   type: infrastructure
+    #   lat: 48.86
+    #   lon: 2.35
+
+    # - name: EMPHASIS
+    #   role: contributor
+    #   logo: EMPHASIS.svg
+    #   url: https://emphasis.plant-phenotyping.eu
+    #   country: Belgium
+    #   type: infrastructure
+    #   lat: 51.03
+    #   lon: 3.56
+
+    # - name: EMSO-ERIC
+    #   role: contributor
+    #   logo: EMSO-ERIC.png
+    #   url: https://emso.eu
+    #   country: Italy
+    #   type: infrastructure
+    #   lat: 41.9
+    #   lon: 12.5
+
+    # - name: EU OPENSCREEN
+    #   role: contributor
+    #   logo: EU-OPENSCREEN.png
+    #   url: https://www.eu-openscreen.eu
+    #   country: Germany
+    #   type: infrastructure
+    #   lat: 52.5
+    #   lon: 13.4
+
+    # - name: EURO-BIOIMAGING
+    #   role: contributor
+    #   logo: EURO-BIOIMAGING.webp
+    #   url: https://www.eurobioimaging.eu
+    #   country: Finland
+    #   type: infrastructure
+    #   lat: 60.2
+    #   lon: 25.0
+
+    # - name: GFZ
+    #   role: contributor
+    #   logo: GFZ.png
+    #   url: https://www.gfz-potsdam.de
+    #   country: Germany
+    #   type: research
+    #   lat: 52.50
+    #   lon: 13.33
+
+    # - name: GreenMatterAI
+    #   role: contributor
+    #   logo: GreenMatterAI.jpeg
+    #   url: https://www.greenmatter.ai/
+    #   country: Germany
+    #   type: industry
+    #   lat: 52.50
+    #   lon: 13.33
+
+    # - name: GRNET
+    #   role: contributor
+    #   logo: GRNET.png
+    #   url: https://grnet.gr
+    #   country: Greece
+    #   type: infrastructure
+    #   lat: 37.9
+    #   lon: 23.7
+
+    # - name: Helmholtz Munich
+    #   role: contributor
+    #   logo: Helmholtz_Munich.png
+    #   url: https://www.helmholtz-munich.de
+    #   country: Germany
+    #   type: research
+    #   lat: 48.1
+    #   lon: 11.7
+
+    # - name: HUMAN TECHNOPOLE
+    #   role: contributor
+    #   logo: HUMAN_TECHNOPOLE.png
+    #   url: https://humantechnopole.it
+    #   country: Italy
+    #   type: research
+    #   lat: 45.52
+    #   lon: 9.10
+
+    # - name: IFREMER
+    #   role: contributor
+    #   logo: ifremer.png
+    #   url: https://wwz.ifremer.fr
+    #   country: France
+    #   type: research
+    #   lat: 48.36
+    #   lon: -4.57
+
+    # - name: IGC
+    #   role: contributor
+    #   logo: IGC.png
+    #   url: https://www.igc.gulbenkian.pt
+    #   country: Portugal
+    #   type: research
+    #   lat: 38.7
+    #   lon: -9.1
+
+    # - name: IISLaFe
+    #   role: contributor
+    #   logo: IISLaFe.png
+    #   url: https://iislafe.es
+    #   country: Spain
+    #   type: research
+    #   lat: 39.5
+    #   lon: -0.4
+
+    # - name: INGV
+    #   role: contributor
+    #   logo: INGV.png
+    #   url: https://www.ingv.it
+    #   country: Italy
+    #   type: research
+    #   lat: 41.9
+    #   lon: 12.5
+
+    # - name: INRAE
+    #   role: contributor
+    #   logo: INRAE.webp
+    #   url: https://www.inrae.fr
+    #   country: France
+    #   type: research
+    #   lat: 48.86
+    #   lon: 2.35
+
+    # - name: INRIA
+    #   role: contributor
+    #   logo: INRIA.png
+    #   url: https://www.inria.fr
+    #   country: France
+    #   type: research
+    #   lat: 48.83
+    #   lon: 2.07
+
+    # - name: Instruct-ERIC
+    #   role: contributor
+    #   logo: Instruct-ERIC.png
+    #   url: https://instruct-eric.org
+    #   country: United Kingdom
+    #   type: infrastructure
+    #   lat: 51.6
+    #   lon: -1.3
+
+    # - name: KNAW
+    #   role: contributor
+    #   logo: KNAW.png
+    #   url: https://www.knaw.nl
+    #   country: Netherlands
+    #   type: research
+    #   lat: 52.4
+    #   lon: 4.9
+
+    # - name: KTH
+    #   role: contributor
+    #   logo: KTH.png
+    #   url: https://www.kth.se
+    #   country: Sweden
+    #   type: research
+    #   lat: 59.3
+    #   lon: 18.1
+
+    # - name: LIEC
+    #   role: contributor
+    #   logo: LIEC.png
+    #   url: https://liec.univ-lorraine.fr
+    #   country: France
+    #   type: research
+    #   lat: 49.24
+    #   lon: 6.7
+
+    # - name: Marine Institute
+    #   role: contributor
+    #   logo: Marine Institute.png
+    #   url: https://www.marine.ie
+    #   country: Ireland
+    #   type: research
+    #   lat: 53.3
+    #   lon: -9.0
+
+    # - name: MARIS
+    #   role: contributor
+    #   logo: MARIS.webp
+    #   url: https://www.maris.nl
+    #   country: Netherlands
+    #   type: research
+    #   lat: 53.22
+    #   lon: 6.57
+
+    # - name: MetaPlanet
+    #   role: contributor
+    #   logo: MetaPlanet.png
+    #   url: https://www.metaplanet.fr/
+    #   country: France
+    #   type: industry
+    #   lat: 48.85
+    #   lon: 2.34
+
+    # - name: MicroStep MIS
+    #   role: contributor
+    #   logo: microstep.png
+    #   url: https://www.microstep.com
+    #   country: Slovakia
+    #   type: industry
+    #   lat: 48.1
+    #   lon: 17.1
+
+    # - name: MRI
+    #   role: contributor
+    #   logo: MRI.png
+    #   url: https://www.max-reger-institut.de/
+    #   country: Germany
+    #   type: research
+    #   lat: 49.0
+    #   lon: 9.0
+
+    # - name: Neovia
+    #   role: contributor
+    #   logo: Neovia.png
+    #   url: https://neovia-innovation.eu
+    #   country: France
+    #   type: industry
+    #   lat: 48.90
+    #   lon: 2.30
+
+    # - name: OGS
+    #   role: contributor
+    #   logo: OGS.png
+    #   url: https://www.ogs.it
+    #   country: Italy
+    #   type: research
+    #   lat: 45.72
+    #   lon: 13.72
+
+    # - name: ORBITAL
+    #   role: contributor
+    #   logo: ORBITAL.webp
+    #   url: https://www.orbitaleos.com/
+    #   country: Spain
+    #   type: industry
+    #   lat: 39.47
+    #   lon: -0.38
+
+    # - name: Premotec
+    #   role: contributor
+    #   logo: Premotec.png
+    #   url: https://www.premotec.fr
+    #   country: France
+    #   type: industry
+    #   lat: 48.9
+    #   lon: 2.3
+
+    # - name: RDA
+    #   role: contributor
+    #   logo: RDA.png
+    #   url: https://www.rd-alliance.org
+    #   country: Belgium
+    #   type: infrastructure
+    #   lat: 51.1
+    #   lon: 3.7
+
+    # - name: SOCIB
+    #   role: contributor
+    #   logo: SOCIB.png
+    #   url: https://www.socib.eu
+    #   country: Spain
+    #   type: research
+    #   lat: 39.6
+    #   lon: 2.6
+
+    # - name: Sorbonne Université
+    #   role: contributor
+    #   logo: Sorbonne_Université.png
+    #   url: https://www.sorbonne-universite.fr
+    #   country: France
+    #   type: research
+    #   lat: 48.9
+    #   lon: 2.3
+
+    # - name: TÜBITAK
+    #   role: contributor
+    #   logo: TÜBITAK.png
+    #   url: https://www.tubitak.gov.tr
+    #   country: Turkey
+    #   type: research
+    #   lat: 39.9
+    #   lon: 32.9
+
+    # - name: TUM
+    #   role: contributor
+    #   logo: TUM.svg
+    #   url: https://www.tum.de
+    #   country: Germany
+    #   type: research
+    #   lat: 48.1
+    #   lon: 11.6
+
+    # - name: UC3M
+    #   role: contributor
+    #   logo: UC3M.png
+    #   url: https://www.uc3m.es
+    #   country: Spain
+    #   type: research
+    #   lat: 40.4
+    #   lon: -3.7
+
+    # - name: UCA
+    #   role: contributor
+    #   logo: UCA.png
+    #   url: https://www.uca.fr
+    #   country: France
+    #   type: research
+    #   lat: 45.8
+    #   lon: 3.1
+
+    # - name: UEDIN
+    #   role: contributor
+    #   logo: UEDIN.png
+    #   url: https://www.ed.ac.uk
+    #   country: United Kingdom
+    #   type: research
+    #   lat: 55.9
+    #   lon: -3.2
+
+    # - name: UFZ
+    #   role: contributor
+    #   logo: UFZ.png
+    #   url: https://www.ufz.de
+    #   country: Germany
+    #   type: research
+    #   lat: 51.3
+    #   lon: 12.4
+
+    # - name: UGent
+    #   role: contributor
+    #   logo: UGent.png
+    #   url: https://www.ugent.be
+    #   country: Belgium
+    #   type: research
+    #   lat: 51.1
+    #   lon: 3.7
+
+    # - name: ULIEGE
+    #   role: contributor
+    #   logo: ULIEGE.png
+    #   url: https://www.uliege.be
+    #   country: Belgium
+    #   type: research
+    #   lat: 50.6
+    #   lon: 5.6
+
+    # - name: UNIPD
+    #   role: contributor
+    #   logo: UNIPD.png
+    #   url: https://www.unipd.it
+    #   country: Italy
+    #   type: research
+    #   lat: 45.4
+    #   lon: 11.9
+
+    # - name: UNITN
+    #   role: contributor
+    #   logo: UNITN.png
+    #   url: https://www.unitn.it
+    #   country: Italy
+    #   type: research
+    #   lat: 46.1
+    #   lon: 11.1
+
+    # - name: UNISTRA
+    #   role: contributor
+    #   logo: UNISTRA.png
+    #   url: https://www.unistra.fr
+    #   country: France
+    #   type: research
+    #   lat: 49.0
+    #   lon: 9.0
+
+    # - name: UOA
+    #   role: contributor
+    #   logo: UOA.png
+    #   url: https://en.uoa.gr
+    #   country: Greece
+    #   type: research
+    #   lat: 37.9
+    #   lon: 23.7
+
+    # - name: UPC
+    #   role: contributor
+    #   logo: UPC.png
+    #   url: https://www.upc.edu
+    #   country: Spain
+    #   type: research
+    #   lat: 41.4
+    #   lon: 2.1
+
+    # - name: US
+    #   role: contributor
+    #   logo: US.png
+    #   url: https://www.us.es
+    #   country: Spain
+    #   type: research
+    #   lat: 37.4
+    #   lon: -6.0
+
+    # - name: UvA
+    #   role: contributor
+    #   logo: UvA.png
+    #   url: https://www.uva.nl
+    #   country: Netherlands
+    #   type: research
+    #   lat: 52.4
+    #   lon: 4.9
+
+    # - name: VLIZ
+    #   role: contributor
+    #   logo: VLIZ.png
+    #   url: https://www.vliz.be
+    #   country: Belgium
+    #   type: research
+    #   lat: 51.1
+    #   lon: 3.7
+
+    # - name: Walton
+    #   role: contributor
+    #   logo: Walton.png
+    #   url: https://www.waltoninstitute.ie
+    #   country: Ireland
+    #   type: research
+    #   lat: 52.3
+    #   lon: -7.1
+
+    # - name: WODR
+    #   role: contributor
+    #   logo: WODR.png
+    #   url: https://www.wodr.pl
+    #   country: Poland
+    #   type: research
+    #   lat: 52.4
+    #   lon: 16.9

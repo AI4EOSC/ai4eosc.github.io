@@ -4,21 +4,21 @@ import SectionHeader from '../ui/SectionHeader.astro';
 const items = [
   {
     step: '01',
-    title: 'Products',
+    title: 'Products and services',
     iconId: 'products',
-    description: 'Open-source software for training, serving and cataloguing AI models — built for EOSC. Includes DEEPaaS API, OSCAR, CVAT and the AI4EOSC Agents framework.',
+    description: 'Open-source software for training, serving and cataloguing AI models, specially built for EOSC.',
   },
   {
     step: '02',
     title: 'Ecosystem',
     iconId: 'ecosystem',
-    description: 'A network of EU-funded projects and scientific communities that extend and use the platform — from EOSC-ARENA and FLUID-AI to domain-specific research groups across Europe.',
+    description: 'A network of EU-funded projects and scientific communities that extend and use the platform: from EOSC-ARENA and FLUID-AI to domain-specific research groups across Europe.',
   },
   {
     step: '03',
     title: 'Communities',
     iconId: 'gateways',
-    description: 'Domain-specific model catalogs giving researchers direct access to AI tools in their research communities — iMagine for marine science, AI4Life for bio-informatics research, and more.',
+    description: 'Domain-specific model catalogs giving researchers direct access to AI tools in their research communities: iMagine for marine science, AI4Life for bio-informatics research, and more.',
   },
 ];
 
@@ -37,7 +37,7 @@ const icons: Record<string, string> = {
     <div class="section-card">
       <SectionHeader
         title="How AI4EOSC works"
-        subtitle="Three layers working together to bring open AI infrastructure to European research."
+        subtitle="Three pillars working together to bring open AI infrastructure to European research."
       />
       <div class="grid">
         {items.map((item, i) => (
