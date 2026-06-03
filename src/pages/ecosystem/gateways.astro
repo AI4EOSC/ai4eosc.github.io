@@ -31,6 +31,12 @@ const communityIcons: Record<string, string> = {
   astronomy:      `<circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>`,
 };
 
+function linkArrow(url: string): string {
+  return (url.startsWith('http') || url.startsWith('//'))
+    ? `<line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>`
+    : `<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>`;
+}
+
 function gatewayIcon(item: any): string {
   if (item.communitySlug) return communityIcons[communityIconMap[item.communitySlug]] ?? communityIcons.earth;
   return communityIcons.earth;
@@ -259,8 +265,16 @@ const gatewayIds = JSON.stringify(items.map((i: any) => i.slug));
                             <span class="meta-lbl">EU Project</span>
                             <a class="meta-val meta-project-link" href={`/ecosystem/projects${item.projectId ? '#' + item.projectId : ''}`}>
                               {item.euProject}
-                              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={linkArrow(`/ecosystem/projects`)} />
                             </a>
+                          </div>
+                        )}
+                        {item.operatedBy && item.operatedBy.length > 0 && (
+                          <div class="meta-item">
+                            <span class="meta-lbl">Operated by</span>
+                            {item.operatedBy.map((org: string) => (
+                              <span class="meta-val">{org}</span>
+                            ))}
                           </div>
                         )}
                         <div class="meta-item">

@@ -41,6 +41,12 @@ const icons: Record<string, string> = {
   astronomy:      `<circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>`,
 };
 
+function linkArrow(url: string): string {
+  return (url.startsWith('http') || url.startsWith('//'))
+    ? `<line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>`
+    : `<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>`;
+}
+
 const firstSlug: string = items[0]?.slug ?? '';
 const communityIds = JSON.stringify(items.map((i: any) => i.slug));
 ---
@@ -154,8 +160,21 @@ const communityIds = JSON.stringify(items.map((i: any) => i.slug));
                           <span class="meta-lbl">Gateway</span>
                           <a class="meta-val meta-project-link" href={`/ecosystem/gateways${item.gatewaySlug ? '#' + item.gatewaySlug : ''}`}>
                             {item.via}
-                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={linkArrow(`/ecosystem/gateways`)} />
                           </a>
+                        </div>
+                      )}
+                      {item.researchInfrastructures && item.researchInfrastructures.length > 0 && (
+                        <div class="meta-item">
+                          <span class="meta-lbl">Research infrastructures</span>
+                          <div class="meta-ri-list">
+                            {item.researchInfrastructures.map((ri: { name: string; link: string }) => (
+                              <a class="meta-val meta-project-link" href={ri.link} target="_blank" rel="noopener">
+                                {ri.name}
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={linkArrow(ri.link)} />
+                              </a>
+                            ))}
+                          </div>
                         </div>
                       )}
                     </div>
@@ -431,7 +450,7 @@ const communityIds = JSON.stringify(items.map((i: any) => i.slug));
     display: flex; flex-direction: column; gap: 20px;
   }
 
-  .meta-block { display: flex; flex-direction: column; gap: 16px; flex: 1; }
+  .meta-block { display: flex; flex-direction: column; gap: 16px; }
 
   .meta-item { display: flex; flex-direction: column; gap: 4px; }
   .meta-lbl {
@@ -444,6 +463,8 @@ const communityIds = JSON.stringify(items.map((i: any) => i.slug));
     text-decoration: none; transition: color 0.15s;
   }
   .meta-project-link:hover { color: white; }
+
+  .meta-ri-list { display: flex; flex-direction: column; gap: 6px; }
 
   /* Buttons */
   .pdr-actions { display: flex; flex-direction: column; gap: 6px; margin-top: auto; }

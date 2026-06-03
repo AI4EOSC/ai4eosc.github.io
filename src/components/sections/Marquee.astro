@@ -1,41 +1,28 @@
 ---
-import { getCollection } from 'astro:content';
 import partnersData from '../../data/partners.yml';
-
-const projectEntries = await getCollection('projects');
-
-// partners.yml is a lookup: name → { logo, url }
-const partnerMeta = new Map(
-  (partnersData.items as Array<{ name: string; logo?: string; url?: string }>)
-    .map(p => [p.name, p])
-);
-
-// Collect every unique partner name from all projects (lead + partners lists)
-const allNames = new Set<string>();
-for (const project of projectEntries) {
-  if (project.data.lead) allNames.add(project.data.lead);
-  for (const p of project.data.partners ?? []) allNames.add(p);
-}
 
 const logoUrls = import.meta.glob<string>(
   '../../assets/logos/*',
   { eager: true, query: '?url', import: 'default' }
 );
 
-// Resolve each name: check partners.yml for logo + url
-const items: Array<{ name: string; src?: string; url?: string }> = Array.from(allNames)
-  .sort((a, b) => a.localeCompare(b))
-  .map(name => {
-    const meta = partnerMeta.get(name);
-    const src = meta?.logo ? (logoUrls[`../../assets/logos/${meta.logo}`] ?? '') : '';
-    return { name, src: src || undefined, url: meta?.url };
-  });
+type PartnerItem = { name: string; logo?: string; url?: string };
+
+const items: Array<{ name: string; src?: string; url?: string }> =
+  (partnersData.items as PartnerItem[])
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map(p => {
+      const src = p.logo ? (logoUrls[`../../assets/logos/${p.logo}`] ?? '') : '';
+      return { name: p.name, src: src || undefined, url: p.url };
+    });
+
+const duration = Math.round(items.length * 2.5);
 ---
 
 <section class="marquee" id="partners">
   <p class="label">Powered by leading research institutions and organizations across Europe</p>
   <div class="track-wrap">
-    <div class="track">
+    <div class="track" style={`animation-duration: ${duration}s`}>
       {[...items, ...items].map((item, i) => (
         item.src ? (
           <a
@@ -113,7 +100,7 @@ const items: Array<{ name: string; src?: string; url?: string }> = Array.from(al
     gap: 60px;
     width: max-content;
     padding: 0 28px;
-    animation: marquee-scroll 90s linear infinite;
+    animation: marquee-scroll linear infinite;
   }
 
   .logo-link {

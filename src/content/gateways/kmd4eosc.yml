@@ -14,7 +14,6 @@ tools:
     - Model deployment
     - Inferece via OSCAR
     - Integrated storage
-logo: kmd4eosc.png
+logo: KMD4EOSC.svg
 url: https://kmd4eosc.cloud.ai4eosc.eu/
 slug: kmd4eosc
-

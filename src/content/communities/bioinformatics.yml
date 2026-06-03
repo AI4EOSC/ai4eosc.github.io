@@ -10,4 +10,5 @@ tools:
     - Image segmentation (cells, nuclei)
     - Image denoising
     - BioImage.IO
+researchInfrastructures: []
 slug: bioinformatics

@@ -48,7 +48,7 @@ The platform's own products (AI4EOSC Platform, LLM, Agents…).
 EU-funded projects that originated or extend the platform.
 
 - **Order**: automatic by end year extracted from the `period` field (e.g. `"2022 – 2024"` → sorts by 2024). Ongoing projects go last.
-- **Add**: copy `_template.yml`. The `lead` field and the `partners` array must use the exact names defined in `src/data/partners.yml` (see Partners section below).
+- **Add**: copy `_template.yml`. The `lead` field and the `partners` array are informational — they do not affect which logos appear on the site.
 
 #### Communities — `src/content/communities/*.yml`
 
@@ -151,9 +151,7 @@ items:
     lon: -3.7
 ```
 
-**Important**: having a partner defined here does not make it appear on the site. Only partners referenced in the `lead` or `partners` fields of a project file (`src/content/projects/`) are actually used. The rest are ignored. Institution counts, country stats, and the logo marquee are all computed by cross-referencing both sources.
-
-To show a new partner's logo in the marquee: (1) place the logo file in `src/assets/logos/`, add the partner to `partners.yml` referencing that filename, and (2) include their name in `lead` / `partners` in the relevant project file.
+**Important**: every active entry in this file appears on the site — in the partner table, the logo marquee, and the map. Commented-out entries are ignored. To add a new partner: place their logo in `src/assets/logos/`, uncomment or add their entry in `partners.yml` with the `logo` filename, and set the appropriate `role`.
 
 ---
 

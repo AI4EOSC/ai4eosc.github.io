@@ -16,3 +16,6 @@ gatewaySlug: gateway-slug # links to the gateway detail
 tools:
     - "Tool 1"
     - "Tool 2"
+researchInfrastructures:
+    - name: "Infrastructure Name"
+      link: https://example.eu

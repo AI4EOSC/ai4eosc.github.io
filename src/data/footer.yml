@@ -1,9 +1,11 @@
 brand:
     name: AI4EOSC
-    description: A shared foundation for deploying, extending, and accessing research-grade AI services in the EOSC.
+    description: An open ecosystem and collaboration for deploying, extending, and accessing research-grade AI services across the European Open Science Cloud.
 columns:
     - title: Navigate
       links:
+          - label: Home
+            href: /
           - label: About
             href: /about
           - label: Products
@@ -24,6 +26,8 @@ columns:
             href: /support/contact
           - label: FAQ
             href: /support/faq
+          - label: Helpdesk
+            href: https://helpdesk.cloud.ai4eosc.eu
           - label: Documentation
             href: https://docs.ai4eosc.eu
 bottom:

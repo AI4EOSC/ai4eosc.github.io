@@ -7,7 +7,6 @@ import CtaFinal from '../components/ui/CtaFinal.astro';
 import EuropeMap from '../components/ui/EuropeMap.astro';
 import about from '../data/about.yml';
 import partners from '../data/partners.yml';
-import { getCollection } from 'astro:content';
 import euLogo from '../assets/en-v-funded-by-the-eu_black-outline.png';
 
 const logoUrls = import.meta.glob<string>(
@@ -16,21 +15,12 @@ const logoUrls = import.meta.glob<string>(
 );
 
 type PartnerMeta = { name: string; role?: string; logo?: string; url?: string; lat?: number; lon?: number; country?: string; type?: string };
-const partnerMeta = new Map((partners.items as PartnerMeta[]).map(p => [p.name, p]));
 
-const projectEntries = await getCollection('projects');
-const allNames = new Set<string>();
-for (const e of projectEntries) {
-  if (e.data.lead) allNames.add(e.data.lead);
-  for (const p of e.data.partners ?? []) allNames.add(p);
-}
-
-const allPartners = Array.from(allNames)
-  .sort((a, b) => a.localeCompare(b))
-  .map(name => {
-    const m = partnerMeta.get(name);
-    const raw = m?.logo ? (logoUrls[`../assets/logos/${m.logo}`] ?? '') : '';
-    return { name, role: m?.role ?? 'contributor', src: raw || undefined, url: m?.url, lat: m?.lat, lon: m?.lon, country: m?.country, type: m?.type };
+const allPartners = (partners.items as PartnerMeta[])
+  .sort((a, b) => a.name.localeCompare(b.name))
+  .map(m => {
+    const raw = m.logo ? (logoUrls[`../assets/logos/${m.logo}`] ?? '') : '';
+    return { name: m.name, role: m.role ?? 'contributor', src: raw || undefined, url: m.url, lat: m.lat, lon: m.lon, country: m.country, type: m.type };
   });
 
 const leaderPartner       = allPartners.find(p => p.role === 'leader');
@@ -451,11 +441,11 @@ const cta = {
   .tl-last .tl-year { color: var(--color-primary-600); }
 
   .tl-phase {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.07em;
-    color: var(--color-neutral-300);
+    color: var(--color-neutral-400);
     text-align: right;
     line-height: 1.2;
   }
@@ -527,7 +517,6 @@ const cta = {
     color: var(--color-neutral-900);
     margin: 0;
     line-height: 1.25;
-    letter-spacing: -0.01em;
   }
 
   .tl-last .tl-head h4 { color: var(--color-primary-700); }
@@ -602,7 +591,6 @@ const cta = {
     font-weight: 650;
     color: var(--color-neutral-900);
     margin: 0 0 10px;
-    letter-spacing: -0.01em;
     line-height: 1.25;
   }
 
@@ -834,7 +822,7 @@ const cta = {
     font-family: var(--font-headings);
     font-size: 19px; font-weight: 650;
     color: var(--color-neutral-900);
-    margin: 0 0 10px; letter-spacing: -0.01em; line-height: 1.25;
+    margin: 0 0 10px; line-height: 1.25;
   }
 
   .principle-item p {

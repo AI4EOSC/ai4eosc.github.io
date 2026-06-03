@@ -59,6 +59,10 @@ const communities = defineCollection({
 		viaUrl: z.url().optional(),
 		gatewaySlug: z.string().optional(),
 		tools: z.array(z.string()).optional(),
+		researchInfrastructures: z.array(z.object({
+			name: z.string(),
+			link: z.url(),
+		})).optional(),
 		slug: z.string(),
 	}),
 });
