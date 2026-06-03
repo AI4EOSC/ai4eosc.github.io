@@ -71,15 +71,12 @@ const sortedStories = stories
   /* Image: full-width bleed, no radius, flush to top */
   .image {
     width: 100%;
-    height: 150px;
+    aspect-ratio: 3 / 1;
     flex-shrink: 0;
     position: relative;
     overflow: hidden;
     border-bottom: 1px solid var(--card-border);
-    background:
-      radial-gradient(ellipse 50% 55% at 88% 88%, rgba(15, 45, 52, 0.38) 0%, transparent 60%),
-      radial-gradient(ellipse 55% 38% at 50% -5%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
-      linear-gradient(148deg, #253d42 0%, #336e78 40%, #3a7d87 70%, #4a8d97 100%);
+    background: #1d3238;
   }
 
   .image img {
@@ -88,8 +85,15 @@ const sortedStories = stories
     width: 100%;
     height: 100%;
     object-fit: cover;
-    mix-blend-mode: luminosity;
-    opacity: 0.55;
+    opacity: 0.82;
+    filter: grayscale(20%) brightness(0.70);
+    transition: opacity 0.45s ease, transform 0.5s ease, filter 0.45s ease;
+  }
+
+  .item:hover .image img {
+    opacity: 1;
+    transform: scale(1.04);
+    filter: grayscale(0%) brightness(0.92);
   }
 
   /* Body carries the horizontal padding */
