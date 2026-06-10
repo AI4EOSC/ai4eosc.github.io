@@ -57,7 +57,7 @@ export function whiteLogoSvg(): string {
 // Left whitespace ≈ 13.9 %  |  Top whitespace ≈ 25.7 %
 const PAGE_LOGO_W = 680;
 const PAGE_LOGO_H = Math.round(PAGE_LOGO_W * (276.44 / 841.89)); // ~223 px
-const PAGE_LOGO_LEFT = Math.max(0, 72 - Math.round(PAGE_LOGO_W * 0.139)); // ~0 px  (visual at ~95px from edge)
+const PAGE_LOGO_LEFT = Math.max(0, 0);
 const PAGE_LOGO_TOP = Math.max(0, 55 - Math.round(PAGE_LOGO_H * 0.257)); // ~0 px  (visual content ~57px from top)
 
 const STORY_LOGO_W = 380;
@@ -339,7 +339,7 @@ export function buildPageOgElement(title: string, subtitle: string): object {
 							letterSpacing: "-1px",
 							color: "#ffffff",
 							marginBottom: "14px",
-							maxWidth: "580px",
+							maxWidth: "585px",
 						},
 						children: title,
 					},
@@ -353,7 +353,7 @@ export function buildPageOgElement(title: string, subtitle: string): object {
 							lineHeight: "1.4",
 							color: "rgba(255,255,255,0.58)",
 							marginBottom: "34px",
-							maxWidth: "500px",
+							maxWidth: "525px",
 						},
 						children: subtitle,
 					},

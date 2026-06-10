@@ -12,6 +12,8 @@ const PAGES: { page: string; title: string; subtitle: string; theme: ThemeKey }[
   { page: 'communities', title: 'Scientific Communities', subtitle: 'Research domains using AI4EOSC across Europe',            theme: 'pink'  },
   { page: 'contact',     title: 'Get in touch',           subtitle: 'Contact the AI4EOSC team',                                theme: 'blue'  },
   { page: 'faq',         title: 'FAQ',                    subtitle: 'Frequently asked questions about the platform',           theme: 'pink'  },
+  { page: 'privacy-policy', title: 'Privacy Policy',      subtitle: 'How AI4EOSC collects, uses and protects your personal data', theme: 'black' },
+  { page: 'acceptable-use-policy', title: 'Acceptable Use Policy', subtitle: 'Conditions governing access to and use of AI4EOSC services', theme: 'black' },
 ];
 
 export const getStaticPaths: GetStaticPaths = () =>
