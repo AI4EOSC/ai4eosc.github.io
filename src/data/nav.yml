@@ -33,6 +33,10 @@ links:
             description: Frequently asked questions
             href: /support/faq
             hoverGradient: pink
+          - label: Community
+            description: Engage with the AI community in the EOSC
+            href: https://community.cloud.ai4eosc.eu/
+            hoverGradient: green
           - label: Helpdesk
             description: Get support from our team
             href: https://helpdesk.cloud.ai4eosc.eu/

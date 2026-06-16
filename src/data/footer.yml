@@ -26,6 +26,8 @@ columns:
             href: /support/contact
           - label: FAQ
             href: /support/faq
+          - label: Community
+            href: https://community.cloud.ai4eosc.eu/
           - label: Helpdesk
             href: https://helpdesk.cloud.ai4eosc.eu
           - label: Documentation
