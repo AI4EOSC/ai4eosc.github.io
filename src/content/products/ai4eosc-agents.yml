@@ -10,7 +10,7 @@ features:
     - GenAI
     - Scientific assistant
     - EOSC-ARENA
-visitLabel: Explore product
+visitLabel: Visit EOSC-ARENA
 visitHref: https://arena.ai4eosc.eu
 
 order: 3
