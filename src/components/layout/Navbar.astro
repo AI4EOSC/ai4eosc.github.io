@@ -1,6 +1,12 @@
 ---
 import nav from '../../data/nav.yml';
 import logoSrc from '../../assets/logos/AI4-horizontal-light.svg?url';
+
+function getCols(n: number): number {
+  if (n <= 4) return n;
+  const rows = Math.ceil(n / 4);
+  return Math.ceil(n / rows);
+}
 ---
 
 <header class="fixed top-5 left-1/2 -translate-x-1/2 w-[calc(100%-72px)] sm:w-[calc(100%-80px)] xl:w-[min(1260px,calc(100%-40px))] z-[200]">
@@ -59,7 +65,7 @@ import logoSrc from '../../assets/logos/AI4-horizontal-light.svg?url';
           <div
             class="panel"
             data-panel={link.label}
-            style={`grid-template-columns: repeat(${link.dropdown?.length ?? 1}, minmax(0, 1fr));`}
+            style={`--cols: ${getCols(link.dropdown?.length ?? 1)};`}
           >
             {link.dropdown?.map((item) => (
               <a
@@ -181,7 +187,7 @@ import logoSrc from '../../assets/logos/AI4-horizontal-light.svg?url';
   }
 
   .nav.open .nav-panel {
-    max-height: 300px;
+    max-height: 500px;
     opacity: 1;
   }
 
@@ -195,18 +201,20 @@ import logoSrc from '../../assets/logos/AI4-horizontal-light.svg?url';
 
   .panel {
     display: none;
+    flex-wrap: wrap;
     gap: 10px;
     padding: 12px 16px 16px;
   }
 
   .nav[data-active="Ecosystem"] .panel[data-panel="Ecosystem"],
   .nav[data-active="Support"]   .panel[data-panel="Support"] {
-    display: grid;
+    display: flex;
   }
 
   /* ── Panel items ────────────────────────────────────── */
   .panel-item {
     display: block;
+    flex: 1 0 calc(100% / var(--cols) - 10px);
     padding: 10px 10px 10px 20px;
     border-radius: 14px;
     text-decoration: none;

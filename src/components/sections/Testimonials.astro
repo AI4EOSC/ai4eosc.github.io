@@ -1,6 +1,12 @@
 ---
 import data from '../../data/testimonials.yml';
 import SectionHeader from '../ui/SectionHeader.astro';
+
+const avatarPalette = [
+  { bg: 'var(--color-primary-100)',   color: 'var(--color-primary-700)'   },
+  { bg: 'var(--color-secondary-100)', color: 'var(--color-secondary-700)' },
+  { bg: '#dbeafe',                    color: '#1d4ed8'                    },
+];
 ---
 
 <section>
@@ -18,7 +24,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
             </svg>
             <p class="quote">{item.quote}</p>
             <div class="author">
-              <div class="avatar">{item.initials}</div>
+              <div class="avatar" style={`background: ${avatarPalette[i % 3].bg}; color: ${avatarPalette[i % 3].color};`}>{item.initials}</div>
               <div class="author-info">
                 <span class="name">{item.name}</span>
                 <span class="role">{item.role}</span>
@@ -88,8 +94,6 @@ import SectionHeader from '../ui/SectionHeader.astro';
     font-weight: 700;
     letter-spacing: 0.03em;
     flex-shrink: 0;
-    background: var(--color-neutral-100);
-    color: var(--color-neutral-500);
   }
 
   .author-info {

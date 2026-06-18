@@ -5,8 +5,8 @@ items:
       url: https://www.ustav.sk
       country: Slovakia
       type: research
-      lat: 48.1
-      lon: 17.1
+      lat: 48.17
+      lon: 17.07
 
     - name: INFN
       role: core
@@ -14,8 +14,8 @@ items:
       url: https://www.infn.it
       country: Italy
       type: research
-      lat: 41.9
-      lon: 12.5
+      lat: 41.90
+      lon: 12.49
 
     - name: KIT
       role: core
@@ -23,8 +23,8 @@ items:
       url: https://www.kit.edu
       country: Germany
       type: research
-      lat: 49.0
-      lon: 9.0
+      lat: 49.01
+      lon: 8.40
 
     - name: LIP
       role: core
@@ -32,8 +32,8 @@ items:
       url: https://www.lip.pt
       country: Portugal
       type: research
-      lat: 38.7
-      lon: -9.1
+      lat: 38.75
+      lon: -9.16
 
     - name: Predictia
       role: contributor
@@ -41,8 +41,8 @@ items:
       url: https://predictia.es
       country: Spain
       type: industry
-      lat: 43.5
-      lon: -3.8
+      lat: 43.46
+      lon: -3.81
 
     - name: PSNC
       role: core
@@ -50,8 +50,8 @@ items:
       url: https://www.pcss.pl
       country: Poland
       type: infrastructure
-      lat: 52.4
-      lon: 16.9
+      lat: 52.41
+      lon: 16.93
 
     - name: STUBA
       role: contributor
@@ -59,8 +59,8 @@ items:
       url: https://www.stuba.sk
       country: Slovakia
       type: research
-      lat: 48.1
-      lon: 17.1
+      lat: 48.15
+      lon: 17.11
 
     - name: CSIC
       role: leader
@@ -68,8 +68,8 @@ items:
       url: https://www.csic.es
       country: Spain
       type: research
-      lat: 40.4
-      lon: -3.7
+      lat: 40.44
+      lon: -3.69
 
     - name: UPV
       role: core
@@ -77,8 +77,8 @@ items:
       url: https://www.upv.es
       country: Spain
       type: research
-      lat: 39.5
-      lon: -0.4
+      lat: 39.48
+      lon: -0.34
 
     # - name: ARIADNE
     #   role: contributor

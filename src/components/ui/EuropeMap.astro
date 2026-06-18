@@ -93,32 +93,48 @@ const countries = world.features
   .map((f: any) => ({ d: geomToD(f.geometry) }))
   .filter((c: any) => c.d.length > 0);
 
-// ── Partner dots (grouped by proximity) ───────────────
-const GRID = 10;
-const snap = (v: number) => Math.round(v / GRID) * GRID;
+// ── Partner dots (proximity clustering) ───────────────
+// Partners whose projected SVG positions are within CLUSTER_DIST px are merged
+const CLUSTER_DIST = 24;
 
 type PartnerRef = { name: string; url?: string; role?: string };
 type Loc = { key: string; cx: number; cy: number; pctX: number; pctY: number; partners: PartnerRef[]; hasLeader: boolean };
-const locMap = new Map<string, Loc>();
+
+const clusters: (Loc & { _sumX: number; _sumY: number })[] = [];
 
 for (const p of partners) {
   if (p.lat == null || p.lon == null) continue;
   const [rawX, rawY] = project(p.lon, p.lat);
-  const cx = Math.round(rawX);
-  const cy = Math.round(rawY);
-  const key = `${snap(cx)}-${snap(cy)}`;
-  if (!locMap.has(key)) {
-    locMap.set(key, { key, cx, cy,
-      pctX: parseFloat((cx / W * 100).toFixed(2)),
-      pctY: parseFloat((cy / H * 100).toFixed(2)),
-      partners: [],
-      hasLeader: false,
-    });
+  const px = Math.round(rawX);
+  const py = Math.round(rawY);
+
+  let nearest: typeof clusters[0] | null = null;
+  let nearestDist = Infinity;
+  for (const c of clusters) {
+    const d = Math.hypot(c.cx - px, c.cy - py);
+    if (d < nearestDist) { nearestDist = d; nearest = c; }
   }
-  locMap.get(key)!.partners.push({ name: p.name, url: p.url, role: p.role });
-  if (p.role === 'leader') locMap.get(key)!.hasLeader = true;
+
+  if (nearest && nearestDist < CLUSTER_DIST) {
+    nearest.partners.push({ name: p.name, url: p.url, role: p.role });
+    if (p.role === 'leader') nearest.hasLeader = true;
+    nearest._sumX += px;
+    nearest._sumY += py;
+    const n = nearest.partners.length;
+    nearest.cx = Math.round(nearest._sumX / n);
+    nearest.cy = Math.round(nearest._sumY / n);
+    nearest.pctX = parseFloat((nearest.cx / W * 100).toFixed(2));
+    nearest.pctY = parseFloat((nearest.cy / H * 100).toFixed(2));
+  } else {
+    clusters.push({ key: `${px}-${py}`, cx: px, cy: py,
+      pctX: parseFloat((px / W * 100).toFixed(2)),
+      pctY: parseFloat((py / H * 100).toFixed(2)),
+      partners: [{ name: p.name, url: p.url, role: p.role }],
+      hasLeader: p.role === 'leader',
+      _sumX: px, _sumY: py });
+  }
 }
-const locations = Array.from(locMap.values());
+const locations: Loc[] = clusters;
 
 // ── Graph edges (MST — Prim's algorithm) ──────────────
 type Edge = { x1: number; y1: number; x2: number; y2: number; keyA: string; keyB: string };
@@ -248,13 +264,14 @@ const byType = {
       <g class="packets" aria-hidden="true">
         {allEdges.map(e => (
           <>
-            <path id={e.id} d={`M${e.x1},${e.y1}L${e.x2},${e.y2}`} fill="none" stroke="none"/>
+            <path id={e.id} d={`M0,0 L${e.x2-e.x1},${e.y2-e.y1}`} fill="none" stroke="none"/>
             <circle
+              cx={e.x1} cy={e.y1}
               r="2.5"
               class="packet"
               filter="url(#map-pkt-glow)"
             >
-              <animateMotion dur={`${e.dur}s`} begin={`-${e.offset}s`} repeatCount="indefinite">
+              <animateMotion additive="sum" dur={`${e.dur}s`} begin={`-${e.offset}s`} repeatCount="indefinite">
                 <mpath href={`#${e.id}`}/>
               </animateMotion>
             </circle>
@@ -589,7 +606,10 @@ const byType = {
     font-weight: 600;
     letter-spacing: -0.04em;
     line-height: 1;
-    color: var(--color-primary-700);
+    background: linear-gradient(120deg, var(--color-primary-700) 0%, var(--color-primary-500) 65%, var(--color-secondary-400) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .stat-lbl {
@@ -620,9 +640,12 @@ const byType = {
     font-family: var(--font-headings);
     font-size: 20px;
     font-weight: 600;
-    color: var(--color-primary-600);
     min-width: 24px;
     text-align: right;
+    background: linear-gradient(120deg, var(--color-primary-700) 0%, var(--color-primary-500) 65%, var(--color-secondary-400) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .bd-lbl {
@@ -639,43 +662,46 @@ const byType = {
 
     .stats-side {
       flex-direction: row;
-      align-items: flex-start;
-      justify-content: space-around;
-      padding: 18px 24px;
+      align-items: stretch;
+      padding: 0;
       gap: 0;
     }
-
-    .stat-item {
-      flex: 1;
-      padding: 12px 0;
-      align-items: center;
-      text-align: center;
-    }
-
-    .stat-val { font-size: 40px; }
-    .stat-lbl { font-size: 12px; }
 
     .stat-divider {
       width: 1px;
       height: auto;
       align-self: stretch;
-      margin: 12px 0;
+      margin: 0;
       flex-shrink: 0;
     }
 
-    .stat-breakdown {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
+    .stat-item {
+      flex: 1;
+      padding: 20px 20px;
+      align-items: center;
+      text-align: center;
       justify-content: center;
-      gap: 6px 10px;
-      margin-top: 8px;
-      padding-top: 8px;
     }
 
-    .bd-row { gap: 3px; }
-    .bd-val { font-size: 14px; min-width: auto; }
-    .bd-lbl { font-size: 11px; }
+    .stat-val { font-size: 44px; }
+    .stat-lbl { font-size: 13px; letter-spacing: 0.05em; }
+
+    .stat-breakdown {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      margin-top: 12px;
+      padding-top: 12px;
+    }
+
+    .bd-row {
+      gap: 6px;
+      justify-content: center;
+    }
+
+    .bd-val { font-size: 15px; min-width: auto; text-align: center; }
+    .bd-lbl { font-size: 12px; }
   }
 
   @media (max-width: 640px) {
@@ -694,12 +720,13 @@ const byType = {
       transform: translateX(-50%);
     }
 
-    .stats-side { padding: 14px 16px; }
-    .stat-val   { font-size: 30px; }
+    .stats-side { padding: 0; }
+    .stat-item  { padding: 16px 14px; }
+    .stat-val   { font-size: 36px; }
     .stat-lbl   { font-size: 11px; }
 
-    .stat-breakdown { gap: 6px; }
-    .bd-val { font-size: 13px; }
-    .bd-lbl { font-size: 10px; }
+    .stat-breakdown { gap: 4px; margin-top: 10px; padding-top: 10px; }
+    .bd-val { font-size: 14px; }
+    .bd-lbl { font-size: 11px; }
   }
 </style>
