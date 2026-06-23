@@ -24,15 +24,21 @@ const sortedStories = stories
         {sortedStories.map((story, i) => (
           <a
             href={story.data.externalUrl ?? `/stories/${story.id}`}
-            class={`item reveal${story.data.image ? ' has-image' : ''}`}
+            class="item reveal has-image"
             style={`transition-delay: ${i * 80}ms`}
             {...(story.data.externalUrl ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
           >
-            {story.data.image && (
-              <div class="image">
-                <img src={story.data.image} alt="" loading="lazy" />
-              </div>
-            )}
+            <div class="image">
+              {story.data.image
+                ? <img src={story.data.image} alt="" loading="lazy" />
+                : <div class="placeholder" aria-hidden="true">
+                    <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.2"/>
+                      <path d="M7 8h10M7 12h10M7 16h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+              }
+            </div>
             <div class="body">
               <div class="meta">
                 <span class="tag">{story.data.type}</span>
@@ -96,6 +102,27 @@ const sortedStories = stories
     filter: grayscale(0%) brightness(0.92);
   }
 
+  .placeholder {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(0, 135, 146, 0.2) 1px, transparent 1px);
+    background-size: 20px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .placeholder-icon {
+    width: 44px;
+    height: 44px;
+    color: rgba(0, 135, 146, 0.5);
+    transition: color 0.45s ease;
+  }
+
+  .item:hover .placeholder-icon {
+    color: rgba(0, 135, 146, 0.75);
+  }
+
   /* Body carries the horizontal padding */
   .body {
     display: flex;
@@ -106,9 +133,6 @@ const sortedStories = stories
 
   .item + .item .body { padding-left: 31px; border-left: 1px solid var(--card-border); }
   .item:last-child .body { padding-right: 0; }
-
-  /* No top padding on body when there's no image */
-  .item:not(.has-image) .body { padding-top: 28px; }
 
   .meta {
     display: flex;

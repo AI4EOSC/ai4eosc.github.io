@@ -6,9 +6,13 @@ import SectionHeader from '../../components/ui/SectionHeader.astro';
 import { getCollection } from 'astro:content';
 
 const stories = await getCollection('stories');
-const sorted = stories.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const sorted = stories.toSorted((a, b) => +b.data.date - +a.data.date);
 
-const types = ['All', ...Array.from(new Set(sorted.map(s => s.data.type))).sort()];
+const types = ['All', ...[...new Set(sorted.map(s => s.data.type))].sort()];
+
+const totalCount = sorted.length;
+const newsCount  = sorted.filter(s => s.data.type === 'News').length;
+const videoCount = sorted.filter(s => s.data.type === 'Video').length;
 ---
 
 <Layout title="Stories — AI4EOSC Initiative" ogImage="/og/stories.png">
@@ -17,7 +21,13 @@ const types = ['All', ...Array.from(new Set(sorted.map(s => s.data.type))).sort(
     breadcrumb="Stories"
     title="Stories from the ecosystem"
     description="Case studies, research highlights and updates from the scientific communities, projects and developers building on AI4EOSC."
-  />
+  >
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-val">{totalCount}<em>+</em></span><span class="hstat-lbl">Total stories</span></div>
+      <div class="hstat"><span class="hstat-val">{newsCount}<em>+</em></span><span class="hstat-lbl">News articles</span></div>
+      <div class="hstat"><span class="hstat-val">{videoCount}<em>+</em></span><span class="hstat-lbl">Videos</span></div>
+    </div>
+  </PageHero>
 
   <div class="section-label"><div class="container">All stories</div></div>
   <div class="container">
@@ -29,18 +39,41 @@ const types = ['All', ...Array.from(new Set(sorted.map(s => s.data.type))).sort(
 
       <div x-data={`{
         filter: 'All',
+        page: 1,
+        perPage: 9,
+        items: [],
+        get filtered() {
+          return this.items.filter(el => this.filter === 'All' || el.dataset.type === this.filter);
+        },
+        get totalPages() {
+          return Math.max(1, Math.ceil(this.filtered.length / this.perPage));
+        },
+        get pages() {
+          return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+        },
         init() {
-          this.$watch('filter', () => this.$nextTick(() => this.syncBorders()));
-          this.$nextTick(() => this.syncBorders());
+          this.items = [...this.$el.querySelectorAll('.item')];
+          this.$watch('filter', () => { this.page = 1; this.$nextTick(() => this.render()); });
+          this.$nextTick(() => this.render());
         },
         setFilter(f) { this.filter = f; },
-        syncBorders() {
-          const all = Array.from(this.$el.querySelectorAll('.item'));
-          const visible = all.filter(el => el.style.display !== 'none');
-          all.forEach(el => el.classList.remove('is-row-start', 'is-new-row'));
+        goTo(p) {
+          this.page = p;
+          this.$el.closest('.section-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          this.$nextTick(() => this.render());
+        },
+        render() {
+          const start = (this.page - 1) * this.perPage;
+          const visible = this.filtered.slice(start, start + this.perPage);
+          const visibleSet = new Set(visible);
+          this.items.forEach(el => {
+            el.style.display = visibleSet.has(el) ? '' : 'none';
+            el.classList.remove('is-col-sep', 'is-col-end', 'is-row-sep');
+          });
           visible.forEach((el, i) => {
-            if (i % 3 === 0) el.classList.add('is-row-start');
-            if (i >= 3)      el.classList.add('is-new-row');
+            el.classList.toggle('is-col-sep', i % 3 !== 0);
+            el.classList.toggle('is-col-end', i % 3 === 2);
+            el.classList.toggle('is-row-sep', i >= 3);
           });
         }
       }`}>
@@ -69,16 +102,22 @@ const types = ['All', ...Array.from(new Set(sorted.map(s => s.data.type))).sort(
           {sorted.map((story) => (
             <a
               href={story.data.externalUrl ?? `/stories/${story.id}`}
-              class={`item${story.data.image ? ' has-image' : ''}`}
-              x-show={`filter === 'All' || filter === '${story.data.type}'`}
-              x-cloak
+              class="item has-image"
+              data-type={story.data.type}
+              style="display:none"
               {...(story.data.externalUrl ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
             >
-              {story.data.image && (
-                <div class="image">
-                  <img src={story.data.image} alt="" loading="lazy" />
-                </div>
-              )}
+              <div class="image">
+                {story.data.image
+                  ? <img src={story.data.image} alt="" loading="lazy" />
+                  : <div class="placeholder" aria-hidden="true">
+                      <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.2"/>
+                        <path d="M7 8h10M7 12h10M7 16h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                      </svg>
+                    </div>
+                }
+              </div>
               <div class="body">
                 <div class="meta">
                   <span class="tag">{story.data.type}</span>
@@ -93,6 +132,30 @@ const types = ['All', ...Array.from(new Set(sorted.map(s => s.data.type))).sort(
               </div>
             </a>
           ))}
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" x-show="totalPages > 1" x-cloak>
+          <button
+            class="page-btn"
+            x-on:click="goTo(page - 1)"
+            x-bind:disabled="page === 1"
+            aria-label="Previous page"
+          >←</button>
+          <template x-for="p in pages" :key="p">
+            <button
+              class="page-btn"
+              x-bind:class="{ 'is-active': p === page }"
+              x-on:click="goTo(p)"
+              x-text="p"
+            ></button>
+          </template>
+          <button
+            class="page-btn"
+            x-on:click="goTo(page + 1)"
+            x-bind:disabled="page === totalPages"
+            aria-label="Next page"
+          >→</button>
         </div>
 
       </div>
@@ -152,25 +215,56 @@ const types = ['All', ...Array.from(new Set(sorted.map(s => s.data.type))).sort(
     filter: grayscale(0%) brightness(0.92);
   }
 
+  .placeholder {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(0, 135, 146, 0.22) 1px, transparent 1px);
+    background-size: 20px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .placeholder-icon {
+    width: 44px;
+    height: 44px;
+    color: rgba(0, 135, 146, 0.5);
+    transition: color 0.45s ease;
+  }
+
+  .item:hover .placeholder-icon {
+    color: rgba(0, 135, 146, 0.75);
+  }
+
+  /* ── Separators (set by render()) ──────────────────── */
+  /*
+    Col 1: left 0  / right 28  → 28px total
+    Col 2: left 28 / right 28  → 56px total  (+ 1px visual line via background-image)
+    Col 3: left 28 / right 0   → 28px total  (+ 1px visual line via background-image)
+    All three have equal content width. The separator uses background-image (no layout impact).
+  */
+  .item.is-col-sep .body {
+    padding-left: 28px;
+    padding-right: 28px;
+    background-image: linear-gradient(to right, var(--card-border) 1px, transparent 1px);
+  }
+
+  .item.is-col-end .body {
+    padding-left: 28px;
+    padding-right: 0;
+  }
+
+  .item.is-row-sep {
+    border-top: 1px solid var(--card-border);
+  }
+
   /* ── Body ───────────────────────────────────────────── */
   .body {
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding: 24px 32px 28px 0;
+    padding: 24px 28px 28px 0;
   }
-
-  .item:not(.is-row-start) .body {
-    padding-left: 31px;
-    border-left: 1px solid var(--card-border);
-  }
-
-  .item.is-new-row {
-    border-top: 1px solid var(--card-border);
-  }
-
-  .item:last-child .body { padding-right: 0; }
-  .item:not(.has-image) .body { padding-top: 28px; }
 
   /* ── Meta ───────────────────────────────────────────── */
   .meta {
@@ -234,17 +328,78 @@ const types = ['All', ...Array.from(new Set(sorted.map(s => s.data.type))).sort(
   .read-link::after                         { content: " \2192\FE0E"; }
   .item[target="_blank"] .read-link::after  { content: " \2197\FE0E"; }
 
+  /* ── Pagination ─────────────────────────────────────── */
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 28px 0 4px;
+  }
+
+  .page-btn {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-xs);
+    background: white;
+    color: var(--color-neutral-600);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+      color var(--transition-fast),
+      border-color var(--transition-fast),
+      background var(--transition-fast);
+  }
+
+  .page-btn[aria-label] {
+    font-size: 18px;
+    padding: 0 10px;
+  }
+
+  .page-btn:hover:not(:disabled) {
+    border-color: var(--color-primary-300);
+    color: var(--color-primary-700);
+    background: color-mix(in oklch, var(--color-primary-50) 70%, white);
+  }
+
+  .page-btn.is-active {
+    background: var(--color-primary-600);
+    border-color: var(--color-primary-600);
+    color: white;
+    font-weight: 600;
+  }
+
+  .page-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  /* ── Hero stats ─────────────────────────────────────── */
+  .hero-stats { display: flex; gap: 32px; margin-top: 28px; flex-wrap: wrap; }
+  .hstat { display: flex; flex-direction: column; gap: 3px; }
+  .hstat-val {
+    font-family: var(--font-headings); font-size: 40px; font-weight: 600;
+    color: #fff; letter-spacing: -0.02em; line-height: 1;
+  }
+  .hstat-val em { font-style: normal; color: rgba(255,255,255,0.45); font-size: 30px; }
+  .hstat-lbl { font-size: 18px; color: rgba(255,255,255,0.45); font-weight: 500; }
+
   /* ── Responsive ─────────────────────────────────────── */
   @media (max-width: 860px) {
-    .grid {
-      grid-template-columns: 1fr;
-      border-top: none;
-    }
+    .grid { grid-template-columns: 1fr; }
+    .item.is-col-sep .body,
+    .item.is-col-end .body { padding: 24px 0; background-image: none; }
+    .body { padding: 24px 0; }
+  }
 
-    .item {
-      border-top: 1px solid var(--card-border);
-    }
-
-    .body { padding: 24px 0 !important; border-left: none !important; }
+  @media (max-width: 640px) {
+    .hero-stats { gap: 20px; margin-top: 20px; }
+    .hstat-val  { font-size: 32px; }
+    .hstat-val em { font-size: 22px; }
+    .hstat-lbl  { font-size: 14px; }
   }
 </style>

@@ -111,15 +111,21 @@ const jsonLd = {
           {related.map((s, i) => (
             <a
               href={s.data.externalUrl ?? `/stories/${s.id}`}
-              class={`rel-item${s.data.image ? ' has-image' : ''} reveal`}
+              class="rel-item has-image reveal"
               style={`transition-delay: ${i * 80}ms`}
               {...(s.data.externalUrl ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
             >
-              {s.data.image && (
-                <div class="rel-image">
-                  <img src={s.data.image} alt="" loading="lazy" />
-                </div>
-              )}
+              <div class="rel-image">
+                {s.data.image
+                  ? <img src={s.data.image} alt="" loading="lazy" />
+                  : <div class="placeholder" aria-hidden="true">
+                      <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.2"/>
+                        <path d="M7 8h10M7 12h10M7 16h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                      </svg>
+                    </div>
+                }
+              </div>
               <div class="rel-body">
                 <div class="rel-meta">
                   <span class="rel-tag">{s.data.type}</span>
@@ -422,14 +428,33 @@ const jsonLd = {
     filter: grayscale(0%) brightness(0.92);
   }
 
+  .placeholder {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(0, 135, 146, 0.22) 1px, transparent 1px);
+    background-size: 20px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .placeholder-icon {
+    width: 40px;
+    height: 40px;
+    color: rgba(0, 135, 146, 0.5);
+    transition: color 0.45s ease;
+  }
+
+  .rel-item:hover .placeholder-icon {
+    color: rgba(0, 135, 146, 0.75);
+  }
+
   .rel-body {
     display: flex;
     flex-direction: column;
     flex: 1;
     padding: 22px 28px 24px 0;
   }
-
-  .rel-item:not(.has-image) .rel-body { padding-top: 24px; }
 
   .rel-meta {
     display: flex;
