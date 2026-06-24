@@ -16,4 +16,5 @@ features:
 visitLabel: Explore product
 visitHref: https://inference.cloud.ai4eosc.eu/
 docsHref: https://docs.ai4os.eu/en/latest/howtos/deploy/oscar.html
+
 order: 2
