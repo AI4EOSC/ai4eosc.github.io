@@ -2,6 +2,10 @@
 import Layout from '../../layouts/Layout.astro';
 import PageHero from '../../components/ui/PageHero.astro';
 import CtaFinal from '../../components/ui/CtaFinal.astro';
+
+// Web3Forms access key — public by design, safe to expose client-side.
+// Get yours at https://web3forms.com after registering with the destination email.
+const WEB3FORMS_ACCESS_KEY = '88c13c4f-9e58-418f-9e21-6c7b915c4185';
 ---
 
 <Layout
@@ -28,40 +32,85 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
         <div class="contact-layout">
 
           <!-- Form side -->
-          <div class="form-side">
+          <div class="form-side" x-data="{
+            sending: false,
+            sent: false,
+            error: false,
+            errorMsg: '',
+            submit(event) {
+              this.sending = true;
+              this.error = false;
+
+              // TEMP: mock submit for local testing, no email is sent. Remove before shipping.
+              const DEV_MOCK_SUBMIT = false;
+              if (DEV_MOCK_SUBMIT) {
+                setTimeout(() => {
+                  this.sent = true;
+                  this.sending = false;
+                }, 1600);
+                return;
+              }
+
+              fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: { Accept: 'application/json' },
+                body: new FormData(event.target),
+              })
+                .then((r) => r.json())
+                .then((r) => {
+                  if (r.success) {
+                    this.sent = true;
+                  } else {
+                    this.error = true;
+                    this.errorMsg = 'Something went wrong. Please try again or email us directly at ai4eosc@csic.es.';
+                  }
+                })
+                .catch(() => {
+                  this.error = true;
+                  this.errorMsg = 'Something went wrong. Please try again or email us directly at ai4eosc@csic.es.';
+                })
+                .finally(() => {
+                  this.sending = false;
+                });
+            },
+          }">
             <div class="form-header reveal">
               <h2>Send us a message</h2>
               <p>We usually respond within 2 business days.</p>
             </div>
 
           <div
-            x-data="{ sending: false, sent: false, error: false }"
-            class="reveal"
+            class="form-body reveal"
           >
             <!-- Success state -->
             <div x-show="sent" x-cloak class="form-success">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+              <div class="form-success-badge">
+                <span class="form-success-ring"></span>
+                <span class="form-success-ring form-success-ring-delay"></span>
+                <span class="form-success-core">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </div>
               <h3>Message sent</h3>
-              <p>Thanks for reaching out — we'll get back to you within 2 business days.</p>
+              <p>We'll get back to you within 2 business days.</p>
+              <p>Thanks for reaching out — it's great to hear from people engaged with open science and AI.</p>
+              <button type="button" class="form-success-reset" x-on:click="sent = false">Send another message</button>
             </div>
 
             <!-- Form -->
             <form
               x-show="!sent"
               class="contact-form"
-              x-on:submit.prevent="
-                sending = true;
-                error = false;
-                fetch('/api/contact', {
-                  method: 'POST',
-                  body: new FormData($el)
-                })
-                .then(r => r.json())
-                .then(r => { if (r.ok) sent = true; else error = true; })
-                .catch(() => { error = true; })
-                .finally(() => { sending = false; })
-              "
+              x-on:submit.prevent="submit($event)"
             >
+              <!-- Web3Forms config -->
+              <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
+              <input type="hidden" name="subject" value="Nuevo mensaje desde AI4EOSC" />
+              <input type="hidden" name="from_name" value="AI4EOSC Contact Form" />
+
+              <!-- Honeypot — invisible to humans, catches bots -->
+              <input type="checkbox" name="botcheck" class="honeypot" tabindex="-1" autocomplete="off" />
+
               <div class="field-row">
                 <div class="field">
                   <label for="name">Name</label>
@@ -77,16 +126,16 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
                 <label for="topic">Topic</label>
                 <select id="topic" name="topic" required>
                   <option value="" disabled selected>Select a topic…</option>
-                  <option value="platform">Platform access &amp; accounts</option>
-                  <option value="technical">Technical support</option>
-                  <option value="ecosystem">Joining the ecosystem</option>
-                  <option value="research">Research collaboration</option>
-                  <option value="press">Press &amp; communications</option>
-                  <option value="other">Other</option>
+                  <option value="Platform access &amp; accounts">Platform access &amp; accounts</option>
+                  <option value="Technical support">Technical support</option>
+                  <option value="Joining the ecosystem">Joining the ecosystem</option>
+                  <option value="Research collaboration">Research collaboration</option>
+                  <option value="Press &amp; communications">Press &amp; communications</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
 
-              <div class="field">
+              <div class="field field-message">
                 <label for="message">Message</label>
                 <textarea id="message" name="message" rows="6" placeholder="Describe your question or request…" required></textarea>
               </div>
@@ -94,11 +143,9 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
               <div class="form-footer">
                 <div>
                   <p class="privacy-note">
-                    Your data is used only to respond to your enquiry and will not be shared with third parties.
+                    Your data is used only to respond to your enquiry and will not be shared with third parties. See our <a href="/privacy-policy">privacy policy</a>.
                   </p>
-                  <p x-show="error" x-cloak class="error-note">
-                    Something went wrong. Please try again or email us directly at <a href="mailto:ai4eosc@csic.es">ai4eosc@csic.es</a>.
-                  </p>
+                  <p x-show="error" x-cloak class="error-note" x-text="errorMsg"></p>
                 </div>
                 <button type="submit" class="submit-btn" x-bind:disabled="sending" x-text="sending ? 'Sending…' : 'Send message'"></button>
               </div>
@@ -187,23 +234,43 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
     description="Check our FAQ for quick answers to the most common questions about the platform, access and the ecosystem."
     button={{ label: 'Browse the FAQ', href: '/support/faq' }}
   />
+
 </Layout>
 
 <style>
   .contact-section { padding: 0 0 24px; }
+
+  /* ── Honeypot ────────────────────────────────────────── */
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
 
   /* ── Layout ──────────────────────────────────────────── */
   .contact-layout {
     display: grid;
     grid-template-columns: 1fr 360px;
     gap: 0;
-    align-items: flex-start;
+    align-items: stretch;
   }
 
   /* ── Form side ───────────────────────────────────────── */
   .form-side {
+    display: flex;
+    flex-direction: column;
     padding-right: 36px;
     border-right: 1px solid var(--card-border);
+  }
+
+  .form-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
   }
 
   .form-header {
@@ -216,7 +283,6 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
     font-family: var(--font-headings);
     font-size: 26px; font-weight: 600;
     color: var(--color-neutral-900);
-    letter-spacing: -0.02em;
     margin: 0 0 8px;
   }
 
@@ -227,27 +293,86 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
 
   /* ── Success state ───────────────────────────────────── */
   .form-success {
+    position: relative;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     gap: 12px;
-    padding: 40px 0;
+    padding: 32px 24px;
     color: var(--color-neutral-900);
   }
 
-  .form-success svg { color: #059669; }
+  .form-success-badge {
+    position: relative;
+    width: 88px; height: 88px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 8px;
+  }
+
+  .form-success-ring {
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    background: var(--gradient-brand-soft);
+    animation: form-success-pulse 2.4s ease-out infinite;
+  }
+
+  .form-success-ring-delay { animation-delay: 1.2s; }
+
+  .form-success-core {
+    position: relative;
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    box-shadow: var(--glow-primary-sm);
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+  }
+
+  @keyframes form-success-pulse {
+    0%   { transform: scale(0.8); opacity: 0.85; }
+    70%  { transform: scale(1.55); opacity: 0; }
+    100% { transform: scale(1.55); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .form-success-ring { animation: none; opacity: 0.35; }
+  }
 
   .form-success h3 {
     font-family: var(--font-headings);
-    font-size: 24px; font-weight: 600;
-    letter-spacing: -0.02em;
+    font-size: 26px; font-weight: 600;
     margin: 0;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
   }
 
   .form-success p {
     font-size: 16px; color: var(--color-neutral-500);
     line-height: 1.6; margin: 0;
+    max-width: 380px;
   }
+
+  .form-success-reset {
+    font: inherit;
+    font-size: 15px; font-weight: 600;
+    color: var(--color-primary-600);
+    background: none;
+    border: none;
+    padding: 0;
+    margin-top: 8px;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .form-success-reset:hover { opacity: 0.85; }
 
   /* ── Error note ───────────────────────────────────────── */
   .error-note {
@@ -260,6 +385,18 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
   /* ── Form ────────────────────────────────────────────── */
   .contact-form {
     display: flex; flex-direction: column; gap: 22px;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .field-message {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .field-message textarea {
+    flex: 1;
+    height: auto;
   }
 
   .field-row {
@@ -318,12 +455,15 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
     justify-content: space-between;
     gap: 16px;
     padding-top: 4px;
+    margin-bottom: 22px;
   }
 
   .privacy-note {
     font-size: 14px; color: var(--color-neutral-400);
     line-height: 1.55; margin: 0; max-width: 340px;
   }
+
+  .privacy-note a { color: inherit; text-decoration: underline; }
 
   .submit-btn {
     flex-shrink: 0;
@@ -336,7 +476,6 @@ import CtaFinal from '../../components/ui/CtaFinal.astro';
     padding: 12px 28px;
     cursor: pointer;
     transition: opacity 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
-    letter-spacing: -0.01em;
   }
 
   .submit-btn:hover:not(:disabled) {
