@@ -1,4 +1,4 @@
-title: Bioinformatics
+title: Life Sciences
 iconId: bioinformatics
 tagline: Genomics, proteomics, drug discovery
 description: Deep learning tools for cells segmentation, object detection and image analysis. Built in collaboration with AI4Life by integrating the models from the BioImage.IO model zoo.
@@ -11,4 +11,4 @@ tools:
     - Image denoising
     - BioImage.IO
 researchInfrastructures: []
-slug: bioinformatics
+slug: lifesciences
