@@ -4,7 +4,7 @@ status: Available
 tagline: Deploy your trained AI modules on a managed serverless platform for scalable inference.
 description: OSCAR is an open-source platform to support the event-driven serverless computing model for data-processing applications. These applications are executed on customized runtime environments provided by Docker containers that run on elastic Kubernetes clusters on a multi-cloud environment, supporting edge-to-cloud scenarios. It includes features focused on improving the user experience, such as multiple interfaces, Jupyter notebook integration, visual pipeline composition, AI model serving, federated identity, multi-tenancy, storage governance, quotas and metrics.
 iconId: platform
-theme: eu-blue
+theme: secondary
 features:
     - AI model serving
     - Jupyter Notebooks
@@ -17,4 +17,4 @@ visitLabel: Explore product
 visitHref: https://inference.cloud.ai4eosc.eu/
 docsHref: https://docs.ai4os.eu/en/latest/howtos/deploy/oscar.html
 
-order: 2
+order: 3
