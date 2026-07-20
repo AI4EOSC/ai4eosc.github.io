@@ -3,6 +3,7 @@ title: LLM4EOSC
 status: Available
 tagline: Large Language Models APIs and chatbot tailored for research using AI4EOSC technology.
 description: The LLM4EOSC is a federated system providing sovereing LLM API services and a connected chatbot. This system allows users to interact with them in a secure manner, ask questions about the AI4EOSC documentation, generate code, and perform other common tasks. The chat history is deleted once the chat is removed in order to protect user data. The chatbot is based on OpenWebUI and supports RAG (retrieval-augmented generation) to provide accurate and up-to-date information from the AI4EOSC documentation. In addition to text-based interactions, the chatbot also supports vision models, allowing users to ask questions about images and receive relevant information. The chatbot can be accessed via the AI4EOSC platform and is designed to assist researchers in navigating the documentation and related AI4EOSC resources.
+slug: llm
 iconId: llm
 theme: secondary
 features:
@@ -14,6 +15,7 @@ features:
     - Data protection
 visitLabel: Explore product
 visitHref: https://chat.cloud.ai4eosc.eu/
+previewUrl: chat.cloud.ai4eosc.eu
 docsHref: https://docs.ai4eosc.eu/en/latest/reference/llm.html
 
 order: 2

@@ -17,17 +17,16 @@ const productIcons: Record<string, string> = {
   platform: `<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>`,
   llm:      `<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>`,
   agents:   `<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/>`,
+  inference:`<path d="M13 2L4.09 12.97a1 1 0 0 0 .77 1.63H11l-1 7.4 8.91-10.97a1 1 0 0 0-.77-1.63H12z"/>`,
 };
 
-const chromeUrl: Record<string, string> = {
-  platform: 'dashboard.cloud.ai4eosc.eu',
-  llm:      'chat.cloud.ai4eosc.eu',
-  agents:   'agents.cloud.ai4eosc.eu',
-};
+// Preview chrome falls back to the visit URL host when previewUrl is absent
+const chromeUrl = (item: any): string =>
+  item.previewUrl ?? new URL(item.visitHref).hostname;
 
-const firstId: string = data.items[0]?.iconId ?? 'platform';
-const productIds = JSON.stringify(data.items.map((i: any) => i.iconId));
-const alpineProductItems = JSON.stringify(data.items.map((i: any) => ({ id: i.iconId, status: i.status })));
+const firstId: string = data.items[0]?.slug ?? 'platform';
+const productIds = JSON.stringify(data.items.map((i: any) => i.slug));
+const alpineProductItems = JSON.stringify(data.items.map((i: any) => ({ id: i.slug, status: i.status })));
 const productStatuses = ['All', ...Array.from(new Set(data.items.map((i: any) => i.status as string))).sort()];
 ---
 
@@ -95,8 +94,8 @@ const productStatuses = ['All', ...Array.from(new Set(data.items.map((i: any) =>
               <button
                 class={`sidebar-item screen-${item.theme}`}
                 x-show={`filter === 'All' || filter === '${item.status}'`}
-                x-bind:class={`{ 'is-active': active === '${item.iconId}' }`}
-                x-on:click={`active = '${item.iconId}'`}
+                x-bind:class={`{ 'is-active': active === '${item.slug}' }`}
+                x-on:click={`active = '${item.slug}'`}
                 type="button"
               >
                 <span class="sc sc--lg" aria-hidden="true"></span>
@@ -116,7 +115,7 @@ const productStatuses = ['All', ...Array.from(new Set(data.items.map((i: any) =>
           <!-- Detail panels -->
           <div class="cat-detail">
             {data.items.map((item: any) => (
-              <div class="detail-panel" x-show={`active === '${item.iconId}'`} x-cloak>
+              <div class="detail-panel" x-show={`active === '${item.slug}'`} x-cloak>
                 <div class="detail-inner">
 
                   <!-- Body (left on desktop) -->
@@ -143,11 +142,11 @@ const productStatuses = ['All', ...Array.from(new Set(data.items.map((i: any) =>
                       <span class="dot"></span>
                       <span class="dot"></span>
                       <span class="dot"></span>
-                      <span class="url">{chromeUrl[item.iconId]}</span>
+                      <span class="url">{chromeUrl(item)}</span>
                     </div>
-                    <div class={`render-body${item.iconId === 'llm' ? ' render-center' : ''}`}>
+                    <div class={`render-body${item.slug === 'llm' ? ' render-center' : ''}`}>
 
-                      {item.iconId === 'platform' && (
+                      {item.slug === 'platform' && (
                         <>
                           <div class="stat-row">
                             <div class="stat"><span class="stat-n">247</span><span class="stat-l">Models</span></div>
@@ -184,7 +183,7 @@ const productStatuses = ['All', ...Array.from(new Set(data.items.map((i: any) =>
                         </>
                       )}
 
-                      {item.iconId === 'llm' && (
+                      {item.slug === 'llm' && (
                         <>
                           <div class="llm-badges">
                             <span class="badge-pill">Mixtral-8x7B</span>
@@ -212,7 +211,7 @@ const productStatuses = ['All', ...Array.from(new Set(data.items.map((i: any) =>
                         </>
                       )}
 
-                      {item.iconId === 'agents' && (
+                      {item.slug === 'agents' && (
                         <>
                           <div class="pipeline">
                             <div class="pipe-step">
@@ -264,6 +263,48 @@ const productStatuses = ['All', ...Array.from(new Set(data.items.map((i: any) =>
                               <span class="sdot sdot-active"></span>
                               <span class="sdot sdot-pending"></span>
                             </span>
+                          </div>
+                        </>
+                      )}
+
+                      {item.slug === 'inference' && (
+                        <>
+                          <div class="inf-fn">
+                            <span class="inf-trigger">
+                              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>
+                              Event
+                            </span>
+                            <span class="inf-arrow">→</span>
+                            <span class="inf-fn-name">plant-classifier</span>
+                            <span class="inf-fn-badge">async</span>
+                          </div>
+                          <div class="divider"></div>
+                          <div class="conn-title">Auto-scaled replicas</div>
+                          <div class="inf-pods">
+                            <span class="pod pod-on"></span>
+                            <span class="pod pod-on"></span>
+                            <span class="pod pod-on"></span>
+                            <span class="pod pod-boot"></span>
+                            <span class="pod pod-idle"></span>
+                            <span class="pod pod-idle"></span>
+                          </div>
+                          <div class="inf-metrics">
+                            <div class="inf-metric"><span class="stat-n">1.4k</span><span class="stat-l">Invocations</span></div>
+                            <div class="inf-metric"><span class="stat-n">86ms</span><span class="stat-l">p95 latency</span></div>
+                            <div class="inf-metric"><span class="stat-n">0</span><span class="stat-l">Idle cost</span></div>
+                          </div>
+                          <div class="divider"></div>
+                          <div class="model-list">
+                            <div class="model-row">
+                              <span class="model-led led-on"></span>
+                              <span class="model-name">MinIO → inference → output</span>
+                              <span class="model-badge">Done</span>
+                            </div>
+                            <div class="model-row">
+                              <span class="model-led led-train"></span>
+                              <span class="model-name">Batch job #37</span>
+                              <span class="model-badge badge-train">Running</span>
+                            </div>
                           </div>
                         </>
                       )}
@@ -665,6 +706,20 @@ const productStatuses = ['All', ...Array.from(new Set(data.items.map((i: any) =>
   .sdot-done    { background: var(--color-primary-300); }
   .sdot-active  { background: var(--color-primary-600); }
   .sdot-pending { background: var(--color-primary-100); border: 1px solid var(--color-primary-200); }
+
+  /* ── Inference illustration ────────────────────────── */
+  .inf-fn { display: flex; align-items: center; gap: 5px; }
+  .inf-trigger { display: inline-flex; align-items: center; gap: 3px; font-size: 8.5px; font-weight: 600; padding: 3px 6px; border-radius: 4px; background: var(--color-primary-600); color: white; flex-shrink: 0; }
+  .inf-arrow { font-size: 10px; color: var(--color-primary-300); flex-shrink: 0; }
+  .inf-fn-name { font-size: 9px; font-weight: 600; font-family: monospace; color: var(--color-primary-700); background: var(--color-primary-50); border: 0.5px solid var(--color-primary-200); border-radius: 4px; padding: 3px 6px; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .inf-fn-badge { font-size: 8px; font-weight: 600; color: var(--color-primary-500); flex-shrink: 0; }
+  .inf-pods { display: flex; gap: 4px; }
+  .pod { flex: 1; height: 18px; border-radius: 3px; border: 0.5px solid; }
+  .pod-on   { background: var(--color-primary-500); border-color: var(--color-primary-600); }
+  .pod-boot { background: var(--color-primary-200); border-color: var(--color-primary-300); animation: pulsing 1.6s ease-in-out infinite; }
+  .pod-idle { background: white; border-color: var(--color-primary-100); }
+  .inf-metrics { display: flex; gap: 6px; }
+  .inf-metric { flex: 1; display: flex; flex-direction: column; gap: 1px; }
 
   /* ── Detail body (col 1) ─────────────────────────── */
   .detail-body {

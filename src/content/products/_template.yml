@@ -1,5 +1,4 @@
 # ── TEMPLATE: copy and rename to <product-id>.yml ────────────────────────────
-# The filename (without .yml) is used as the URL anchor: /products#<id>
 #
 # Required fields
 category: "Category label"
@@ -7,7 +6,8 @@ title: "Product Name"
 status: Available # Available | Preview | Coming soon
 tagline: "Short description shown in cards"
 description: "Full description shown in detail panel."
-iconId: platform # platform | llm | agents
+slug: product-id # URL anchor (/products#<slug>) — must be unique across products
+iconId: platform # platform | llm | agents | inference (see productIcons in products.astro)
 theme: eu-blue # eu-blue | secondary | primary
 features:
     - "Feature 1"
@@ -17,3 +17,4 @@ visitHref: https://example.ai4eosc.eu
 
 # Optional
 docsHref: https://docs.ai4eosc.eu/...
+previewUrl: app.example.ai4eosc.eu # shown in the preview chrome; defaults to visitHref host
