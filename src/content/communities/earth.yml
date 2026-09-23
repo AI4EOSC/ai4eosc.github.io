@@ -7,5 +7,5 @@ viaUrl: https://genai4earth.cloud.ai4eosc.eu/
 gatewaySlug: genai4earth
 tools:
   - Foundation models
-researchInfrastructures: [DataTerra]
+researchInfrastructures: []
 slug: earth-sciences
