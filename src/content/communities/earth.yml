@@ -1,0 +1,11 @@
+title: Earth System Sciences
+iconId: earth
+tagline: GenAI for Earth System Sciences
+description: Unlocking generative AI's potential by embedding it responsibly within the EOSC ecosystem and implementing services tailored for the ESS science communities. 
+via: GenAI4Earth
+viaUrl: https://genai4earth.cloud.ai4eosc.eu/
+gatewaySlug: genai4earth
+tools:
+  - Foundation models
+researchInfrastructures: [DataTerra]
+slug: earth-sciences
