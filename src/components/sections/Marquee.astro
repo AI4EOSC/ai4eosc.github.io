@@ -51,7 +51,7 @@ const duration = Math.round(items.length * 2.5);
 
 <style>
   .marquee {
-    width: min(1320px, 100% - 40px);
+    width: min(1320px, 100% - 2 * var(--gutter));
     margin: 0 auto;
     height: var(--marquee-height);
     display: flex;
@@ -140,6 +140,10 @@ const duration = Math.round(items.length * 2.5);
   }
 
   @media (max-width: 640px) {
+    .marquee {
+      width: calc(100% - 40px);
+    }
+
     .label {
       font-size: 11px;
       margin-bottom: 14px;

@@ -152,6 +152,7 @@
 
 	/* -- Layout */
 	--marquee-height: 180px;
+	--gutter: 20px; /* side margin between viewport and page containers */
 	--nav-offset: 100px; /* navbar margin(20px) + nav-row height(80px) */
 
 	/* -- Transiciones */
@@ -346,7 +347,7 @@ svg {
    LAYOUT
 ───────────────────────────────────────────────────────────────── */
 .container {
-	width: min(1320px, 100% - 40px);
+	width: min(1320px, 100% - 2 * var(--gutter));
 	max-width: none;
 	margin: 0 auto;
 }
@@ -494,6 +495,22 @@ svg {
 @media (max-width: 640px) {
 	:root {
 		--marquee-height: 160px;
+		--gutter: 0px;
+		/* Full-bleed layout: no rounded corners anywhere, so every section meets the viewport edge alike */
+		--radius-lg: 0px;
+		--radius-xl: 0px;
+	}
+
+	/* Section titles keep their side margin so the accent bar does not touch the edge */
+	.section-label .container {
+		width: calc(100% - 40px);
+	}
+
+	/* Full-bleed boxes on mobile: drop side borders and the remaining fixed radii so they meet the viewport edge */
+	.container :is(.section-card, .prose-card, .article-card, .faq-wrap, .box, .tile-grid, .banner, .cta) {
+		border-radius: 0 !important;
+		border-left-width: 0 !important;
+		border-right-width: 0 !important;
 	}
 }
 
