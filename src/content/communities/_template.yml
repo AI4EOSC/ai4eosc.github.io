@@ -3,7 +3,7 @@
 #
 # Required fields
 title: "Community Name"
-iconId: marine # marine | climate | bioinformatics | social | humanities | physics | earth | astronomy
+iconId: marine # marine | climate | life | social | humanities | physics | earth | astronomy
 tagline: "Short description shown in cards (1 line)"
 slug: community-slug
 

@@ -3,7 +3,7 @@ status: active
 tagline: GenAI4Earth AI4EOSC platform
 description: An AI4EOSC-based platform tailored for the GenAI4Earth project.
 euProject: GenAI4Earth
-projectId: GenAI4Earth
+projectId: genai4earth
 community: Earth System Sciences
 communitySlug: earth-sciences
 accessType: Open to researchers
@@ -14,5 +14,5 @@ tools:
   - Experiment tracking
   - Model deployment
 logo: GenAI4Earth.png
-url: https://genai4arth.cloud.ai4eosc.eu
+url: https://genai4earth.cloud.ai4eosc.eu
 slug: genai4earth
