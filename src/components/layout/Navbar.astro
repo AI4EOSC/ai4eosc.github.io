@@ -182,20 +182,29 @@ function getCols(n: number): number {
     overflow: hidden;
     max-height: 0;
     opacity: 0;
-    transition: max-height var(--transition-slow), opacity 0.2s ease;
+    /* closing: keep content visible while it shrinks, fade only at the end */
+    transition: max-height var(--transition-slow), opacity 0.25s ease 0.4s;
   }
 
   .nav.open .nav-panel {
     max-height: 500px;
     opacity: 1;
+    transition: max-height var(--transition-slow), opacity 0.2s ease;
   }
 
-  .nav.open .nav-panel::before {
+  .nav-panel::before {
     content: '';
     display: block;
     margin: 0 18px;
     height: 0.5px;
     background: rgba(0, 0, 0, 0.07);
+    opacity: 0;
+    transition: opacity 0.25s ease 0.4s;
+  }
+
+  .nav.open .nav-panel::before {
+    opacity: 1;
+    transition: opacity 0.2s ease;
   }
 
   .panel {
@@ -457,11 +466,25 @@ function getCols(n: number): number {
     const buttons = document.querySelectorAll<HTMLElement>('[data-menu]');
     const noMenus = document.querySelectorAll('[data-no-menu]');
 
+    // Keep data-active until the collapse transition ends so the panel
+    // content stays visible while it shrinks.
+    let closeTimer: number | undefined;
+
+    const openDesktop = (btn: HTMLElement, menu: string) => {
+      if (!nav) return;
+      window.clearTimeout(closeTimer);
+      nav.classList.add('open');
+      nav.setAttribute('data-active', menu);
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    };
+
     const closeDesktop = () => {
       if (!nav) return;
       nav.classList.remove('open');
-      nav.removeAttribute('data-active');
       buttons.forEach(b => b.classList.remove('active'));
+      window.clearTimeout(closeTimer);
+      closeTimer = window.setTimeout(() => nav.removeAttribute('data-active'), 650);
     };
 
     const isTouch = window.matchMedia('(pointer: coarse)').matches;
@@ -471,20 +494,14 @@ function getCols(n: number): number {
         btn.addEventListener('mouseenter', () => {
           const menu = btn.getAttribute('data-menu');
           if (!menu || !nav) return;
-          nav.classList.add('open');
-          nav.setAttribute('data-active', menu);
-          buttons.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
+          openDesktop(btn, menu);
         });
       }
       btn.addEventListener('click', () => {
         const menu = btn.getAttribute('data-menu');
         if (!menu || !nav) return;
-        if (nav.getAttribute('data-active') === menu) { closeDesktop(); return; }
-        nav.classList.add('open');
-        nav.setAttribute('data-active', menu);
-        buttons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        if (nav.classList.contains('open') && nav.getAttribute('data-active') === menu) { closeDesktop(); return; }
+        openDesktop(btn, menu);
       });
     });
 
