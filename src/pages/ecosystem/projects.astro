@@ -220,7 +220,7 @@ const statusBadge: Record<string, { label: string; cls: string }> = {
 
                     {item.logo && logoUrls[`../../assets/logos/${item.logo}`] && (
                       <div class="logo-top">
-                        <img src={logoUrls[`../../assets/logos/${item.logo}`]} alt={`${item.title} logo`} class="logo-img" />
+                        <img src={logoUrls[`../../assets/logos/${item.logo}`]} alt={`${item.title} logo`} class="logo-img" loading="lazy" decoding="async" />
                       </div>
                     )}
 
