@@ -9,6 +9,8 @@ function getCols(n: number): number {
 }
 ---
 
+<div class="top-blur" data-top-blur aria-hidden="true"><span></span><span></span><span></span></div>
+
 <header class="fixed top-5 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] sm:w-[calc(100%-80px)] xl:w-[min(1260px,calc(100%-40px))] z-[200]">
   <div
     data-nav
@@ -128,9 +130,28 @@ function getCols(n: number): number {
 
 <style>
   /* ── Desktop nav ────────────────────────────────────── */
+  /* More opaque than the shared .glass background (0.75) */
+  .nav.glass {
+    background: rgba(255, 255, 255, 0.8);
+  }
+
   .nav.glass:hover {
     transform: none;
     box-shadow: var(--glass-shadow-neutral);
+  }
+
+  /* Floating look: a soft, long drop shadow that deepens as the page scrolls */
+  .nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: -1;
+    pointer-events: none;
+    box-shadow:
+      0 3px 8px rgba(0, 0, 0, 0.04),
+      0 16px 36px -12px rgba(0, 0, 0, 0.12);
+    opacity: calc(0.4 + 0.6 * var(--top-blur, 0));
   }
 
   .nav.open {
@@ -175,6 +196,45 @@ function getCols(n: number): number {
   .nav-link.active .chevron {
     transform: rotate(180deg);
     color: var(--color-neutral-700);
+  }
+
+  /* ── Progressive blur for content scrolling behind the navbar ── */
+  .top-blur {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    z-index: 190;
+    pointer-events: none;
+    /* No opacity here: it would make this a backdrop root and the blur would see nothing.
+       Strength is driven by --top-blur (0 → 1, set from the scroll position) instead. */
+  }
+
+  .top-blur span {
+    position: absolute;
+    inset: 0;
+  }
+
+  .top-blur span:nth-child(1) {
+    backdrop-filter: blur(calc(1px * var(--top-blur, 0)));
+    -webkit-backdrop-filter: blur(calc(1px * var(--top-blur, 0)));
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 110px, transparent 200px);
+    mask-image: linear-gradient(to bottom, #000 0, #000 110px, transparent 200px);
+  }
+
+  .top-blur span:nth-child(2) {
+    backdrop-filter: blur(calc(3px * var(--top-blur, 0)));
+    -webkit-backdrop-filter: blur(calc(3px * var(--top-blur, 0)));
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 100px, transparent 170px);
+    mask-image: linear-gradient(to bottom, #000 0, #000 100px, transparent 170px);
+  }
+
+  .top-blur span:nth-child(3) {
+    backdrop-filter: blur(calc(6px * var(--top-blur, 0)));
+    -webkit-backdrop-filter: blur(calc(6px * var(--top-blur, 0)));
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 85px, transparent 135px);
+    mask-image: linear-gradient(to bottom, #000 0, #000 85px, transparent 135px);
   }
 
   /* ── Desktop dropdown panel ─────────────────────────── */
@@ -460,6 +520,8 @@ function getCols(n: number): number {
 </style>
 
 <script>
+  let cleanupTopBlur: (() => void) | undefined;
+
   function initNav() {
     /* ── Desktop dropdown ─────────────────────────────── */
     const nav     = document.querySelector('[data-nav]') as HTMLElement | null;
@@ -513,6 +575,35 @@ function getCols(n: number): number {
       if (!(e.target instanceof Element)) return;
       if (!e.target.closest('[data-nav]')) closeDesktop();
     });
+
+    /* ── Top blur: fades in once the page header has scrolled past ── */
+    // initNav runs on every client-side navigation, so drop the previous listeners.
+    cleanupTopBlur?.();
+    const NAV_BOTTOM = 160;  // starts just before the header's bottom edge reaches the navbar
+    const RAMP = 200;        // px of scroll over which the blur reaches full strength
+    let blurTicking = false;
+    const updateTopBlur = () => {
+      blurTicking = false;
+      // Every page starts with .hero (home) or .page-hero; pages without one use the raw scroll.
+      const heroEl = document.querySelector('.hero, .page-hero');
+      const passed = heroEl
+        ? NAV_BOTTOM - heroEl.getBoundingClientRect().bottom
+        : window.scrollY;
+      const t = Math.min(Math.max(passed / RAMP, 0), 1);
+      document.documentElement.style.setProperty('--top-blur', (t * t * (3 - 2 * t)).toFixed(3));
+    };
+    const onScroll = () => {
+      if (blurTicking) return;
+      blurTicking = true;
+      requestAnimationFrame(updateTopBlur);
+    };
+    updateTopBlur();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', updateTopBlur);
+    cleanupTopBlur = () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', updateTopBlur);
+    };
 
     /* ── Mobile hamburger ─────────────────────────────── */
     const hamburger  = document.querySelector('[data-hamburger]') as HTMLElement | null;
