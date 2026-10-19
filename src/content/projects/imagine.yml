@@ -11,6 +11,7 @@ outputs:
     - Vision models
     - Image annotation tools
 funding: 4500000
+grant: "No. 101058625"
 programme: Horizon Europe
 period: "2022 – 2025"
 lead: EGI
@@ -40,3 +41,5 @@ url: https://www.imagine-ai.eu/
 grantUrl: https://cordis.europa.eu/project/id/101058625
 social:
     linkedin: https://www.linkedin.com/company/imagine-aquatic-science/
+    zenodo: https://zenodo.org/communities/imagine-project/
+    email: info@imagine-ai.eu
