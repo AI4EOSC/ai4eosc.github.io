@@ -2,13 +2,18 @@ type: origin
 status: finished
 title: DEEP-HybridDataCloud
 tagline: Designing and Enabling E-infrastructures for intensive Processing in a Hybrid DataCloud.
-description: Supporting artificial intelligence (machine learning and deep learning), parallel post-processing of very large data, and analysis of massive online data streams over distributed e-Infrastructures in the EOSC.
+description: Supporting artificial intelligence (machine learning and deep learning), parallel post-processing of very large data, and analysis of massive online data streams over distributed e-Infrastructures in the EOSC. Provided a DevOps-based toolchain and a GPU testbed to raise existing services to TRL8, with pilot applications in biology, physics and network security. Its platform has since been superseded by AI4EOSC.
 logo: deep.png
 outputsLabel: Key outputs
 outputs:
     - DEEP platform
     - DEEPaaS API
     - Model marketplace
+    - Training dashboard
+    - DEEP IAM
+    - GPU testbed
+    - DevOps CI/CD pipeline
+    - Pilot use cases
 funding: 2988750
 grant: "No. 777435"
 programme: Horizon 2020
@@ -26,3 +31,6 @@ partners:
     - Helmholtz Munich
 url: https://deep-hybrid-datacloud.eu/
 grantUrl: https://cordis.europa.eu/project/id/777435
+social:
+    x: https://x.com/DEEP_eu
+    github: https://github.com/deephdc/

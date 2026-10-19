@@ -4,11 +4,16 @@ title: GenAI4Earth
 tagline: Generative Artificial Intelligence for Earth System.
 description: GenAI4Earth will go beyond the state of the art by designing, deploying, and operating trustworthy, reusable GenAI services within the EOSC ecosystem, advancing discovery on Earth–climate–environment–life interactions in co-design with user communities and research infrastructures at national and European levels.
 logo: GenAI4Earth.png
-outputsLabel: Adding to AI4EOSC
 outputs:
     - GenAI for EarthSciences
+    - Topical AI foundation models
+    - AI-powered data discovery
+    - Urban resilience pilot
+    - Agro-environmental monitoring pilot
+    - Seismology pilot
+    - Reusable GenAI services
 funding: 9976151.18
-grant: "No. 101292566"
+grant: "No. 101293266"
 programme: Horizon Europe
 period: "2026 – 2029"
 lead: CNRS
@@ -30,3 +35,6 @@ partners:
     - UEDIN
 url: https://genai4earth.earth-data.eu/
 grantUrl: https://cordis.europa.eu/project/id/101293266
+social:
+    linkedin: https://www.linkedin.com/showcase/gen-ai-4-earth/
+    zenodo: https://zenodo.org/communities/genai4earth/

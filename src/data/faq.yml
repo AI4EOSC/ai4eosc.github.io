@@ -48,7 +48,7 @@ categories:
     label: Ecosystem & projects
     items:
       - question: What is the difference between a project and a gateway?
-        answer: Projects are EU-funded research initiatives that build on or extend the AI4EOSC platform (e.g. EOSC-ARENA adding agent capabilities, FLUID-AI adding energy monitoring). Gateways are operational deployments of the platform for a specific scientific domain, often produced by a project but serving an ongoing user community beyond the project's lifetime.
+        answer: Projects are EU-funded research initiatives that build on or extend the AI4EOSC platform (e.g. EOSC-ARENA adding agent capabilities, FLUID-AI4EOSC adding energy monitoring). Gateways are operational deployments of the platform for a specific scientific domain, often produced by a project but serving an ongoing user community beyond the project's lifetime.
 
       - question: How can my project join the ecosystem?
         answer: If your project uses AI4EOSC infrastructure or builds extensions on top of it, it can be listed in the ecosystem. Get in touch with a short description of your project, its relationship to the platform and your current status. We list both active and new projects.

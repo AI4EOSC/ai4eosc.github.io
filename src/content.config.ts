@@ -41,6 +41,7 @@ const projects = defineCollection({
 				bluesky: z.url().optional(),
 				youtube: z.url().optional(),
 				github: z.url().optional(),
+				zenodo: z.url().optional(),
 				email: z.email().optional(),
 			})
 			.optional(),
