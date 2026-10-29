@@ -4,6 +4,7 @@ import PageHero from '../../components/ui/PageHero.astro';
 import CtaFinal from '../../components/ui/CtaFinal.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
 import { getCollection } from 'astro:content';
+import { eventTime } from '../../lib/eventTime';
 
 const stories = await getCollection('stories');
 const sorted = stories.toSorted((a, b) => +b.data.date - +a.data.date);
@@ -29,6 +30,19 @@ const videoCount = sorted.filter(s => s.data.type === 'Video').length;
     </div>
   </PageHero>
 
+  <div id="upcoming-events" hidden>
+    <div class="section-label"><div class="container">Upcoming events</div></div>
+    <div class="container">
+      <div class="section-card">
+        <SectionHeader
+          title="What's next"
+          subtitle="Webinars and events from across the AI4EOSC ecosystem."
+        />
+        <div class="grid" id="upcoming-grid"></div>
+      </div>
+    </div>
+  </div>
+
   <div class="section-label"><div class="container">All stories</div></div>
   <div class="container">
     <div class="section-card">
@@ -52,7 +66,8 @@ const videoCount = sorted.filter(s => s.data.type === 'Video').length;
           return Array.from({ length: this.totalPages }, (_, i) => i + 1);
         },
         init() {
-          this.items = [...this.$el.querySelectorAll('.item')];
+          const today = new Date().toISOString().slice(0, 10);
+          this.items = [...this.$el.querySelectorAll('.item')].filter(el => !(el.dataset.eventDate >= today));
           this.$watch('filter', () => { this.page = 1; this.$nextTick(() => this.render()); });
           this.$nextTick(() => this.render());
         },
@@ -90,7 +105,7 @@ const videoCount = sorted.filter(s => s.data.type === 'Video').length;
                   x-on:click={`setFilter('${t}')`}
                   type="button"
                 >
-                  {t}
+                  {t === 'Event' ? 'Past events' : t}
                 </button>
               ))}
             </div>
@@ -98,12 +113,15 @@ const videoCount = sorted.filter(s => s.data.type === 'Video').length;
         </div>
 
         <!-- Grid -->
-        <div class="grid">
+        <div class="grid" id="all-grid">
           {sorted.map((story) => (
             <a
               href={story.data.externalUrl ?? `/stories/${story.id}`}
               class="item has-image"
               data-type={story.data.type}
+              data-event-date={story.data.type === 'Event' ? story.data.date.toISOString().slice(0, 10) : undefined}
+              data-event-start={story.data.eventStart?.toISOString()}
+              data-event-end={story.data.eventEnd?.toISOString()}
               style="display:none"
               {...(story.data.externalUrl ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
             >
@@ -123,12 +141,17 @@ const videoCount = sorted.filter(s => s.data.type === 'Video').length;
                   <span class="tag">{story.data.type}</span>
                   <span class="dot" aria-hidden="true"></span>
                   <span class="date">
-                    {story.data.date.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}
+                    {story.data.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                   </span>
+                  {eventTime(story.data) && (<>
+                    <span class="dot" aria-hidden="true"></span>
+                    <span class="date">{eventTime(story.data)}</span>
+                  </>)}
+                  {story.data.type === 'Event' && <span class="story-status" hidden></span>}
                 </div>
                 <h4>{story.data.title}</h4>
                 <p>{story.data.excerpt}</p>
-                <span class="read-link">{story.data.externalUrl ? 'View on external site' : 'Read story'}</span>
+                <span class="read-link" data-event-action={story.data.type === 'Event' ? '' : undefined}>{story.data.externalUrl ? 'View on external site' : 'Read story'}</span>
               </div>
             </a>
           ))}
@@ -170,14 +193,26 @@ const videoCount = sorted.filter(s => s.data.type === 'Video').length;
   />
 </Layout>
 
+<script>
+  import { placeUpcoming } from '../../lib/eventStatus';
+
+  placeUpcoming(document.getElementById('all-grid'), {
+    block: document.getElementById('upcoming-events'),
+    grid: document.getElementById('upcoming-grid'),
+    remove: false,
+  });
+</script>
+
 
 <style>
   /* ── Grid ───────────────────────────────────────────── */
   .grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* middle track is 28px wider so its text, with 56px of padding, matches the side columns (28px) */
+    grid-template-columns: calc((100% - 28px) / 3) calc((100% + 56px) / 3) calc((100% - 28px) / 3);
     gap: 0;
     margin-top: 20px;
+    container-type: inline-size;
   }
 
   .item {
@@ -190,7 +225,7 @@ const videoCount = sorted.filter(s => s.data.type === 'Video').length;
   /* ── Image ──────────────────────────────────────────── */
   .image {
     width: 100%;
-    aspect-ratio: 3 / 1;
+    height: calc((100cqw - 28px) / 9); /* 3:1 of a side column, so all images share one height */
     flex-shrink: 0;
     position: relative;
     overflow: hidden;
@@ -241,7 +276,7 @@ const videoCount = sorted.filter(s => s.data.type === 'Video').length;
     Col 1: left 0  / right 28  → 28px total
     Col 2: left 28 / right 28  → 56px total  (+ 1px visual line via background-image)
     Col 3: left 28 / right 0   → 28px total  (+ 1px visual line via background-image)
-    All three have equal content width. The separator uses background-image (no layout impact).
+    The grid gives col 2 a 28px wider track, so all three have equal content width. The separator uses background-image (no layout impact).
   */
   .item.is-col-sep .body {
     padding-left: 28px;
@@ -275,7 +310,7 @@ const videoCount = sorted.filter(s => s.data.type === 'Video').length;
   }
 
   .tag {
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -292,7 +327,8 @@ const videoCount = sorted.filter(s => s.data.type === 'Video').length;
 
   .date {
     font-size: 14px;
-    color: var(--color-neutral-400);
+    font-weight: 400;
+    color: var(--color-neutral-500);
   }
 
   h4 {
@@ -312,11 +348,13 @@ const videoCount = sorted.filter(s => s.data.type === 'Video').length;
     font-size: 16px;
     color: var(--color-neutral-500);
     line-height: 1.6;
+    text-align: justify;
+    hyphens: none;
     flex: 1;
   }
 
   .read-link {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     color: var(--color-primary-700);
     margin-top: auto;
@@ -390,6 +428,7 @@ const videoCount = sorted.filter(s => s.data.type === 'Video').length;
   /* ── Responsive ─────────────────────────────────────── */
   @media (max-width: 860px) {
     .grid { grid-template-columns: 1fr; }
+    .image { height: auto; aspect-ratio: 3 / 1; }
     .item.is-col-sep .body,
     .item.is-col-end .body { padding: 24px 0; background-image: none; }
     .body { padding: 24px 0; }

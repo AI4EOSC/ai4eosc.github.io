@@ -127,6 +127,11 @@ const jsonLd = {
     </button>
 
     <script>
+      import { fillEventStatus } from '../lib/eventStatus';
+      fillEventStatus();
+    </script>
+
+    <script>
       function initPage() {
         // Scroll reveal
         const observer = new IntersectionObserver(
