@@ -163,7 +163,7 @@ const jsonLd = {
 <script>
   import { placeUpcoming } from '../../lib/eventStatus';
 
-  placeUpcoming(document.getElementById('related-grid'), { keep: 3 });
+  document.addEventListener('astro:page-load', () => placeUpcoming(document.getElementById('related-grid'), { keep: 3 }));
 </script>
 
 <style>
