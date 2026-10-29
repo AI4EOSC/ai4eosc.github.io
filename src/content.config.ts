@@ -12,6 +12,8 @@ const stories = defineCollection({
 		icon: z.string().optional(),
 		image: z.string().optional(),
 		externalUrl: z.url().optional(),
+		eventStart: z.date().optional(),
+		eventEnd: z.date().optional(),
 	}),
 });
 
