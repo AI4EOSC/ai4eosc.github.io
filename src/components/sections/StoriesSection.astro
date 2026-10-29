@@ -87,11 +87,12 @@ const sortedStories = stories
 <script>
   import { placeUpcoming } from '../../lib/eventStatus';
 
-  placeUpcoming(document.getElementById('latest-grid'), {
+  // page-load fires on every client-side navigation, a plain top-level call would only run on the first one
+  document.addEventListener('astro:page-load', () => placeUpcoming(document.getElementById('latest-grid'), {
     block: document.getElementById('upcoming-events'),
     grid: document.getElementById('upcoming-grid'),
     keep: 3,
-  });
+  }));
 </script>
 
 <style>

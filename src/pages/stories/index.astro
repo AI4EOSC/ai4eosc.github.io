@@ -196,11 +196,11 @@ const videoCount = sorted.filter(s => s.data.type === 'Video').length;
 <script>
   import { placeUpcoming } from '../../lib/eventStatus';
 
-  placeUpcoming(document.getElementById('all-grid'), {
+  document.addEventListener('astro:page-load', () => placeUpcoming(document.getElementById('all-grid'), {
     block: document.getElementById('upcoming-events'),
     grid: document.getElementById('upcoming-grid'),
     remove: false,
-  });
+  }));
 </script>
 
 
