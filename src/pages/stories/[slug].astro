@@ -215,7 +215,7 @@ const jsonLd = {
 
   /* ── Image ──────────────────────────────────────────── */
   .article-image {
-    height: 340px;
+    aspect-ratio: 3 / 1;
     position: relative;
     overflow: hidden;
   }
@@ -372,6 +372,32 @@ const jsonLd = {
     font-size: 14px;
     color: var(--color-neutral-400);
     font-weight: 500;
+  }
+
+  /* Embedded video (YouTube, etc.) written as HTML inside the Markdown */
+  .prose :global(.video-embed) {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    margin: 32px 0 12px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--card-border);
+    background: #000;
+    overflow: hidden;
+  }
+
+  .prose :global(.video-embed iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .prose :global(.video-caption) {
+    margin: 0 0 26px;
+    font-size: 16px;
+    color: var(--color-neutral-400);
+    text-align: center;
   }
 
   .prose :global(code) {
@@ -540,7 +566,6 @@ const jsonLd = {
   }
 
   @media (max-width: 640px) {
-    .article-image { height: 220px; }
     .prose { padding: 28px 20px 40px; font-size: 16px; }
     .article-topbar { padding: 12px 20px; }
     .topbar-meta { display: none; }
