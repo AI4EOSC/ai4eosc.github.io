@@ -171,38 +171,38 @@ const jsonLd = {
   .hero-meta {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-top: 22px;
+    gap: 0.5882rem;
+    margin-top: 1.2941rem;
     flex-wrap: wrap;
   }
 
   .hero-tag {
-    font-size: 14px;
+    font-size: 0.8235rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.07em;
     color: rgba(255,255,255,0.9);
     background: rgba(255,255,255,0.16);
     border: 1px solid rgba(255,255,255,0.22);
-    border-radius: 999px;
-    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    padding: 0.1765rem 0.5882rem;
   }
 
   .hero-sep {
-    width: 3px; height: 3px;
+    width: 0.1765rem; height: 0.1765rem;
     border-radius: 50%;
     background: rgba(255,255,255,0.35);
     flex-shrink: 0;
   }
 
   .hero-date, .hero-read {
-    font-size: 14px;
+    font-size: 0.8235rem;
     color: rgba(255,255,255,0.5);
   }
 
   /* ── Article card ───────────────────────────────────── */
   .article-container {
-    padding-top: 24px;
+    padding-top: 1.4118rem;
   }
 
   .article-card {
@@ -210,7 +210,7 @@ const jsonLd = {
     border: 1px solid var(--card-border);
     border-radius: var(--radius-lg);
     overflow: hidden;
-    margin-bottom: 6px;
+    margin-bottom: 0.3529rem;
   }
 
   /* ── Image ──────────────────────────────────────────── */
@@ -231,20 +231,20 @@ const jsonLd = {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 48px;
+    padding: 0.8235rem 2.8235rem;
     border-bottom: 1px solid var(--card-border);
-    gap: 16px;
+    gap: 0.9412rem;
     flex-wrap: wrap;
   }
 
   .back-btn {
-    font-size: 14px;
+    font-size: 0.8235rem;
     font-weight: 500;
     color: var(--color-neutral-500);
     text-decoration: none;
     border: 1px solid var(--card-border);
-    border-radius: 999px;
-    padding: 5px 14px;
+    border-radius: var(--radius-pill);
+    padding: 0.2941rem 0.8235rem;
     background: white;
     transition:
       color var(--transition-fast),
@@ -263,53 +263,53 @@ const jsonLd = {
   .topbar-meta {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 0.4706rem;
   }
 
   .meta-tag {
-    font-size: 14px;
+    font-size: 0.8235rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--color-primary-600);
     background: color-mix(in oklch, var(--color-primary-100) 70%, white);
-    border-radius: 999px;
-    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    padding: 0.1765rem 0.5882rem;
   }
 
   .meta-dot {
-    width: 3px; height: 3px;
+    width: 0.1765rem; height: 0.1765rem;
     border-radius: 50%;
     background: var(--color-neutral-300);
     flex-shrink: 0;
   }
 
-  .meta-date { font-size: 14px; color: var(--color-neutral-400); }
+  .meta-date { font-size: 0.8235rem; color: var(--color-neutral-400); }
 
   .meta-read {
-    font-size: 14px;
+    font-size: 0.8235rem;
     font-weight: 500;
     color: var(--color-neutral-600);
   }
 
   /* ── Prose ──────────────────────────────────────────── */
   .prose {
-    max-width: 1100px;
+    max-width: 64.7059rem;
     margin: 0 auto;
-    padding: 72px 56px 96px;
-    font-size: 17px;
+    padding: 4.2353rem 3.2941rem 5.6471rem;
+    font-size: 1rem;
     line-height: 1.85;
     color: var(--color-neutral-600);
   }
 
   .prose :global(h2) {
     font-family: var(--font-headings);
-    font-size: 24px;
+    font-size: 1.4118rem;
     font-weight: 650;
     color: var(--color-neutral-900);
     line-height: 1.25;
-    margin: 56px 0 18px;
-    padding-top: 56px;
+    margin: 3.2941rem 0 1.0588rem;
+    padding-top: 3.2941rem;
     border-top: 1px solid var(--card-border);
   }
 
@@ -319,25 +319,25 @@ const jsonLd = {
 
   .prose :global(h3) {
     font-family: var(--font-headings);
-    font-size: 18px;
+    font-size: 1.0588rem;
     font-weight: 600;
     color: var(--color-neutral-800);
-    margin: 36px 0 12px;
+    margin: 2.1176rem 0 0.7059rem;
   }
 
-  .prose :global(p) { margin: 0 0 22px; text-align: justify; }
+  .prose :global(p) { margin: 0 0 1.2941rem; text-align: justify; }
   .prose :global(p:last-child) { margin-bottom: 0; }
 
   .prose :global(ul), .prose :global(ol) {
-    margin: 0 0 22px;
-    padding-left: 24px;
+    margin: 0 0 1.2941rem;
+    padding-left: 1.4118rem;
   }
-  .prose :global(li) { margin-bottom: 8px; line-height: 1.75; }
+  .prose :global(li) { margin-bottom: 0.4706rem; line-height: 1.75; }
 
   .prose :global(a) {
     color: var(--color-primary-600);
     text-decoration: underline;
-    text-underline-offset: 3px;
+    text-underline-offset: 0.1765rem;
     text-decoration-color: color-mix(in oklch, var(--color-primary-400) 50%, transparent);
     transition: text-decoration-color var(--transition-fast);
   }
@@ -352,8 +352,8 @@ const jsonLd = {
 
   .prose :global(blockquote) {
     border-left: 2px solid var(--color-primary-400);
-    margin: 36px 0;
-    padding: 20px 28px;
+    margin: 2.1176rem 0;
+    padding: 1.1765rem 1.6471rem;
     background: color-mix(in oklch, var(--color-primary-50) 60%, white);
     border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
     color: var(--color-neutral-600);
@@ -362,14 +362,14 @@ const jsonLd = {
   .prose :global(blockquote p) {
     margin: 0;
     font-style: italic;
-    font-size: 17.5px;
+    font-size: 1.0294rem;
     line-height: 1.7;
   }
 
   .prose :global(blockquote p + p) {
-    margin-top: 14px;
+    margin-top: 0.8235rem;
     font-style: normal;
-    font-size: 14px;
+    font-size: 0.8235rem;
     color: var(--color-neutral-400);
     font-weight: 500;
   }
@@ -378,7 +378,7 @@ const jsonLd = {
   .prose :global(.video-embed) {
     position: relative;
     aspect-ratio: 16 / 9;
-    margin: 32px 0 12px;
+    margin: 1.8824rem 0 0.7059rem;
     border-radius: var(--radius-md);
     border: 1px solid var(--card-border);
     background: #000;
@@ -394,18 +394,18 @@ const jsonLd = {
   }
 
   .prose :global(.video-caption) {
-    margin: 0 0 26px;
-    font-size: 16px;
+    margin: 0 0 1.5294rem;
+    font-size: 0.9412rem;
     color: var(--color-neutral-400);
     text-align: center;
   }
 
   .prose :global(code) {
-    font-size: 14px;
+    font-size: 0.8235rem;
     background: var(--page-bg);
     border: 1px solid var(--card-border);
-    border-radius: 4px;
-    padding: 2px 7px;
+    border-radius: 0.2353rem;
+    padding: 0.1176rem 0.4118rem;
     color: var(--color-primary-700);
     font-family: ui-monospace, 'Cascadia Code', monospace;
   }
@@ -416,16 +416,16 @@ const jsonLd = {
 
   /* ── Related stories ────────────────────────────────── */
   .related-section {
-    padding-top: 28px;
-    padding-bottom: 28px;
+    padding-top: 1.6471rem;
+    padding-bottom: 1.6471rem;
   }
 
   .related-grid {
     display: grid;
     /* same grid as the stories page: the middle track is 28px wider to offset its extra padding */
-    grid-template-columns: calc((100% - 28px) / 3) calc((100% + 56px) / 3) calc((100% - 28px) / 3);
+    grid-template-columns: calc((100% - 1.6471rem) / 3) calc((100% + 3.2941rem) / 3) calc((100% - 1.6471rem) / 3);
     gap: 0;
-    margin-top: 20px;
+    margin-top: 1.1765rem;
     container-type: inline-size;
   }
 
@@ -437,7 +437,7 @@ const jsonLd = {
   }
 
   .rel-item:nth-child(n + 2) .rel-body {
-    padding-left: 28px;
+    padding-left: 1.6471rem;
     background-image: linear-gradient(to right, var(--card-border) 1px, transparent 1px);
   }
 
@@ -445,7 +445,7 @@ const jsonLd = {
 
   .rel-image {
     width: 100%;
-    height: calc((100cqw - 28px) / 9); /* 3:1 of a side column, so all images share one height */
+    height: calc((100cqw - 1.6471rem) / 9); /* 3:1 of a side column, so all images share one height */
     flex-shrink: 0;
     position: relative;
     overflow: hidden;
@@ -472,15 +472,15 @@ const jsonLd = {
     position: absolute;
     inset: 0;
     background-image: radial-gradient(circle, rgba(0, 135, 146, 0.22) 1px, transparent 1px);
-    background-size: 20px 20px;
+    background-size: 1.1765rem 1.1765rem;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .placeholder-icon {
-    width: 44px;
-    height: 44px;
+    width: 2.5882rem;
+    height: 2.5882rem;
     color: rgba(0, 135, 146, 0.5);
     transition: color 0.45s ease;
   }
@@ -493,18 +493,18 @@ const jsonLd = {
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding: 24px 28px 28px 0;
+    padding: 1.4118rem 1.6471rem 1.6471rem 0;
   }
 
   .rel-meta {
     display: flex;
     align-items: center;
-    gap: 6px;
-    margin-bottom: 10px;
+    gap: 0.3529rem;
+    margin-bottom: 0.5882rem;
   }
 
   .rel-tag {
-    font-size: 13px;
+    font-size: 0.7647rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -512,18 +512,18 @@ const jsonLd = {
   }
 
   .rel-dot {
-    width: 3px; height: 3px;
+    width: 0.1765rem; height: 0.1765rem;
     border-radius: 50%;
     background: var(--color-neutral-300);
     flex-shrink: 0;
   }
 
-  .rel-date { font-size: 14px; color: var(--color-neutral-500); }
+  .rel-date { font-size: 0.8235rem; color: var(--color-neutral-500); }
 
   .rel-title {
-    margin: 0 0 10px;
+    margin: 0 0 0.5882rem;
     font-family: var(--font-headings);
-    font-size: 19px;
+    font-size: 1.1176rem;
     font-weight: 650;
     color: var(--color-neutral-800);
     line-height: 1.3;
@@ -533,8 +533,8 @@ const jsonLd = {
   .rel-item:hover .rel-title { color: var(--color-primary-700); }
 
   .rel-excerpt {
-    margin: 0 0 20px;
-    font-size: 16px;
+    margin: 0 0 1.1765rem;
+    font-size: 0.9412rem;
     color: var(--color-neutral-500);
     line-height: 1.6;
     text-align: justify;
@@ -543,7 +543,7 @@ const jsonLd = {
   }
 
   .rel-link {
-    font-size: 16px;
+    font-size: 0.9412rem;
     font-weight: 600;
     color: var(--color-primary-700);
     margin-top: auto;
@@ -556,18 +556,18 @@ const jsonLd = {
 
   /* ── Responsive ─────────────────────────────────────── */
   @media (max-width: 860px) {
-    .article-topbar { padding: 12px 28px; }
-    .prose { padding: 36px 28px 52px; }
+    .article-topbar { padding: 0.7059rem 1.6471rem; }
+    .prose { padding: 2.1176rem 1.6471rem 3.0588rem; }
 
     .related-grid { grid-template-columns: 1fr; }
     .rel-image { height: auto; aspect-ratio: 3 / 1; }
     .rel-item { border-top: 1px solid var(--card-border); }
-    .rel-item .rel-body { padding: 24px 0; background-image: none; }
+    .rel-item .rel-body { padding: 1.4118rem 0; background-image: none; }
   }
 
   @media (max-width: 640px) {
-    .prose { padding: 28px 20px 40px; font-size: 16px; }
-    .article-topbar { padding: 12px 20px; }
+    .prose { padding: 1.6471rem 1.1765rem 2.3529rem; font-size: 0.9412rem; }
+    .article-topbar { padding: 0.7059rem 1.1765rem; }
     .topbar-meta { display: none; }
 
   }

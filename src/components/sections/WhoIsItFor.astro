@@ -44,7 +44,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
         <!-- Researcher -->
         <a class="item reveal" href="/ecosystem/communities" style="transition-delay: 80ms">
           <div class="illus illus--res">
-            <div class="catalogue">
+            <div class="cat-window">
               <div class="term-chrome">
                 <span class="tdot tdot--r"></span>
                 <span class="tdot tdot--y"></span>
@@ -149,7 +149,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0;
-    margin-top: 24px;
+    margin-top: 1.4118rem;
     border-top: 1px solid var(--card-border);
   }
 
@@ -165,7 +165,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
 
   /* ── Illustration area ───────────────────────────────────────── */
   .illus {
-    height: 196px;
+    height: 11.5294rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -183,26 +183,26 @@ import SectionHeader from '../ui/SectionHeader.astro';
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding: 24px 32px 28px 0;
+    padding: 1.4118rem 1.8824rem 1.6471rem 0;
   }
 
-  .item + .item .body { padding-left: 32px; }
+  .item + .item .body { padding-left: 1.8824rem; }
   .item:last-child .body { padding-right: 0; }
 
   .role {
     display: block;
-    font-size: 12px;
+    font-size: 0.7059rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--color-neutral-400);
-    margin-bottom: 14px;
+    margin-bottom: 0.8235rem;
   }
 
   h3 {
-    margin: 0 0 12px;
+    margin: 0 0 0.7059rem;
     font-family: var(--font-headings);
-    font-size: 21px;
+    font-size: 1.2353rem;
     font-weight: 650;
     color: var(--color-neutral-900);
     line-height: 1.2;
@@ -212,15 +212,15 @@ import SectionHeader from '../ui/SectionHeader.astro';
   .item:hover h3 { color: var(--color-primary-700); }
 
   p {
-    margin: 0 0 20px;
-    font-size: 16px;
+    margin: 0 0 1.1765rem;
+    font-size: 0.9412rem;
     line-height: 1.65;
     color: var(--color-neutral-500);
     flex: 1;
   }
 
   .link {
-    font-size: 14px;
+    font-size: 0.8235rem;
     font-weight: 600;
     color: var(--color-primary-700);
     margin-top: auto;
@@ -231,32 +231,32 @@ import SectionHeader from '../ui/SectionHeader.astro';
 
   /* ── Shared: dark window chrome ──────────────────────────────── */
   .terminal,
-  .catalogue,
+  .cat-window,
   .gwpanel {
     background: #1e2233;
-    border-radius: 10px;
-    width: calc(100% - 28px);
-    height: 168px;
+    border-radius: 0.5882rem;
+    width: calc(100% - 1.6471rem);
+    height: 9.8824rem;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0,0,0,0.18);
     transition: transform 0.25s ease;
   }
 
   .item:hover .terminal,
-  .item:hover .catalogue,
+  .item:hover .cat-window,
   .item:hover .gwpanel { transform: translateY(-4px); }
 
   .term-chrome {
     background: #2a2f42;
-    padding: 8px 10px;
+    padding: 0.4706rem 0.5882rem;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 0.2941rem;
   }
 
   .tdot {
-    width: 8px;
-    height: 8px;
+    width: 0.4706rem;
+    height: 0.4706rem;
     border-radius: 50%;
     flex-shrink: 0;
   }
@@ -266,34 +266,34 @@ import SectionHeader from '../ui/SectionHeader.astro';
   .tdot--g { background: #28c840; }
 
   .win-label {
-    font-size: 10px;
+    font-size: 0.5882rem;
     color: #6b7280;
-    margin-left: 6px;
+    margin-left: 0.3529rem;
     font-family: monospace;
   }
 
   /* ── Developer: terminal body ───────────────────────────────── */
   .term-body {
-    padding: 10px 12px 12px;
+    padding: 0.5882rem 0.7059rem 0.7059rem;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 0.2353rem;
   }
 
   .tl {
     margin: 0;
-    font-size: 11px;
+    font-size: 0.6471rem;
     font-family: 'Courier New', monospace;
     line-height: 1.45;
     color: #a8b4c8;
     white-space: nowrap;
   }
 
-  .tprompt { color: var(--color-primary-400); font-weight: 700; margin-right: 5px; }
+  .tprompt { color: var(--color-primary-400); font-weight: 700; margin-right: 0.2941rem; }
   .tcmd { color: #e2e8f0; }
   .tcmd em { font-style: normal; color: #93c5fd; }
   .tmuted { color: #4b5563; }
-  .tok { color: #6ee7b7; display: flex; align-items: center; gap: 5px; }
+  .tok { color: #6ee7b7; display: flex; align-items: center; gap: 0.2941rem; }
   .tok-check { color: #34d399; }
   .tcursor { color: var(--color-primary-400); animation: blink 1.2s step-end infinite; }
 
@@ -306,15 +306,15 @@ import SectionHeader from '../ui/SectionHeader.astro';
   .cat-search {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 7px 10px;
+    gap: 0.3529rem;
+    padding: 0.4118rem 0.5882rem;
     background: #252a3a;
     border-bottom: 1px solid #2d3347;
     color: var(--color-primary-500);
   }
 
   .cat-query {
-    font-size: 10px;
+    font-size: 0.5882rem;
     font-family: monospace;
     color: #a8b4c8;
   }
@@ -322,7 +322,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
   .cat-cursor {
     color: var(--color-primary-400);
     animation: blink 1.2s step-end infinite;
-    font-size: 11px;
+    font-size: 0.6471rem;
     line-height: 1;
   }
 
@@ -331,8 +331,8 @@ import SectionHeader from '../ui/SectionHeader.astro';
   .cat-row {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 7px 10px;
+    gap: 0.4706rem;
+    padding: 0.4118rem 0.5882rem;
     border-bottom: 1px solid #252a3a;
   }
 
@@ -340,9 +340,9 @@ import SectionHeader from '../ui/SectionHeader.astro';
   .cat-row--dim { opacity: 0.45; }
 
   .cat-thumb {
-    width: 22px;
-    height: 22px;
-    border-radius: 5px;
+    width: 1.2941rem;
+    height: 1.2941rem;
+    border-radius: 0.2941rem;
     flex-shrink: 0;
   }
 
@@ -359,7 +359,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
   }
 
   .cat-name {
-    font-size: 10px;
+    font-size: 0.5882rem;
     font-weight: 600;
     color: #e2e8f0;
     font-family: monospace;
@@ -369,12 +369,12 @@ import SectionHeader from '../ui/SectionHeader.astro';
   }
 
   .cat-domain {
-    font-size: 9px;
+    font-size: 0.5294rem;
     color: #4b5563;
   }
 
   .cat-acc {
-    font-size: 10px;
+    font-size: 0.5882rem;
     font-weight: 700;
     color: var(--color-primary-400);
     flex-shrink: 0;
@@ -385,12 +385,12 @@ import SectionHeader from '../ui/SectionHeader.astro';
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 11px;
+    padding: 0.4706rem 0.6471rem;
     border-bottom: 1px solid #2d3347;
   }
 
   .gw-name {
-    font-size: 11px;
+    font-size: 0.6471rem;
     font-weight: 600;
     color: #e2e8f0;
     font-family: monospace;
@@ -399,15 +399,15 @@ import SectionHeader from '../ui/SectionHeader.astro';
   .gw-active {
     display: flex;
     align-items: center;
-    gap: 4px;
-    font-size: 9px;
+    gap: 0.2353rem;
+    font-size: 0.5294rem;
     color: #34d399;
     font-family: monospace;
   }
 
   .gw-dot {
-    width: 6px;
-    height: 6px;
+    width: 0.3529rem;
+    height: 0.3529rem;
     border-radius: 50%;
     background: #34d399;
     flex-shrink: 0;
@@ -426,12 +426,12 @@ import SectionHeader from '../ui/SectionHeader.astro';
     flex-direction: column;
     align-items: center;
     gap: 1px;
-    padding: 8px 6px;
+    padding: 0.4706rem 0.3529rem;
     background: #1e2233;
   }
 
   .gw-val {
-    font-size: 17px;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--color-primary-300);
     font-family: var(--font-headings);
@@ -439,7 +439,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
   }
 
   .gw-key {
-    font-size: 8px;
+    font-size: 0.4706rem;
     color: #4b5563;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -449,12 +449,12 @@ import SectionHeader from '../ui/SectionHeader.astro';
   .gw-bar-row {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 10px;
+    gap: 0.4706rem;
+    padding: 0.4706rem 0.5882rem;
   }
 
   .gw-bar-label {
-    font-size: 9px;
+    font-size: 0.5294rem;
     color: #6b7280;
     font-family: monospace;
     flex-shrink: 0;
@@ -462,20 +462,20 @@ import SectionHeader from '../ui/SectionHeader.astro';
 
   .gw-bar {
     flex: 1;
-    height: 4px;
+    height: 0.2353rem;
     background: #2d3347;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     overflow: hidden;
   }
 
   .gw-fill {
     height: 100%;
     background: var(--color-primary-500);
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
   }
 
   .gw-bar-val {
-    font-size: 9px;
+    font-size: 0.5294rem;
     font-weight: 600;
     color: var(--color-primary-400);
     font-family: monospace;
@@ -494,7 +494,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
       border-top: 1px solid var(--card-border);
     }
 
-    .body { padding: 24px 0 24px 0 !important; }
+    .body { padding: 1.4118rem 0 1.4118rem 0 !important; }
   }
 
   @media (max-width: 640px) {

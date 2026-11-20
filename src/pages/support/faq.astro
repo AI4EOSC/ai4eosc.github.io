@@ -60,9 +60,8 @@ import data from '../../data/faq.yml';
 </Layout>
 
 <style>
-  .p-section { padding: 0 0 24px; }
-  .p-section.has-top { padding-top: 28px; }
-  @media (max-width: 720px) { .p-section.has-top { padding-top: 40px; } }
+  .p-section.has-top { padding-top: 1.6471rem; }
+  @media (max-width: 640px) { .p-section.has-top { padding-top: 2.3529rem; } }
 
   /* ── Wrapper ─────────────────────────────────────────── */
   .faq-wrap {
@@ -74,7 +73,7 @@ import data from '../../data/faq.yml';
   /* ── Row: one per category ───────────────────────────── */
   .faq-row {
     display: grid;
-    grid-template-columns: 260px 1fr;
+    grid-template-columns: 15.2941rem minmax(0, 1fr);
     border-bottom: 0.5px solid var(--card-border);
   }
 
@@ -83,34 +82,34 @@ import data from '../../data/faq.yml';
   /* ── Category column (sticky title) ─────────────────── */
   .cat-col {
     border-right: 0.5px solid var(--card-border);
-    padding: 40px 32px;
+    padding: 2.3529rem 1.8824rem;
   }
 
   .cat-sticky {
     position: sticky;
-    top: calc(var(--nav-offset) + 16px);
+    top: calc(var(--nav-offset) + 0.941rem);
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0.4706rem;
   }
 
   .cat-num {
-    font-size: 18px; font-weight: 700;
+    font-size: 1.0588rem; font-weight: 700;
     letter-spacing: 0.06em;
     color: var(--color-secondary-400);
   }
 
   .cat-title {
     font-family: var(--font-headings);
-    font-size: 28px; font-weight: 500;
+    font-size: 1.6471rem; font-weight: 500;
     line-height: 1.1;
     color: var(--color-neutral-900);
     margin: 0;
   }
 
   .cat-count {
-    font-size: 15px; color: var(--color-neutral-400);
-    margin-top: 4px;
+    font-size: 0.8824rem; color: var(--color-neutral-400);
+    margin-top: 0.2353rem;
   }
 
   /* ── Q&A column ──────────────────────────────────────── */
@@ -120,33 +119,33 @@ import data from '../../data/faq.yml';
 
   /* ── Individual Q&A item ─────────────────────────────── */
   .qa-item {
-    padding: 32px 40px;
+    padding: 1.8824rem 2.3529rem;
     border-bottom: 0.5px solid var(--card-border);
   }
 
   .qa-item.is-last { border-bottom: none; }
 
   .q-text {
-    font-size: 17px; font-weight: 600;
+    font-size: 1rem; font-weight: 600;
     color: var(--color-neutral-900);
     line-height: 1.4;
-    margin: 0 0 14px;
+    margin: 0 0 0.8235rem;
   }
 
   .q-text::before {
     content: '';
     display: inline-block;
-    width: 6px; height: 6px;
+    width: 0.3529rem; height: 0.3529rem;
     border-radius: 50%;
     background: var(--color-secondary-400);
-    margin-right: 10px;
+    margin-right: 0.5882rem;
     vertical-align: middle;
-    margin-bottom: 2px;
+    margin-bottom: 0.1176rem;
     flex-shrink: 0;
   }
 
   .qa-a {
-    font-size: 16px; line-height: 1.8;
+    font-size: 0.9412rem; line-height: 1.8;
     color: var(--color-neutral-500);
     margin: 0;
   }
@@ -159,23 +158,23 @@ import data from '../../data/faq.yml';
     .cat-col {
       border-right: none;
       border-bottom: 0.5px solid var(--card-border);
-      padding: 28px 28px 22px;
+      padding: 1.6471rem 1.6471rem 1.2941rem;
     }
     .cat-sticky {
       position: static;
       flex-direction: row;
       align-items: baseline;
-      gap: 12px;
+      gap: 0.7059rem;
       flex-wrap: wrap;
     }
-    .cat-title { font-size: 20px; }
+    .cat-title { font-size: 1.1765rem; }
     .cat-num, .cat-count { display: none; }
-    .qa-item { padding: 24px 28px; }
+    .qa-item { padding: 1.4118rem 1.6471rem; }
   }
 
   @media (max-width: 640px) {
-    .qa-item { padding: 20px; }
+    .qa-item { padding: 1.1765rem; }
     .qa-a { padding-left: 0; }
-    .q-text { font-size: 15px; }
+    .q-text { font-size: 0.8824rem; }
   }
 </style>

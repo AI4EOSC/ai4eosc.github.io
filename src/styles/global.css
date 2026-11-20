@@ -83,50 +83,31 @@
 	--card-border: color-mix(in oklch, var(--color-neutral-200) 70%, #ffffff 30%);
 
 	/* -- Radios (concéntricos con la navbar: nav=40px, padding=16px → card=24px) */
-	--radius-xl: 32px;
-	--radius-lg: 24px;
-	--radius-md: 16px;
-	--radius-sm: 12px;
-	--radius-xs: 8px;
+	--radius-xl: 1.8824rem;
+	--radius-lg: 1.4118rem;
+	--radius-md: 0.9412rem;
+	--radius-sm: 0.7059rem;
+	--radius-xs: 0.4706rem;
+	--radius-pill: 58.7647rem;
 
 	/* -- Sombras */
 	--shadow-1: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.06);
 	--shadow-2:
 		0 2px 4px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.08),
 		0 20px 48px rgba(0, 0, 0, 0.06);
-	--shadow-3:
-		0 4px 8px rgba(0, 0, 0, 0.05), 0 16px 40px rgba(0, 0, 0, 0.1),
-		0 40px 80px rgba(0, 0, 0, 0.07);
 	--shadow-primary: 0 8px 24px rgba(0, 134, 145, 0.25);
-	--shadow-secondary: 0 8px 24px rgba(255, 91, 127, 0.25);
-	--shadow-soft: var(--shadow-2);
 
 	/* -- Gradientes de marca — 3 stops para mayor profundidad */
 	--gradient-primary: linear-gradient(140deg, #003c40 0%, #005a60 40%, #008792 100%);
-	--gradient-brand: linear-gradient(135deg, #008792, #ec5d80);
 	--gradient-green: linear-gradient(140deg, #002d30 0%, #004d53 45%, #008792 100%);
 	--gradient-pink: linear-gradient(140deg, #8b1040 0%, #c02060 45%, #ec5d80 100%);
 	--gradient-eu-blue: linear-gradient(140deg, #071a58 0%, #0f38a8 45%, #2a5ed8 100%);
+	--gradient-dark: linear-gradient(140deg, #111418 0%, #1a1f24 50%, #1e2228 100%);
 
 	/* Tokens de glow coloreado */
 	--glow-primary-sm: 0 0 20px rgba(0, 135, 146, 0.3);
-	--glow-primary-md: 0 0 40px rgba(0, 135, 146, 0.35), 0 0 80px rgba(0, 135, 146, 0.15);
-	--glow-secondary-sm: 0 0 20px rgba(236, 93, 128, 0.3);
-	--glow-secondary-md: 0 0 40px rgba(236, 93, 128, 0.35), 0 0 80px rgba(236, 93, 128, 0.15);
 
 	/* Versiones suaves para overlays, fondos de hover, chips */
-	--gradient-primary-soft: linear-gradient(
-		135deg,
-		rgba(0, 135, 146, 0.1),
-		rgba(0, 135, 146, 0.04)
-	);
-	--gradient-green-soft: linear-gradient(135deg, rgba(0, 77, 83, 0.1), rgba(0, 135, 146, 0.06));
-	--gradient-pink-soft: linear-gradient(135deg, rgba(192, 32, 96, 0.1), rgba(236, 93, 128, 0.06));
-	--gradient-eu-blue-soft: linear-gradient(
-		135deg,
-		rgba(21, 66, 139, 0.1),
-		rgba(46, 104, 212, 0.06)
-	);
 	--gradient-brand-soft: linear-gradient(
 		135deg,
 		rgba(0, 135, 146, 0.08),
@@ -151,9 +132,17 @@
 		inset 0 0 0 0.5px rgba(255, 255, 255, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.7);
 
 	/* -- Layout */
-	--marquee-height: 180px;
-	--gutter: 20px; /* side margin between viewport and page containers */
-	--nav-offset: 100px; /* navbar margin(20px) + nav-row height(80px) */
+	--page-max: 77.65rem; /* = 1320px at the default size; grows with the root size on big screens */
+	--marquee-height: 10.6rem;
+	--gutter: clamp(0.9412rem, 2.5vw, 1.9rem); /* side margin between viewport and page containers */
+	--nav-inset: clamp(0.4706rem, 1.6vw, 1.75rem); /* navbar sits this far inside the page container, as it does on wide screens */
+	--nav-offset: 5.9rem; /* navbar margin + nav-row height, in rem because the navbar is */
+
+	/* -- Fluid type: scales smoothly with the viewport instead of jumping at breakpoints */
+	--fs-display: clamp(1.75rem, 3vw + 0.5rem, 3.3rem);
+	--fs-h1: clamp(1.65rem, 2.5vw + 1rem, 2.95rem);
+	--fs-h2: clamp(1.65rem, 2.5vw + 0.7rem, 2.7rem);
+	--fs-lead: clamp(0.9rem, 0.5vw + 0.7rem, 1.06rem);
 
 	/* -- Transiciones */
 	--transition-fast: 0.25s ease;
@@ -215,6 +204,15 @@
 /* ─────────────────────────────────────────────────────────────────
    ANIMATIONS
 ───────────────────────────────────────────────────────────────── */
+/* Soft blink for live/status dots. Opacity only (some dots already use transform for positioning).
+   Defined only when motion is allowed: with reduced motion the animation has no keyframes and does nothing. */
+@media (prefers-reduced-motion: no-preference) {
+	@keyframes pulsing {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.35; }
+	}
+}
+
 @keyframes circlePulseSm {
 	0%,
 	100% {
@@ -272,6 +270,16 @@
 	animation: circlePulseLg 7s ease-in-out infinite 1.8s;
 }
 
+/* Absolute layer that holds the .circle rings inside a banner */
+.hero-circles,
+.cta-circles {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	z-index: 2;
+	overflow: visible;
+}
+
 /* ── Scroll reveal ── */
 .reveal {
 	opacity: 0;
@@ -311,7 +319,8 @@ body {
 	background-color: var(--page-bg);
 	color: var(--color-neutral-900);
 	font-family: var(--font-body);
-	font-size: 17px;
+	/* 17px at the default size, follows the user's font setting, and grows on 2K/4K screens so the whole page (everything is in rem) scales with the monitor */
+	font-size: max(106.25%, 0.85vw);
 	line-height: 1.6;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -347,7 +356,7 @@ svg {
    LAYOUT
 ───────────────────────────────────────────────────────────────── */
 .container {
-	width: min(1320px, 100% - 2 * var(--gutter));
+	width: min(var(--page-max), 100% - 2 * var(--gutter));
 	max-width: none;
 	margin: 0 auto;
 }
@@ -356,17 +365,17 @@ svg {
    SECTION LABEL
 ───────────────────────────────────────────────────────────────── */
 .section-label {
-	font-size: 16px;
+	font-size: 0.9412rem;
 	font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: 0.1em;
 	color: var(--color-neutral-600);
-	margin: 50px auto 25px;
+	margin: 2.9412rem auto 1.4706rem;
 }
 
 .section-label .container {
 	border-left: none;
-	padding-left: 17px;
+	padding-left: 1rem;
 	position: relative;
 }
 
@@ -376,7 +385,7 @@ svg {
 	left: 0;
 	top: 0;
 	bottom: 0;
-	width: 2px;
+	width: 0.1176rem;
 	background: linear-gradient(180deg, var(--color-primary-500) 0%, var(--color-secondary-500) 100%);
 	border-radius: 1px;
 }
@@ -388,7 +397,7 @@ svg {
 	background: var(--card-bg);
 	border: 1px solid var(--card-border);
 	border-radius: var(--radius-lg);
-	padding: 34px 34px;
+	padding: 2rem 2rem;
 	overflow: hidden;
 	position: relative;
 }
@@ -399,7 +408,7 @@ svg {
 	inset: 0;
 	border-radius: inherit;
 	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-	background-size: 200px 200px;
+	background-size: 11.7647rem 11.7647rem;
 	opacity: 0.04;
 	pointer-events: none;
 	z-index: 0;
@@ -408,12 +417,9 @@ svg {
 /* ─────────────────────────────────────────────────────────────────
    BACKGROUND ZONES (continuidad visual landing)
 ───────────────────────────────────────────────────────────────── */
-.zone-feature {
-	padding: 4px 0 24px;
-}
-
+.zone-feature,
 .zone-impact {
-	padding: 4px 0 24px;
+	padding: 0.2353rem 0 1.4118rem;
 }
 
 /* ─────────────────────────────────────────────────────────────────
@@ -423,12 +429,12 @@ svg {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	gap: 8px;
-	border-radius: 999px;
-	padding: 10px 22px;
+	gap: 0.4706rem;
+	border-radius: var(--radius-pill);
+	padding: 0.5882rem 1.2941rem;
 	border: 1px solid transparent;
 	font-family: var(--font-body);
-	font-size: 18px;
+	font-size: 1.0588rem;
 	font-weight: 500;
 	cursor: pointer;
 	text-decoration: none;
@@ -482,19 +488,19 @@ svg {
 ───────────────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
 	.section-card {
-		padding: 24px;
+		padding: 1.4118rem;
 	}
 }
 
 @media (max-width: 720px) {
 	.section-label {
-		margin-top: 40px;
+		margin-top: 2.3529rem;
 	}
 }
 
 @media (max-width: 640px) {
 	:root {
-		--marquee-height: 160px;
+		--marquee-height: 9.4rem;
 		--gutter: 0px;
 		/* Full-bleed layout: no rounded corners anywhere, so every section meets the viewport edge alike */
 		--radius-lg: 0px;
@@ -503,7 +509,7 @@ svg {
 
 	/* Section titles keep their side margin so the accent bar does not touch the edge */
 	.section-label .container {
-		width: calc(100% - 40px);
+		width: calc(100% - 2.3529rem);
 	}
 
 	/* Full-bleed boxes on mobile: drop side borders and the remaining fixed radii so they meet the viewport edge */
@@ -519,19 +525,19 @@ svg {
 ───────────────────────────────────────────────────────────────── */
 .filters {
 	display: flex;
-	gap: 6px;
+	gap: 0.3529rem;
 	flex-wrap: wrap;
-	margin-top: 20px;
-	margin-bottom: 8px;
+	margin-top: 1.1765rem;
+	margin-bottom: 0.4706rem;
 }
 
 .filter-btn {
 	font-family: inherit;
-	font-size: 14px;
+	font-size: 0.8235rem;
 	font-weight: 500;
 	letter-spacing: 0.01em;
-	border-radius: 999px;
-	padding: 6px 16px;
+	border-radius: var(--radius-pill);
+	padding: 0.3529rem 0.9412rem;
 	cursor: pointer;
 	border: 1px solid var(--card-border);
 	background: white;
@@ -576,23 +582,23 @@ svg {
 .filter-columns {
 	display: grid;
 	grid-template-columns: 1fr auto;
-	gap: 0 48px;
+	gap: 0 2.8235rem;
 	align-items: start;
-	margin: 20px 0 0;
-	padding-bottom: 20px;
+	margin: 1.1765rem 0 0;
+	padding-bottom: 1.1765rem;
 	border-bottom: 1px solid var(--card-border);
 }
 
 .filter-col {
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
+	gap: 0.5882rem;
 }
 
 .filter-col-label {
 	display: block;
 	margin: 0;
-	font-size: 13px;
+	font-size: 0.7647rem;
 	font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: 0.07em;
@@ -606,7 +612,7 @@ svg {
 @media (max-width: 860px) {
 	.filter-columns {
 		grid-template-columns: 1fr;
-		gap: 16px;
+		gap: 0.9412rem;
 	}
 }
 
@@ -615,17 +621,17 @@ svg {
 ───────────────────────────────────────────────────────────────── */
 .sc-title {
 	font-family: var(--font-headings);
-	font-size: 22px;
+	font-size: 1.2941rem;
 	font-weight: 600;
 	color: var(--color-neutral-900);
-	margin: 0 0 6px;
+	margin: 0 0 0.3529rem;
 }
 
 .sc-sub {
-	font-size: 16px;
+	font-size: 0.9412rem;
 	color: var(--color-neutral-500);
 	line-height: 1.6;
-	max-width: 560px;
+	max-width: 32.94rem;
 	margin: 0;
 }
 
@@ -633,10 +639,10 @@ svg {
    BADGES
 ───────────────────────────────────────────────────────────────── */
 .badge {
-	font-size: 14px;
+	font-size: 0.8235rem;
 	font-weight: 600;
-	border-radius: 999px;
-	padding: 4px 12px;
+	border-radius: var(--radius-pill);
+	padding: 0.2353rem 0.7059rem;
 }
 
 .b-active {
@@ -656,12 +662,12 @@ svg {
    FEATURE LABEL (uppercase eyebrow)
 ───────────────────────────────────────────────────────────────── */
 .feat-lbl {
-	font-size: 14px;
+	font-size: 0.8235rem;
 	font-weight: 600;
 	letter-spacing: 0.06em;
 	text-transform: uppercase;
 	color: var(--color-neutral-400);
-	margin: 0 0 8px;
+	margin: 0 0 0.4706rem;
 }
 
 /* ─────────────────────────────────────────────────────────────────
@@ -674,10 +680,10 @@ svg {
 	align-items: center;
 	background: var(--color-primary-700);
 	color: white;
-	border-radius: 999px;
-	padding: 8px 18px;
+	border-radius: var(--radius-pill);
+	padding: 0.4706rem 1.0588rem;
 	font-family: inherit;
-	font-size: 16px;
+	font-size: 0.9412rem;
 	font-weight: 500;
 	text-decoration: none;
 	white-space: nowrap;
@@ -697,10 +703,10 @@ svg {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	border-radius: 999px;
-	padding: 8px 12px;
+	border-radius: var(--radius-pill);
+	padding: 0.4706rem 0.7059rem;
 	font-family: inherit;
-	font-size: 16px;
+	font-size: 0.9412rem;
 	font-weight: 500;
 	text-decoration: none;
 	background: rgba(255, 255, 255, 0.12);
@@ -725,10 +731,10 @@ svg {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	border-radius: 999px;
-	padding: 8px 12px;
+	border-radius: var(--radius-pill);
+	padding: 0.4706rem 0.7059rem;
 	font-family: inherit;
-	font-size: 16px;
+	font-size: 0.9412rem;
 	font-weight: 500;
 	text-decoration: none;
 	background: transparent;
@@ -787,11 +793,11 @@ svg {
 /* ── Back to top ───────────────────────────────────────────────────────── */
 #btt {
 	position: fixed;
-	bottom: 28px;
-	right: 28px;
+	bottom: 1.6471rem;
+	right: 1.6471rem;
 	z-index: 900;
-	width: 40px;
-	height: 40px;
+	width: 2.3529rem;
+	height: 2.3529rem;
 	border-radius: 50%;
 	border: 1px solid var(--card-border);
 	background: white;
@@ -826,9 +832,9 @@ svg {
 /* Upcoming/Past pill on event story cards (text filled by src/lib/eventStatus.ts) */
 .story-status {
 	margin-left: auto;
-	padding: 4px 9px;
-	border-radius: 999px;
-	font-size: 13px;
+	padding: 0.2353rem 0.5294rem;
+	border-radius: var(--radius-pill);
+	font-size: 0.7647rem;
 	font-weight: 600;
 	line-height: 1;
 	letter-spacing: 0.02em;
@@ -845,21 +851,21 @@ svg {
 /* Calendar-style date tile on the cards of the "Upcoming events" blocks (added by src/lib/eventStatus.ts) */
 .date-tile {
 	position: absolute;
-	top: 12px;
-	left: 12px;
+	top: 0.7059rem;
+	left: 0.7059rem;
 	z-index: 1;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	min-width: 56px;
-	padding: 9px 10px 8px;
+	min-width: 3.2941rem;
+	padding: 0.5294rem 0.5882rem 0.4706rem;
 	border-radius: var(--radius-xs);
 	background: #fff;
 	line-height: 1;
 }
 
 .date-tile .month {
-	font-size: 13px;
+	font-size: 0.7647rem;
 	font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: 0.06em;
@@ -867,8 +873,8 @@ svg {
 }
 
 .date-tile .day {
-	margin-top: 4px;
-	font-size: 26px;
+	margin-top: 0.2353rem;
+	font-size: 1.5294rem;
 	font-weight: 650;
 	color: var(--color-neutral-800);
 }
@@ -887,11 +893,11 @@ svg {
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: space-between;
-	gap: 8px 16px;
+	gap: 0.4706rem 0.9412rem;
 	margin-top: auto;
 }
 
-#upcoming-grid .event-footer .read-link { font-size: 16px; }
+#upcoming-grid .event-footer .read-link { font-size: 0.9412rem; }
 
 .event-actions {
 	position: relative;
@@ -899,8 +905,8 @@ svg {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-	gap: 4px 12px;
-	font-size: 14px;
+	gap: 0.2353rem 0.7059rem;
+	font-size: 0.8235rem;
 	color: var(--color-neutral-500);
 }
 
@@ -913,7 +919,7 @@ svg {
 	font-weight: 600;
 	color: var(--color-primary-700);
 	text-decoration: underline;
-	text-underline-offset: 3px;
+	text-underline-offset: 0.1765rem;
 	cursor: pointer;
 }
 
@@ -923,12 +929,12 @@ svg {
 /* "Upcoming events" blocks: one row per event (image left, text right) instead of the 3-column card grid.
    The #id selector outranks the scoped card styles of the stories page and the home section. */
 /* the home grid draws a top rule; the first row has no top padding, so drop it and match the stories page */
-#upcoming-grid { grid-template-columns: 1fr; margin-top: 20px; border-top: 0; }
+#upcoming-grid { grid-template-columns: 1fr; margin-top: 1.1765rem; border-top: 0; }
 
 #upcoming-grid .is-event-card {
 	display: grid;
-	grid-template-columns: 360px minmax(0, 1fr);
-	padding: 22px 0;
+	grid-template-columns: 21.1765rem minmax(0, 1fr);
+	padding: 1.2941rem 0;
 	border-top: 1px solid var(--card-border);
 }
 
@@ -943,7 +949,7 @@ svg {
 }
 
 #upcoming-grid .is-event-card .body {
-	padding: 4px 0 4px 32px;
+	padding: 0.2353rem 0 0.2353rem 1.8824rem;
 	border-left: 0;
 	background-image: none;
 }
@@ -951,5 +957,406 @@ svg {
 @media (max-width: 700px) {
 	#upcoming-grid .is-event-card { grid-template-columns: 1fr; }
 	#upcoming-grid .is-event-card .image { aspect-ratio: 16 / 9; }
-	#upcoming-grid .is-event-card .body { padding: 20px 0 0; }
+	#upcoming-grid .is-event-card .body { padding: 1.1765rem 0 0; }
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   PageHero stats row (gateways, communities, projects, stories)
+   ───────────────────────────────────────────────────────────────── */
+.hero-stats { display: flex; gap: 1.8824rem; margin-top: 1.6471rem; flex-wrap: wrap; }
+.hstat { display: flex; flex-direction: column; gap: 0.1765rem; }
+.hstat-val {
+	font-family: var(--font-headings); font-size: 2.3529rem; font-weight: 600;
+	color: #fff; line-height: 1;
+}
+.hstat-val em { font-style: normal; color: rgba(255,255,255,0.45); font-size: 1.7647rem; }
+.hstat-lbl { font-size: 1.0588rem; color: rgba(255,255,255,0.45); font-weight: 500; }
+
+@media (max-width: 640px) {
+	.hero-stats { gap: 1.1765rem; margin-top: 1.1765rem; }
+	.hstat-val  { font-size: 1.8824rem; }
+	.hstat-val em { font-size: 1.2941rem; }
+	.hstat-lbl  { font-size: 0.8235rem; }
+}
+
+/* Page section wrapper used by listing pages */
+.p-section { padding: 0 0 1.4118rem; }
+
+/* ─────────────────────────────────────────────────────────────────
+   CATALOGUE — category sidebar + detail panel
+   (products, gateways, communities, projects)
+   Each page sets the --si-* theme tokens on .catalogue.
+───────────────────────────────────────────────────────────────── */
+.catalogue {
+	display: flex;
+	gap: 1.6471rem;
+	align-items: flex-start;
+	margin-top: 1.1765rem;
+}
+
+.cat-sidebar {
+	flex: 0 0 14.1176rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.3529rem;
+}
+
+.cat-detail {
+	flex: 1;
+	min-width: 0;
+}
+
+.sidebar-item {
+	width: 100%;
+	height: 3.0588rem;
+	display: flex;
+	align-items: center;
+	padding: 0 0.9412rem;
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
+	border-radius: var(--radius-sm);
+	border: none;
+	background:
+		radial-gradient(ellipse 55% 80% at 5% 50%, var(--si-glow-a) 0%, transparent 60%),
+		radial-gradient(ellipse 40% 70% at 92% 50%, var(--si-glow-b) 0%, transparent 60%),
+		radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 50%),
+		var(--gradient-dark);
+	font: inherit;
+	color: inherit;
+	text-align: left;
+	outline: none;
+	transition: box-shadow 0.4s ease;
+	flex-shrink: 0;
+}
+
+.sidebar-item:focus-visible {
+	outline: 2px solid var(--si-focus);
+	outline-offset: 0.1176rem;
+}
+
+/* Noise texture */
+.sidebar-item::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	pointer-events: none;
+	z-index: 1;
+	opacity: 0.09;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+	background-size: 9.4118rem 9.4118rem;
+}
+
+/* Active layer is a pseudo-element so it can fade */
+.sidebar-item::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background: var(--si-active-bg);
+	opacity: 0;
+	transition: opacity 0.4s ease;
+	z-index: 0;
+}
+
+.sidebar-item.is-active::before { opacity: 1; }
+.sidebar-item.is-active { box-shadow: var(--si-active-shadow); }
+
+/* Decorative circles */
+.sc {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	transform: translate(50%, 50%);
+	aspect-ratio: 1;
+	border-radius: 50%;
+	background: transparent;
+	pointer-events: none;
+}
+.sc--sm { width: 38%; animation: circlePulseSm 7s ease-in-out infinite 0s; }
+.sc--md { width: 62%; animation: circlePulseMd 7s ease-in-out infinite 0.9s; }
+.sc--lg { width: 90%; animation: circlePulseLg 7s ease-in-out infinite 1.8s; }
+
+.sidebar-item .sc {
+	box-shadow: var(--si-sc-shadow);
+	transition: box-shadow 0.4s ease;
+}
+.sidebar-item.is-active .sc { box-shadow: var(--si-sc-active-shadow); }
+
+.si-inner {
+	position: relative;
+	z-index: 2;
+	display: flex;
+	align-items: center;
+	gap: 0.5882rem;
+	width: 100%;
+	min-width: 0;
+}
+
+.si-name {
+	font-size: 0.9412rem;
+	font-weight: 500;
+	color: white;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.detail-panel {
+	border: 1px solid var(--card-border);
+	border-radius: var(--radius-md);
+	overflow: hidden;
+	animation: panelFadeIn 0.22s ease;
+}
+
+@keyframes panelFadeIn {
+	from { opacity: 0; transform: translateY(4px); }
+	to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile: sidebar becomes a horizontally scrollable tab strip */
+@media (max-width: 860px) {
+	.catalogue { flex-direction: column; }
+	.cat-sidebar {
+		flex: none;
+		width: 100%;
+		flex-direction: row;
+		overflow-x: auto;
+		scrollbar-width: none;
+		padding-bottom: 0.1176rem;
+		-webkit-overflow-scrolling: touch;
+	}
+	.cat-sidebar::-webkit-scrollbar { display: none; }
+	.sidebar-item { flex: 0 0 auto; min-width: 8.8235rem; width: auto; }
+	.cat-detail { width: 100%; }
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   LEGAL PAGES — prose card (privacy policy, acceptable use policy)
+───────────────────────────────────────────────────────────────── */
+.prose-card {
+	background: var(--card-bg);
+	border: 1px solid var(--card-border);
+	border-radius: var(--radius-lg);
+	overflow: hidden;
+}
+
+.prose-wrap {
+	max-width: 64.7059rem;
+	margin: 0 auto;
+	padding: 6rem 3.2941rem 5.6471rem;
+}
+
+@media (max-width: 640px) {
+	.prose-wrap { padding: 2.3529rem 1.6471rem 3.2941rem; }
+}
+
+.prose-section {
+	margin-bottom: 3.0588rem;
+}
+
+.prose-section h2 {
+	font-family: var(--font-headings);
+	font-size: 1.2941rem;
+	font-weight: 500;
+	color: var(--color-neutral-900);
+	margin: 0 0 1.1765rem;
+	padding-bottom: 0.7059rem;
+	border-bottom: 1px solid var(--color-border);
+}
+
+.prose-section p {
+	font-size: 0.9412rem;
+	line-height: 1.75;
+	color: var(--color-neutral-700);
+	margin: 0 0 0.9412rem;
+	text-align: justify;
+}
+
+.prose-section a {
+	color: var(--color-primary-600);
+	text-decoration: none;
+	font-weight: 500;
+}
+
+.prose-section a:hover {
+	text-decoration: underline;
+}
+
+.prose-section em {
+	font-style: italic;
+	color: var(--color-neutral-600);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   NUMBERED STEPS — dividered 3-column grid (products "Get started",
+   communities "How to join"). The grid sets the --step-* accent tokens.
+───────────────────────────────────────────────────────────────── */
+.step-item {
+	padding: 1.8824rem 2.1176rem 0.4706rem 0;
+	border-right: 1px solid var(--card-border);
+	position: relative;
+}
+.step-item:last-child { border-right: none; padding-right: 0; }
+.step-item + .step-item { padding-left: 2.1176rem; }
+
+.step-item:not(:last-child)::after {
+	content: var(--step-arrow);
+	position: absolute;
+	right: -0.7647rem;
+	top: 2.7059rem;
+	width: 1.5294rem;
+	height: 1.5294rem;
+	text-align: center;
+	line-height: 1.4118rem;
+	font-size: var(--step-arrow-size);
+	color: var(--step-400);
+	background: white;
+	border-radius: 50%;
+	border: 1px solid var(--step-100);
+	z-index: 2;
+}
+
+.step-top {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	margin-bottom: 1.2941rem;
+}
+
+.step-icon-wrap {
+	width: 3.0588rem;
+	height: 3.0588rem;
+	border-radius: 0.8235rem;
+	background: var(--step-50);
+	border: 1px solid var(--step-100);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--step-600);
+	flex-shrink: 0;
+}
+
+.step-top .step-num {
+	font-family: var(--font-headings);
+	font-size: 3.0588rem;
+	font-weight: 700;
+	line-height: 1;
+	color: var(--step-100);
+	user-select: none;
+}
+
+.step-item h4 {
+	font-size: 1.2941rem;
+	font-weight: 650;
+	font-family: var(--font-headings);
+	color: var(--color-neutral-900);
+	margin: 0 0 0.7059rem;
+	line-height: 1.2;
+}
+.step-item p {
+	font-size: 0.9412rem;
+	color: var(--color-neutral-500);
+	line-height: 1.65;
+	margin: 0 0 0.9412rem;
+}
+
+.step-link {
+	font-size: 0.9412rem;
+	font-weight: 500;
+	text-decoration: none;
+	display: inline-block;
+	color: var(--step-600);
+	transition: opacity 0.15s;
+}
+.step-link:hover { opacity: 0.7; }
+.step-link::after { content: " \2192\FE0E"; }
+.step-link[target="_blank"]::after { content: " \2197\FE0E"; }
+
+@media (max-width: 860px) {
+	.step-item { border-right: none; border-top: 1px solid var(--card-border); padding: 1.4118rem 0 1.6471rem; }
+	.step-item + .step-item { padding-left: 0; }
+	.step-item:not(:last-child)::after { display: none; }
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Banner themes shared by PageHero and CtaFinal (.theme-teal differs per
+   component and stays local to each).
+───────────────────────────────────────────────────────────────── */
+.theme-black {
+	background:
+		radial-gradient(ellipse 55% 80% at 5% 50%, rgba(0, 135, 146, 0.14) 0%, transparent 60%),
+		radial-gradient(ellipse 40% 70% at 92% 50%, rgba(236, 93, 128, 0.10) 0%, transparent 60%),
+		radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 50%),
+		var(--gradient-dark);
+}
+
+.theme-blue {
+	background:
+		radial-gradient(ellipse 55% 48% at 14% 16%, rgba(255, 255, 255, 0.13) 0%, transparent 55%),
+		radial-gradient(ellipse 50% 42% at 82% 86%, rgba(0, 5, 50, 0.5) 0%, transparent 55%),
+		var(--gradient-eu-blue);
+}
+
+.theme-pink {
+	background:
+		radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255, 255, 255, 0.13) 0%, transparent 55%),
+		radial-gradient(ellipse 55% 45% at 85% 88%, rgba(80, 10, 30, 0.45) 0%, transparent 58%),
+		radial-gradient(ellipse 40% 35% at 55% 48%, rgba(255, 120, 160, 0.12) 0%, transparent 55%),
+		linear-gradient(140deg, #6b0828 0%, #a01848 38%, #ec5d80 100%);
+}
+
+.theme-blue .circle {
+	box-shadow:
+		0 0 0 1px rgba(255, 255, 255, 0.38),
+		0 0 60px rgba(80, 140, 255, 0.38),
+		0 0 130px rgba(80, 140, 255, 0.18),
+		inset 0 0 28px rgba(255, 255, 255, 0.12);
+}
+
+.theme-pink .circle {
+	box-shadow:
+		0 0 0 1px rgba(255, 255, 255, 0.38),
+		0 0 60px rgba(236, 93, 128, 0.38),
+		0 0 130px rgba(236, 93, 128, 0.18),
+		inset 0 0 28px rgba(255, 255, 255, 0.12);
+}
+
+/* Ecosystem detail panel (gateways, communities, projects): copy column + dark meta column.
+   The page sets --pdr-glow-a/b on .catalogue. */
+.pdl {
+	background: var(--page-bg);
+	padding: 1.6471rem;
+	display: flex;
+	flex-direction: column;
+}
+
+.pdr {
+	background:
+		radial-gradient(ellipse 55% 80% at 5% 50%, var(--pdr-glow-a) 0%, transparent 60%),
+		radial-gradient(ellipse 40% 70% at 92% 50%, var(--pdr-glow-b) 0%, transparent 60%),
+		var(--gradient-dark);
+	padding: 1.4118rem 1.1765rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.1765rem;
+}
+
+.meta-lbl {
+	font-size: 0.8235rem;
+	font-weight: 600;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.35);
+}
+
+.meta-val {
+	font-size: 0.9412rem;
+	color: rgba(255, 255, 255, 0.75);
+	font-weight: 500;
+}
+
+@media (max-width: 640px) {
+	.pdr { border-top: 0.5px solid var(--card-border); }
 }

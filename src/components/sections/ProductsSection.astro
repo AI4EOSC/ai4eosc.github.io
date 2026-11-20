@@ -1,5 +1,6 @@
 ---
 import SectionHeader from '../ui/SectionHeader.astro';
+import '../../styles/mockup.css';
 ---
 
 <section>
@@ -18,7 +19,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
 
         <!-- Platform -->
         <a class="cell reveal" href="/products#platform" style="transition-delay:0ms">
-          <div class="product-render">
+          <div class="product-render mockup">
             <div class="chrome">
               <span class="dot"></span><span class="dot"></span><span class="dot"></span>
               <span class="url">dashboard.cloud.ai4eosc.eu</span>
@@ -71,7 +72,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
 
         <!-- LLM -->
         <a class="cell reveal" href="/products#llm" style="transition-delay:60ms">
-          <div class="product-render">
+          <div class="product-render mockup">
             <div class="chrome">
               <span class="dot"></span><span class="dot"></span><span class="dot"></span>
               <span class="url">chat.cloud.ai4eosc.eu</span>
@@ -115,7 +116,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
 
         <!-- Agents -->
         <a class="cell reveal" href="/products#agents" style="transition-delay:120ms">
-          <div class="product-render">
+          <div class="product-render mockup">
             <div class="chrome">
               <span class="dot"></span><span class="dot"></span><span class="dot"></span>
               <span class="url">agents.cloud.ai4eosc.eu</span>
@@ -199,7 +200,7 @@ import SectionHeader from '../ui/SectionHeader.astro';
     border: 1px solid var(--card-border);
     border-radius: var(--radius-xs);
     overflow: hidden;
-    margin-top: 24px;
+    margin-top: 1.4118rem;
   }
 
   .cell {
@@ -229,8 +230,8 @@ import SectionHeader from '../ui/SectionHeader.astro';
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    flex: 0 0 245px;
-    max-height: 245px;
+    flex: 0 0 14.4118rem;
+    max-height: 14.4118rem;
     position: relative;
   }
 
@@ -254,171 +255,9 @@ import SectionHeader from '../ui/SectionHeader.astro';
     transform: translateX(220%) skewX(-12deg);
   }
 
-  .chrome {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 7px 12px;
-    background: var(--color-primary-50);
-    border-bottom: 1px solid var(--color-primary-100);
-    flex-shrink: 0;
-  }
-
-  .dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--color-primary-200);
-    flex-shrink: 0;
-  }
-
-  .url {
-    font-size: 9px;
-    font-weight: 500;
-    color: var(--color-primary-500);
-    margin-left: 6px;
-    letter-spacing: 0.02em;
-    font-family: monospace;
-  }
-
-  .render-body {
-    padding: 14px 14px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    flex: 1;
-  }
-
   /* Platform stats */
-  .stat-row {
-    display: flex;
-    gap: 6px;
-  }
-
-  .stat {
-    flex: 1;
-    background: white;
-    border: 0.5px solid var(--color-primary-200);
-    border-radius: 4px;
-    padding: 6px 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-  }
-
-  .stat-n {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--color-primary-700);
-    line-height: 1;
-  }
-
-  .stat-l {
-    font-size: 8px;
-    color: var(--color-primary-400);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-
-  .divider {
-    height: 1px;
-    background: var(--color-primary-100);
-  }
-
-  .job { display: flex; flex-direction: column; gap: 4px; }
-
-  .job-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .job-name {
-    font-size: 9px;
-    color: var(--color-primary-600);
-    font-weight: 500;
-  }
-
-  .job-pct {
-    font-size: 9px;
-    font-weight: 600;
-    color: var(--color-primary-700);
-  }
-
-  .job-pct.active { color: var(--color-primary-500); }
-
-  .track {
-    height: 3px;
-    background: var(--color-primary-100);
-    border-radius: 99px;
-    overflow: hidden;
-  }
-
-  .fill {
-    height: 100%;
-    background: var(--color-primary-500);
-    border-radius: 99px;
-  }
 
   /* LLM chat */
-  .llm-badges { display: flex; gap: 5px; flex-wrap: wrap; }
-
-  .badge-pill {
-    font-size: 9px;
-    font-weight: 600;
-    padding: 2px 6px;
-    border-radius: 99px;
-    border: 0.5px solid var(--color-primary-300);
-    color: var(--color-primary-700);
-    background: white;
-  }
-
-  .badge-pill.muted {
-    border-color: var(--color-primary-200);
-    color: var(--color-primary-500);
-    background: transparent;
-  }
-
-  .chat-row { display: flex; align-items: flex-end; gap: 6px; }
-  .chat-row--end { justify-content: flex-end; }
-
-  .av {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 8px;
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-
-  .av-u { background: var(--color-primary-100); color: var(--color-primary-600); }
-  .av-ai { background: var(--color-primary-600); color: white; }
-
-  .bubble {
-    font-size: 9px;
-    line-height: 1.4;
-    padding: 5px 8px;
-    border-radius: 6px;
-    max-width: 80%;
-  }
-
-  .bubble-u {
-    background: white;
-    color: var(--color-neutral-600);
-    border: 0.5px solid var(--color-primary-200);
-    border-radius: 6px 6px 0 6px;
-  }
-
-  .bubble-ai {
-    background: var(--color-primary-100);
-    color: var(--color-primary-800);
-    border: 0.5px solid var(--color-primary-200);
-    border-radius: 6px 0 6px 6px;
-  }
 
   /* Agents pipeline */
   .pipeline {
@@ -426,75 +265,12 @@ import SectionHeader from '../ui/SectionHeader.astro';
     align-items: center;
     justify-content: center;
     gap: 0;
-    padding: 4px 0;
-  }
-
-  .node {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    border: 1.5px solid;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    z-index: 1;
-  }
-
-  .node--done {
-    background: var(--color-primary-100);
-    border-color: var(--color-primary-400);
-    color: var(--color-primary-600);
-  }
-
-  .node--active {
-    background: var(--color-primary-600);
-    border-color: var(--color-primary-500);
-    color: white;
-    box-shadow: 0 0 10px var(--color-primary-200);
-  }
-
-  .node--pending {
-    background: white;
-    border-color: var(--color-primary-200);
-    color: var(--color-primary-300);
-  }
-
-  .pipe-line {
-    flex: 1;
-    height: 1.5px;
-    background: var(--color-primary-200);
-  }
-
-  .pipe-line--done { background: var(--color-primary-400); }
-
-  .ag-status {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 9px;
-    color: var(--color-primary-600);
-    font-weight: 500;
-    margin-top: 4px;
-  }
-
-  .ag-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--color-primary-500);
-    animation: pulsing 2s ease-in-out infinite;
-    flex-shrink: 0;
-  }
-
-  .ag-note {
-    font-size: 8px;
-    color: var(--color-primary-400);
+    padding: 0.2353rem 0;
   }
 
   /* ── Cell body (text area below preview) ── */
   .cell-body {
-    padding: 20px 22px 22px;
+    padding: 1.1765rem 1.2941rem 1.2941rem;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -503,12 +279,12 @@ import SectionHeader from '../ui/SectionHeader.astro';
   .cell-top {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
+    gap: 0.4706rem;
+    margin-bottom: 0.5882rem;
   }
 
   .category {
-    font-size: 10px;
+    font-size: 0.5882rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.07em;
@@ -518,10 +294,10 @@ import SectionHeader from '../ui/SectionHeader.astro';
   }
 
   .status {
-    font-size: 10px;
+    font-size: 0.5882rem;
     font-weight: 600;
-    padding: 2px 7px;
-    border-radius: 999px;
+    padding: 0.1176rem 0.4118rem;
+    border-radius: var(--radius-pill);
     border: 1px solid;
     white-space: nowrap;
   }
@@ -531,23 +307,23 @@ import SectionHeader from '../ui/SectionHeader.astro';
   .status.coming-soon { color: var(--color-neutral-400); border-color: var(--card-border); background: transparent; }
 
   h3 {
-    margin: 0 0 8px;
+    margin: 0 0 0.4706rem;
     font-family: var(--font-headings);
-    font-size: 19px;
+    font-size: 1.1176rem;
     font-weight: 650;
     color: var(--color-neutral-900);
   }
 
   p {
-    margin: 0 0 18px;
-    font-size: 16px;
+    margin: 0 0 1.0588rem;
+    font-size: 0.9412rem;
     line-height: 1.6;
     color: var(--color-neutral-500);
     flex: 1;
   }
 
   .link {
-    font-size: 14px;
+    font-size: 0.8235rem;
     font-weight: 600;
     color: var(--color-primary-700);
     text-decoration: none;
@@ -558,148 +334,16 @@ import SectionHeader from '../ui/SectionHeader.astro';
   .cell:hover .link { color: var(--color-primary-600); }
 
   /* ── Platform model list ── */
-  .model-list { display: flex; flex-direction: column; gap: 4px; }
-
-  .model-row {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .model-led {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .led-on    { background: #22c55e; }
-  .led-train { background: var(--color-primary-400); animation: pulsing 2s ease-in-out infinite; }
-  .led-off   { background: var(--color-neutral-300); }
-
-  .model-name {
-    font-size: 9px;
-    color: var(--color-primary-600);
-    font-weight: 500;
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .model-badge {
-    font-size: 8px;
-    font-weight: 600;
-    padding: 1px 5px;
-    border-radius: 3px;
-    background: #dcfce7;
-    color: #166534;
-    flex-shrink: 0;
-  }
-
-  .model-badge.badge-train { background: var(--color-primary-50); color: var(--color-primary-700); }
-  .model-badge.badge-off   { background: var(--color-neutral-100); color: var(--color-neutral-500); }
 
   /* LLM badge → chat gap */
-  .chat-gap { height: 6px; flex-shrink: 0; }
 
   /* ── LLM typing indicator ── */
-  .bubble-typing {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    padding: 7px 10px;
-    background: var(--color-primary-50);
-    border: 0.5px solid var(--color-primary-100);
-    border-radius: 6px 0 6px 6px;
-  }
-
-  .tydot {
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: var(--color-primary-400);
-    animation: pulsing 1.4s ease-in-out infinite;
-  }
-
-  .tydot:nth-child(2) { animation-delay: 0.2s; }
-  .tydot:nth-child(3) { animation-delay: 0.4s; }
 
   /* Agents pipeline: node + label stacked, aligned */
-  .pipe-step {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .pipe-lbl {
-    font-size: 8px;
-    color: var(--color-primary-500);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-  }
 
   /* Agents step pills inline */
-  .step-dots {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    margin-left: auto;
-  }
-
-  .sdot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .sdot-done    { background: var(--color-primary-300); }
-  .sdot-active  { background: var(--color-primary-600); }
-  .sdot-pending { background: var(--color-primary-100); border: 1px solid var(--color-primary-200); }
 
   /* ── Agents connected services ── */
-  .conn-title {
-    font-size: 8px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--color-primary-400);
-  }
-
-  .conn-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4px;
-  }
-
-  .conn-chip {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 8.5px;
-    font-weight: 600;
-    padding: 4px 7px;
-    border-radius: 4px;
-    border: 0.5px solid;
-  }
-
-  .chip-on {
-    background: var(--color-primary-50);
-    border-color: var(--color-primary-200);
-    color: var(--color-primary-600);
-  }
-
-  .chip-active {
-    background: var(--color-primary-600);
-    border-color: var(--color-primary-500);
-    color: white;
-    box-shadow: 0 0 8px var(--color-primary-200);
-  }
 
   @media (max-width: 860px) {
     .grid { grid-template-columns: 1fr; }

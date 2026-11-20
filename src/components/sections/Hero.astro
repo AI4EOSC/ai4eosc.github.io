@@ -36,11 +36,11 @@ const cta = {
 
 <style>
   .hero {
-    width: min(1320px, 100% - 2 * var(--gutter));
+    width: min(var(--page-max), 100% - 2 * var(--gutter));
     margin: 0 auto;
-    height: calc(100vh - var(--marquee-height));
-    height: calc(100svh - var(--marquee-height));
-    min-height: 520px;
+    /* min-height, not height: on short screens (1280x720, 1366x768 at 1x) the content must push the hero taller instead of overflowing under the navbar */
+    min-height: max(30.6rem, min(calc(100vh - var(--marquee-height)), 56rem));
+    min-height: max(30.6rem, min(calc(100svh - var(--marquee-height)), 56rem));
     border-radius: 0 0 var(--radius-xl) var(--radius-xl);
     background:
       radial-gradient(ellipse 55% 45% at 12% 8%,  rgba(255, 255, 255, 0.16) 0%, transparent 55%),
@@ -48,7 +48,7 @@ const cta = {
       radial-gradient(ellipse 40% 35% at 25% 55%, rgba(0, 200, 215, 0.18) 0%, transparent 55%),
       radial-gradient(ellipse 35% 30% at 78% 18%, rgba(0, 180, 195, 0.12) 0%, transparent 50%),
       linear-gradient(140deg, #002d30 0%, #004d53 35%, #007d88 70%, #008792 100%);
-    padding: calc(var(--nav-offset) + 45px) 72px 70px;
+    padding: calc(var(--nav-offset) + 2.647rem) clamp(1.4118rem, 6vw - 0.4706rem, 4.25rem) 4.1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -91,7 +91,7 @@ const cta = {
     pointer-events: none;
     opacity: 0.04;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-    background-size: 200px 200px;
+    background-size: 11.7647rem 11.7647rem;
     z-index: 1;
   }
 
@@ -103,20 +103,20 @@ const cta = {
   .hero-badge {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    font-size: 15px;
+    gap: 0.5882rem;
+    font-size: 0.8824rem;
     color: rgba(255, 255, 255, 0.85);
-    padding: 6px 16px;
-    border-radius: 999px;
+    padding: 0.3529rem 0.9412rem;
+    border-radius: var(--radius-pill);
     border: 0.5px solid rgba(255, 255, 255, 0.25);
     background: rgba(255, 255, 255, 0.18);
-    margin-bottom: 40px;
+    margin-bottom: 2.3529rem;
   }
 
   .hero-badge .dot {
     position: relative;
-    width: 6px;
-    height: 6px;
+    width: 0.3529rem;
+    height: 0.3529rem;
     border-radius: 50%;
     background: #7fe8c4;
   }
@@ -137,35 +137,35 @@ const cta = {
 
   h1 {
     font-family: var(--font-headings);
-    font-size: 56px;
+    font-size: var(--fs-display);
     font-weight: 500;
     line-height: 1.12;
     word-spacing: 0.1em;
-    margin: 0 0 50px;
-    max-width: 550px;
+    margin: 0 0 clamp(1.4118rem, 5vh, 2.9412rem);
+    max-width: 10.5em; /* scales with the fluid h1 so the line breaks stay stable */
   }
 
   p {
-    font-size: 18px;
+    font-size: var(--fs-lead);
     line-height: 1.25;
-    max-width: 430px;
-    margin: 0 0 50px;
+    max-width: 24em;
+    margin: 0 0 clamp(1.4118rem, 5vh, 2.9412rem);
     color: rgba(255, 255, 255, 0.75);
   }
 
   .hero-actions {
     display: flex;
-    gap: 14px;
+    gap: 0.8235rem;
     flex-wrap: wrap;
   }
 
   .scroll-down {
     position: absolute;
-    bottom: 45px;
-    right: 45px;
+    bottom: 2.6471rem;
+    right: 2.6471rem;
     z-index: 4;
-    width: 48px;
-    height: 48px;
+    width: 2.8235rem;
+    height: 2.8235rem;
     border-radius: 50%;
     border: 1px solid rgba(255, 255, 255, 0.28);
     background: rgba(255, 255, 255, 0.12);
@@ -186,14 +186,6 @@ const cta = {
     transform: translateY(2px);
   }
 
-  .hero-circles {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 2;
-    overflow: visible;
-  }
-
   /* base .circle layout and style comes from global.css */
   .circle--lg { width: 82%; }
   .circle--md { width: 58%; }
@@ -203,20 +195,16 @@ const cta = {
     .hero {
       height: auto;
       min-height: 0;
-      padding: calc(var(--nav-offset) + 32px) 56px 56px;
+      padding: calc(var(--nav-offset) + 1.882rem) 3.2941rem 3.2941rem;
     }
-    .hero-badge { margin-bottom: 22px; }
-    h1 { font-size: 44px; margin-bottom: 24px; }
-    p  { margin-bottom: 26px; }
+    .hero-badge { margin-bottom: 1.2941rem; }
+    h1 { margin-bottom: 1.4118rem; }
+    p  { margin-bottom: 1.5294rem; }
   }
 
   @media (max-width: 860px) {
     .hero {
-      padding: calc(var(--nav-offset) + 20px) 42px 56px;
-    }
-
-    h1 {
-      font-size: 38px;
+      padding: calc(var(--nav-offset) + 1.176rem) 2.4706rem 3.2941rem;
     }
 
     .scroll-down { display: none; }
@@ -226,23 +214,21 @@ const cta = {
     .hero {
       height: auto;
       min-height: 0;
-      padding: calc(var(--nav-offset) + 28px) 24px 52px;
+      padding: calc(var(--nav-offset) + 1.647rem) 1.4118rem 3.0588rem;
     }
 
     .hero-badge {
-      font-size: 14px;
-      margin-bottom: 24px;
+      font-size: 0.8235rem;
+      margin-bottom: 1.4118rem;
     }
 
     h1 {
-      font-size: 30px;
-      margin-bottom: 24px;
+      margin-bottom: 1.4118rem;
     }
 
     p {
-      font-size: 16px;
       line-height: 1.6;
-      margin-bottom: 32px;
+      margin-bottom: 1.8824rem;
     }
 
     .hero-actions {

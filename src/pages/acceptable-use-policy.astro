@@ -84,53 +84,12 @@ import CtaFinal from '../components/ui/CtaFinal.astro';
 
 <style>
   .container {
-    padding-top: 50px;
-    padding-bottom: 40px;
-  }
-
-  .prose-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-  }
-
-  .prose-wrap {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 102px 56px 96px;
-  }
-
-  @media (max-width: 640px) {
-    .prose-wrap {
-      padding: 40px 28px 56px;
-    }
-  }
-
-  .prose-section {
-    margin-bottom: 52px;
+    padding-top: 2.9412rem;
+    padding-bottom: 2.3529rem;
   }
 
   .prose-section:last-child {
     margin-bottom: 0;
-  }
-
-  .prose-section h2 {
-    font-family: var(--font-headings);
-    font-size: 22px;
-    font-weight: 500;
-    color: var(--color-neutral-900);
-    margin: 0 0 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .prose-section p {
-    font-size: 16px;
-    line-height: 1.75;
-    color: var(--color-neutral-700);
-    margin: 0 0 16px;
-    text-align: justify;
   }
 
   .prose-section ol {
@@ -139,54 +98,39 @@ import CtaFinal from '../components/ui/CtaFinal.astro';
     counter-reset: aup;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 0.9412rem;
     margin: 0;
   }
 
   .prose-section ol li {
     counter-increment: aup;
     display: flex;
-    gap: 12px;
-    font-size: 16px;
+    gap: 0.7059rem;
+    font-size: 0.9412rem;
     line-height: 1.75;
     color: var(--color-neutral-700);
   }
 
   .prose-section ol li::before {
     content: counter(aup) ".";
-    font-size: 16px;
+    font-size: 0.9412rem;
     font-weight: 600;
     color: var(--color-primary-600);
     flex-shrink: 0;
-    width: 20px;
+    width: 1.1765rem;
     padding-top: 1px;
     font-variant-numeric: tabular-nums;
-  }
-
-  .prose-section a {
-    color: var(--color-primary-600);
-    text-decoration: none;
-    font-weight: 500;
-  }
-
-  .prose-section a:hover {
-    text-decoration: underline;
-  }
-
-  .prose-section em {
-    font-style: italic;
-    color: var(--color-neutral-600);
   }
 
   blockquote {
     text-align: center;
     font-style: italic;
-    font-size: 16px;
+    font-size: 0.9412rem;
     color: var(--color-neutral-600);
     background: var(--color-primary-50);
     border-radius: var(--radius-sm);
-    padding: 16px 24px;
-    margin: 20px 0 0;
+    padding: 0.9412rem 1.4118rem;
+    margin: 1.1765rem 0 0;
   }
 
   /* Contacts table */
@@ -202,10 +146,10 @@ import CtaFinal from '../components/ui/CtaFinal.astro';
 
   .dl-row {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 11.7647rem minmax(0, 1fr);
     gap: 0;
     border-bottom: 1px solid var(--color-border);
-    padding: 14px 20px;
+    padding: 0.8235rem 1.1765rem;
   }
 
   .dl-row:last-child {
@@ -213,7 +157,7 @@ import CtaFinal from '../components/ui/CtaFinal.astro';
   }
 
   dt {
-    font-size: 16px;
+    font-size: 0.9412rem;
     font-weight: 600;
     color: var(--color-neutral-600);
     display: flex;
@@ -221,7 +165,7 @@ import CtaFinal from '../components/ui/CtaFinal.astro';
   }
 
   dd {
-    font-size: 16px;
+    font-size: 0.9412rem;
     color: var(--color-neutral-800);
     margin: 0;
     display: flex;
@@ -231,7 +175,7 @@ import CtaFinal from '../components/ui/CtaFinal.astro';
   @media (max-width: 640px) {
     .dl-row {
       grid-template-columns: 1fr;
-      gap: 4px;
+      gap: 0.2353rem;
     }
   }
 </style>
