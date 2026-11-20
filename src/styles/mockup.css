@@ -1,0 +1,426 @@
+/* Mini product UI mockups (dashboard, chat, pipeline, connectors) shared by the home
+   ProductsSection and the /products detail panels. Scoped under .mockup so the short
+   class names (.dot, .stat, .node ...) cannot leak into other components. */
+
+.mockup .chrome {
+	display: flex;
+	align-items: center;
+	gap: 0.2353rem;
+	padding: 0.4118rem 0.7059rem;
+	background: var(--color-primary-50);
+	border-bottom: 1px solid var(--color-primary-100);
+	flex-shrink: 0;
+}
+
+.mockup .dot {
+	width: 0.3529rem;
+	height: 0.3529rem;
+	border-radius: 50%;
+	background: var(--color-primary-200);
+	flex-shrink: 0;
+}
+
+.mockup .url {
+	font-size: 0.5294rem;
+	font-weight: 500;
+	color: var(--color-primary-500);
+	margin-left: 0.3529rem;
+	letter-spacing: 0.02em;
+	font-family: monospace;
+}
+
+.mockup .render-body {
+	padding: 0.8235rem 0.8235rem 0.9412rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5882rem;
+	flex: 1;
+}
+
+.mockup .stat-row {
+	display: flex;
+	gap: 0.3529rem;
+}
+
+.mockup .stat {
+	flex: 1;
+	background: white;
+	border: 0.5px solid var(--color-primary-200);
+	border-radius: 0.2353rem;
+	padding: 0.3529rem 0.4706rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1px;
+}
+
+.mockup .stat-n {
+	font-size: 0.7647rem;
+	font-weight: 700;
+	color: var(--color-primary-700);
+	line-height: 1;
+}
+
+.mockup .stat-l {
+	font-size: 0.4706rem;
+	color: var(--color-primary-400);
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.mockup .divider {
+	height: 1px;
+	background: var(--color-primary-100);
+}
+
+.mockup .job {
+	display: flex;
+	flex-direction: column;
+	gap: 0.2353rem;
+}
+
+.mockup .job-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.mockup .job-name {
+	font-size: 0.5294rem;
+	color: var(--color-primary-600);
+	font-weight: 500;
+}
+
+.mockup .job-pct {
+	font-size: 0.5294rem;
+	font-weight: 600;
+	color: var(--color-primary-700);
+}
+
+.mockup .job-pct.active {
+	color: var(--color-primary-500);
+}
+
+.mockup .track {
+	height: 0.1765rem;
+	background: var(--color-primary-100);
+	border-radius: 5.8235rem;
+	overflow: hidden;
+}
+
+.mockup .fill {
+	height: 100%;
+	background: var(--color-primary-500);
+	border-radius: 5.8235rem;
+}
+
+.mockup .model-list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.2353rem;
+}
+
+.mockup .model-row {
+	display: flex;
+	align-items: center;
+	gap: 0.3529rem;
+}
+
+.mockup .model-led {
+	width: 0.2941rem;
+	height: 0.2941rem;
+	border-radius: 50%;
+	flex-shrink: 0;
+}
+
+.mockup .led-on {
+	background: #22c55e;
+}
+
+.mockup .led-train {
+	background: var(--color-primary-400);
+	animation: pulsing 2s ease-in-out infinite;
+}
+
+.mockup .led-off {
+	background: var(--color-neutral-300);
+}
+
+.mockup .model-name {
+	font-size: 0.5294rem;
+	color: var(--color-primary-600);
+	font-weight: 500;
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mockup .model-badge {
+	font-size: 0.4706rem;
+	font-weight: 600;
+	padding: 1px 0.2941rem;
+	border-radius: 0.1765rem;
+	background: #dcfce7;
+	color: #166534;
+	flex-shrink: 0;
+}
+
+.mockup .model-badge.badge-train {
+	background: var(--color-primary-50);
+	color: var(--color-primary-700);
+}
+
+.mockup .model-badge.badge-off {
+	background: var(--color-neutral-100);
+	color: var(--color-neutral-500);
+}
+
+.mockup .llm-badges {
+	display: flex;
+	gap: 0.2941rem;
+	flex-wrap: wrap;
+}
+
+.mockup .badge-pill {
+	font-size: 0.5294rem;
+	font-weight: 600;
+	padding: 0.1176rem 0.3529rem;
+	border-radius: 5.8235rem;
+	border: 0.5px solid var(--color-primary-300);
+	color: var(--color-primary-700);
+	background: white;
+}
+
+.mockup .badge-pill.muted {
+	border-color: var(--color-primary-200);
+	color: var(--color-primary-500);
+	background: transparent;
+}
+
+.mockup .chat-gap {
+	height: 0.3529rem;
+	flex-shrink: 0;
+}
+
+.mockup .chat-row {
+	display: flex;
+	align-items: flex-end;
+	gap: 0.3529rem;
+}
+
+.mockup .chat-row--end {
+	justify-content: flex-end;
+}
+
+.mockup .av {
+	width: 1.1765rem;
+	height: 1.1765rem;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 0.4706rem;
+	font-weight: 700;
+	flex-shrink: 0;
+}
+
+.mockup .av-u {
+	background: var(--color-primary-100);
+	color: var(--color-primary-600);
+}
+
+.mockup .av-ai {
+	background: var(--color-primary-600);
+	color: white;
+}
+
+.mockup .bubble {
+	font-size: 0.5294rem;
+	line-height: 1.4;
+	padding: 0.2941rem 0.4706rem;
+	border-radius: 0.3529rem;
+	max-width: 80%;
+}
+
+.mockup .bubble-u {
+	background: white;
+	color: var(--color-neutral-600);
+	border: 0.5px solid var(--color-primary-200);
+	border-radius: 0.3529rem 0.3529rem 0 0.3529rem;
+}
+
+.mockup .bubble-ai {
+	background: var(--color-primary-100);
+	color: var(--color-primary-800);
+	border: 0.5px solid var(--color-primary-200);
+	border-radius: 0.3529rem 0 0.3529rem 0.3529rem;
+}
+
+.mockup .bubble-typing {
+	display: flex;
+	align-items: center;
+	gap: 0.1765rem;
+	padding: 0.4118rem 0.5882rem;
+	background: var(--color-primary-50);
+	border: 0.5px solid var(--color-primary-100);
+	border-radius: 0.3529rem 0 0.3529rem 0.3529rem;
+}
+
+.mockup .tydot {
+	width: 0.2353rem;
+	height: 0.2353rem;
+	border-radius: 50%;
+	background: var(--color-primary-400);
+	animation: pulsing 1.4s ease-in-out infinite;
+}
+
+.mockup .tydot:nth-child(2) {
+	animation-delay: 0.2s;
+}
+
+.mockup .tydot:nth-child(3) {
+	animation-delay: 0.4s;
+}
+
+.mockup .pipe-step {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.2941rem;
+}
+
+.mockup .node {
+	width: 1.5294rem;
+	height: 1.5294rem;
+	border-radius: 50%;
+	border: 1.5px solid;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	z-index: 1;
+}
+
+.mockup .node--done {
+	background: var(--color-primary-100);
+	border-color: var(--color-primary-400);
+	color: var(--color-primary-600);
+}
+
+.mockup .node--active {
+	background: var(--color-primary-600);
+	border-color: var(--color-primary-500);
+	color: white;
+	box-shadow: 0 0 10px var(--color-primary-200);
+}
+
+.mockup .node--pending {
+	background: white;
+	border-color: var(--color-primary-200);
+	color: var(--color-primary-300);
+}
+
+.mockup .pipe-line {
+	flex: 1;
+	height: 1.5px;
+	background: var(--color-primary-200);
+}
+
+.mockup .pipe-line--done {
+	background: var(--color-primary-400);
+}
+
+.mockup .pipe-lbl {
+	font-size: 0.4706rem;
+	color: var(--color-primary-500);
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	white-space: nowrap;
+}
+
+.mockup .conn-title {
+	font-size: 0.4706rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: var(--color-primary-400);
+}
+
+.mockup .conn-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0.2353rem;
+}
+
+.mockup .conn-chip {
+	display: flex;
+	align-items: center;
+	gap: 0.2353rem;
+	font-size: 0.5rem;
+	font-weight: 600;
+	padding: 0.2353rem 0.4118rem;
+	border-radius: 0.2353rem;
+	border: 0.5px solid;
+}
+
+.mockup .chip-on {
+	background: var(--color-primary-50);
+	border-color: var(--color-primary-200);
+	color: var(--color-primary-600);
+}
+
+.mockup .chip-active {
+	background: var(--color-primary-600);
+	border-color: var(--color-primary-500);
+	color: white;
+	box-shadow: 0 0 8px var(--color-primary-200);
+}
+
+.mockup .ag-status {
+	display: flex;
+	align-items: center;
+	gap: 0.2941rem;
+	font-size: 0.5294rem;
+	color: var(--color-primary-600);
+	font-weight: 500;
+	margin-top: 0.2353rem;
+}
+
+.mockup .ag-dot {
+	width: 0.2941rem;
+	height: 0.2941rem;
+	border-radius: 50%;
+	background: var(--color-primary-500);
+	animation: pulsing 2s ease-in-out infinite;
+	flex-shrink: 0;
+}
+
+.mockup .step-dots {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.1765rem;
+	margin-left: auto;
+}
+
+.mockup .sdot {
+	width: 0.3529rem;
+	height: 0.3529rem;
+	border-radius: 50%;
+	flex-shrink: 0;
+}
+
+.mockup .sdot-done {
+	background: var(--color-primary-300);
+}
+
+.mockup .sdot-active {
+	background: var(--color-primary-600);
+}
+
+.mockup .sdot-pending {
+	background: var(--color-primary-100);
+	border: 1px solid var(--color-primary-200);
+}

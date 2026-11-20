@@ -144,60 +144,19 @@ import CtaFinal from '../components/ui/CtaFinal.astro';
 
 <style>
   .container {
-    padding-top: 50px;
-    padding-bottom: 40px;
-  }
-
-  .prose-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-  }
-
-  .prose-wrap {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 102px 56px 96px;
-  }
-
-  @media (max-width: 640px) {
-    .prose-wrap {
-      padding: 40px 28px 56px;
-    }
-  }
-
-  .prose-section {
-    margin-bottom: 52px;
+    padding-top: 2.9412rem;
+    padding-bottom: 2.3529rem;
   }
 
   .prose-section.last {
     margin-bottom: 0;
   }
 
-  .prose-section h2 {
-    font-family: var(--font-headings);
-    font-size: 22px;
-    font-weight: 500;
-    color: var(--color-neutral-900);
-    margin: 0 0 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--color-border);
-  }
-
   .prose-section h3 {
-    font-size: 17px;
+    font-size: 1rem;
     font-weight: 600;
     color: var(--color-neutral-800);
-    margin: 32px 0 12px;
-  }
-
-  .prose-section p {
-    font-size: 16px;
-    line-height: 1.75;
-    color: var(--color-neutral-700);
-    margin: 0 0 16px;
-    text-align: justify;
+    margin: 1.8824rem 0 0.7059rem;
   }
 
   .prose-section p:last-child {
@@ -209,14 +168,14 @@ import CtaFinal from '../components/ui/CtaFinal.astro';
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin: 0 0 16px;
+    gap: 0.5882rem;
+    margin: 0 0 0.9412rem;
   }
 
   .prose-section ul li {
     display: flex;
-    gap: 12px;
-    font-size: 16px;
+    gap: 0.7059rem;
+    font-size: 0.9412rem;
     line-height: 1.75;
     color: var(--color-neutral-700);
   }
@@ -228,41 +187,6 @@ import CtaFinal from '../components/ui/CtaFinal.astro';
     font-weight: 600;
   }
 
-  .prose-section a {
-    color: var(--color-primary-600);
-    text-decoration: none;
-    font-weight: 500;
-  }
-
-  .prose-section a:hover {
-    text-decoration: underline;
-  }
-
-  .prose-section em {
-    font-style: italic;
-    color: var(--color-neutral-600);
-  }
-
-  .dpo-email {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--color-primary-600);
-    text-decoration: none;
-  }
-
-  .dpo-email:hover {
-    text-decoration: underline;
-  }
-
-  .contact-block {
-    display: inline-flex;
-    align-items: center;
-    background: var(--color-primary-50);
-    border: 1px solid var(--color-primary-100);
-    border-radius: var(--radius-sm);
-    padding: 12px 20px;
-    margin-top: 8px;
-    font-size: 16px;
-    font-weight: 500;
-  }
+  /* weight/colour/underline come from .prose-section a */
+  .dpo-email { font-size: 0.9412rem; }
 </style>

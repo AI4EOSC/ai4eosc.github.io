@@ -73,30 +73,30 @@ const icons: Record<string, string> = {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0;
-    margin-top: 32px;
+    margin-top: 1.8824rem;
     border-top: 1px solid var(--card-border);
   }
 
   .item {
-    padding: 32px 36px 36px 0;
+    padding: 1.8824rem 2.1176rem 2.1176rem 0;
     border-right: 1px solid var(--card-border);
     position: relative;
   }
 
   .item:last-child { border-right: none; padding-right: 0; }
-  .item + .item    { padding-left: 36px; }
+  .item + .item    { padding-left: 2.1176rem; }
 
   /* Arrow badge on each divider */
   .item:not(:last-child)::after {
     content: '\2192\FE0E';
     position: absolute;
-    right: -13px;
-    top: 46px;
-    width: 26px;
-    height: 26px;
+    right: -0.7647rem;
+    top: 2.7059rem;
+    width: 1.5294rem;
+    height: 1.5294rem;
     text-align: center;
-    line-height: 24px;
-    font-size: 13px;
+    line-height: 1.4118rem;
+    font-size: 0.7647rem;
     color: var(--color-primary-400);
     background: white;
     border-radius: 50%;
@@ -109,13 +109,13 @@ const icons: Record<string, string> = {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    margin-bottom: 22px;
+    margin-bottom: 1.2941rem;
   }
 
   .icon-wrap {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
+    width: 3.0588rem;
+    height: 3.0588rem;
+    border-radius: 0.8235rem;
     background: var(--color-primary-50);
     border: 1px solid var(--color-primary-100);
     display: flex;
@@ -127,7 +127,7 @@ const icons: Record<string, string> = {
 
   .step-num {
     font-family: var(--font-headings);
-    font-size: 52px;
+    font-size: 3.0588rem;
     font-weight: 700;
     line-height: 1;
     color: var(--color-primary-100);
@@ -136,9 +136,9 @@ const icons: Record<string, string> = {
 
   /* ── Text ────────────────────────────────────────────────────── */
   h3 {
-    margin: 0 0 12px;
+    margin: 0 0 0.7059rem;
     font-family: var(--font-headings);
-    font-size: 22px;
+    font-size: 1.2941rem;
     font-weight: 650;
     color: var(--color-neutral-900);
     line-height: 1.2;
@@ -146,7 +146,7 @@ const icons: Record<string, string> = {
 
   p {
     margin: 0;
-    font-size: 16px;
+    font-size: 0.9412rem;
     line-height: 1.65;
     color: var(--color-neutral-500);
   }
@@ -161,7 +161,7 @@ const icons: Record<string, string> = {
     .item {
       border-right: none;
       border-top: 1px solid var(--card-border);
-      padding: 24px 0 28px;
+      padding: 1.4118rem 0 1.6471rem;
     }
 
     .item + .item { padding-left: 0; }

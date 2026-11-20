@@ -39,9 +39,9 @@ const { title, description, breadcrumb, breadcrumbParent, theme } = Astro.props;
 
 <style>
   .page-hero {
-    width: min(1320px, 100% - 2 * var(--gutter));
+    width: min(var(--page-max), 100% - 2 * var(--gutter));
     margin: 0 auto;
-    padding: calc(var(--nav-offset) + 48px) 72px 60px;
+    padding: calc(var(--nav-offset) + 2.824rem) clamp(1.4118rem, 6vw - 0.4706rem, 4.25rem) 3.5rem;
     border-radius: 0 0 var(--radius-xl) var(--radius-xl);
     position: relative;
     overflow: hidden;
@@ -56,7 +56,7 @@ const { title, description, breadcrumb, breadcrumbParent, theme } = Astro.props;
     pointer-events: none;
     opacity: 0.035;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-    background-size: 200px 200px;
+    background-size: 11.7647rem 11.7647rem;
     z-index: 1;
   }
 
@@ -69,29 +69,6 @@ const { title, description, breadcrumb, breadcrumbParent, theme } = Astro.props;
       linear-gradient(140deg, #002d30 0%, #005060 38%, #008792 100%);
   }
 
-  .theme-black {
-    background:
-      radial-gradient(ellipse 55% 80% at 5% 50%, rgba(0, 135, 146, 0.14) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 70% at 92% 50%, rgba(236, 93, 128, 0.10) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 50%),
-      linear-gradient(140deg, #111418 0%, #1a1f24 50%, #1e2228 100%);
-  }
-
-  .theme-blue {
-    background:
-      radial-gradient(ellipse 55% 48% at 14% 16%, rgba(255, 255, 255, 0.13) 0%, transparent 55%),
-      radial-gradient(ellipse 50% 42% at 82% 86%, rgba(0, 5, 50, 0.5) 0%, transparent 55%),
-      var(--gradient-eu-blue);
-  }
-
-  .theme-pink {
-    background:
-      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255, 255, 255, 0.13) 0%, transparent 55%),
-      radial-gradient(ellipse 55% 45% at 85% 88%, rgba(80, 10, 30, 0.45) 0%, transparent 58%),
-      radial-gradient(ellipse 40% 35% at 55% 48%, rgba(255, 120, 160, 0.12) 0%, transparent 55%),
-      linear-gradient(140deg, #6b0828 0%, #a01848 38%, #ec5d80 100%);
-  }
-
   /* ── Content ───────────────────────────────────────── */
   .hero-content {
     position: relative;
@@ -101,9 +78,9 @@ const { title, description, breadcrumb, breadcrumbParent, theme } = Astro.props;
   .breadcrumb {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 28px;
-    font-size: 16px;
+    gap: 0.4706rem;
+    margin-bottom: 1.6471rem;
+    font-size: 0.9412rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.38);
   }
@@ -128,30 +105,21 @@ const { title, description, breadcrumb, breadcrumbParent, theme } = Astro.props;
 
   h1 {
     font-family: var(--font-headings);
-    font-size: 50px;
+    font-size: var(--fs-h1);
     font-weight: 500;
     line-height: 1.1;
-    margin: 0 0 20px;
-    max-width: 670px;
+    margin: 0 0 1.1765rem;
+    max-width: 13.4em;
     color: #ffffff;
   }
 
   p {
-    font-size: 18px;
+    font-size: var(--fs-lead);
     line-height: 1.7;
     color: rgba(255, 255, 255, 0.58);
-    max-width: 540px;
+    max-width: 30em;
     font-weight: 400;
     margin: 0;
-  }
-
-  /* ── Decorative circles ────────────────────────────── */
-  .hero-circles {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 2;
-    overflow: visible;
   }
 
   /* base .circle layout and style comes from global.css — only glow color overridden per theme */
@@ -159,50 +127,28 @@ const { title, description, breadcrumb, breadcrumbParent, theme } = Astro.props;
   .circle--md { width: 50%; }
   .circle--sm { width: 30%; }
 
-  .theme-blue .circle {
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.38),
-      0 0 60px rgba(80, 140, 255, 0.38),
-      0 0 130px rgba(80, 140, 255, 0.18),
-      inset 0 0 28px rgba(255, 255, 255, 0.12);
-  }
-
-  .theme-pink .circle {
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.38),
-      0 0 60px rgba(236, 93, 128, 0.38),
-      0 0 130px rgba(236, 93, 128, 0.18),
-      inset 0 0 28px rgba(255, 255, 255, 0.12);
-  }
-
   /* ── Responsive ────────────────────────────────────── */
   @media (max-width: 860px) {
     .page-hero {
-      padding: calc(var(--nav-offset) + 28px) 40px 48px;
-    }
-
-    h1 {
-      font-size: 38px;
+      padding: calc(var(--nav-offset) + 1.647rem) 2.3529rem 2.8235rem;
     }
   }
 
   @media (max-width: 640px) {
     .page-hero {
-      padding: calc(var(--nav-offset) + 20px) 24px 36px;
+      padding: calc(var(--nav-offset) + 1.176rem) 1.4118rem 2.1176rem;
     }
 
     .breadcrumb {
-      font-size: 14px;
-      margin-bottom: 20px;
+      font-size: 0.8235rem;
+      margin-bottom: 1.1765rem;
     }
 
     h1 {
-      font-size: 28px;
-      margin-bottom: 14px;
+      margin-bottom: 0.8235rem;
     }
 
     p {
-      font-size: 15px;
       line-height: 1.65;
     }
   }

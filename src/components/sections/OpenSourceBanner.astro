@@ -36,11 +36,11 @@ const button = { label: 'View on GitHub', href: 'https://github.com/ai4eosc' };
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@700&display=swap');
   .os-wrap {
-    padding: 8px 0 20px;
+    padding: 0.4706rem 0 1.1765rem;
   }
 
-  @media (max-width: 720px) {
-    .os-wrap { padding-top: 24px; }
+  @media (max-width: 640px) {
+    .os-wrap { padding-top: 1.4118rem; }
   }
 
   .banner {
@@ -48,9 +48,9 @@ const button = { label: 'View on GitHub', href: 'https://github.com/ai4eosc' };
       radial-gradient(ellipse 55% 80% at 5% 50%, rgba(0, 135, 146, 0.14) 0%, transparent 60%),
       radial-gradient(ellipse 40% 70% at 92% 50%, rgba(236, 93, 128, 0.10) 0%, transparent 60%),
       radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 50%),
-      linear-gradient(140deg, #111418 0%, #1a1f24 50%, #1e2228 100%);
-    border-radius: 16px;
-    padding: 28px 32px;
+      var(--gradient-dark);
+    border-radius: 0.9412rem;
+    padding: 1.6471rem 1.8824rem;
     position: relative;
     overflow: hidden;
     color: #ffffff;
@@ -64,7 +64,7 @@ const button = { label: 'View on GitHub', href: 'https://github.com/ai4eosc' };
     pointer-events: none;
     opacity: 0.04;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-    background-size: 200px 200px;
+    background-size: 11.7647rem 11.7647rem;
     z-index: 1;
   }
 
@@ -74,22 +74,22 @@ const button = { label: 'View on GitHub', href: 'https://github.com/ai4eosc' };
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    gap: 1.1765rem;
   }
 
   .left {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 1.4118rem;
   }
 
   .code-icon-wrap {
-    width: 52px;
-    height: 52px;
+    width: 3.0588rem;
+    height: 3.0588rem;
     flex-shrink: 0;
     background: linear-gradient(135deg, rgba(0, 145, 160, 0.22) 0%, rgba(0, 100, 115, 0.14) 100%);
     border: 1px solid rgba(0, 210, 230, 0.22);
-    border-radius: 14px;
+    border-radius: 0.8235rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -97,7 +97,7 @@ const button = { label: 'View on GitHub', href: 'https://github.com/ai4eosc' };
 
   .code-icon-text {
     font-family: 'Fira Code', monospace;
-    font-size: 20px;
+    font-size: 1.1765rem;
     font-weight: 900;
     color: white;
     text-shadow:
@@ -105,21 +105,21 @@ const button = { label: 'View on GitHub', href: 'https://github.com/ai4eosc' };
       0 0 20px rgba(0, 210, 230, 0.25);
   }
 
-  .button-pill.primary::after { content: "\2197\FE0E"; margin-left: 4px; }
+  .button-pill.primary::after { content: "\2197\FE0E"; margin-left: 0.2353rem; }
 
   .gh-icon {
-    width: 20px;
-    height: 20px;
+    width: 1.1765rem;
+    height: 1.1765rem;
     flex-shrink: 0;
   }
 
   h4 {
-    font-size: 22px;
+    font-size: 1.2941rem;
     font-weight: 600;
   }
 
   p {
-    font-size: 16px;
+    font-size: 0.9412rem;
     color: var(--color-neutral-400);
   }
 

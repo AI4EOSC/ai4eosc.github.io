@@ -28,16 +28,16 @@ const { title, description, button, theme } = Astro.props;
 
 <style>
   .cta-wrap {
-    padding: 20px 0 0;
+    padding: 1.1765rem 0 0;
   }
 
-  @media (max-width: 720px) {
-    .cta-wrap { padding-top: 40px; }
+  @media (max-width: 640px) {
+    .cta-wrap { padding-top: 2.3529rem; }
   }
 
   .cta {
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    padding: 56px;
+    padding: 3.2941rem;
     position: relative;
     overflow: hidden;
     color: #ffffff;
@@ -51,7 +51,7 @@ const { title, description, button, theme } = Astro.props;
     pointer-events: none;
     opacity: 0.04;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-    background-size: 200px 200px;
+    background-size: 11.7647rem 11.7647rem;
     z-index: 1;
   }
 
@@ -65,42 +65,19 @@ const { title, description, button, theme } = Astro.props;
       linear-gradient(140deg, #002d30 0%, #005060 38%, #007d88 70%, #008792 100%);
   }
 
-  .theme-black {
-    background:
-      radial-gradient(ellipse 55% 80% at 5% 50%, rgba(0, 135, 146, 0.14) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 70% at 92% 50%, rgba(236, 93, 128, 0.10) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 50%),
-      linear-gradient(140deg, #111418 0%, #1a1f24 50%, #1e2228 100%);
-  }
-
-  .theme-blue {
-    background:
-      radial-gradient(ellipse 55% 48% at 14% 16%, rgba(255, 255, 255, 0.13) 0%, transparent 55%),
-      radial-gradient(ellipse 50% 42% at 82% 86%, rgba(0, 5, 50, 0.5) 0%, transparent 55%),
-      var(--gradient-eu-blue);
-  }
-
-  .theme-pink {
-    background:
-      radial-gradient(ellipse 60% 55% at 12% 12%, rgba(255, 255, 255, 0.13) 0%, transparent 55%),
-      radial-gradient(ellipse 55% 45% at 85% 88%, rgba(80, 10, 30, 0.45) 0%, transparent 58%),
-      radial-gradient(ellipse 40% 35% at 55% 48%, rgba(255, 120, 160, 0.12) 0%, transparent 55%),
-      linear-gradient(140deg, #6b0828 0%, #a01848 38%, #ec5d80 100%);
-  }
-
   /* ── Content ───────────────────────────────────────── */
   h2 {
-    margin: 0 0 12px;
+    margin: 0 0 0.7059rem;
     font-family: var(--font-headings);
-    font-size: 46px;
+    font-size: var(--fs-h2);
     font-weight: 600;
   }
 
   p {
-    margin: 0 0 28px;
-    font-size: 18px;
+    margin: 0 0 1.6471rem;
+    font-size: var(--fs-lead);
     color: rgba(255, 255, 255, 0.7);
-    max-width: 550px;
+    max-width: 32.35rem;
     line-height: 1.65;
     font-weight: 500;
   }
@@ -110,46 +87,20 @@ const { title, description, button, theme } = Astro.props;
     z-index: 3;
   }
 
-  /* ── Decorative circles ────────────────────────────── */
-  .cta-circles {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 2;
-    overflow: visible;
-  }
-
   /* base .circle layout and style comes from global.css — only glow color overridden per theme */
   .circle--lg { width: 80%; }
   .circle--md { width: 56%; }
   .circle--sm { width: 34%; }
-
-
-  .theme-blue .circle {
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.38),
-      0 0 60px rgba(80, 140, 255, 0.38),
-      0 0 130px rgba(80, 140, 255, 0.18),
-      inset 0 0 28px rgba(255, 255, 255, 0.12);
-  }
-
-  .theme-pink .circle {
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.38),
-      0 0 60px rgba(236, 93, 128, 0.38),
-      0 0 130px rgba(236, 93, 128, 0.18),
-      inset 0 0 28px rgba(255, 255, 255, 0.12);
-  }
 
   /* ── CTA button ────────────────────────────────────── */
   .cta-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 999px;
-    padding: 10px 24px;
+    border-radius: var(--radius-pill);
+    padding: 0.5882rem 1.4118rem;
     font-family: var(--font-body);
-    font-size: 15px; font-weight: 600;
+    font-size: 0.8824rem; font-weight: 600;
     text-decoration: none;
     background: #ffffff;
     box-shadow: 0 1px 4px rgba(0,0,0,0.10);
@@ -169,11 +120,7 @@ const { title, description, button, theme } = Astro.props;
 
   @media (max-width: 860px) {
     .cta {
-      padding: 36px 26px;
-    }
-
-    h2 {
-      font-size: 28px;
+      padding: 2.1176rem 1.5294rem;
     }
   }
 </style>

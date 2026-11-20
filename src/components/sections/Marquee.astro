@@ -51,23 +51,23 @@ const duration = Math.round(items.length * 2.5);
 
 <style>
   .marquee {
-    width: min(1320px, 100% - 2 * var(--gutter));
+    width: min(var(--page-max), 100% - 2 * var(--gutter));
     margin: 0 auto;
     height: var(--marquee-height);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 18px 0 25px 0;
+    padding: 1.0588rem 0 1.4706rem 0;
     overflow: hidden;
   }
 
   .label {
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    font-size: 14px;
+    font-size: 0.8235rem;
     color: var(--color-neutral-400);
     text-align: center;
-    margin: 0 0 30px;
+    margin: 0 0 1.7647rem;
     flex-shrink: 0;
   }
 
@@ -97,9 +97,9 @@ const duration = Math.round(items.length * 2.5);
   .track {
     display: flex;
     align-items: center;
-    gap: 60px;
+    gap: 3.5294rem;
     width: max-content;
-    padding: 0 28px;
+    padding: 0 1.6471rem;
     animation: marquee-scroll linear infinite;
   }
 
@@ -108,15 +108,15 @@ const duration = Math.round(items.length * 2.5);
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    height: 50px;
+    height: 2.9412rem;
     text-decoration: none;
   }
 
   .logo-img {
     display: block;
-    height: 45px;
+    height: 2.6471rem;
     width: auto;
-    max-width: 120px;
+    max-width: 7.0588rem;
     object-fit: contain;
     filter: grayscale(100%) brightness(0.9) contrast(0.4);
     opacity: 0.75;
@@ -129,7 +129,7 @@ const duration = Math.round(items.length * 2.5);
   }
 
   .name-pill {
-    font-size: 14px;
+    font-size: 0.8235rem;
     font-weight: 600;
     letter-spacing: 0.05em;
     color: var(--color-neutral-400);
@@ -141,22 +141,22 @@ const duration = Math.round(items.length * 2.5);
 
   @media (max-width: 640px) {
     .marquee {
-      width: calc(100% - 40px);
+      width: calc(100% - 2.3529rem);
     }
 
     .label {
-      font-size: 13px;
-      margin-bottom: 14px;
+      font-size: 0.7647rem;
+      margin-bottom: 0.8235rem;
       letter-spacing: 0.08em;
     }
 
     .logo-link {
-      height: 40px;
+      height: 2.3529rem;
     }
 
     .logo-img {
-      height: 34px;
-      max-width: 90px;
+      height: 2rem;
+      max-width: 5.2941rem;
     }
   }
 

@@ -7,14 +7,21 @@ function getCols(n: number): number {
   const rows = Math.ceil(n / 4);
   return Math.ceil(n / rows);
 }
+
+// Cards on the bottom row that touch the panel's lower corners get the larger radius that matches the navbar shape.
+function cornerClass(i: number, n: number): string {
+  const cols = getCols(n);
+  const lastRowStart = Math.floor((n - 1) / cols) * cols;
+  return [i === lastRowStart ? 'corner-bl' : '', i === n - 1 ? 'corner-br' : ''].join(' ');
+}
 ---
 
 <div class="top-blur" data-top-blur aria-hidden="true"><span></span><span></span><span></span></div>
 
-<header class="fixed top-5 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] sm:w-[calc(100%-80px)] xl:w-[min(1260px,calc(100%-40px))] z-[200]">
+<header class="fixed top-5 left-1/2 -translate-x-1/2 w-[calc(100%-1.8824rem)] sm:w-[min(calc(var(--page-max)-3.5rem),calc(100%-2*var(--gutter)-2*var(--nav-inset)))] z-[200]">
   <div
     data-nav
-    class="nav glass relative flex flex-col rounded-[40px] transition-shadow duration-300"
+    class="nav glass relative flex flex-col rounded-[2.3529rem] transition-shadow duration-300"
   >
     <!-- Row principal -->
     <div class="flex items-center justify-between gap-3.5 h-20 pr-5">
@@ -69,9 +76,9 @@ function getCols(n: number): number {
             data-panel={link.label}
             style={`--cols: ${getCols(link.dropdown?.length ?? 1)};`}
           >
-            {link.dropdown?.map((item) => (
+            {link.dropdown?.map((item, i, items) => (
               <a
-                class={`panel-item gradient-${item.hoverGradient ?? 'none'}`}
+                class={`panel-item gradient-${item.hoverGradient ?? 'none'} ${cornerClass(i, items.length)}`}
                 href={item.href}
                 {...(item.href?.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               >
@@ -164,10 +171,10 @@ function getCols(n: number): number {
   .nav-link {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    padding: 7px 14px;
-    border-radius: 999px;
-    font-size: 18px;
+    gap: 0.2941rem;
+    padding: 0.41rem clamp(0.4706rem, 1.2vw, 0.82rem);
+    border-radius: var(--radius-pill);
+    font-size: clamp(0.88rem, 0.9vw + 0.47rem, 1.06rem);
     font-weight: 500;
     color: var(--color-neutral-600);
     text-decoration: none;
@@ -204,7 +211,7 @@ function getCols(n: number): number {
     top: 0;
     left: 0;
     right: 0;
-    height: 200px;
+    height: 11.7647rem;
     z-index: 190;
     pointer-events: none;
     /* No opacity here: it would make this a backdrop root and the blur would see nothing.
@@ -217,29 +224,29 @@ function getCols(n: number): number {
   }
 
   .top-blur span:nth-child(1) {
-    backdrop-filter: blur(calc(1px * var(--top-blur, 0)));
-    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 110px, transparent 200px);
-    mask-image: linear-gradient(to bottom, #000 0, #000 110px, transparent 200px);
+    backdrop-filter: blur(calc(0.0588rem * var(--top-blur, 0)));
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 6.471rem, rgba(0,0,0,0.6) calc(6.471rem + (11.765rem - 6.471rem) * 0.35), rgba(0,0,0,0.2) calc(6.471rem + (11.765rem - 6.471rem) * 0.7), transparent 11.765rem);
+    mask-image: linear-gradient(to bottom, #000 0, #000 6.471rem, rgba(0,0,0,0.6) calc(6.471rem + (11.765rem - 6.471rem) * 0.35), rgba(0,0,0,0.2) calc(6.471rem + (11.765rem - 6.471rem) * 0.7), transparent 11.765rem);
   }
 
   .top-blur span:nth-child(2) {
-    backdrop-filter: blur(calc(3px * var(--top-blur, 0)));
-    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 100px, transparent 170px);
-    mask-image: linear-gradient(to bottom, #000 0, #000 100px, transparent 170px);
+    backdrop-filter: blur(calc(0.1765rem * var(--top-blur, 0)));
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 5.882rem, rgba(0,0,0,0.6) calc(5.882rem + (10rem - 5.882rem) * 0.35), rgba(0,0,0,0.2) calc(5.882rem + (10rem - 5.882rem) * 0.7), transparent 10rem);
+    mask-image: linear-gradient(to bottom, #000 0, #000 5.882rem, rgba(0,0,0,0.6) calc(5.882rem + (10rem - 5.882rem) * 0.35), rgba(0,0,0,0.2) calc(5.882rem + (10rem - 5.882rem) * 0.7), transparent 10rem);
   }
 
   .top-blur span:nth-child(3) {
-    backdrop-filter: blur(calc(6px * var(--top-blur, 0)));
-    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 85px, transparent 135px);
-    mask-image: linear-gradient(to bottom, #000 0, #000 85px, transparent 135px);
+    backdrop-filter: blur(calc(0.3529rem * var(--top-blur, 0)));
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 5rem, rgba(0,0,0,0.6) calc(5rem + (7.941rem - 5rem) * 0.35), rgba(0,0,0,0.2) calc(5rem + (7.941rem - 5rem) * 0.7), transparent 7.941rem);
+    mask-image: linear-gradient(to bottom, #000 0, #000 5rem, rgba(0,0,0,0.6) calc(5rem + (7.941rem - 5rem) * 0.35), rgba(0,0,0,0.2) calc(5rem + (7.941rem - 5rem) * 0.7), transparent 7.941rem);
   }
 
   /* Safari < 18 only knows the prefixed property. It lives in its own rule because the
      minifier merges a prefixed/unprefixed pair declared together and keeps just one. */
   @supports not (backdrop-filter: blur(1px)) {
-    .top-blur span:nth-child(1) { -webkit-backdrop-filter: blur(calc(1px * var(--top-blur, 0))); }
-    .top-blur span:nth-child(2) { -webkit-backdrop-filter: blur(calc(3px * var(--top-blur, 0))); }
-    .top-blur span:nth-child(3) { -webkit-backdrop-filter: blur(calc(6px * var(--top-blur, 0))); }
+    .top-blur span:nth-child(1) { -webkit-backdrop-filter: blur(calc(0.0588rem * var(--top-blur, 0))); }
+    .top-blur span:nth-child(2) { -webkit-backdrop-filter: blur(calc(0.1765rem * var(--top-blur, 0))); }
+    .top-blur span:nth-child(3) { -webkit-backdrop-filter: blur(calc(0.3529rem * var(--top-blur, 0))); }
   }
 
   /* ── Desktop dropdown panel ─────────────────────────── */
@@ -252,7 +259,7 @@ function getCols(n: number): number {
   }
 
   .nav.open .nav-panel {
-    max-height: 500px;
+    max-height: 29.4118rem;
     opacity: 1;
     transition: max-height var(--transition-slow), opacity 0.2s ease;
   }
@@ -260,7 +267,7 @@ function getCols(n: number): number {
   .nav-panel::before {
     content: '';
     display: block;
-    margin: 0 18px;
+    margin: 0 1.0588rem;
     height: 0.5px;
     background: rgba(0, 0, 0, 0.07);
     opacity: 0;
@@ -275,8 +282,8 @@ function getCols(n: number): number {
   .panel {
     display: none;
     flex-wrap: wrap;
-    gap: 10px;
-    padding: 12px 16px 16px;
+    gap: 0.5882rem;
+    padding: 0.7059rem 0.9412rem 0.9412rem;
   }
 
   .nav[data-active="Ecosystem"] .panel[data-panel="Ecosystem"],
@@ -287,9 +294,9 @@ function getCols(n: number): number {
   /* ── Panel items ────────────────────────────────────── */
   .panel-item {
     display: block;
-    flex: 1 0 calc(100% / var(--cols) - 10px);
-    padding: 10px 10px 10px 20px;
-    border-radius: 14px;
+    flex: 1 0 calc(100% / var(--cols) - 0.5882rem);
+    padding: 0.5882rem 0.5882rem 0.5882rem 1.1765rem;
+    border-radius: 0.8235rem;
     text-decoration: none;
     background: rgba(0, 0, 0, 0.025);
     border: 0.5px solid transparent;
@@ -302,8 +309,8 @@ function getCols(n: number): number {
       transform    var(--transition-fast);
   }
 
-  .panel-item:first-child { border-bottom-left-radius:  24px; }
-  .panel-item:last-child  { border-bottom-right-radius: 24px; }
+  .panel-item.corner-bl { border-bottom-left-radius:  1.4118rem; }
+  .panel-item.corner-br { border-bottom-right-radius: 1.4118rem; }
   .panel-item:hover { transform: translateY(-1px); }
 
   .panel-item::before {
@@ -334,18 +341,18 @@ function getCols(n: number): number {
     opacity: 0; transition: opacity var(--transition-base); z-index: 0;
   }
   .panel-item:hover .circle { opacity: 1; }
-  .panel-item .circle--lg { width: 180px; }
-  .panel-item .circle--md { width: 120px; }
-  .panel-item .circle--sm { width: 60px; }
+  .panel-item .circle--lg { width: 10.5882rem; }
+  .panel-item .circle--md { width: 7.0588rem; }
+  .panel-item .circle--sm { width: 3.5294rem; }
 
   .panel-item h4 {
-    font-size: 20px; font-weight: 600;
+    font-size: 1.1765rem; font-weight: 600;
     color: var(--color-neutral-900);
     position: relative; z-index: 1;
     transition: color var(--transition-fast);
   }
   .panel-item p {
-    margin: 0; font-size: 16px; color: var(--color-neutral-500);
+    margin: 0; font-size: 0.9412rem; color: var(--color-neutral-500);
     position: relative; z-index: 1;
     transition: color var(--transition-fast);
   }
@@ -357,8 +364,8 @@ function getCols(n: number): number {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 5px;
-    width: 40px; height: 40px;
+    gap: 0.2941rem;
+    width: 2.3529rem; height: 2.3529rem;
     border: none; background: transparent;
     cursor: pointer; padding: 0; border-radius: 50%;
     transition: background 0.15s ease;
@@ -367,9 +374,9 @@ function getCols(n: number): number {
 
   .bar {
     display: block;
-    width: 20px; height: 1.5px;
+    width: 1.1765rem; height: 1.5px;
     background: var(--color-neutral-700);
-    border-radius: 2px;
+    border-radius: 0.1176rem;
     transform-origin: center;
     transition: transform 0.28s cubic-bezier(0.4,0,0.2,1), opacity 0.2s ease;
   }
@@ -387,23 +394,23 @@ function getCols(n: number): number {
   }
 
   .nav.mob-open .mobile-menu {
-    max-height: 900px;
+    max-height: 52.9412rem;
     opacity: 1;
   }
 
   .mob-inner {
-    padding: 6px 12px 16px;
+    padding: 0.3529rem 0.7059rem 0.9412rem;
     border-top: 0.5px solid rgba(0,0,0,0.07);
     margin-top: 0;
-    display: flex; flex-direction: column; gap: 2px;
+    display: flex; flex-direction: column; gap: 0.1176rem;
   }
 
   /* Simple link */
   .mob-link {
     display: block;
-    padding: 12px 14px;
-    border-radius: 14px;
-    font-size: 16px; font-weight: 500;
+    padding: 0.7059rem 0.8235rem;
+    border-radius: 0.8235rem;
+    font-size: 0.9412rem; font-weight: 500;
     color: var(--color-neutral-700);
     text-decoration: none;
     transition: background 0.15s ease, color 0.15s ease;
@@ -414,9 +421,9 @@ function getCols(n: number): number {
   .mob-trigger {
     width: 100%;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 14px;
-    border-radius: 14px;
-    font: inherit; font-size: 16px; font-weight: 500;
+    padding: 0.7059rem 0.8235rem;
+    border-radius: 0.8235rem;
+    font: inherit; font-size: 0.9412rem; font-weight: 500;
     color: var(--color-neutral-700);
     background: transparent; border: none;
     cursor: pointer; text-align: left;
@@ -439,18 +446,18 @@ function getCols(n: number): number {
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 0.3529rem;
   }
   .mob-group.mob-group-open .mob-sub {
-    max-height: 500px;
-    padding: 6px 0 4px;
+    max-height: 29.4118rem;
+    padding: 0.3529rem 0 0.2353rem;
   }
 
   /* Cards */
   .mob-card {
     display: block;
-    padding: 12px 16px 14px 18px;
-    border-radius: 14px;
+    padding: 0.7059rem 0.9412rem 0.8235rem 1.0588rem;
+    border-radius: 0.8235rem;
     text-decoration: none;
     position: relative;
     overflow: hidden;
@@ -467,20 +474,20 @@ function getCols(n: number): number {
       inset 0 0 28px rgba(255, 255, 255, 0.12);
     opacity: 0.5;
   }
-  .mob-card .circle--lg { width: 180px; }
-  .mob-card .circle--md { width: 120px; }
-  .mob-card .circle--sm { width: 60px; }
+  .mob-card .circle--lg { width: 10.5882rem; }
+  .mob-card .circle--md { width: 7.0588rem; }
+  .mob-card .circle--sm { width: 3.5294rem; }
 
   .mob-card-label {
     display: block;
-    font-size: 15px; font-weight: 600;
+    font-size: 0.8824rem; font-weight: 600;
     color: #ffffff;
     position: relative; z-index: 1;
-    margin-bottom: -3px;
+    margin-bottom: -0.1765rem;
   }
   .mob-card-desc {
     display: block;
-    font-size: 14px;
+    font-size: 0.8235rem;
     color: rgba(255, 255, 255, 0.62);
     position: relative; z-index: 1;
   }
@@ -508,16 +515,16 @@ function getCols(n: number): number {
   .mob-gradient-none .mob-card-desc  { color: var(--color-neutral-500); }
 
   /* CTA */
-  .mob-cta-wrap { padding: 10px 14px 2px; }
-  .mob-cta { width: 100%; justify-content: center; font-size: 15px !important; }
+  .mob-cta-wrap { padding: 0.5882rem 0.8235rem 0.1176rem; }
+  .mob-cta { width: 100%; justify-content: center; font-size: 0.8824rem !important; }
 
   /* ── Responsive ─────────────────────────────────────── */
-  @media (min-width: 861px) {
+  @media (min-width: 1025px) {
     .hamburger    { display: none !important; }
     .mobile-menu  { display: none !important; }
   }
 
-  @media (max-width: 860px) {
+  @media (max-width: 1024px) {
     .links        { display: none; }
     .desktop-cta  { display: none; }
     .hamburger    { display: flex; }
